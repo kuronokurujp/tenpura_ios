@@ -708,7 +708,7 @@ enum
         }
         else if ([keyChunk isEqualToString:@"titleTTF"])
         {
-            NSLog(@"setTitleTTF: %@ forState:%d", value, state);
+            CCLOG(@"setTitleTTF: %@ forState:%d", value, state);
             
             [self setTitleTTF:value forState:state];
         }

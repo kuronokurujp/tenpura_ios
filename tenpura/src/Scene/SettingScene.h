@@ -9,8 +9,42 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
-@interface SettingScene : CCLayer {
-    
+#import	"./../Data/DataNetaList.h"
+#import "./../../libs/CCControlExtension/CCControl/CCControlButton.h"
+
+@interface SettingScene : CCLayer
+{
+@private
+	//	セッティング用項目リスト
+	CCArray*	mp_useItemNoList;
+	CCLabelTTF*	mp_nowMoneyText;
+	CCLabelTTF*	mp_nowHiScoreText;
+	CCControlButton*	mp_gameStartBtn;
 }
+
+@property	(nonatomic, retain)CCArray*	useItemNoList;
+
+@end
+
+/*
+	@brief	アイテム設定項目ボタン
+*/
+@interface SettingItemBtn : CCMenuItemImage
+{
+@private
+	CCLabelTTF*	mp_itemName;
+	UInt32	m_itemNo;
+}
+
+@property	(nonatomic, readonly)UInt32 itemNo;
+
+-(void)settingItem:(const NETA_DATA_ST*)in_pData;
+
+@end
+
+/*
+	@brief	ゲームスタート開始ボタン
+*/
+@interface SettingGameStartBtn : CCControlButton
 
 @end

@@ -10,4 +10,32 @@
 
 @implementation DataSettingTenpura
 
+@synthesize no	= m_no;
+
+/*
+	@brief
+*/
+-(id)	init
+{
+	if( self = [super init] )
+	{
+		m_no	= 0;
+	}
+	
+	return self;
+}
+
+/*
+	@brief	別データからのデータコピー用
+*/
+-(void)CopyData:(DataSettingTenpura *)in_pData
+{
+	if( in_pData == nil )
+	{
+		return;
+	}
+	
+	m_no	= in_pData.no;
+}
+
 @end
