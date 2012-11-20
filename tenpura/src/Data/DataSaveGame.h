@@ -19,25 +19,32 @@ enum
 	eITEMS_MAX	= 64,
 };
 
+typedef struct
+{
+	unsigned char	id;		//	0(1)
+	unsigned char	num;	//	1(1)
+	char	padding;	//	2(4)
+} SAVE_DATA_ITEM_ST;
+
 //
 typedef struct
 {
 	//	アイテム所持数
-	unsigned char	aItems[ eITEMS_MAX ];	//	0(64)
-	int	itemNum;				//	64(4)
+	SAVE_DATA_ITEM_ST	aItems[eITEMS_MAX];	//	0(256)
+	long	itemNum;				//	256(4)
 	
 	//	所持金
-	int	money;					//	68(4)
+	long	money;					//	260(4)
 	//	日付
-	int	year, month, day;		//	72(12)
-	
-	int	check;					//	84(4)
-	
-	int64_t	score;				//	88(8)
-	char	use;				//	96(1)
+	long	year, month, day;		//	264(12)
+		
+	int64_t	score;				//	272(8)
+	char	use;				//	280(1)
+	char	check;				//	281(1)
+
 	//	予約領域
-	char	dummy[31];				//	97(31)
-} SAVE_DATA_ST;	//	128
+	char	dummy[230];				//	282(230)
+} SAVE_DATA_ST;	//	512
 
 @interface DataSaveGame : NSObject
 {
@@ -56,9 +63,12 @@ typedef struct
 //	データリセット
 -(BOOL)reset;
 //	すでにアイテムを持っているかどうか
--(BOOL)isItem:(UInt32)in_no;
+-(const SAVE_DATA_ITEM_ST*)isItem:(UInt32)in_no;
+-(const SAVE_DATA_ITEM_ST*)isItemOfIndex:(UInt32)in_idx;
+
 //	アイテム追加
 -(BOOL)addItem:(UInt32)in_no;
+
 //	現在時刻を記録
 -(BOOL)saveDate;
 

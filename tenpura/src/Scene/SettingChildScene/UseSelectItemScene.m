@@ -27,6 +27,11 @@
 static const char*	s_pNetaCellFileName	= "neta_cell.png";
 static const SInt32	s_netaTableViewCellMax	= 6;
 
+enum
+{
+	eSW_TABLE_TAG_ITEM_NUM_TEXT_CELL	= eSW_TABLE_TAG_CELL_MAX + 1,
+};
+
 /*
 	@brief
 */
@@ -91,12 +96,12 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 	[super table:table cellTouched:cell];
 	
 	UInt32	idx	= [cell objectID];
-	if( [self isUseItem:idx] == NO )
+	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] isItemOfIndex:idx];
+	if( pItem != nil )
 	{
 		[self actionCellTouch:cell];
 
-		const SAVE_DATA_ST*	pData	= [[DataSaveGame shared] getData];
-		const NETA_DATA_ST*	pNetaData	= [[DataNetaList shared] getDataSearchId:pData->aItems[idx]];
+		const NETA_DATA_ST*	pNetaData	= [[DataNetaList shared] getDataSearchId:pItem->id];
 		[mp_settingItemBtn settingItem:pNetaData];
 
 		[[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:2];
@@ -110,6 +115,7 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 {
 	SWTableViewCell*	pCell	= [super table:table cellAtIndex:idx];
 	CCSprite *pSprite = (CCSprite*)[pCell getChildByTag:eSW_TABLE_TAG_CELL_SPRITE];
+	DataBaseText*	pDataBaseText	= [DataBaseText shared];
 	
 	//	すでに使用設定中か
 	if( [self isUseItem:idx] )
@@ -122,13 +128,34 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 	}
 
 	NSString*	pStr	= @"";
-	const SAVE_DATA_ST*	pData	= [[DataSaveGame shared] getData];
-	if( pData->aItems[ idx ] != 0 )
+	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] isItemOfIndex:idx];
+	if( pItem != nil )
 	{
-		const NETA_DATA_ST*	pNetaData	= [[DataNetaList shared] getDataSearchId:pData->aItems[idx]];
+		const NETA_DATA_ST*	pNetaData	= [[DataNetaList shared] getDataSearchId:pItem->id];
 		pStr	= [NSString stringWithUTF8String:[[DataBaseText shared] getText:pNetaData->textID]];
 
 		[pSprite setColor:ccWHITE];
+		
+		CCLabelTTF*	pItemNumLabel	= (CCLabelTTF*)[pSprite getChildByTag:eSW_TABLE_TAG_ITEM_NUM_TEXT_CELL];
+		if( pItemNumLabel == nil )
+		{
+			CGSize	texSize	= [pSprite textureRect].size;
+
+			pItemNumLabel	= [CCLabelTTF labelWithString:pStr fontName:@"Helvetica" fontSize:self.data.fontSize];
+			CGPoint	pos	= ccp( texSize.width - 150.f, 0 );
+			[pItemNumLabel setPosition:pos];
+			[pItemNumLabel setAnchorPoint:ccp(0.f, 0.f)];
+
+			[pSprite addChild:pItemNumLabel z:0 tag:eSW_TABLE_TAG_ITEM_NUM_TEXT_CELL];
+		}
+
+		if( pItemNumLabel != nil )
+		{
+			NSString*	pUseNameStr	= [NSString stringWithUTF8String:[pDataBaseText getText:57]];
+			NSString*	pItemNumStr	= [NSString stringWithFormat:@"%@ %02d", pUseNameStr, pItem->num];
+			[pItemNumLabel setString:pItemNumStr];
+			[pItemNumLabel setColor:ccc3(0, 0, 0)];
+		}
 	}
 
 	CCLabelTTF*	pLabel	= (CCLabelTTF*)[pSprite getChildByTag:eSW_TABLE_TAG_CELL_TEXT];
@@ -150,13 +177,13 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 		return NO;
 	}
 	
-	const SAVE_DATA_ST*	pData	= [[DataSaveGame shared] getData];
-	if( pData->aItems[in_idx] == 0 )
+	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] isItemOfIndex:in_idx];
+	if( pItem == nil )
 	{
 		return YES;
 	}
 	
-	const NETA_DATA_ST*	pNetaData	= [[DataNetaList shared] getDataSearchId:pData->aItems[in_idx]];
+	const NETA_DATA_ST*	pNetaData	= [[DataNetaList shared] getDataSearchId:pItem->id];
 
 	SettingItemBtn*	pItemBtn	= nil;
 	CCARRAY_FOREACH(mp_useItemNoList, pItemBtn)

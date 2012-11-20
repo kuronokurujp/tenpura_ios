@@ -11,6 +11,8 @@
 
 @implementation SWTableViewHelper
 
+@synthesize data	= m_data;
+
 /*
 	@brief
 */

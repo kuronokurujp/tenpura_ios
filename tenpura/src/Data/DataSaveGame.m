@@ -117,21 +117,38 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 /*
 	@brief	すでにアイテムを持っているかどうか
 */
--(BOOL)isItem:(UInt32)in_no
+-(const SAVE_DATA_ITEM_ST*)isItem:(UInt32)in_no
 {
 	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
 	if( pData != nil )
 	{
 		for( SInt32 i = 0; i < pData->itemNum; ++i )
 		{
-			if( pData->aItems[ i ] == in_no )
+			if( ( pData->aItems[ i ].id == in_no ) && ( 0 < pData->aItems[ i ].num ) )
 			{
-				return TRUE;
+				return &pData->aItems[ i ];
 			}
 		}
 	}
 	
-	return FALSE;
+	return nil;
+}
+
+/*
+	@brief	すでにアイテムを持っているかどうか
+*/
+-(const SAVE_DATA_ITEM_ST*)isItemOfIndex:(UInt32)in_idx
+{
+	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
+	if( pData != nil )
+	{
+		if( 0 < pData->aItems[in_idx].num )
+		{
+			return &pData->aItems[in_idx];
+		}
+	}
+	
+	return nil;
 }
 
 /*
@@ -139,23 +156,25 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 */
 -(BOOL)addItem:(UInt32)in_no
 {
-	if( [self isItem:in_no] == TRUE )
-	{
-		return FALSE;
-	}
+	const SAVE_DATA_ITEM_ST*	pItem	= [self isItem:in_no];
 
 	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
 	if( pData != nil )
 	{
-		if( pData->itemNum < ( eITEMS_MAX - 1 ) )
+		if( ( pData->itemNum < ( eITEMS_MAX - 1 ) ) && ( pItem == nil ) )
 		{
 			//	追加可能
-			pData->aItems[ pData->itemNum ]	= in_no;
+			pData->aItems[ pData->itemNum ].id	= in_no;
+			++pData->aItems[ pData->itemNum ].num;
 			++pData->itemNum;
 			
 			[mp_SaveData save];
 
-			return TRUE;
+			return YES;
+		}
+		else if( pItem != nil )
+		{
+			++pData->aItems[ in_no ].num;
 		}
 		else
 		{
@@ -163,7 +182,7 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 		}
 	}
 	
-	return FALSE;
+	return NO;
 }
 
 /*
@@ -218,7 +237,8 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 	
 	memset( out_pData, 0, sizeof( SAVE_DATA_ST ) );
 	out_pData->money	= 1000;
-	out_pData->aItems[ 0 ]	= 1;
+	out_pData->aItems[ 0 ].id	= 1;
+	out_pData->aItems[ 0 ].num	= 1;
 	out_pData->itemNum	= 1;
 }
 

@@ -231,7 +231,7 @@
 			if( [pLabel.string isEqualToString:@"moneyNum"] )
 			{
 				mp_nowMoneyText	= pLabel;
-				[mp_nowMoneyText setString:[NSString stringWithFormat:@"%06d", pSaveData->money]];
+				[mp_nowMoneyText setString:[NSString stringWithFormat:@"%06ld", pSaveData->money]];
 			}
 			else if( [pLabel.string isEqualToString:@"scoreNum"] )
 			{

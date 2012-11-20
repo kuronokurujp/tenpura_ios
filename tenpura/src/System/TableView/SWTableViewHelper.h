@@ -45,6 +45,8 @@ typedef struct
 	SW_INIT_DATA_ST	m_data;
 }
 
+@property	(nonatomic, readonly)SW_INIT_DATA_ST	data;
+
 //	関数
 //	初期化
 -(id)	initWithData:(SW_INIT_DATA_ST*)in_pData;
