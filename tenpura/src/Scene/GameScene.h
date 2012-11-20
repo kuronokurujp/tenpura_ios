@@ -24,6 +24,7 @@
 	CCLabelTTF*	mp_scorePut;
 	int64_t	m_scoreNum;
 	SInt32	m_addMoneyNum;
+	Float32	m_timeVal;
 	
 	CCArray*	mp_settingItemList;
 }

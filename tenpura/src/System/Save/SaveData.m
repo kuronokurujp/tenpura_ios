@@ -41,6 +41,7 @@
 
 /*
 	@brief	セットアップ
+	@return	セットアップ成功 = YES / 失敗 = NO
 */
 -(BOOL)setup:(NSString *)in_pIdName :(SInt32)in_size
 {
@@ -60,6 +61,7 @@
 
 /*
 	@brief	ロード
+	@return	ロード成功 / 失敗
 */
 -(BOOL)	load
 {
@@ -83,6 +85,7 @@
 
 /*
 	@brief	セーブ
+	@return	セーブ成功 = YES / 失敗 = NO
 */
 -(BOOL)	save
 {
@@ -106,6 +109,7 @@
 
 /*
 	@brief	リセット
+	@return	リセット成功 = YES / 失敗 = NO
 */
 -(BOOL)	reset
 {
@@ -115,7 +119,8 @@
 }
 
 /*
-	@brief
+	@brief	データアドレス取得
+	@return	データアドレス
 */
 -(char*)getData
 {

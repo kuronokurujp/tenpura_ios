@@ -126,10 +126,10 @@
 	//	ハイスコアであれば記録
 	if( pSaveData->score < pGameScene->m_scoreNum )
 	{
-		pDataSaveGame.score		= pGameScene->m_scoreNum;
+		[pDataSaveGame addSaveScore:pGameScene->m_scoreNum];
 	}
 
-	pDataSaveGame.addMoney	= pGameScene->m_addMoneyNum;
+	[pDataSaveGame addSaveMoeny:pGameScene->m_addMoneyNum];
 
 	[self setVisible:NO];
 }

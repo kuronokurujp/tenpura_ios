@@ -22,6 +22,7 @@
 
 //	ゲーム内の動作停止させるかどうか
 @synthesize bStopAnim	= mb_stopAnim;
+@synthesize requestTime;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

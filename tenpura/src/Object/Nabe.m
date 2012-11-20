@@ -99,7 +99,7 @@ enum
 				TENPURA_POS_ST	tenpuraPosData	= [pDataTenpuraPosList getData:posIdx];
 
 				[pTenpura setup:in_data:ccp(tenpuraPosData.x, tenpuraPosData.y)];
-				[pTenpura setVisible:YES];
+				[pTenpura startRaise];
 				
 				return pTenpura;
 			}

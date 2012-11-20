@@ -18,7 +18,7 @@
 
 @interface UseSelectItemScene (PriveteMethod)
 
--(BOOL)isUseItem:(SInt32)in_idx;
+-(const UInt32)getNotUseItemNum:(SInt32)in_idx;
 
 @end
 
@@ -29,7 +29,8 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 
 enum
 {
-	eSW_TABLE_TAG_ITEM_NUM_TEXT_CELL	= eSW_TABLE_TAG_CELL_MAX + 1,
+	eTAG_USE_SELECT_TABLE_USE_ITEM_NUM_TEXT	= eSW_TABLE_TAG_CELL_MAX + 1,
+	eTAG_USE_SELECT_TABLE_USE_ITEM_ICON_SPRITE,
 };
 
 /*
@@ -96,12 +97,13 @@ enum
 	[super table:table cellTouched:cell];
 	
 	UInt32	idx	= [cell objectID];
-	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] isItemOfIndex:idx];
-	if( pItem != nil )
+	const UInt32 NotUseItemNum	= [self getNotUseItemNum:idx];
+	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] getItemOfIndex:idx];
+	if( (pItem != nil) && (0 < NotUseItemNum) )
 	{
 		[self actionCellTouch:cell];
 
-		const NETA_DATA_ST*	pNetaData	= [[DataNetaList shared] getDataSearchId:pItem->id];
+		const NETA_DATA_ST*	pNetaData	= [[DataNetaList shared] getDataSearchId:pItem->no];
 		[mp_settingItemBtn settingItem:pNetaData];
 
 		[[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:2];
@@ -114,54 +116,75 @@ enum
 -(SWTableViewCell*)	table:(SWTableView *)table cellAtIndex:(NSUInteger)idx
 {
 	SWTableViewCell*	pCell	= [super table:table cellAtIndex:idx];
-	CCSprite *pSprite = (CCSprite*)[pCell getChildByTag:eSW_TABLE_TAG_CELL_SPRITE];
+	CCSprite *pCellSp = (CCSprite*)[pCell getChildByTag:eSW_TABLE_TAG_CELL_SPRITE];
+	CGSize	cellTexSize	= [pCellSp textureRect].size;
+
 	DataBaseText*	pDataBaseText	= [DataBaseText shared];
 	
 	//	すでに使用設定中か
-	if( [self isUseItem:idx] )
+	const UInt32 NotUseItemNum	= [self getNotUseItemNum:idx];
+	if( NotUseItemNum <= 0 )
 	{
-		if( pSprite != nil )
-		{
-			//	使用中はセルの色を変える
-			[pSprite setColor:ccGRAY];
-		}
+		//	使用中はセルの色を変える
+		[pCellSp setColor:ccGRAY];
+	}
+	else
+	{
+		[pCellSp setColor:ccWHITE];
 	}
 
-	NSString*	pStr	= @"";
-	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] isItemOfIndex:idx];
+	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] getItemOfIndex:idx];
 	if( pItem != nil )
 	{
-		const NETA_DATA_ST*	pNetaData	= [[DataNetaList shared] getDataSearchId:pItem->id];
-		pStr	= [NSString stringWithUTF8String:[[DataBaseText shared] getText:pNetaData->textID]];
-
-		[pSprite setColor:ccWHITE];
-		
-		CCLabelTTF*	pItemNumLabel	= (CCLabelTTF*)[pSprite getChildByTag:eSW_TABLE_TAG_ITEM_NUM_TEXT_CELL];
-		if( pItemNumLabel == nil )
-		{
-			CGSize	texSize	= [pSprite textureRect].size;
-
-			pItemNumLabel	= [CCLabelTTF labelWithString:pStr fontName:@"Helvetica" fontSize:self.data.fontSize];
-			CGPoint	pos	= ccp( texSize.width - 150.f, 0 );
-			[pItemNumLabel setPosition:pos];
-			[pItemNumLabel setAnchorPoint:ccp(0.f, 0.f)];
-
-			[pSprite addChild:pItemNumLabel z:0 tag:eSW_TABLE_TAG_ITEM_NUM_TEXT_CELL];
-		}
-
-		if( pItemNumLabel != nil )
+		const NETA_DATA_ST*	pNetaData	= [[DataNetaList shared] getDataSearchId:pItem->no];
+		NSAssert(pNetaData, @"");
+		//	所持数表示
 		{
 			NSString*	pUseNameStr	= [NSString stringWithUTF8String:[pDataBaseText getText:57]];
-			NSString*	pItemNumStr	= [NSString stringWithFormat:@"%@ %02d", pUseNameStr, pItem->num];
-			[pItemNumLabel setString:pItemNumStr];
-			[pItemNumLabel setColor:ccc3(0, 0, 0)];
-		}
-	}
+			NSString*	pItemNumStr	= [NSString stringWithFormat:@"%@ %02ld", pUseNameStr, NotUseItemNum];
 
-	CCLabelTTF*	pLabel	= (CCLabelTTF*)[pSprite getChildByTag:eSW_TABLE_TAG_CELL_TEXT];
-	if( pLabel != nil )
-	{
-		[pLabel setString:pStr];
+			CCLabelTTF*	pItemNumLabel	= (CCLabelTTF*)[pCellSp getChildByTag:eTAG_USE_SELECT_TABLE_USE_ITEM_NUM_TEXT];
+			if( pItemNumLabel == nil )
+			{
+				pItemNumLabel	= [CCLabelTTF labelWithString:pItemNumStr fontName:self.textFontName fontSize:self.data.fontSize];
+				CGPoint	pos	= ccp( cellTexSize.width - 150.f, cellTexSize.height * 0.5f );
+				[pItemNumLabel setPosition:pos];
+				CGPoint	anchorPoint	= pItemNumLabel.anchorPoint;
+				[pItemNumLabel setAnchorPoint:ccp(0.f, anchorPoint.y)];
+
+				[pCellSp addChild:pItemNumLabel z:0 tag:eTAG_USE_SELECT_TABLE_USE_ITEM_NUM_TEXT];
+			}
+
+			if( pItemNumLabel != nil )
+			{
+				[pItemNumLabel setString:pItemNumStr];
+				[pItemNumLabel setColor:ccc3(0, 0, 0)];
+			}
+		}
+
+		//	アイテム名
+		{
+			CCLabelTTF*	pLabel	= (CCLabelTTF*)[pCellSp getChildByTag:eSW_TABLE_TAG_CELL_TEXT];
+			NSString*	pStr	= [NSString stringWithUTF8String:[[DataBaseText shared] getText:pNetaData->textID]];
+			[pLabel setString:pStr];
+
+			CGPoint	anchorPos	= pLabel.anchorPoint;
+			[pLabel setAnchorPoint:ccp(0,anchorPos.y)];
+			[pLabel setPosition:ccp(129, cellTexSize.height * 0.5f)];
+		}
+		
+		//	アイコン
+		{
+			CCSprite*	pItemIconSp	= (CCSprite*)[pCellSp getChildByTag:eTAG_USE_SELECT_TABLE_USE_ITEM_ICON_SPRITE];
+			if( pItemIconSp == nil )
+			{
+				NSString*	pFileName	= [NSString stringWithFormat:@"cust_%s.png", pNetaData->fileName];
+				pItemIconSp	= [CCSprite spriteWithFile:pFileName];
+				
+				[pItemIconSp setPosition:ccp(64, cellTexSize.height * 0.5f)];
+				[pCellSp addChild:pItemIconSp z:0 tag:eTAG_USE_SELECT_TABLE_USE_ITEM_ICON_SPRITE];
+			}
+		}
 	}
 
 	return pCell;
@@ -170,20 +193,21 @@ enum
 /*
 	@brief
 */
--(BOOL)	isUseItem:(SInt32)in_idx
+-(const UInt32)	getNotUseItemNum:(SInt32)in_idx
 {
 	if( mp_useItemNoList == nil )
 	{
 		return NO;
 	}
 	
-	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] isItemOfIndex:in_idx];
+	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] getItemOfIndex:in_idx];
 	if( pItem == nil )
 	{
-		return YES;
+		return 0;
 	}
-	
-	const NETA_DATA_ST*	pNetaData	= [[DataNetaList shared] getDataSearchId:pItem->id];
+
+	UInt32	useNum	= 0;
+	const NETA_DATA_ST*	pNetaData	= [[DataNetaList shared] getDataSearchId:pItem->no];
 
 	SettingItemBtn*	pItemBtn	= nil;
 	CCARRAY_FOREACH(mp_useItemNoList, pItemBtn)
@@ -191,11 +215,17 @@ enum
 		if( pItemBtn.itemNo == pNetaData->no )
 		{
 			//	使用中
-			return YES;
+			++useNum;
 		}
 	}
+	
+	//	現在選択中のボタンで設定されている天ぷらと同じ天ぷらなら設定個数を一つ外す
+	if( mp_settingItemBtn.itemNo == pItem->no )
+	{
+		--useNum;
+	}
 
-	return NO;
+	return	(pItem->num - useNum);
 }
 
 /*

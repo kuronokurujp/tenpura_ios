@@ -13,6 +13,7 @@
 #import "./../../Data/DataNetaList.h"
 #import "./../../Data/DataBaseText.h"
 #import "./../../Data/DataGlobal.h"
+#import "./../../Object/Tenpura.h"
 
 @interface SiireScene (PrivateMethod)
 
@@ -24,8 +25,10 @@
 
 enum
 {
-	eTAG_MONEY_TEXT_LABLE	= 3,
-	eTAG_CELL_NOT_BUY_SPRITE	= eSW_TABLE_TAG_CELL_MAX + 1,
+	eTAG_SHOP_TABLE_NOT_BUY_CELL	= eSW_TABLE_TAG_CELL_MAX + 1,
+	eTAG_SHOP_TABLE_ITEM_ICON_OBJ,
+	eTAG_SHOP_TABLE_ITEM_NUM_TEXT,
+	eTAG_SHOP_TABLE_MONEY_TEXT,
 };
 
 static const char*	s_pSireCellFileName		= "sire_cell.png";
@@ -128,15 +131,30 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 {
 	const NETA_DATA_ST*	pData	= [[DataNetaList shared] getData:idx];
 	UInt32	nowMoney	= [[DataSaveGame shared] getData]->money;
+	DataBaseText*	pDataBaseTextShared	= [DataBaseText shared];
 
-	SWTableViewCell*	pCell	= [super table:table cellAtIndex:idx];
-	
+	SWTableViewCell*	pCell	= [super table:table cellAtIndex:idx];	
 	CCSprite*	pCellSprite	= (CCSprite*)[pCell getChildByTag:eSW_TABLE_TAG_CELL_SPRITE];
+	NSAssert(pCellSprite, @"");
+
+	//	天ぷらアイコン
+	{
+		CCNode*	pChildNode	= [pCellSprite getChildByTag:eTAG_SHOP_TABLE_ITEM_ICON_OBJ];
+		if( pChildNode == nil )
+		{
+			CGSize	texSize	= [pCellSprite textureRect].size;
+
+			Tenpura*	pTenpuraObject	= [[[Tenpura alloc] init] autorelease];
+			[pTenpuraObject setup:*pData :ccp(70, texSize.height * 0.5f)];
+
+			[pCellSprite addChild:pTenpuraObject z:0 tag:eTAG_SHOP_TABLE_ITEM_ICON_OBJ];
+		}
+	}
 
 	//	購入できない場合の対応
 	{
 		CCSprite*	pNotBuyCellSprite	= nil;
-		CCNode*	pChildNode	= [pCellSprite getChildByTag:eTAG_CELL_NOT_BUY_SPRITE];
+		CCNode*	pChildNode	= [pCellSprite getChildByTag:eTAG_SHOP_TABLE_NOT_BUY_CELL];
 		if( ( pChildNode != nil ) && [pChildNode isKindOfClass:[CCSprite class]] )
 		{
 			pNotBuyCellSprite	= (CCSprite*)pChildNode;
@@ -144,7 +162,7 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 		else
 		{
 			pNotBuyCellSprite = [CCSprite spriteWithFile:[NSString stringWithFormat:@"%s", s_pNotBuyCellFileName]];
-			[pCellSprite addChild:pNotBuyCellSprite z:0 tag:eTAG_CELL_NOT_BUY_SPRITE];
+			[pCellSprite addChild:pNotBuyCellSprite z:0 tag:eTAG_SHOP_TABLE_NOT_BUY_CELL];
 		}
 
 		[pNotBuyCellSprite setPosition:ccp(0, 0)];
@@ -152,28 +170,79 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 		[pNotBuyCellSprite setColor:ccc3(255,255,255)];
 		[pNotBuyCellSprite setVisible:NO];
 
-		if( pData != nil )
+		[pCellSprite setColor:ccWHITE];
+		if( (pData != nil) && (nowMoney < pData->buyMoney) )
 		{
-			if( nowMoney < pData->buyMoney )
+			//	購入できない
+			[pCellSprite setColor:ccGRAY];
+			if( [[DataSaveGame shared] getItem:pData->no] == FALSE )
 			{
-				//	購入できない
-				[pCellSprite setColor:ccGRAY];
-				
-				if( [[DataSaveGame shared] isItem:pData->no] == FALSE )
-				{
-					[pNotBuyCellSprite setVisible:YES];
-				}
+				[pNotBuyCellSprite setVisible:YES];
 			}
 		}		
 	}
 
+	//	アイテム名表示
 	{
 		CCLabelTTF*	pLabel	= (CCLabelTTF*)[pCellSprite getChildByTag:eSW_TABLE_TAG_CELL_TEXT];
-		if( pData != nil )
+		if( pLabel != nil )
 		{
-			NSString*	pTenpuraName	= [NSString stringWithUTF8String:[[DataBaseText shared] getText:pData->textID]];
-			NSString*	pStr	= [NSString stringWithFormat:@"%@ 金額:%ld", pTenpuraName, pData->buyMoney];
+			NSString*	pTenpuraName	= [NSString stringWithUTF8String:[pDataBaseTextShared getText:pData->textID]];
+			[pLabel setAnchorPoint:ccp(0, 0)];
+			[pLabel setPosition:ccp(130.f, 50.f)];
+			[pLabel setString:pTenpuraName];
+		}
+	}
+	
+	//	購入金額表示
+	{
+		CCLabelTTF*	pLabel	= (CCLabelTTF*)[pCellSprite getChildByTag:eTAG_SHOP_TABLE_MONEY_TEXT];
+		if( pLabel == nil )
+		{
+			pLabel	= [CCLabelTTF labelWithString:@"" fontName:self.textFontName fontSize:self.data.fontSize];
+			[pLabel setAnchorPoint:ccp(0, 0)];
+			[pLabel setPosition:ccp(130.f, 10.f)];
+			[pLabel setColor:ccBLACK];
+
+			[pCellSprite addChild:pLabel z:0 tag:eTAG_SHOP_TABLE_MONEY_TEXT];
+		}
+
+		if( pLabel != nil )
+		{
+			NSString*	pTitleName		= [NSString stringWithUTF8String:[pDataBaseTextShared getText:58]];
+			NSString*	pStr	= [NSString stringWithFormat:@"%@:%04ld", pTitleName, pData->buyMoney];
 			[pLabel setString:pStr];
+		}
+	}
+
+	//	所持数表示
+	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] getItem:pData->no];
+	{
+		CCLabelTTF*	pItemNumLabel	= (CCLabelTTF*)[pCellSprite getChildByTag:eTAG_SHOP_TABLE_ITEM_NUM_TEXT];
+		if( pItemNumLabel == nil )
+		{
+			CGSize	texSize	= [pCellSprite textureRect].size;
+
+			pItemNumLabel	= [CCLabelTTF labelWithString:@"" fontName:self.textFontName fontSize:self.data.fontSize];
+			CGPoint	pos	= ccp( texSize.width - 150.f, 10.f );
+			[pItemNumLabel setPosition:pos];
+			[pItemNumLabel setAnchorPoint:ccp(0.f, 0.f)];
+
+			[pCellSprite addChild:pItemNumLabel z:0 tag:eTAG_SHOP_TABLE_ITEM_NUM_TEXT];
+		}
+
+		UInt32	itemNum	= 0;
+		if( pItem != nil )
+		{
+			itemNum	= pItem->num;
+		}
+		
+		if( pItemNumLabel != nil )
+		{
+			NSString*	pUseNameStr	= [NSString stringWithUTF8String:[pDataBaseTextShared getText:57]];
+			NSString*	pItemNumStr	= [NSString stringWithFormat:@"%@ %02ld", pUseNameStr, itemNum];
+			[pItemNumLabel setString:pItemNumStr];
+			[pItemNumLabel setColor:ccBLACK];
 		}
 	}
 
@@ -214,7 +283,7 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 					[pCellSprite setColor:ccGRAY];
 				}
 				
-				pDataSaveGameInst.addMoney	= -pData->buyMoney;
+				[pDataSaveGameInst addSaveMoeny:-pData->buyMoney];
 				[self setMoneyString:[[DataSaveGame shared] getData]->money];
 
 				//	スクロールビュー描画更新

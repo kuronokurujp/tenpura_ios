@@ -12,6 +12,7 @@
 @implementation SWTableViewHelper
 
 @synthesize data	= m_data;
+@synthesize textFontName	= mp_textFontName;
 
 /*
 	@brief
@@ -21,6 +22,8 @@
 	NSAssert(in_pData, @"スクロールビューデータがない");
 	if( self = [super init] )
 	{
+		mp_textFontName	= [[NSString alloc] initWithString:@"Helvetica"];
+
 		//	セルファイル名はアドレスしかもっていないので注意
 		m_data	= *in_pData;
 
@@ -33,7 +36,7 @@
 		mp_table.verticalFillOrder	= SWTableViewFillTopDown;
 		
 		[self addChild:mp_table z:3.f];
-		[mp_table reloadData];
+		[mp_table reloadData];		
 	}
 
 	return self;
@@ -44,6 +47,9 @@
 */
 -(void)	dealloc
 {
+	[mp_textFontName release];
+	mp_textFontName	= nil;
+
 	mp_table	= nil;
 	[super dealloc];
 }
@@ -107,7 +113,7 @@
 	}
 	else
 	{
-		pLabel	= [CCLabelTTF labelWithString:pStr fontName:@"Helvetica" fontSize:m_data.fontSize];
+		pLabel	= [CCLabelTTF labelWithString:pStr fontName:mp_textFontName fontSize:m_data.fontSize];
 		[pSprite addChild:pLabel z:0 tag:eSW_TABLE_TAG_CELL_TEXT];
 	}
 

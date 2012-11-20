@@ -35,8 +35,8 @@
 
 @implementation GameScene
 
-static const Float32 s_basicFontSize	= 32.f;
-static const Float32 s_time	= 60.f;
+static const Float32	s_basicFontSize	= 32.f;
+static const Float32	s_baseTimeVal	= 30.f;
 
 //	各ゲームシーン
 enum
@@ -89,6 +89,8 @@ enum
 					[mp_settingItemList addObject:pAddData];
 				}
 			}
+			
+			m_timeVal	= [mp_settingItemList count] * s_baseTimeVal;
 		}
 
 		CGSize size = [[CCDirector sharedDirector] winSize];
@@ -113,7 +115,7 @@ enum
 					if( [pLabel.string isEqualToString:@"timeNum"] )
 					{
 						mp_timerPut	= pLabel;
-						[mp_timerPut setString:[NSString stringWithFormat:@"%03ld", (SInt32)s_time]];
+						[mp_timerPut setString:[NSString stringWithFormat:@"%03ld", (SInt32)m_timeVal]];
 					}
 					else if( [pLabel.string isEqualToString:@"scoreNum"] )
 					{
@@ -206,7 +208,7 @@ enum
 
 		[self unschedule:_cmd];
 		
-		[self addChild:[[[GameInScene alloc] init:s_time] autorelease] z:0 tag:eGAME_IN_SCENE_TAG];
+		[self addChild:[[[GameInScene alloc] init:m_timeVal] autorelease] z:0 tag:eGAME_IN_SCENE_TAG];
 		[self schedule:@selector(_updateInGame:)];
 	}
 }

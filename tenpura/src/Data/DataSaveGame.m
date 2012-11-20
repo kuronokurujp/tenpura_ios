@@ -10,10 +10,10 @@
 
 #import "./../System/Save/SaveData.h"
 
+//	非公開関数
 @interface DataSaveGame (PriveteMethod)
 
--(void)	_setSaveScore:(int64_t)in_score;
--(void)	_addSaveMoeny:(UInt32)in_addMoney;
+-(SAVE_DATA_ITEM_ST*)	_getItem:(UInt32)in_no;
 
 @end
 
@@ -36,7 +36,7 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 }
 
 /*
-	@brief
+	@brief	終了
 */
 +(void)end
 {
@@ -54,7 +54,7 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 }
 
 /*
-	@brief
+	@brief	初期化
 */
 -(id)	init
 {
@@ -115,29 +115,21 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 }
 
 /*
-	@brief	すでにアイテムを持っているかどうか
+	@brief	指定したnoアイテムを取得
+	@param	in_no	: アイテムno
+	@return	アイテムnoのデータアドレス
 */
--(const SAVE_DATA_ITEM_ST*)isItem:(UInt32)in_no
+-(const SAVE_DATA_ITEM_ST*)getItem:(UInt32)in_no
 {
-	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
-	if( pData != nil )
-	{
-		for( SInt32 i = 0; i < pData->itemNum; ++i )
-		{
-			if( ( pData->aItems[ i ].id == in_no ) && ( 0 < pData->aItems[ i ].num ) )
-			{
-				return &pData->aItems[ i ];
-			}
-		}
-	}
-	
-	return nil;
+	return [self _getItem:in_no];
 }
 
 /*
-	@brief	すでにアイテムを持っているかどうか
+	@brief	指定したリストidxからアイテム取得
+	@parma	in_idx	: アイテムリストidx
+	@return	指定したアイテムリストidxのデータアドレス
 */
--(const SAVE_DATA_ITEM_ST*)isItemOfIndex:(UInt32)in_idx
+-(const SAVE_DATA_ITEM_ST*)getItemOfIndex:(UInt32)in_idx
 {
 	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
 	if( pData != nil )
@@ -153,10 +145,12 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 
 /*
 	@brief	アイテム追加
+	@param	in_no	: 追加するアイテムno(1つ追加)
+	@return	追加成功 = YES / 追加失敗 = NO
 */
 -(BOOL)addItem:(UInt32)in_no
 {
-	const SAVE_DATA_ITEM_ST*	pItem	= [self isItem:in_no];
+	SAVE_DATA_ITEM_ST*	pItem	= [self _getItem:in_no];
 
 	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
 	if( pData != nil )
@@ -164,7 +158,7 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 		if( ( pData->itemNum < ( eITEMS_MAX - 1 ) ) && ( pItem == nil ) )
 		{
 			//	追加可能
-			pData->aItems[ pData->itemNum ].id	= in_no;
+			pData->aItems[ pData->itemNum ].no	= in_no;
 			++pData->aItems[ pData->itemNum ].num;
 			++pData->itemNum;
 			
@@ -174,7 +168,11 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 		}
 		else if( pItem != nil )
 		{
-			++pData->aItems[ in_no ].num;
+			pItem->num += 1;
+			
+			[mp_SaveData save];
+
+			return YES;
 		}
 		else
 		{
@@ -187,6 +185,7 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 
 /*
 	@brief	現在時刻を記録
+	@return	時刻セーブ成功 = YES
 */
 -(BOOL)	saveDate
 {
@@ -203,15 +202,16 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 
 		[mp_SaveData save];
 
-		return TRUE;
+		return YES;
 	}
 	
 	NSAssert( 0, @"セーブデータ取得失敗" );
-	return FALSE;
+	return NO;
 }
 
 /*
-	@brief
+	@brief	データ丸ごとアドレス取得
+	@return	データアドレス
 */
 -(const SAVE_DATA_ST*)getData
 {
@@ -227,6 +227,7 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 
 /*
 	@brief	セーブ初期データ取得
+	@param	out_pData	: リセットデータを受け取る構造体アドレス
 */
 -(void)	getInitSaveData:(SAVE_DATA_ST*)out_pData
 {
@@ -237,30 +238,32 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 	
 	memset( out_pData, 0, sizeof( SAVE_DATA_ST ) );
 	out_pData->money	= 1000;
-	out_pData->aItems[ 0 ].id	= 1;
+	out_pData->aItems[ 0 ].no	= 1;
 	out_pData->aItems[ 0 ].num	= 1;
 	out_pData->itemNum	= 1;
 }
 
 /*
-	@brief	スコア設定
+	@brief	スコア追加
+	@param	in_score	: 加算するスコア数
 */
--(void)	_setSaveScore:(int64_t)in_score
+-(void)	addSaveScore:(int64_t)in_score
 {
 	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
 	NSAssert( pData, @"セーブデータ取得失敗" );
 
 	if( pData != nil )
 	{
-		pData->score	= in_score;
+		pData->score	+= in_score;
 		[mp_SaveData save];
 	}
 }
 
 /*
 	@brief	金額加算
+	@param	in_addMoney : 追加する金額
 */
--(void)	_addSaveMoeny:(UInt32)in_addMoney
+-(void)	addSaveMoeny:(long)in_addMoney
 {
 	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
 	NSAssert( pData, @"セーブデータ取得失敗" );
@@ -270,6 +273,28 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 		pData->money	= pData->money + in_addMoney;
 		[mp_SaveData save];
 	}
+}
+
+/*
+	@brief	指定したnoから特定のアイテムデータを取得
+	@param	in_no : アイテムno
+	@return	noアイテムデータ / nil = アイテムデータがない＋アイテム数が０
+*/
+-(SAVE_DATA_ITEM_ST*)	_getItem:(UInt32)in_no
+{
+	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
+	if( pData != nil )
+	{
+		for( SInt32 i = 0; i < pData->itemNum; ++i )
+		{
+			if( ( pData->aItems[ i ].no == in_no ) && ( 0 < pData->aItems[ i ].num ) )
+			{
+				return &pData->aItems[ i ];
+			}
+		}
+	}
+	
+	return nil;
 }
 
 @end

@@ -46,6 +46,8 @@ typedef enum
 -(void)	setup:(NETA_DATA_ST)in_data:(CGPoint)in_pos;
 -(void)	end;
 
+//	揚げる開始
+-(void)	startRaise;
 //	リセット
 -(void)	reset;
 //	天ぷら削除許可通知設定

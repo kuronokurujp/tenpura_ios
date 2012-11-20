@@ -43,9 +43,11 @@ typedef struct
 	//	変数定義
 	SWTableView*	mp_table;
 	SW_INIT_DATA_ST	m_data;
+	NSString*		mp_textFontName;
 }
 
 @property	(nonatomic, readonly)SW_INIT_DATA_ST	data;
+@property	(nonatomic, retain)NSString*	textFontName;
 
 //	関数
 //	初期化

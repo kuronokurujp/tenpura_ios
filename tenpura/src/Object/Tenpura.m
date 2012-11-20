@@ -77,10 +77,7 @@
 	m_texSize.height	= m_texSize.height / (Float32)(eTENPURA_STATE_ALLBAD + 1);
 
 	[self setPosition:in_pos];
-	[mp_sp setTextureRect:[self getTexRect:(SInt32)m_state]];
-	
-	//	揚げる段階を設定
-	[self schedule:@selector(doNextRaise:) interval:m_data.changeTime[m_state]];	
+	[mp_sp setTextureRect:[self getTexRect:(SInt32)m_state]];	
 }
 
 /*
@@ -93,6 +90,17 @@
 	[self unschedule:@selector(doNextRaise:)];
 	[self setVisible:NO];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+/*
+	@brief	揚げる開始
+*/
+-(void)	startRaise
+{
+	//	揚げる段階を設定
+	m_state		= eTENPURA_STATE_NOT;
+	[self schedule:@selector(doNextRaise:) interval:m_data.changeTime[m_state]];
+	[self setVisible:YES];
 }
 
 /*
