@@ -15,6 +15,8 @@
 #import "./../../Data/DataGlobal.h"
 #import "./../../Object/Tenpura.h"
 
+#import "AppDelegate.h"
+
 @interface SiireScene (PrivateMethod)
 
 -(void)setMoneyString:(UInt32)in_num;
@@ -71,9 +73,16 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 												message:[DataBaseText getString:48]
 												delegate:self
 												cancelButtonTitle:[DataBaseText getString:46]
-												otherButtonTitles:nil];								
+												otherButtonTitles:nil];
+								
+		{
+			CGSize	winSize	= [CCDirector sharedDirector].winSize;
+			CGPoint	pos	= ccp(winSize.width * 0.5f, winSize.height * 0.5f);
+			mp_storeViewCtrl	= [[StoreAppPurchaseViewController alloc] initToData:pos:winSize];
+			mp_storeViewCtrl.delegate	= self;
+		}
 	}
-	
+
 	return self;
 }
 
@@ -82,12 +91,18 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 */
 -(void)dealloc
 {
+	if( mp_storeViewCtrl != nil )
+	{
+		[mp_storeViewCtrl release];
+		mp_storeViewCtrl	= nil;
+	}
+
 	if( mp_buyCheckAlertView != nil )
 	{
 		[mp_buyCheckAlertView release];
 		mp_buyCheckAlertView	= nil;
 	}
-	
+		
 	if( mp_buyAlertView != nil )
 	{
 		[mp_buyAlertView release];
@@ -258,6 +273,22 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 }
 
 /*
+	@brief	ゲーム内の金額購入画面
+*/
+-(void)	pressBuyMoneyBtn
+{
+	//	テスト
+	UIView*	pView	= [CCDirector sharedDirector].view;
+	pView.userInteractionEnabled	= NO;
+	[[CCDirector sharedDirector] pause];
+
+	NSString*	pIdName	= [NSString stringWithUTF8String:[[DataBaseText shared] getText:59]];
+	[mp_storeViewCtrl requestPurchase:pIdName];
+
+	[pView addSubview:mp_storeViewCtrl.view];
+}
+
+/*
 	@brief	購入するか決定
 */
 -(void)	alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -360,6 +391,43 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 	}
 
 	[super onExitTransitionDidStart];
+}
+
+/*
+	@brief	購入決済終了
+*/
+-(void)	onPaymentPurchased
+{
+}
+
+/*
+	@brief	決済途中キャンセル
+*/
+-(void)	onPaymentFailed
+{
+}
+
+/*
+	@brief	ビュー終了
+*/
+-(void)	onEndView
+{
+	[[CCDirector sharedDirector] resume];
+
+	UIView*	pView	= [CCDirector sharedDirector].view;
+	pView.userInteractionEnabled	= YES;
+
+	if( [mp_storeViewCtrl.view isDescendantOfView:pView] == YES )
+	{
+		[mp_storeViewCtrl.view removeFromSuperview];
+	}
+}
+
+/*
+	@brief	エラー
+*/
+-(void)	onError:(STORE_ERROR_STATE_ENUM)in_state
+{
 }
 
 @end

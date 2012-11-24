@@ -10,6 +10,7 @@
 		CE1281161642974800D369CF /* SettingScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1281151642974800D369CF /* SettingScene.m */; };
 		CE12811916429D0200D369CF /* setting.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE12811816429D0200D369CF /* setting.ccbi */; };
 		CE361D2A164353CF00339BB0 /* not_buy_cell.png in Resources */ = {isa = PBXBuildFile; fileRef = CE361D29164353CF00339BB0 /* not_buy_cell.png */; };
+		CE4D94D3166126BA003743D7 /* StoreAppPurchaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4D94D2166126BA003743D7 /* StoreAppPurchaseViewController.m */; };
 		CE51773816494022004DF4F6 /* GameKitHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = CE51773716494022004DF4F6 /* GameKitHelper.m */; };
 		CE51774316497376004DF4F6 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE51774216497376004DF4F6 /* GameKit.framework */; };
 		CE5177531649D921004DF4F6 /* UINavigationControllerExt.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5177521649D921004DF4F6 /* UINavigationControllerExt.m */; };
@@ -231,6 +232,8 @@
 		CE1281151642974800D369CF /* SettingScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingScene.m; path = src/Scene/SettingScene.m; sourceTree = "<group>"; };
 		CE12811816429D0200D369CF /* setting.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = setting.ccbi; path = Resources/ccbi/setting.ccbi; sourceTree = "<group>"; };
 		CE361D29164353CF00339BB0 /* not_buy_cell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = not_buy_cell.png; path = Resources/tableView/not_buy_cell.png; sourceTree = "<group>"; };
+		CE4D94D1166126BA003743D7 /* StoreAppPurchaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StoreAppPurchaseViewController.h; path = src/System/StoreView/StoreAppPurchaseViewController.h; sourceTree = "<group>"; };
+		CE4D94D2166126BA003743D7 /* StoreAppPurchaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StoreAppPurchaseViewController.m; path = src/System/StoreView/StoreAppPurchaseViewController.m; sourceTree = "<group>"; };
 		CE51773616494022004DF4F6 /* GameKitHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameKitHelper.h; path = src/System/GameCenter/GameKitHelper.h; sourceTree = "<group>"; };
 		CE51773716494022004DF4F6 /* GameKitHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameKitHelper.m; path = src/System/GameCenter/GameKitHelper.m; sourceTree = "<group>"; };
 		CE51774216497376004DF4F6 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
@@ -655,9 +658,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEDD4102165AA0D90037F60B /* StoreKit.framework in Frameworks */,
 				CEDD4104165AA1070037F60B /* AdSupport.framework in Frameworks */,
 				CED245F51639964D00506CA8 /* AudioToolbox.framework in Frameworks */,
-				CEDD4102165AA0D90037F60B /* StoreKit.framework in Frameworks */,
 				CE51774316497376004DF4F6 /* GameKit.framework in Frameworks */,
 				CEF39137163DEFD100EC8B75 /* SystemConfiguration.framework in Frameworks */,
 				CEF39135163DEFC500EC8B75 /* MessageUI.framework in Frameworks */,
@@ -675,6 +678,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE4D94D01661268B003743D7 /* StoreView */ = {
+			isa = PBXGroup;
+			children = (
+				CE4D94D1166126BA003743D7 /* StoreAppPurchaseViewController.h */,
+				CE4D94D2166126BA003743D7 /* StoreAppPurchaseViewController.m */,
+			);
+			name = StoreView;
+			sourceTree = "<group>";
+		};
 		CE517734164935F5004DF4F6 /* GameCenter */ = {
 			isa = PBXGroup;
 			children = (
@@ -1212,6 +1224,7 @@
 		CED24798163997A700506CA8 /* System */ = {
 			isa = PBXGroup;
 			children = (
+				CE4D94D01661268B003743D7 /* StoreView */,
 				CEDD4105165AA1650037F60B /* BannerView */,
 				CE517734164935F5004DF4F6 /* GameCenter */,
 				CEF39112163DEB8900EC8B75 /* TweetView */,
@@ -1753,6 +1766,7 @@
 				CE5177531649D921004DF4F6 /* UINavigationControllerExt.m in Sources */,
 				CE69CD5C1651155D00BFDBD2 /* SWTableViewHelper.m in Sources */,
 				CEDD4108165AA1760037F60B /* BannerViewController.m in Sources */,
+				CE4D94D3166126BA003743D7 /* StoreAppPurchaseViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
