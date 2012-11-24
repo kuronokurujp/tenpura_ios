@@ -18,6 +18,7 @@ typedef enum
 	eTENPURA_STATE_BAD,			//	焦げ
 	eTENPURA_STATE_ALLBAD,		//	丸焦げ
 	eTENPURA_STATE_DEL,			//	消滅
+	eTENPUrA_STATE_RESTART,		//	再設定
 	
 	eTENPURA_STATE_MAX,
 } TENPURA_STATE_ET;
@@ -26,25 +27,34 @@ typedef enum
 
 @private
 	//	変数定義
-	NETA_DATA_ST	m_data;
-	CCSprite*	mp_sp;
+	NETA_DATA_ST		m_data;
+	CCSprite*			mp_sp;
 	
 	TENPURA_STATE_ET	m_state;
-	BOOL	mb_touch;
-	BOOL	mb_deletePermit;
+	BOOL				mb_touch;
+	BOOL				mb_delete;
+	BOOL				mb_raise;	//	揚げる開始
 	
-	CGSize	m_texSize;
-	CGPoint	m_touchPrevPos;
+	UInt32				m_posDataIdx;
+	CGSize				m_texSize;
+	CGPoint				m_touchPrevPos;
 }
 
 //	プロパティ
-@property	(nonatomic,readonly) TENPURA_STATE_ET state;
-@property	(nonatomic,readonly) BOOL	bTouch;
-@property	(nonatomic,readonly) NETA_DATA_ST data;
+@property	(nonatomic, readonly)	TENPURA_STATE_ET state;
+@property	(nonatomic, readonly)	BOOL	bTouch;
+@property	(nonatomic, readonly)	BOOL	bRaise;
+@property	(nonatomic, readonly)	BOOL	bDelete;
+@property	(nonatomic, readonly)	UInt32	posDataIdx;
+@property	(nonatomic, readonly)	NETA_DATA_ST data;
 
 //	セットアップ
--(void)	setup:(NETA_DATA_ST)in_data:(CGPoint)in_pos;
+-(void)	setupToPosIndex:(NETA_DATA_ST)in_data:(const UInt32)in_posDataIdx;
+-(void)	setupToPos:(NETA_DATA_ST)in_data:(const CGPoint)in_pos;
+
 -(void)	end;
+
+-(void)	setPosOfIndex:(const UInt32)in_posDataIdx;
 
 //	揚げる開始
 -(void)	startRaise;

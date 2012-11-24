@@ -59,16 +59,26 @@ enum
 */
 -(void)	update:(ccTime)delta
 {
+	DataTenpuraPosList*	pDataTenpuraPosList	= [DataTenpuraPosList shared];
+
 	Tenpura*	pTenpura	= nil;
-	CCNode*		pNode	= nil;
+	CCNode*		pNode		= nil;
 	CCARRAY_FOREACH(children_, pNode)
 	{
 		if( [pNode isKindOfClass:[Tenpura class]] == YES )
 		{
 			pTenpura	= (Tenpura*)pNode;
-			if( pTenpura.state == eTENPURA_STATE_DEL )
+			if( pTenpura.state == eTENPUrA_STATE_RESTART )
 			{
-				[self subTenpura:pTenpura];
+				[pTenpura reset];
+				[pTenpura setVisible:YES];
+
+				//	再配置する
+				UInt32	posIdx	= [pDataTenpuraPosList getIdxNoUse];
+				[pDataTenpuraPosList setUseFlg:YES :posIdx];
+
+				[pTenpura setPosOfIndex:posIdx];
+				
 			}
 		}
 	}
@@ -82,23 +92,20 @@ enum
 	DataTenpuraPosList*	pDataTenpuraPosList	= [DataTenpuraPosList shared];
 
 	Tenpura*	pTenpura	= nil;
-	CCNode*		pNode	= nil;
-	SInt32	idx	= 0;
+	CCNode*		pNode		= nil;
+	SInt32		idx			= 0;
 	
 	CCARRAY_FOREACH(children_, pNode)
 	{
 		if( [pNode isKindOfClass:[Tenpura class]] == YES )
 		{
-			if( pNode.visible == NO )
+			pTenpura	= (Tenpura*)pNode;
+			if( pTenpura.bRaise == NO )
 			{
-				//	表示天ぷらのセットアップ
-				pTenpura	= (Tenpura*)pNode;
-				
 				UInt32	posIdx	= [pDataTenpuraPosList getIdxNoUse];
 				[pDataTenpuraPosList setUseFlg:YES :posIdx];
-				TENPURA_POS_ST	tenpuraPosData	= [pDataTenpuraPosList getData:posIdx];
 
-				[pTenpura setup:in_data:ccp(tenpuraPosData.x, tenpuraPosData.y)];
+				[pTenpura setupToPosIndex:in_data:posIdx];
 				[pTenpura startRaise];
 				
 				return pTenpura;
@@ -116,10 +123,14 @@ enum
 */
 -(void)	subTenpura:(Tenpura*)in_pTenpura
 {
-	if( ( in_pTenpura == nil ) || ( in_pTenpura.visible == NO ) )
+	if( ( in_pTenpura == nil ) || ( in_pTenpura.bRaise == NO ) )
 	{
 		return;
 	}
+
+	//	使用した座標データを未使用状態に
+	DataTenpuraPosList*	pDataTenpuraPosList	= [DataTenpuraPosList shared];
+	[pDataTenpuraPosList setUseFlg:NO :in_pTenpura.posDataIdx];
 
 	[in_pTenpura end];
 }

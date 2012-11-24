@@ -8,22 +8,27 @@
 
 #import "Tenpura.h"
 
+#import "./../Data/DataTenpuraPosList.h"
 
 @interface Tenpura (PrivateMethod)
 
--(CGRect)	getTexRect:(SInt32)in_idx;
+-(void)		_setup:(NETA_DATA_ST)in_data;
+-(CGRect)	_getTexRect:(SInt32)in_idx;
 
--(void)	doNextRaise:(ccTime)delta;
--(void)	onDoDeleteState;
+-(void)	_doNextRaise:(ccTime)delta;
+-(void)	_onDoDeleteState;
 
 @end
 
 @implementation Tenpura
 
 //	プロパティ定義
-@synthesize state	= m_state;
-@synthesize bTouch	= mb_touch;
-@synthesize data	= m_data;
+@synthesize state		= m_state;
+@synthesize bTouch		= mb_touch;
+@synthesize bRaise		= mb_raise;
+@synthesize bDelete		= mb_delete;
+@synthesize posDataIdx	= m_posDataIdx;
+@synthesize data		= m_data;
 
 /*
 	@brief	初期化
@@ -33,8 +38,12 @@
 	if( self = [super init] )
 	{
 		memset( &m_data, 0, sizeof(m_data) );
-		mp_sp	= nil;
-		mb_touch	= NO;
+		mp_sp			= nil;
+		mb_touch		= NO;
+		mb_raise		= NO;
+		mb_delete		= NO;
+		m_posDataIdx	= 0;
+		m_state			= eTENPURA_STATE_ALLBAD;
 	}
 	
 	return self;
@@ -54,30 +63,28 @@
 /*
 	@brief	セットアップ
 */
--(void)	setup:(NETA_DATA_ST)in_data:(CGPoint)in_pos
+-(void)	setupToPosIndex:(NETA_DATA_ST)in_data:(const UInt32)in_posDataIdx
 {
-	if( mp_sp != nil )
-	{
-		[self removeChild:mp_sp cleanup:YES];
-		mp_sp	= nil;
-	}
+	[self _setup:in_data];
 	
-	mb_deletePermit	= NO;
-	m_data	= in_data;
+	//	座標設定
+	{
+		DataTenpuraPosList*	pDataTenpuraPosList	= [DataTenpuraPosList shared];
+		TENPURA_POS_ST	tenpuraPosData	= [pDataTenpuraPosList getData:in_posDataIdx];
+		[self setPosition:ccp(tenpuraPosData.x, tenpuraPosData.y)];
+		
+		m_posDataIdx	= in_posDataIdx;
+	}
+}
 
-	//	ファイル名作成
-	NSMutableString*	pFileName	= [NSMutableString stringWithUTF8String:in_data.fileName];
-	[pFileName appendString: @".png"];
-	mp_sp	= [CCSprite node];
-	[mp_sp initWithFile:pFileName];
-	[self addChild:mp_sp];
-
-	m_state		= eTENPURA_STATE_NOT;
-	m_texSize	= [mp_sp contentSize];
-	m_texSize.height	= m_texSize.height / (Float32)(eTENPURA_STATE_ALLBAD + 1);
+/*
+	@brief
+*/
+-(void)	setupToPos:(NETA_DATA_ST)in_data:(const CGPoint)in_pos
+{
+	[self _setup:in_data];
 
 	[self setPosition:in_pos];
-	[mp_sp setTextureRect:[self getTexRect:(SInt32)m_state]];	
 }
 
 /*
@@ -86,10 +93,26 @@
 -(void)	end
 {
 	[mp_sp setScale:1.f];
+	mb_delete		= NO;
+	mb_raise		= NO;
+	mb_touch		= NO;
+	m_posDataIdx	= 0;
 
-	[self unschedule:@selector(doNextRaise:)];
+	[self unschedule:@selector(_doNextRaise:)];
 	[self setVisible:NO];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+/*
+	@brief
+*/
+-(void)	setPosOfIndex:(const UInt32)in_posDataIdx
+{
+	DataTenpuraPosList*	pDataTenpuraPosList	= [DataTenpuraPosList shared];
+	TENPURA_POS_ST	tenpuraPosData	= [pDataTenpuraPosList getData:in_posDataIdx];
+	[self setPosition:ccp(tenpuraPosData.x, tenpuraPosData.y)];
+		
+	m_posDataIdx	= in_posDataIdx;
 }
 
 /*
@@ -99,8 +122,9 @@
 {
 	//	揚げる段階を設定
 	m_state		= eTENPURA_STATE_NOT;
-	[self schedule:@selector(doNextRaise:) interval:m_data.changeTime[m_state]];
+	[self schedule:@selector(_doNextRaise:) interval:m_data.changeTime[m_state]];
 	[self setVisible:YES];
+	mb_raise	= YES;
 }
 
 /*
@@ -113,10 +137,10 @@
 	[mp_sp setScale:1.f];
 	
 	//	揚げる段階を設定
-	[self unschedule:@selector(doNextRaise:)];
-	[self schedule:@selector(doNextRaise:) interval:m_data.changeTime[m_state]];
+	[self unschedule:@selector(_doNextRaise:)];
+	[self schedule:@selector(_doNextRaise:) interval:m_data.changeTime[m_state]];
 
-	[mp_sp setTextureRect:[self getTexRect:(SInt32)m_state]];
+	[mp_sp setTextureRect:[self _getTexRect:(SInt32)m_state]];
 }
 
 /*
@@ -127,7 +151,7 @@
 	NSAssert(in_pName, @"名前設定がない");
 	
 	NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-	[nc addObserver:self selector:@selector(onDoDeleteState) name:in_pName object:nil];
+	[nc addObserver:self selector:@selector(_onDoDeleteState) name:in_pName object:nil];
 }
 
 /*
@@ -172,7 +196,7 @@
 /*
 	@brief
 */
--(CGRect)	getTexRect:(SInt32)in_idx
+-(CGRect)	_getTexRect:(SInt32)in_idx
 {
 	return CGRectMake(0, m_texSize.height * in_idx, m_texSize.width, m_texSize.height);
 }
@@ -180,10 +204,10 @@
 /*
 	@brief
 */
--(void)	doNextRaise:(ccTime)delta
+-(void)	_doNextRaise:(ccTime)delta
 {
 	++m_state;
-	[self unschedule:@selector(doNextRaise:)];
+	[self unschedule:@selector(_doNextRaise:)];
 	
 	if( m_state < eTENPURA_STATE_MAX )
 	{
@@ -191,49 +215,48 @@
 		BOOL	bFunc	= NO;
 		switch ((SInt32)m_state)
 		{
-			case eTENPURA_STATE_NOT:	//	揚げてない
-			case eTENPURA_STATE_GOOD:	//　ちょうど良い
+			case eTENPURA_STATE_NOT:		//	揚げてない
+			case eTENPURA_STATE_GOOD:		//　ちょうど良い
+			case eTENPURA_STATE_VERYGOOD:	//	最高
+			case eTENPURA_STATE_BAD:		//	焦げ
 			{
 				bFunc	= YES;
 				time	= m_data.changeTime[m_state];
-				break;
-			}
-			case eTENPURA_STATE_VERYGOOD:		//	最高
-			{
-				bFunc	= YES;
-				time	= m_data.changeTime[m_state];
-				break;
-			}
-			case eTENPURA_STATE_BAD:			//	焦げ
-			{
-				bFunc	= YES;
-				time	= m_data.changeTime[m_state];
+				
+				[mp_sp setTextureRect:[self _getTexRect:(SInt32)m_state]];
 				break;
 			}
 			case eTENPURA_STATE_ALLBAD:		//	丸焦げ
 			{
-				if( mb_deletePermit == YES )
-				{
-					bFunc	= YES;
-					time	= 1.f;
-				}
-				else
-				{
-					[self reset];
-				}
+				bFunc	= YES;
+				time	= 1.f;
+				
+				[mp_sp setTextureRect:[self _getTexRect:(SInt32)m_state]];
 
 				break;
 			}
 			case eTENPURA_STATE_DEL:	//	消滅
 			{
+				if( mb_delete == NO )
+				{
+					bFunc	= YES;
+					time	= 1.f;
+				}
+
+				[self setVisible:NO];
+				
+				break;
+			}
+			case eTENPUrA_STATE_RESTART:
+			{
+				//	再配置可能
 				break;
 			}
 		}
 
 		if( bFunc == YES)
 		{
-			[self schedule:@selector(doNextRaise:) interval:time];
-			[mp_sp setTextureRect:[self getTexRect:(SInt32)m_state]];
+			[self schedule:@selector(_doNextRaise:) interval:time];
 		}
 	}
 }
@@ -241,10 +264,41 @@
 /*
 	@brief
 */
--(void)	onDoDeleteState
+-(void)	_onDoDeleteState
 {
-	mb_deletePermit	= YES;
+	mb_delete	= YES;
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+/*
+	@brief
+*/
+-(void)		_setup:(NETA_DATA_ST)in_data
+{
+	if( mp_sp != nil )
+	{
+		[self removeChild:mp_sp cleanup:YES];
+		mp_sp	= nil;
+	}
+	
+	mb_delete		= NO;
+	mb_touch		= NO;
+	mb_raise		= NO;
+
+	m_data	= in_data;
+
+	//	ファイル名作成
+	NSMutableString*	pFileName	= [NSMutableString stringWithUTF8String:in_data.fileName];
+	[pFileName appendString: @".png"];
+	mp_sp	= [CCSprite node];
+	[mp_sp initWithFile:pFileName];
+	[self addChild:mp_sp];
+
+	m_state		= eTENPURA_STATE_NOT;
+	m_texSize	= [mp_sp contentSize];
+	m_texSize.height	= m_texSize.height / (Float32)(eTENPURA_STATE_ALLBAD + 1);
+
+	[mp_sp setTextureRect:[self _getTexRect:(SInt32)m_state]];	
 }
 
 #ifdef DEBUG

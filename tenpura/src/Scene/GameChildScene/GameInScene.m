@@ -146,10 +146,10 @@ static const SInt32	s_AddCustomerEatMax	= 1;
 		for( SInt32 i = cnt - 1; i >= 0; --i )
 		{
 			pNode	= [pGameScene->mp_nabe.children objectAtIndex:i];
-			if( [pNode isKindOfClass:[Tenpura class]] == YES )
+			if( ([pNode isKindOfClass:[Tenpura class]] == YES) && (pNode.visible == YES) )
 			{
 				Tenpura*	pTenpura	= (Tenpura*)pNode;
-				if( (pTenpura.bTouch == NO) && (pTenpura.visible == YES) )
+				if( (pTenpura.bTouch == NO) && (pTenpura.bRaise == YES) )
 				{
 					if( CGRectContainsPoint([pTenpura getBoxRect], touchPoint) == YES )
 					{
