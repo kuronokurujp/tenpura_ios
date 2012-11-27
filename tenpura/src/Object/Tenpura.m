@@ -292,6 +292,7 @@
 	[pFileName appendString: @".png"];
 	mp_sp	= [CCSprite node];
 	[mp_sp initWithFile:pFileName];
+	NSAssert(mp_sp, @"");
 	[self addChild:mp_sp];
 
 	m_state		= eTENPURA_STATE_NOT;

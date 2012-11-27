@@ -22,13 +22,13 @@
 		<array>
 			<dict>
 				<key>baseClass</key>
-				<string>CCLayerGradient</string>
+				<string>CCSprite</string>
 				<key>children</key>
 				<array/>
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>CCLayerGradient</string>
+				<string>CCSprite</string>
 				<key>memberVarAssignmentName</key>
 				<string></string>
 				<key>memberVarAssignmentType</key>
@@ -37,37 +37,13 @@
 				<array>
 					<dict>
 						<key>name</key>
-						<string>position</string>
-						<key>type</key>
-						<string>Position</string>
-						<key>value</key>
-						<array>
-							<real>0.0</real>
-							<real>-3</real>
-							<integer>0</integer>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>contentSize</string>
-						<key>type</key>
-						<string>Size</string>
-						<key>value</key>
-						<array>
-							<real>100</real>
-							<real>100</real>
-							<integer>1</integer>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
 						<string>anchorPoint</string>
 						<key>type</key>
 						<string>Point</string>
 						<key>value</key>
 						<array>
-							<real>0.5</real>
-							<real>0.5</real>
+							<real>0.0</real>
+							<real>0.0</real>
 						</array>
 					</dict>
 					<dict>
@@ -89,155 +65,30 @@
 						<key>type</key>
 						<string>Check</string>
 						<key>value</key>
-						<true/>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>isTouchEnabled</string>
-						<key>platform</key>
-						<string>iOS</string>
-						<key>type</key>
-						<string>Check</string>
-						<key>value</key>
 						<false/>
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>isAccelerometerEnabled</string>
-						<key>platform</key>
-						<string>iOS</string>
+						<string>displayFrame</string>
 						<key>type</key>
-						<string>Check</string>
-						<key>value</key>
-						<false/>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>mouseEnabled</string>
-						<key>platform</key>
-						<string>Mac</string>
-						<key>type</key>
-						<string>Check</string>
-						<key>value</key>
-						<false/>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>isKeyboardEnabled</string>
-						<key>platform</key>
-						<string>Mac</string>
-						<key>type</key>
-						<string>Check</string>
-						<key>value</key>
-						<false/>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>startColor</string>
-						<key>type</key>
-						<string>Color3</string>
+						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<integer>19</integer>
-							<integer>0</integer>
-							<integer>255</integer>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>endColor</string>
-						<key>type</key>
-						<string>Color3</string>
-						<key>value</key>
-						<array>
-							<integer>255</integer>
-							<integer>33</integer>
-							<integer>249</integer>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>blendFunc</string>
-						<key>type</key>
-						<string>Blendmode</string>
-						<key>value</key>
-						<array>
-							<integer>1</integer>
-							<integer>1</integer>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>vector</string>
-						<key>type</key>
-						<string>Point</string>
-						<key>value</key>
-						<array>
-							<real>0.0</real>
-							<real>-1</real>
+							<string></string>
+							<string>title/title_back.png</string>
 						</array>
 					</dict>
 				</array>
 			</dict>
 			<dict>
-				<key>animatedProperties</key>
-				<dict>
-					<key>1</key>
-					<dict>
-						<key>position</key>
-						<dict>
-							<key>keyframes</key>
-							<array>
-								<dict>
-									<key>easing</key>
-									<dict>
-										<key>type</key>
-										<integer>1</integer>
-									</dict>
-									<key>name</key>
-									<string>position</string>
-									<key>time</key>
-									<real>0.0</real>
-									<key>type</key>
-									<integer>3</integer>
-									<key>value</key>
-									<array>
-										<real>238</real>
-										<real>344</real>
-									</array>
-								</dict>
-								<dict>
-									<key>easing</key>
-									<dict>
-										<key>type</key>
-										<integer>1</integer>
-									</dict>
-									<key>time</key>
-									<real>1.0333333015441895</real>
-									<key>type</key>
-									<integer>3</integer>
-									<key>value</key>
-									<array>
-										<real>238</real>
-										<real>211</real>
-									</array>
-								</dict>
-							</array>
-							<key>name</key>
-							<string>position</string>
-							<key>type</key>
-							<integer>3</integer>
-						</dict>
-					</dict>
-				</dict>
 				<key>baseClass</key>
-				<string>CCLabelTTF</string>
+				<string>CCSprite</string>
 				<key>children</key>
 				<array/>
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>CCLabelTTF</string>
+				<string>CCSprite</string>
 				<key>memberVarAssignmentName</key>
 				<string></string>
 				<key>memberVarAssignmentType</key>
@@ -245,19 +96,14 @@
 				<key>properties</key>
 				<array>
 					<dict>
-						<key>baseValue</key>
-						<array>
-							<real>238</real>
-							<real>344</real>
-						</array>
 						<key>name</key>
 						<string>position</string>
 						<key>type</key>
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>238</real>
-							<real>215.29031372070312</real>
+							<real>244</real>
+							<real>212</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -279,8 +125,8 @@
 						<string>ScaleLock</string>
 						<key>value</key>
 						<array>
-							<real>3.4779829978942871</real>
-							<real>3.4934895038604736</real>
+							<real>1</real>
+							<real>1</real>
 							<false/>
 							<integer>0</integer>
 						</array>
@@ -295,62 +141,16 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>fontName</string>
+						<string>displayFrame</string>
 						<key>type</key>
-						<string>FontTTF</string>
-						<key>value</key>
-						<string>Helvetica</string>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>fontSize</string>
-						<key>type</key>
-						<string>FloatScale</string>
+						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<real>12</real>
-							<integer>0</integer>
+							<string></string>
+							<string>title/title_rogo.png</string>
 						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>dimensions</string>
-						<key>type</key>
-						<string>Size</string>
-						<key>value</key>
-						<array>
-							<real>0.0</real>
-							<real>0.0</real>
-							<integer>0</integer>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>horizontalAlignment</string>
-						<key>type</key>
-						<string>IntegerLabeled</string>
-						<key>value</key>
-						<integer>0</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>verticalAlignment</string>
-						<key>type</key>
-						<string>IntegerLabeled</string>
-						<key>value</key>
-						<integer>0</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>string</string>
-						<key>type</key>
-						<string>Text</string>
-						<key>value</key>
-						<string>textID:2</string>
 					</dict>
 				</array>
-				<key>seqExpanded</key>
-				<true/>
 			</dict>
 			<dict>
 				<key>animatedProperties</key>
@@ -405,8 +205,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>248</real>
-							<real>70</real>
+							<real>246</real>
+							<real>66</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -478,7 +278,7 @@
 						<key>type</key>
 						<string>String</string>
 						<key>value</key>
-						<string></string>
+						<string>textID:60</string>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -495,7 +295,7 @@
 						<string>FloatScale</string>
 						<key>value</key>
 						<array>
-							<real>12</real>
+							<real>24</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -517,8 +317,8 @@
 						<string>Size</string>
 						<key>value</key>
 						<array>
-							<real>200</real>
-							<real>50</real>
+							<real>160</real>
+							<real>70</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -538,7 +338,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn/btn_gamestart.png</string>
+							<string>title/title_btn.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -561,7 +361,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn/btn_gamestart.png</string>
+							<string>title/title_btn.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -584,7 +384,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn/btn_gamestart.png</string>
+							<string>title/title_btn.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -600,7 +400,7 @@
 						</array>
 					</dict>
 				</array>
-				<key>seqExpanded</key>
+				<key>selected</key>
 				<true/>
 			</dict>
 			<dict>
@@ -656,7 +456,7 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>420</real>
+							<real>402</real>
 							<real>66</real>
 							<integer>0</integer>
 						</array>
@@ -746,7 +546,7 @@
 						<string>FloatScale</string>
 						<key>value</key>
 						<array>
-							<real>12</real>
+							<real>24</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -768,8 +568,8 @@
 						<string>Size</string>
 						<key>value</key>
 						<array>
-							<real>120</real>
-							<real>40</real>
+							<real>160</real>
+							<real>70</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -789,7 +589,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>Icon-Small-50.png</string>
+							<string>title/title_btn.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -812,7 +612,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>Icon-Small-50.png</string>
+							<string>title/title_btn.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -835,7 +635,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>Icon-Small-50.png</string>
+							<string>title/title_btn.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -851,8 +651,6 @@
 						</array>
 					</dict>
 				</array>
-				<key>seqExpanded</key>
-				<true/>
 			</dict>
 			<dict>
 				<key>animatedProperties</key>
@@ -907,8 +705,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>75</real>
-							<real>67</real>
+							<real>86</real>
+							<real>66</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -997,7 +795,7 @@
 						<string>FloatScale</string>
 						<key>value</key>
 						<array>
-							<real>12</real>
+							<real>24</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -1019,8 +817,8 @@
 						<string>Size</string>
 						<key>value</key>
 						<array>
-							<real>120</real>
-							<real>40</real>
+							<real>160</real>
+							<real>70</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -1040,7 +838,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>Icon-Small-50.png</string>
+							<string>title/title_btn.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -1063,7 +861,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>Icon-Small-50.png</string>
+							<string>title/title_btn.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -1086,7 +884,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>Icon-Small-50.png</string>
+							<string>title/title_btn.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -1102,8 +900,6 @@
 						</array>
 					</dict>
 				</array>
-				<key>seqExpanded</key>
-				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>
