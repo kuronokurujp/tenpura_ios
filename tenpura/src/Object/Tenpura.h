@@ -16,7 +16,7 @@ typedef enum
 	eTENPURA_STATE_GOOD,		//　ちょうど良い
 	eTENPURA_STATE_VERYGOOD,	//	最高
 	eTENPURA_STATE_BAD,			//	焦げ
-	eTENPURA_STATE_ALLBAD,		//	丸焦げ
+	eTENPURA_STATE_VERYBAD,		//	丸焦げ
 	eTENPURA_STATE_DEL,			//	消滅
 	eTENPUrA_STATE_RESTART,		//	再設定
 	

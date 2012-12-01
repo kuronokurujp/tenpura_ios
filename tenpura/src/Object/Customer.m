@@ -69,7 +69,6 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 		mp_settingTenpuraList	= in_pSettingTenpuraList;
 	
 		mb_put	= NO;
-		mb_tenpuraHit	= NO;
 		m_idx	= in_idx;
 		mp_registTenpuraDelPermitName	= [[NSString stringWithFormat:@"customer%ld_TenpuraDel", in_idx] retain];
 
@@ -270,24 +269,6 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 	}
 	
 	return cnt;
-}
-
-/*
-	@brief	天ぷらヒットフラグ設定
-*/
--(void)	setFlgTenpuraHit:(const BOOL)in_flg
-{
-	if( ( mb_tenpuraHit == NO ) && ( in_flg == YES ) )
-	{
-		[mp_act startFlash];
-	}
-	else if( ( mb_tenpuraHit == YES ) && ( in_flg == NO ) )
-	{
-		//	フラッシュ終了
-		[mp_act endFlash];
-	}
-	
-	mb_tenpuraHit	= in_flg;
 }
 
 @end

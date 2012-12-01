@@ -30,11 +30,11 @@ enum ACTION_LIST_ENUM
 -(void)_endPutNumber:(id)sender;
 
 //	スコアアクション作成
--(CCSequence*)	_createPutScoreAction:(SInt32)in_num;
--(CCSequence*)	_createPutMoneyAction:(SInt32)in_num;
+-(CCAction*)	_createPutScoreAction:(SInt32)in_num;
+-(CCAction*)	_createPutMoneyAction:(SInt32)in_num;
 
--(CCSequence*)	_createPutResultScoreAction:(SInt32)in_num;
--(CCSequence*)	_createPutResultMoneyAction:(SInt32)in_num;
+-(CCAction*)	_createPutResultScoreAction:(SInt32)in_num;
+-(CCAction*)	_createPutResultMoneyAction:(SInt32)in_num;
 
 @end
 
@@ -47,7 +47,9 @@ enum ACTION_LIST_ENUM
 {
 	if( self = [super init] )
 	{
-		m_bSettingEat	= NO;
+		mb_SettingEat	= NO;
+		mb_flash	= NO;
+
 		mp_customer	= in_pCustomer;
 		CGRect	rect	= [mp_customer getBoxRect];
 		
@@ -76,17 +78,12 @@ enum ACTION_LIST_ENUM
 */
 -(void)put:(BOOL)in_bSettingEat
 {
-	if( mp_customer == nil )
-	{
-		return;
-	}
-	
 	if( [mp_customer numberOfRunningActions] > 0 )
 	{
 		[mp_customer stopAllActions];
 	}
 
-	m_bSettingEat	= in_bSettingEat;
+	mb_SettingEat	= in_bSettingEat;
 
 	SInt32	idx	= mp_customer.idx;
 
@@ -106,41 +103,10 @@ enum ACTION_LIST_ENUM
 }
 
 /*
-	@breif	出現アクション初期
-*/
--(void)_initPut:(id)sender
-{
-	mp_customer.bPut	= NO;
-	[mp_customer setFlgTenpuraHit:NO];
-}
-
-/*
-	@brief	出現アクション終了
-*/
--(void)_endPut:(id)sender
-{
-	Customer*	pCustomer	= mp_customer;
-	pCustomer.bPut	= YES;
-
-	if( m_bSettingEat == YES )
-	{
-		//	客が食べたいものを作成
-		[pCustomer createEatList];
-	}
-	
-	m_bSettingEat	= NO;
-}
-
-/*
 	@brief	退場
 */
 -(void)	exit
 {
-	if( mp_customer == nil )
-	{
-		return;
-	}
-	
 	if( [mp_customer numberOfRunningActions] > 0 )
 	{
 		[mp_customer stopAllActions];
@@ -169,26 +135,23 @@ enum ACTION_LIST_ENUM
 }
 
 /*
-	@brief	
+	@brief	点滅アクション
 */
--(void)_endExit:(id)sender
+-(void)	loopFlash
 {
-	Customer*	pCustomer	= mp_customer;
-	[pCustomer setVisible:NO];
-}
+	if( mb_flash == NO )
+	{
+		mb_flash	= YES;
+		Customer*	pCustomer	= mp_customer;
 
-//	点滅アクション
--(void)	startFlash
-{
-	Customer*	pCustomer	= mp_customer;
+		CCFadeOut*	pFadeOut	= [CCFadeOut actionWithDuration:0.1f];
+		CCFadeIn*	pFadeIn		= [CCFadeIn actionWithDuration:0.1f];
+		CCSequence*	pSequence	= [CCSequence actions:pFadeOut, pFadeIn, nil];
+		CCRepeatForever*	pRepeat	= [CCRepeatForever actionWithAction:pSequence];
 
-	CCFadeOut*	pFadeOut	= [CCFadeOut actionWithDuration:0.1f];
-	CCFadeIn*	pFadeIn		= [CCFadeIn actionWithDuration:0.1f];
-	CCSequence*	pSequence	= [CCSequence actions:pFadeOut, pFadeIn, nil];
-	CCRepeatForever*	pRepeat	= [CCRepeatForever actionWithAction:pSequence];
-	
-	pRepeat.tag	= eACT_TAG_FLAH;
-	[pCustomer.charSprite runAction:pRepeat];
+		pRepeat.tag	= eACT_TAG_FLAH;
+		[pCustomer.charSprite runAction:pRepeat];
+	}
 }
 
 /*
@@ -196,9 +159,13 @@ enum ACTION_LIST_ENUM
 */
 -(void)endFlash
 {
-	Customer*	pCustomer	= mp_customer;
-	[pCustomer.charSprite stopActionByTag:eACT_TAG_FLAH];
-	[pCustomer.charSprite setOpacity:255];
+	if( mb_flash == YES )
+	{
+		mb_flash	= NO;
+		Customer*	pCustomer	= mp_customer;
+		[pCustomer.charSprite stopActionByTag:eACT_TAG_FLAH];
+		[pCustomer.charSprite setOpacity:255];
+	}
 }
 
 /*
@@ -208,6 +175,108 @@ enum ACTION_LIST_ENUM
 {
 	[self _createPutResultScoreAction:mp_customer.money];
 	[self _createPutResultMoneyAction:mp_customer.score];
+}
+
+/*
+	@breif	食べる成功
+*/
+-(void)eatGood:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money
+{
+	if( [mp_customer numberOfRunningActions] > 0 )
+	{
+		[mp_customer stopAllActions];
+	}
+
+	//	食べた天ぷらアイコン消滅
+	assert( [mp_customer removeEatIcon:in_no] == YES);
+	
+	[self _createPutScoreAction:in_score];
+	[self _createPutMoneyAction:in_money];
+	
+	//	食べる天ぷらがないと退場
+	if([mp_customer getEatTenpura] <= 0)
+	{
+		[self exit];
+	}
+}
+
+/*
+	@breif	食べる大成功
+*/
+-(void)eatVeryGood:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money
+{
+	if( [mp_customer numberOfRunningActions] > 0 )
+	{
+		[mp_customer stopAllActions];
+	}
+
+	//	食べた天ぷらアイコン消滅
+	assert( [mp_customer removeEatIcon:in_no] == YES);
+
+	[self _createPutScoreAction:in_score];
+	[self _createPutMoneyAction:in_money];
+	
+	//	食べる天ぷらがないと退場
+	if([mp_customer getEatTenpura] <= 0)
+	{
+		[self exit];
+	}
+}
+
+/*
+	@breif	食べる失敗
+*/
+-(void)eatBat:(const SInt32)in_no
+{
+	if( [mp_customer numberOfRunningActions] > 0 )
+	{
+		[mp_customer stopAllActions];
+	}
+}
+
+/*
+	@breif	食べる大失敗
+*/
+-(void)eatVeryBat:(const SInt32)in_no
+{
+	if( [mp_customer numberOfRunningActions] > 0 )
+	{
+		[mp_customer stopAllActions];
+	}
+}
+
+/*
+	@breif	出現アクション初期
+*/
+-(void)_initPut:(id)sender
+{
+	mp_customer.bPut	= NO;
+}
+
+/*
+	@brief	出現アクション終了
+*/
+-(void)_endPut:(id)sender
+{
+	Customer*	pCustomer	= mp_customer;
+	pCustomer.bPut	= YES;
+
+	if( mb_SettingEat == YES )
+	{
+		//	客が食べたいものを作成
+		[pCustomer createEatList];
+	}
+	
+	mb_SettingEat	= NO;
+}
+
+/*
+	@brief
+*/
+-(void)_endExit:(id)sender
+{
+	Customer*	pCustomer	= mp_customer;
+	[pCustomer setVisible:NO];
 }
 
 /*
@@ -221,7 +290,7 @@ enum ACTION_LIST_ENUM
 /*
 	@brief
 */
--(CCSequence*)	_createPutScoreAction:(SInt32)in_num
+-(CCAction*)	_createPutScoreAction:(SInt32)in_num
 {
 	CCFadeIn*		pFaedIn		= [CCFadeIn actionWithDuration:0.1f];
 	CCFadeOut*		pFadeOut	= [CCFadeOut actionWithDuration:0.1f];
@@ -238,7 +307,7 @@ enum ACTION_LIST_ENUM
 /*
 	@brief
 */
--(CCSequence*)	_createPutMoneyAction:(SInt32)in_num
+-(CCAction*)	_createPutMoneyAction:(SInt32)in_num
 {
 	CCFadeIn*		pFaedIn		= [CCFadeIn actionWithDuration:0.1f];
 	CCFadeOut*		pFadeOut	= [CCFadeOut actionWithDuration:0.1f];
@@ -255,94 +324,29 @@ enum ACTION_LIST_ENUM
 /*
 	@brief
 */
--(CCSequence*)	_createPutResultScoreAction:(SInt32)in_num
+-(CCAction*)	_createPutResultScoreAction:(SInt32)in_num
 {
-	CCFadeIn*		pFaedIn		= [CCFadeIn actionWithDuration:0.1f];
-	CCSequence*		pSeq		= [CCSequence actions:pFaedIn,nil];
+	CCFadeIn*		pFadeIn		= [CCFadeIn actionWithDuration:0.1f];
 
 	[mp_moneyLabel setString:[NSString stringWithFormat:@"+%ld", in_num]];
-	[mp_moneyLabel runAction:pSeq];
+	[mp_moneyLabel runAction:pFadeIn];
 	[mp_moneyLabel setVisible:YES];
 
-	return pSeq;
+	return pFadeIn;
 }
 
 /*
 	@brief
 */
--(CCSequence*)	_createPutResultMoneyAction:(SInt32)in_num
+-(CCAction*)	_createPutResultMoneyAction:(SInt32)in_num
 {
 	CCFadeIn*		pFaedIn		= [CCFadeIn actionWithDuration:0.1f];
-	CCSequence*		pSeq		= [CCSequence actions:pFaedIn,nil];
 
 	[mp_scoreLabel setString:[NSString stringWithFormat:@"+%ld", in_num]];
-	[mp_scoreLabel runAction:pSeq];
+	[mp_scoreLabel runAction:pFaedIn];
 	[mp_scoreLabel setVisible:YES];
 
-	return pSeq;
-}
-
-//	食べた時のアクション
-/*
-	@breif
-*/
--(void)eatGood:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money
-{
-	//	食べた天ぷらアイコン消滅
-	assert( [mp_customer removeEatIcon:in_no] == YES);
-	
-	[self _createPutScoreAction:in_score];
-	[self _createPutMoneyAction:in_money];
-	
-	//	食べる天ぷらがないと退場
-	if([mp_customer getEatTenpura] <= 0)
-	{
-		[self exit];
-	}
-}
-
-/*
-	@breif
-*/
--(void)eatVeryGood:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money
-{
-	//	食べた天ぷらアイコン消滅
-	assert( [mp_customer removeEatIcon:in_no] == YES);
-
-	[self _createPutScoreAction:in_score];
-	[self _createPutMoneyAction:in_money];
-	
-	//	食べる天ぷらがないと退場
-	if([mp_customer getEatTenpura] <= 0)
-	{
-		[self exit];
-	}
-}
-
-/*
-	@breif
-*/
--(void)eatBat:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money:(BOOL)in_bExit
-{
-	//	客は去る
-	if( in_bExit == YES )
-	{
-		[self exit];
-		[mp_customer removeAllEatIcon];
-	}
-}
-
-/*
-	@breif
-*/
--(void)eatAllBat:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money:(BOOL)in_bExit
-{
-	//	客は去る
-	if( in_bExit == YES )
-	{
-		[self exit];
-		[mp_customer removeAllEatIcon];
-	}
+	return pFaedIn;
 }
 
 @end

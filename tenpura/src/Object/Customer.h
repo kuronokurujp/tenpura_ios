@@ -25,7 +25,6 @@
 	NSString*		mp_registTenpuraDelPermitName;
 	
 	BOOL	mb_put;
-	BOOL	mb_tenpuraHit;
 	SInt32	m_idx;
 	SInt32	m_money;
 	SInt32	m_score;
@@ -68,8 +67,5 @@ typedef enum
 
 //	天ぷら食べる個数
 -(const SInt32)	getEatCnt;
-
-//	天ぷらヒットフラグ設定
--(void)	setFlgTenpuraHit:(const BOOL)in_flg;
 
 @end

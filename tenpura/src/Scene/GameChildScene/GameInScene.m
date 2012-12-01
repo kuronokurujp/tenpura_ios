@@ -26,6 +26,7 @@
 
 -(BOOL)	_eatCustomer:(Customer*)in_pCustomer:(TENPURA_STATE_ET)in_tenpuraState:(NETA_DATA_ST*)in_pData;
 -(Customer*)	_isHitCustomer:(CGRect)in_rect;
+-(void)	_endTouch;
 
 @end
 
@@ -183,9 +184,9 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 		if( pTenpuraHitCustomer != nil )
 		{
 			//	ヒットした場合ヒットしていると表示する。
-			[pTenpuraHitCustomer setFlgTenpuraHit:YES];
+			[pTenpuraHitCustomer.act loopFlash];
 		}
-		
+
 		//	天ぷらとヒットしていない客はヒット演出を止める
 		Customer*	pCustomer	= nil;
 		GameScene*	pGameScene	= (GameScene*)[self parent];
@@ -193,7 +194,7 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 		{
 			if( pCustomer != pTenpuraHitCustomer )
 			{
-				[pCustomer setFlgTenpuraHit:NO];
+				[pCustomer.act endFlash];
 			}
 		}
 	}
@@ -243,55 +244,52 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 					//	客が一人しかいない状態で退場する時客が新しく出す
 					[pGameScene putCustomer:YES];
 				}
-				else
+				else if( s_PutCustomerCombNum <= m_combCnt )
 				{
-					if( s_PutCustomerCombNum <= m_combCnt )
-					{
-						[pGameScene putCustomer:YES];
-						m_combCnt	= 0;
-					}
+					[pGameScene putCustomer:YES];
+					m_combCnt	= 0;
 				}
 			}
+			else
+			{
+				//	食べるのに失敗
+				m_combCnt	= 0;
+			}
 			
-			[pCustomer setFlgTenpuraHit:NO];
+			[pCustomer.act endFlash];
 		}
 
-		BOOL	bRemoveTenpur		= NO;
-		BOOL	bNewPostionTenpur	= NO;
+		BOOL	bRemoveTenpura		= NO;
+		BOOL	bNewPostionTenpura	= NO;
 		CGPoint	nowTenpuraPos	= mp_touchTenpura.position;
 		if( ( bHitCustomer == YES ) && ( bEatTenpura == YES ) )
 		{
 			//	食べるのに成功
-			bRemoveTenpur	= YES;
+			bRemoveTenpura	= YES;
 		}
 		else if( CGRectContainsRect([pGameScene->mp_nabe boundingBox], [mp_touchTenpura boundingBox]) )
 		{
 			//	鍋内なら現在位置に配置
-			bNewPostionTenpur	= YES;
+			bNewPostionTenpura	= YES;
 		}
 
 		//	タッチ前の位置に設定しているので注意！
 		[mp_touchTenpura unLockTouch];
 
-		if( bRemoveTenpur == YES )
+		if( bRemoveTenpura == YES )
 		{
 			[pGameScene->mp_nabe removeTenpura:mp_touchTenpura];
 		}
-		
-		//	鍋枠内であれば現在を位置に変更
-		if( bNewPostionTenpur == YES )
+		else if( bNewPostionTenpura == YES )
 		{
+			//	鍋枠内であれば現在を位置に変更
 			[mp_touchTenpura setPosition:nowTenpuraPos];
 		}
 
 		mp_touchTenpura	= nil;
 	}
 
-	//	ヒットしたときの演出を終了
-	CCARRAY_FOREACH(pGameScene->mp_customerArray,pCustomer)
-	{
-		[pCustomer setFlgTenpuraHit:NO];
-	}
+	[self _endTouch];
 }
 
 /*
@@ -304,6 +302,8 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 		[mp_touchTenpura unLockTouch];
 		mp_touchTenpura	= nil;
 	}
+	
+	[self _endTouch];
 }
 
 /*
@@ -313,28 +313,22 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 */
 -(BOOL)	_eatCustomer:(Customer*)in_pCustomer:(TENPURA_STATE_ET)in_tenpuraState:(NETA_DATA_ST*)in_pData
 {
-	if( in_pData == nil )
+	if( (in_pData == nil) || in_pCustomer == nil )
 	{
 		return NO;
 	}
 
-	if( in_pCustomer == nil )
-	{
-		return NO;
-	}
-	
 	GameScene*	pGameScene	= (GameScene*)[self parent];
 
 	SInt32	addScoreNum	= 0;
 	SInt32	addMoneyNum	= 0;
 
-	//	一人しか客がいない場合には退場させない
 	BOOL	bEat		= NO;
 	
 	//	客が欲しい天ぷらかチェック
 	if( [in_pCustomer isEatTenpura:in_pData->no] == NO )
 	{
-		[in_pCustomer.act eatBat:in_pData->no:0:0:NO];
+		[in_pCustomer.act eatBat:in_pData->no];
 	}
 	else
 	{
@@ -344,7 +338,7 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 			//	揚げてない
 			case eTENPURA_STATE_NOT:
 			{
-				[in_pCustomer.act eatBat:in_pData->no:0:0:NO];
+				[in_pCustomer.act eatBat:in_pData->no];
 				break;
 			}
 			//　ちょうど良い
@@ -370,13 +364,13 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 			//	焦げ
 			case eTENPURA_STATE_BAD:
 			{
-				[in_pCustomer.act eatBat:in_pData->no:0:0:NO];
+				[in_pCustomer.act eatBat:in_pData->no];
 				break;
 			}
 			//	丸焦げ
-			case eTENPURA_STATE_ALLBAD:
+			case eTENPURA_STATE_VERYBAD:
 			{
-				[in_pCustomer.act eatAllBat:in_pData->no:0:0:NO];
+				[in_pCustomer.act eatVeryBat:in_pData->no];
 				break;
 			}
 			default:
@@ -424,6 +418,21 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 	}
 	
 	return nil;
+}
+
+/*
+	@brief	タッチ処理終了
+*/
+-(void)	_endTouch
+{
+	GameScene*	pGameScene	= (GameScene*)[self parent];
+
+	//	ヒットしたときの演出を終了
+	Customer*	pCustomer	= nil;
+	CCARRAY_FOREACH(pGameScene->mp_customerArray,pCustomer)
+	{
+		[pCustomer.act endFlash];
+	}
 }
 
 @end

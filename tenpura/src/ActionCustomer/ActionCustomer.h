@@ -22,7 +22,8 @@
 	CCLabelTTF*	mp_scoreLabel;
 	CCLabelTTF*	mp_moneyLabel;
 	
-	BOOL	m_bSettingEat;
+	BOOL	mb_SettingEat;
+	BOOL	mb_flash;
 }
 
 //	初期化
@@ -35,7 +36,7 @@
 -(void)	exit;
 
 //	点滅アクション
--(void)	startFlash;
+-(void)	loopFlash;
 -(void)	endFlash;
 
 //	リザルトスコア表示アクション
@@ -44,7 +45,7 @@
 //	食べた時のアクション
 -(void)eatGood:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money;
 -(void)eatVeryGood:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money;
--(void)eatBat:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money:(BOOL)in_bExit;
--(void)eatAllBat:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money:(BOOL)in_bExit;
+-(void)eatBat:(const SInt32)in_no;
+-(void)eatVeryBat:(const SInt32)in_not;
 
 @end

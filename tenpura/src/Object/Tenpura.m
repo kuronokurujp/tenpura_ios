@@ -43,7 +43,7 @@
 		mb_raise		= NO;
 		mb_delete		= NO;
 		m_posDataIdx	= 0;
-		m_state			= eTENPURA_STATE_ALLBAD;
+		m_state			= eTENPURA_STATE_VERYBAD;
 	}
 	
 	return self;
@@ -234,7 +234,7 @@
 				[mp_sp setTextureRect:[self _getTexRect:(SInt32)m_state]];
 				break;
 			}
-			case eTENPURA_STATE_ALLBAD:		//	丸焦げ
+			case eTENPURA_STATE_VERYBAD:		//	丸焦げ
 			{
 				bFunc	= YES;
 				time	= 1.f;
@@ -305,7 +305,7 @@
 
 	m_state		= eTENPURA_STATE_NOT;
 	m_texSize	= [mp_sp contentSize];
-	m_texSize.height	= m_texSize.height / (Float32)(eTENPURA_STATE_ALLBAD + 1);
+	m_texSize.height	= m_texSize.height / (Float32)(eTENPURA_STATE_VERYBAD + 1);
 
 	[mp_sp setTextureRect:[self _getTexRect:(SInt32)m_state]];	
 }
