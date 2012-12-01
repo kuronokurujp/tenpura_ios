@@ -36,6 +36,6 @@ typedef struct
 //	使用設定と取得
 -(void)	setUseFlg:(BOOL)in_flg:(UInt32)in_idx;
 -(BOOL)	isUse:(UInt32)in_idx;
-
+-(void)	clearFlg;
 	
 @end

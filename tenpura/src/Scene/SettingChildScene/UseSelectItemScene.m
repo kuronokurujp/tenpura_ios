@@ -264,6 +264,8 @@ enum
 		NSAssert(n, @"");
 		[[NSNotificationCenter defaultCenter] postNotification:n];
 	}
+	
+	[mp_settingItemBtn setVisible:YES];
 
 	[super onExitTransitionDidStart];
 }

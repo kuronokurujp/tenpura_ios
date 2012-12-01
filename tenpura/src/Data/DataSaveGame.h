@@ -17,6 +17,7 @@
 enum
 {
 	eITEMS_MAX	= 64,
+	eMISSION_MAX	= 64,
 };
 
 typedef struct
@@ -40,9 +41,12 @@ typedef struct
 	int64_t	score;				//	148(8)
 	char	use;				//	156(1)
 	char	check;				//	157(1)
-
+	
+	char	aMissionFlg[eMISSION_MAX];		//	158(64)
+	char	rank;							//	221(1)
+	
 	//	予約領域
-	char	dummy[98];				//	158(98)
+	char	dummy[34];				//	222(34)
 } SAVE_DATA_ST;	//	256byte
 
 @interface DataSaveGame : NSObject
@@ -71,7 +75,13 @@ typedef struct
 -(void)	addSaveScore:(int64_t)in_score;
 
 //	現在時刻を記録
--(BOOL)saveDate;
+-(BOOL)	saveDate;
+
+//	ミッションフラグをたてる
+-(void)	saveMissionFlg:(BOOL)in_flg:(UInt32)in_idx;
+
+//	ランク設定
+-(void)	saveRank:(char)in_rank;
 
 //	データ丸ごと取得
 -(const SAVE_DATA_ST*)getData;

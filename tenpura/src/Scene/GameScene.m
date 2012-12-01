@@ -12,10 +12,11 @@
 #import "./GameChildScene/GameInScene.h"
 #import "./GameChildScene/GameResultScene.h"
 
-#import "./../Action/ActionCustomer.h"
+#import "./../ActionCustomer/ActionCustomer.h"
 #import "./../Data/DataNetaList.h"
 #import "./../Data/DataGlobal.h"
 #import "./../Data/DataSettingTenpura.h"
+#import "./../Data/DataTenpuraPosList.h"
 
 #import "./../CCBReader/CCBReader.h"
 
@@ -71,6 +72,11 @@ enum
 	{
 		m_addMoneyNum	= 0;
 		m_scoreNum	= 0;
+
+		{
+			DataTenpuraPosList*	pDataTenpuraPosList	= [DataTenpuraPosList shared];
+			[pDataTenpuraPosList clearFlg];
+		}
 
 		//	なべに配置できるてんぷらリスト作成
 		{

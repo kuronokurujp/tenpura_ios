@@ -157,10 +157,13 @@
 /*
 	@brief	オブジェクト矩形取得
 */
--(CGRect)	getBoxRect
+-(CGRect)	boundingBox
 {
 	CGSize	texSize	= [mp_sp textureRect].size;
-	CGRect	boxRect	= CGRectMake(self.position.x - texSize.width * 0.5f, self.position.y - texSize.height * 0.5f, texSize.width, texSize.height);
+	//	左下の点を開始点に
+	CGPoint	pos	= ccp(	self.position.x - mp_sp.anchorPoint.x * texSize.width,
+						self.position.y - mp_sp.anchorPoint.y * texSize.height);
+	CGRect	boxRect	= CGRectMake(pos.x, pos.y, texSize.width, texSize.height);
 	
 	return boxRect;
 }
@@ -177,6 +180,9 @@
 	[mp_sp setScale:1.f];
 	[mp_sp runAction:pScaleBy];
 	
+	m_oldZOrder	= self.zOrder;
+	[self setZOrder:30];
+	
 	mb_touch	= YES;
 	m_touchPrevPos	= self.position;
 }
@@ -188,6 +194,8 @@
 {
 	[scheduler_ resumeTarget:self];
 	[mp_sp setScale:1.f];
+	
+	[self setZOrder:m_oldZOrder];
 	
 	mb_touch	= NO;
 	[self setPosition:m_touchPrevPos];
@@ -310,7 +318,7 @@
 	ccDrawColor4B(255, 0, 255, 255);
 	CGPoint	p1,p2,p3,p4;
 	
-	CGRect	rect	= [self getBoxRect];
+	CGRect	rect	= [self boundingBox];
 	//	オブジェクト描画位置が原点になるので原点値を引く
 	rect.origin.x	= rect.origin.x - self.position.x;
 	rect.origin.y	= rect.origin.y - self.position.y;
@@ -329,4 +337,5 @@
 }
 
 #endif
+
 @end

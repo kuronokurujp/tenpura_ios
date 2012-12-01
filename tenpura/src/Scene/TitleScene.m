@@ -37,7 +37,7 @@
 	CCMenu*	pMenu	= [CCMenu menuWithItems:pResetSaveItem, nil];
 	CGSize	winSize	= [[CCDirector sharedDirector] winSize];
 	[pMenu setPosition:ccp( 120.f, winSize.height - 32 )];
-	[self addChild:pMenu];
+	[self addChild:pMenu z:20];
 #endif
 	}
 	

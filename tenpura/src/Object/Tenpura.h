@@ -36,6 +36,7 @@ typedef enum
 	BOOL				mb_raise;	//	揚げる開始
 	
 	UInt32				m_posDataIdx;
+	SInt32				m_oldZOrder;
 	CGSize				m_texSize;
 	CGPoint				m_touchPrevPos;
 }
@@ -63,11 +64,9 @@ typedef enum
 //	天ぷら削除許可通知設定
 -(void)	registDeletePermitObserver:(NSString*)in_pName;
 
-//	オブジェクト矩形取得
--(CGRect)	getBoxRect;
-
 //	タッチロック
 -(void)	lockTouch;
 -(void)	unLockTouch;
 
+-(CGRect)	boundingBox;
 @end

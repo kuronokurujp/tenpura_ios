@@ -16,6 +16,7 @@
 @private
 	Float32		m_time;
 	Tenpura*	mp_touchTenpura;
+	UInt32		m_combCnt;
 }
 
 -(id)	init:(Float32)in_time;

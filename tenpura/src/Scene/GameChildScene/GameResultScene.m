@@ -10,7 +10,7 @@
 
 #import "./../GameScene.h"
 #import "./../../Object/Customer.h"
-#import "./../../Action/ActionCustomer.h"
+#import "./../../ActionCustomer/ActionCustomer.h"
 #import "./../../Data/DataGlobal.h"
 #import "./../../Data/DataSaveGame.h"
 #import "./../../CCBReader/CCBReader.h"
@@ -63,6 +63,9 @@
 		[pCustomer removeAllEatIcon];
 	}
 	
+	//	天ぷらを消滅
+	[pGameScene->mp_nabe allRemoveTenpura];
+
 	[self unschedule:@selector(_begin:)];
 	[self schedule:@selector(_waitPutCustomer:)];
 }
@@ -91,9 +94,7 @@
 			//	スコア表示開始
 			[pCustomer.act putResultScore];
 		}
-		
-		[pGameScene->mp_nabe setVisibleTenpura:NO];
-		
+				
 		[self unschedule:_cmd];
 		
 		[self createMenu];

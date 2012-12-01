@@ -9,6 +9,7 @@
 #import "MissionScene.h"
 
 #import "./../../Data/DataGlobal.h"
+#import "./../../Data/DataMissionList.h"
 #import "./../../System/GameCenter/GameKitHelper.h"
 
 @implementation MissionScene
@@ -21,19 +22,11 @@ static const char*	sp_MissionListCellSpriteName	= "neta_cell.png";
 -(id)	init
 {
 	SW_INIT_DATA_ST	data	= { 0 };
+	DataMissionList*	pMissionInst	= [DataMissionList shared];
+	NSAssert(pMissionInst, @"ミッションリストデータがない");
 
-	NSMutableDictionary*	pAchievementDescriptions	= [GameKitHelper shared].achievementDescriptions;
-	if( pAchievementDescriptions != nil )
-	{
-		NSArray*	pAchievments	= [[GameKitHelper shared].achievementDescriptions allValues];
-		data.viewMax	= [pAchievments count] < 6 ? 6 : [pAchievments count];
-	}
-	else
-	{
-		data.viewMax	= 6;
-	}
-
-	data.fontSize	= 32;
+	data.viewMax	= pMissionInst.dataNum < 6 ? 6 : pMissionInst.dataNum;
+	data.fontSize	= 24;
 
 	strcpy(data.aCellFileName, sp_MissionListCellSpriteName);
 	
@@ -85,23 +78,27 @@ static const char*	sp_MissionListCellSpriteName	= "neta_cell.png";
 {
 	SWTableViewCell*	pCell	= [super table:table cellAtIndex:idx];
 	
-	NSMutableDictionary*	pAchievementDescriptions	= [GameKitHelper shared].achievementDescriptions;
-	if( pAchievementDescriptions != nil )
+	DataMissionList*	pMissionInst	= [DataMissionList shared];
+	NSAssert(pMissionInst, @"ミッションリストデータがない");
+
+	CCNode*	pNode	= [pCell getChildByTag:eSW_TABLE_TAG_CELL_SPRITE];
+	if( pNode != nil )
 	{
-		NSArray*	pAchievments	= [pAchievementDescriptions allValues];
-		if( idx < [pAchievments count] )
+		CCSprite*	pCellSp	= (CCSprite*)pNode;
+		//	ミッション名
+		CCNode*	pNode02	= [pNode getChildByTag:eSW_TABLE_TAG_CELL_TEXT];
+		if( ( pNode02 != nil ) && ( [pNode02 isKindOfClass:[CCLabelTTF class]] ) )
 		{
-			GKAchievementDescription* pAchievement	= (GKAchievementDescription*)[pAchievments objectAtIndex:idx];
-			CCNode*	pNode	= [pCell getChildByTag:eSW_TABLE_TAG_CELL_SPRITE];
-			if( pNode != nil )
-			{
-				CCNode*	pNode02	= [pNode getChildByTag:eSW_TABLE_TAG_CELL_TEXT];
-				if( ( pNode02 != nil ) && ( [pNode02 isKindOfClass:[CCLabelTTF class]] ) )
-				{
-					CCLabelTTF*	pCellTextLabel	= (CCLabelTTF*)pNode02;
-					[pCellTextLabel setString:pAchievement.title];
-				}
-			}
+			CCLabelTTF*	pCellTextLabel	= (CCLabelTTF*)pNode02;
+			[pCellTextLabel setString:[pMissionInst getMissonName:idx]];
+		}
+		
+		//	達成しているミッションがあるかチェック
+		[pCellSp setColor:ccWHITE];
+		if( [pMissionInst isSuccess:idx] == YES )
+		{
+			//	使用中はセルの色を変える
+			[pCellSp setColor:ccGRAY];
 		}
 	}
 	

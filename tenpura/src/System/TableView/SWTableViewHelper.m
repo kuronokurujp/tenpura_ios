@@ -27,7 +27,7 @@
 		//	セルファイル名はアドレスしかもっていないので注意
 		m_data	= *in_pData;
 
-		mp_table	= [SWTableView viewWithDataSource:self size:m_data.viewSize];
+		mp_table	= [SWTableView viewWithDataSource:self size:m_data.viewSize contentOffset:ccp(0,0)];
 		[mp_table setPosition:m_data.viewPos];
 		[mp_table setContentOffset:ccp( [mp_table minContainerOffset].x, [mp_table minContainerOffset].y )];
 
@@ -36,7 +36,7 @@
 		mp_table.verticalFillOrder	= SWTableViewFillTopDown;
 		
 		[self addChild:mp_table z:3.f];
-		[mp_table reloadData];		
+		[mp_table reloadData];
 	}
 
 	return self;

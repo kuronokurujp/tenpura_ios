@@ -16,6 +16,7 @@
 #import "./Data/DataSaveGame.h"
 #import "./Data/DataTenpuraPosList.h"
 #import "./Data/DataGlobal.h"
+#import "./Data/DataMissionList.h"
 #import "./System/GameCenter/GameKitHelper.h"
 #import "./System/BannerView/BannerViewController.h"
 
@@ -103,8 +104,15 @@ void uncaughtExceptionHandler( NSException* in_pException )
 	[DataNetaList shared];
 	[DataTenpuraPosList shared];
 	[DataBaseText shared];
+	/*
+		ミッションリストデータ読み込み順序が下記のより上だとハングするので注意
+			テキスト
+			ネタ
+			セーブデータ
+	*/
+	[DataMissionList shared];
 	[GameKitHelper shared].delegate	= self;
-
+	
 	//	広告ビュー作成
 	{
 		mp_bannerViewCtrl	= [[BannerViewController alloc] init];
@@ -208,6 +216,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
 
 	CC_DIRECTOR_END();
 
+	[DataMissionList end];
 	[DataBaseText end];
 	[DataNetaList end];
 	[DataSaveGame end];

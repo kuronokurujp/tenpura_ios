@@ -13,13 +13,17 @@
 #import "./../../libs/CCControlExtension/CCControl/CCControlButton.h"
 
 @interface SettingScene : CCLayer
+<
+	UIAlertViewDelegate
+>
 {
 @private
 	//	セッティング用項目リスト
-	CCArray*	mp_useItemNoList;
-	CCLabelTTF*	mp_nowMoneyText;
-	CCLabelTTF*	mp_nowHiScoreText;
+	CCArray*			mp_useItemNoList;
+	CCLabelTTF*			mp_nowMoneyText;
+	CCLabelTTF*			mp_nowHiScoreText;
 	CCControlButton*	mp_gameStartBtn;
+	UIAlertView*		mp_missionSucceesAlertView;
 }
 
 @property	(nonatomic, retain)CCArray*	useItemNoList;

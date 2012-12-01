@@ -12,7 +12,7 @@
 #import "./../../Object/Customer.h"
 #import "./../../Object/Tenpura.h"
 #import "./../../Object/Nabe.h"
-#import "./../../Action/ActionCustomer.h"
+#import "./../../ActionCustomer/ActionCustomer.h"
 #import "./../../Data/DataNetaList.h"
 
 
@@ -32,6 +32,7 @@
 @implementation GameInScene
 
 static const SInt32	s_AddCustomerEatMax	= 1;
+static const UInt32	s_PutCustomerCombNum	= 3;
 
 /*
 	@brief
@@ -42,6 +43,7 @@ static const SInt32	s_AddCustomerEatMax	= 1;
 	{
 		mp_touchTenpura	= nil;
 		m_time	= in_time;
+		m_combCnt	= 0;
 
 		[self setVisible:YES];
 		[self schedule:@selector(_begin:)];
@@ -108,7 +110,7 @@ static const SInt32	s_AddCustomerEatMax	= 1;
 */
 -(void)	_end:(ccTime)in_time
 {
-	[self unschedule:@selector(_end:)];
+	[self unschedule:_cmd];
 	[self setVisible:NO];
 }
 
@@ -127,6 +129,7 @@ static const SInt32	s_AddCustomerEatMax	= 1;
 -(void)	onExit
 {
 	[[[CCDirector sharedDirector] touchDispatcher] removeDelegate:self];
+	[super onExit];
 }
 
 /*
@@ -151,7 +154,7 @@ static const SInt32	s_AddCustomerEatMax	= 1;
 				Tenpura*	pTenpura	= (Tenpura*)pNode;
 				if( (pTenpura.bTouch == NO) && (pTenpura.bRaise == YES) )
 				{
-					if( CGRectContainsPoint([pTenpura getBoxRect], touchPoint) == YES )
+					if( CGRectContainsPoint([pTenpura boundingBox], touchPoint) == YES )
 					{
 						[pTenpura lockTouch];
 						mp_touchTenpura	= pTenpura;
@@ -176,7 +179,7 @@ static const SInt32	s_AddCustomerEatMax	= 1;
 	if( mp_touchTenpura != nil )
 	{
 		[mp_touchTenpura setPosition:touchPoint];
-		Customer*	pTenpuraHitCustomer	= [self _isHitCustomer:[mp_touchTenpura getBoxRect]];
+		Customer*	pTenpuraHitCustomer	= [self _isHitCustomer:[mp_touchTenpura boundingBox]];
 		if( pTenpuraHitCustomer != nil )
 		{
 			//	ヒットした場合ヒットしていると表示する。
@@ -209,7 +212,7 @@ static const SInt32	s_AddCustomerEatMax	= 1;
 		BOOL	bHitCustomer	= NO;
 		BOOL	bEatTenpura		= NO;
 
-		pCustomer	= [self _isHitCustomer:[mp_touchTenpura getBoxRect]];
+		pCustomer	= [self _isHitCustomer:[mp_touchTenpura boundingBox]];
 		if( pCustomer != nil )
 		{
 			NETA_DATA_ST	data	= mp_touchTenpura.data;
@@ -220,26 +223,64 @@ static const SInt32	s_AddCustomerEatMax	= 1;
 			bEatTenpura	= [self _eatCustomer:pCustomer:mp_touchTenpura.state:&data];
 			if( bEatTenpura == YES )
 			{
-				//	食べるものがなければ新しい客を出す
-				if( [pCustomer getEatCnt] <= 0 )
+				switch ((SInt32)mp_touchTenpura.state)
 				{
+					case eTENPURA_STATE_GOOD:
+					case eTENPURA_STATE_VERYGOOD:
+					{
+						++m_combCnt;
+						break;
+					}
+					default:
+					{
+						m_combCnt	= 0;
+						break;
+					}
+				}
+
+				if( ([pGameScene getPutCustomerNum] <= 1) && ( [pCustomer getEatCnt] <= 0 ) )
+				{
+					//	客が一人しかいない状態で退場する時客が新しく出す
 					[pGameScene putCustomer:YES];
+				}
+				else
+				{
+					if( s_PutCustomerCombNum <= m_combCnt )
+					{
+						[pGameScene putCustomer:YES];
+						m_combCnt	= 0;
+					}
 				}
 			}
 			
 			[pCustomer setFlgTenpuraHit:NO];
 		}
 
+		BOOL	bRemoveTenpur		= NO;
+		BOOL	bNewPostionTenpur	= NO;
 		CGPoint	nowTenpuraPos	= mp_touchTenpura.position;
-		[mp_touchTenpura unLockTouch];
 		if( ( bHitCustomer == YES ) && ( bEatTenpura == YES ) )
 		{
 			//	食べるのに成功
-			[pGameScene->mp_nabe subTenpura:mp_touchTenpura];
+			bRemoveTenpur	= YES;
 		}
-		else if( CGRectContainsPoint(pGameScene->mp_nabe.boundingBox, nowTenpuraPos))
+		else if( CGRectContainsRect([pGameScene->mp_nabe boundingBox], [mp_touchTenpura boundingBox]) )
 		{
-			//	鍋内なら現在で位置に配置
+			//	鍋内なら現在位置に配置
+			bNewPostionTenpur	= YES;
+		}
+
+		//	タッチ前の位置に設定しているので注意！
+		[mp_touchTenpura unLockTouch];
+
+		if( bRemoveTenpur == YES )
+		{
+			[pGameScene->mp_nabe removeTenpura:mp_touchTenpura];
+		}
+		
+		//	鍋枠内であれば現在を位置に変更
+		if( bNewPostionTenpur == YES )
+		{
 			[mp_touchTenpura setPosition:nowTenpuraPos];
 		}
 
@@ -288,13 +329,12 @@ static const SInt32	s_AddCustomerEatMax	= 1;
 	SInt32	addMoneyNum	= 0;
 
 	//	一人しか客がいない場合には退場させない
-	BOOL	bExitAct	= ([pGameScene getPutCustomerNum] > 1);
 	BOOL	bEat		= NO;
 	
 	//	客が欲しい天ぷらかチェック
 	if( [in_pCustomer isEatTenpura:in_pData->no] == NO )
 	{
-		[in_pCustomer.act eatBat:in_pData->no:0:0:bExitAct];
+		[in_pCustomer.act eatBat:in_pData->no:0:0:NO];
 	}
 	else
 	{
@@ -304,7 +344,7 @@ static const SInt32	s_AddCustomerEatMax	= 1;
 			//	揚げてない
 			case eTENPURA_STATE_NOT:
 			{
-				[in_pCustomer.act eatBat:in_pData->no:0:0:bExitAct];
+				[in_pCustomer.act eatBat:in_pData->no:0:0:NO];
 				break;
 			}
 			//　ちょうど良い

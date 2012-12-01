@@ -29,6 +29,7 @@ typedef struct
 +(void)	end;
 
 +(NSString*)getString:(const UInt32)in_no;
++(NSString*)getStringOfField:(const char*)in_pText;
 
 -(const char*)getText:(const UInt32)in_no;
 -(const UInt32)getFontSize:(const UInt32)in_no;

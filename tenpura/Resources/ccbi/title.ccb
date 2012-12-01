@@ -348,9 +348,9 @@
 						<string>Color3</string>
 						<key>value</key>
 						<array>
-							<integer>255</integer>
-							<integer>255</integer>
-							<integer>255</integer>
+							<integer>0</integer>
+							<integer>0</integer>
+							<integer>0</integer>
 						</array>
 					</dict>
 					<dict>
@@ -371,9 +371,9 @@
 						<string>Color3</string>
 						<key>value</key>
 						<array>
-							<integer>255</integer>
-							<integer>255</integer>
-							<integer>255</integer>
+							<integer>0</integer>
+							<integer>0</integer>
+							<integer>0</integer>
 						</array>
 					</dict>
 					<dict>
@@ -394,14 +394,12 @@
 						<string>Color3</string>
 						<key>value</key>
 						<array>
-							<integer>255</integer>
-							<integer>255</integer>
-							<integer>255</integer>
+							<integer>0</integer>
+							<integer>0</integer>
+							<integer>0</integer>
 						</array>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 			<dict>
 				<key>animatedProperties</key>
@@ -599,9 +597,9 @@
 						<string>Color3</string>
 						<key>value</key>
 						<array>
-							<integer>255</integer>
-							<integer>255</integer>
-							<integer>255</integer>
+							<integer>0</integer>
+							<integer>0</integer>
+							<integer>0</integer>
 						</array>
 					</dict>
 					<dict>
@@ -622,9 +620,9 @@
 						<string>Color3</string>
 						<key>value</key>
 						<array>
-							<integer>255</integer>
-							<integer>255</integer>
-							<integer>255</integer>
+							<integer>0</integer>
+							<integer>0</integer>
+							<integer>0</integer>
 						</array>
 					</dict>
 					<dict>
@@ -645,12 +643,14 @@
 						<string>Color3</string>
 						<key>value</key>
 						<array>
-							<integer>255</integer>
-							<integer>255</integer>
-							<integer>255</integer>
+							<integer>0</integer>
+							<integer>0</integer>
+							<integer>0</integer>
 						</array>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>animatedProperties</key>
@@ -848,9 +848,9 @@
 						<string>Color3</string>
 						<key>value</key>
 						<array>
-							<integer>255</integer>
-							<integer>255</integer>
-							<integer>255</integer>
+							<integer>0</integer>
+							<integer>0</integer>
+							<integer>0</integer>
 						</array>
 					</dict>
 					<dict>
@@ -871,9 +871,9 @@
 						<string>Color3</string>
 						<key>value</key>
 						<array>
-							<integer>255</integer>
-							<integer>255</integer>
-							<integer>255</integer>
+							<integer>0</integer>
+							<integer>0</integer>
+							<integer>0</integer>
 						</array>
 					</dict>
 					<dict>
@@ -894,9 +894,9 @@
 						<string>Color3</string>
 						<key>value</key>
 						<array>
-							<integer>255</integer>
-							<integer>255</integer>
-							<integer>255</integer>
+							<integer>0</integer>
+							<integer>0</integer>
+							<integer>0</integer>
 						</array>
 					</dict>
 				</array>

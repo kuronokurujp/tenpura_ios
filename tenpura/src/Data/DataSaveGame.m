@@ -184,6 +184,38 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 }
 
 /*
+	@brief	スコア追加
+	@param	in_score	: 加算するスコア数
+*/
+-(void)	addSaveScore:(int64_t)in_score
+{
+	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
+	NSAssert( pData, @"セーブデータ取得失敗" );
+
+	if( pData != nil )
+	{
+		pData->score	+= in_score;
+		[mp_SaveData save];
+	}
+}
+
+/*
+	@brief	金額加算
+	@param	in_addMoney : 追加する金額
+*/
+-(void)	addSaveMoeny:(long)in_addMoney
+{
+	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
+	NSAssert( pData, @"セーブデータ取得失敗" );
+
+	if( pData != nil )
+	{
+		pData->money	= pData->money + in_addMoney;
+		[mp_SaveData save];
+	}
+}
+
+/*
 	@brief	現在時刻を記録
 	@return	時刻セーブ成功 = YES
 */
@@ -207,6 +239,35 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 	
 	NSAssert( 0, @"セーブデータ取得失敗" );
 	return NO;
+}
+
+/*
+	@brief	ミッションフラグをたてる
+	@param	設定するフラグ / 設定するミッションリストidx
+*/
+-(void)	saveMissionFlg:(BOOL)in_flg:(UInt32)in_idx;
+{
+	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
+	if( (pData != nil) && (in_idx < eMISSION_MAX) )
+	{
+		pData->aMissionFlg[in_idx]	= in_flg;
+		
+		[mp_SaveData save];
+	}
+}
+
+/*
+	@brief	ランク設定
+	@param	設定するランク値
+*/
+-(void)	saveRank:(char)in_rank
+{
+	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
+	if( pData != nil )
+	{
+		pData->rank	= in_rank;
+		[mp_SaveData save];
+	}
 }
 
 /*
@@ -241,38 +302,6 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 	out_pData->aItems[ 0 ].no	= 1;
 	out_pData->aItems[ 0 ].num	= 1;
 	out_pData->itemNum	= 1;
-}
-
-/*
-	@brief	スコア追加
-	@param	in_score	: 加算するスコア数
-*/
--(void)	addSaveScore:(int64_t)in_score
-{
-	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
-	NSAssert( pData, @"セーブデータ取得失敗" );
-
-	if( pData != nil )
-	{
-		pData->score	+= in_score;
-		[mp_SaveData save];
-	}
-}
-
-/*
-	@brief	金額加算
-	@param	in_addMoney : 追加する金額
-*/
--(void)	addSaveMoeny:(long)in_addMoney
-{
-	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
-	NSAssert( pData, @"セーブデータ取得失敗" );
-
-	if( pData != nil )
-	{
-		pData->money	= pData->money + in_addMoney;
-		[mp_SaveData save];
-	}
 }
 
 /*

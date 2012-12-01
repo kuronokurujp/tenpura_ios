@@ -10,7 +10,7 @@
 #import "Nabe.h"
 #import "TenpuraIcon.h"
 
-#import "../Action/ActionCustomer.h"
+#import "../ActionCustomer/ActionCustomer.h"
 #import "../Data/DataNetaList.h"
 #import "../Data/DataGlobal.h"
 #import "../Data/DataSettingTenpura.h"
@@ -206,9 +206,21 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 */
 -(void)	removeAllEatIcon
 {
-	for( SInt32 i = 0; i < eEAT_MAX; ++i)
+	CCArray*	pRemoveNodeArray	= [CCArray array];
+	
+	CCNode*	pNode	= nil;
+	CCARRAY_FOREACH(children_, pNode)
 	{
-		[self removeChildByTag:eTAG_EAT_ICON cleanup:YES];
+		if( [pNode isKindOfClass:[TenpuraIcon class]] )
+		{
+			[pRemoveNodeArray addObject:pNode];
+		}
+	}
+	
+	//	ここで一気に消す
+	CCARRAY_FOREACH(pRemoveNodeArray, pNode)
+	{
+		[self removeChild:pNode cleanup:YES];
 	}
 }
 

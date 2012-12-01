@@ -19,13 +19,17 @@
 @private
 	//	変数定義
 	CCSprite*		mp_sp;
+	SInt32			m_tenpuraZOrder;
 }
 
 //	関数定義
--(Tenpura*)	addTenpura:(NETA_DATA_ST)in_data;
--(void)	subTenpura:(Tenpura*)in_pTenpura;
 
--(void)	setVisibleTenpura:(BOOL)in_bFlg;
+//	天ぷら追加
+-(Tenpura*)	addTenpura:(NETA_DATA_ST)in_data;
+//	追加した天ぷら削除
+-(void)	removeTenpura:(Tenpura*)in_pTenpura;
+//	追加天ぷらすべて削除
+-(void)	allRemoveTenpura;
 
 //	オーバーライド定義
 -(CGRect)	boundingBox;

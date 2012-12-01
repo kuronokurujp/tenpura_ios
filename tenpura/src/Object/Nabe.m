@@ -19,6 +19,8 @@ enum
 	eTEPURA_MAX	= 32,	//	天ぷら最大確保個数
 };
 
+static const SInt32	s_startTenpuraZOrder	= 10;
+
 /*
 	@brief	初期化
 */
@@ -36,8 +38,10 @@ enum
 		{
 			Tenpura*	pTenpura	= [Tenpura node];
 			[pTenpura setVisible:NO];
-			[self addChild:pTenpura z:10.f];
+			[self addChild:pTenpura z:s_startTenpuraZOrder];
 		}
+		
+		m_tenpuraZOrder	= s_startTenpuraZOrder;
 		
 		[self scheduleUpdate];
 	}
@@ -68,7 +72,7 @@ enum
 		if( [pNode isKindOfClass:[Tenpura class]] == YES )
 		{
 			pTenpura	= (Tenpura*)pNode;
-			if( pTenpura.state == eTENPUrA_STATE_RESTART )
+			if( (pTenpura.bRaise == YES) && (pTenpura.state == eTENPUrA_STATE_RESTART) )
 			{
 				[pTenpura reset];
 				[pTenpura setVisible:YES];
@@ -107,6 +111,8 @@ enum
 
 				[pTenpura setupToPosIndex:in_data:posIdx];
 				[pTenpura startRaise];
+				[pTenpura setZOrder:m_tenpuraZOrder];
+				m_tenpuraZOrder += 1;
 				
 				return pTenpura;
 			}
@@ -121,7 +127,7 @@ enum
 /*
 	@brief	天ぷら削除
 */
--(void)	subTenpura:(Tenpura*)in_pTenpura
+-(void)	removeTenpura:(Tenpura*)in_pTenpura
 {
 	if( ( in_pTenpura == nil ) || ( in_pTenpura.bRaise == NO ) )
 	{
@@ -133,19 +139,27 @@ enum
 	[pDataTenpuraPosList setUseFlg:NO :in_pTenpura.posDataIdx];
 
 	[in_pTenpura end];
+	m_tenpuraZOrder -= 1;
 }
 
 /*
-	@breif
+	@brief	配置した天ぷらをすべて外す
 */
--(void)	setVisibleTenpura:(BOOL)in_bFlg
+-(void)	allRemoveTenpura
 {
-	CCNode*	pNode	= nil;
+	m_tenpuraZOrder	= s_startTenpuraZOrder;
+
+	Tenpura*	pTenpura	= nil;
+	CCNode*		pNode		= nil;
 	CCARRAY_FOREACH(children_, pNode)
 	{
 		if( [pNode isKindOfClass:[Tenpura class]] == YES )
 		{
-			[pNode setVisible:NO];
+			pTenpura	= (Tenpura*)pNode;
+			if( pTenpura.bRaise == YES )
+			{
+				[pTenpura end];
+			}
 		}
 	}
 }
@@ -157,5 +171,30 @@ enum
 {
 	return mp_sp.boundingBox;
 }
+
+#ifdef DEBUG
+-(void)	draw
+{
+	[super draw];
+
+	ccDrawColor4B(255, 0, 255, 255);
+	CGPoint	p1,p2,p3,p4;
+	
+	CGRect	rect	= [self boundingBox];
+
+	p1	= ccp(rect.origin.x + 2,rect.origin.y + 1);
+	p2	= ccp(rect.origin.x + 2,rect.origin.y + rect.size.height - 2);
+	p3	= ccp(rect.origin.x + rect.size.width - 2,rect.origin.y + rect.size.height - 2);
+	p4	= ccp(rect.origin.x + rect.size.width - 2,rect.origin.y + 1);
+
+	ccDrawLine(p1,p2);
+	ccDrawLine(p2,p3);
+	ccDrawLine(p3,p4);
+	ccDrawLine(p4,p1);
+	
+	ccDrawColor4B(255, 255, 255, 255);
+}
+
+#endif
 
 @end

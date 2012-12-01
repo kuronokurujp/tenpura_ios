@@ -15,7 +15,14 @@
 #import "./../Data/DataBaseText.h"
 #import "./../Data/DataGlobal.h"
 #import "./../Data/DataSaveGame.h"
+#import "./../Data/DataMissionList.h"
 #import "./SettingChildScene/UseSelectItemScene.h"
+
+@interface SettingScene (PriveteMethod)
+
+-(void)	_checkMissionSuccess;
+
+@end
 
 @implementation SettingScene
 
@@ -29,6 +36,7 @@
 	if( self = [super init] )
 	{
 		mp_useItemNoList	= [[CCArray alloc] init];
+		mp_missionSucceesAlertView	= nil;		
 	}
 	
 	return self;
@@ -42,6 +50,12 @@
 	mp_nowHiScoreText	= nil;
 	mp_nowMoneyText	= nil;
 
+	if( mp_missionSucceesAlertView != nil )
+	{
+		[mp_missionSucceesAlertView release];
+		mp_missionSucceesAlertView	= nil;
+	}
+	
 	if( mp_useItemNoList != nil )
 	{
 		[mp_useItemNoList release];
@@ -66,6 +80,14 @@
 			break;
 		}
 	}
+	
+	DataSaveGame*	pDataSaveGame	= [DataSaveGame shared];
+	NSAssert(pDataSaveGame, @"セーブデータがない");
+	const SAVE_DATA_ST*	pSaveData	= [pDataSaveGame getData];
+	NSAssert(pSaveData, @"セーブデータの中身がない");
+
+	//	金額反映
+	[mp_nowMoneyText setString:[NSString stringWithFormat:@"%06ld", pSaveData->money]];
 
 	[super onEnter];
 }
@@ -82,6 +104,9 @@
 		NSAssert(n, @"");
 		[[NSNotificationCenter defaultCenter] postNotification:n];
 	}
+	
+	//	成功しているミッションがあるかチェック
+	[self _checkMissionSuccess];
 
 	[super onEnterTransitionDidFinish];
 }
@@ -243,6 +268,53 @@
 		{
 			mp_gameStartBtn	= (CCControlButton*)pNode;
 			[mp_gameStartBtn setVisible:NO];
+		}
+	}
+}
+
+/*
+	@brief	ミッション成功メッセージ終了
+*/
+-(void)	alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	//	他に成功しているミッションがないかチェック
+	[self _checkMissionSuccess];
+	
+	DataSaveGame*	pDataSaveGame	= [DataSaveGame shared];
+	NSAssert(pDataSaveGame, @"セーブデータがない");
+	const SAVE_DATA_ST*	pSaveData	= [pDataSaveGame getData];
+	NSAssert(pSaveData, @"セーブデータの中身がない");
+
+	//	金額反映
+	[mp_nowMoneyText setString:[NSString stringWithFormat:@"%06ld", pSaveData->money]];
+}
+
+/*
+	@brief	ミッション成功チェック
+*/
+-(void)	_checkMissionSuccess
+{
+	DataMissionList*	pMissionInst	= [DataMissionList shared];
+	UInt32	missionNum	= pMissionInst.dataNum;
+	for( UInt32 i = 0; i < missionNum; ++i )
+	{
+		if( [pMissionInst checSuccess:i] == YES )
+		{
+			[pMissionInst setSuccess:YES:i];
+			//	ミッション成功メッセージを出す（アラート）
+			if( mp_missionSucceesAlertView != nil )
+			{
+				[mp_missionSucceesAlertView release];
+				mp_missionSucceesAlertView	= nil;
+			}
+
+			mp_missionSucceesAlertView	= [[UIAlertView alloc]	initWithTitle:[DataBaseText getString:68]
+											message:[pMissionInst getSuccessMsg:i]
+											delegate:self
+											cancelButtonTitle:[DataBaseText getString:46]
+											otherButtonTitles:nil];
+			[mp_missionSucceesAlertView show];
+			break;
 		}
 	}
 }

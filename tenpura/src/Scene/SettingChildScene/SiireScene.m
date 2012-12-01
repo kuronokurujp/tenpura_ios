@@ -145,6 +145,8 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 -(SWTableViewCell*)table:(SWTableView *)table cellAtIndex:(NSUInteger)idx
 {
 	const NETA_DATA_ST*	pData	= [[DataNetaList shared] getData:idx];
+	NSAssert(pData, @"ネタデータがない");
+
 	UInt32	nowMoney	= [[DataSaveGame shared] getData]->money;
 	DataBaseText*	pDataBaseTextShared	= [DataBaseText shared];
 

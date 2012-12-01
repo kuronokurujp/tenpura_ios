@@ -169,6 +169,18 @@ static DataTenpuraPosList*	s_pDatTenpuraPosListInst	= nil;
 }
 
 /*
+	@brief
+*/
+-(void)	clearFlg
+{
+	SInt32	i	= 0;
+	for( i = 0; i < m_dataNum; ++i )
+	{
+		mp_dataList[i].bUse	= NO;
+	}
+}
+
+/*
 	@brief	データ解析
 */
 -(TENPURA_POS_ST)	parse:(NSArray*)in_dataArray

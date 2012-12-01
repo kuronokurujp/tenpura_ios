@@ -9,11 +9,19 @@
 /* Begin PBXBuildFile section */
 		CE1281161642974800D369CF /* SettingScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1281151642974800D369CF /* SettingScene.m */; };
 		CE12811916429D0200D369CF /* setting.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE12811816429D0200D369CF /* setting.ccbi */; };
+		CE18C49C1667ABA000ED1E85 /* DataMissionList.m in Sources */ = {isa = PBXBuildFile; fileRef = CE18C49B1667ABA000ED1E85 /* DataMissionList.m */; };
+		CE18C4A31667D84200ED1E85 /* missionListData.csv in Resources */ = {isa = PBXBuildFile; fileRef = CE18C4A21667D84200ED1E85 /* missionListData.csv */; };
 		CE361D2A164353CF00339BB0 /* not_buy_cell.png in Resources */ = {isa = PBXBuildFile; fileRef = CE361D29164353CF00339BB0 /* not_buy_cell.png */; };
 		CE4D94D3166126BA003743D7 /* StoreAppPurchaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4D94D2166126BA003743D7 /* StoreAppPurchaseViewController.m */; };
 		CE51773816494022004DF4F6 /* GameKitHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = CE51773716494022004DF4F6 /* GameKitHelper.m */; };
 		CE51774316497376004DF4F6 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE51774216497376004DF4F6 /* GameKit.framework */; };
 		CE5177531649D921004DF4F6 /* UINavigationControllerExt.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5177521649D921004DF4F6 /* UINavigationControllerExt.m */; };
+		CE5BAA471669776500BD3606 /* ActionCustomer.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5BAA431669776500BD3606 /* ActionCustomer.m */; };
+		CE5BAA481669776500BD3606 /* ActionCustomerMng.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5BAA461669776500BD3606 /* ActionCustomerMng.m */; };
+		CE5BAA4C1669778F00BD3606 /* ActionCustomerBase.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5BAA4B1669778F00BD3606 /* ActionCustomerBase.m */; };
+		CE5BAA4F16697C6E00BD3606 /* ActionCustomerPut.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5BAA4E16697C6E00BD3606 /* ActionCustomerPut.m */; };
+		CE5BAA5216697DD500BD3606 /* ActionCustomerExit.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5BAA5116697DD500BD3606 /* ActionCustomerExit.m */; };
+		CE5BAA5816697F9800BD3606 /* ActionCustomerTenpurHit.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5BAA5716697F9800BD3606 /* ActionCustomerTenpurHit.m */; };
 		CE5F089416440C270005721C /* UseSelectItemScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5F089316440C270005721C /* UseSelectItemScene.m */; };
 		CE69CD5C1651155D00BFDBD2 /* SWTableViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = CE69CD5B1651155D00BFDBD2 /* SWTableViewHelper.m */; };
 		CE8360B51647FA2700CC11E0 /* SiireScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8360B31647FA2700CC11E0 /* SiireScene.m */; };
@@ -212,7 +220,6 @@
 		CED247771639965100506CA8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CED247761639965100506CA8 /* main.m */; };
 		CED2478D163996D800506CA8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CED24788163996D800506CA8 /* AppDelegate.m */; };
 		CED247921639975000506CA8 /* BootScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CED247911639975000506CA8 /* BootScene.m */; };
-		CED2479C163997BB00506CA8 /* ActionCustomer.m in Sources */ = {isa = PBXBuildFile; fileRef = CED2479B163997BB00506CA8 /* ActionCustomer.m */; };
 		CED247B5163997D300506CA8 /* DataGlobal.c in Sources */ = {isa = PBXBuildFile; fileRef = CED247AF163997D300506CA8 /* DataGlobal.c */; };
 		CED247B6163997D300506CA8 /* DataNetaList.m in Sources */ = {isa = PBXBuildFile; fileRef = CED247B2163997D300506CA8 /* DataNetaList.m */; };
 		CED247B7163997D300506CA8 /* DataTenpuraPosList.m in Sources */ = {isa = PBXBuildFile; fileRef = CED247B4163997D300506CA8 /* DataTenpuraPosList.m */; };
@@ -286,6 +293,9 @@
 		CE1281141642974800D369CF /* SettingScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingScene.h; path = src/Scene/SettingScene.h; sourceTree = "<group>"; };
 		CE1281151642974800D369CF /* SettingScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingScene.m; path = src/Scene/SettingScene.m; sourceTree = "<group>"; };
 		CE12811816429D0200D369CF /* setting.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = setting.ccbi; path = Resources/ccbi/setting.ccbi; sourceTree = "<group>"; };
+		CE18C49A1667ABA000ED1E85 /* DataMissionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataMissionList.h; path = src/Data/DataMissionList.h; sourceTree = "<group>"; };
+		CE18C49B1667ABA000ED1E85 /* DataMissionList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataMissionList.m; path = src/Data/DataMissionList.m; sourceTree = "<group>"; };
+		CE18C4A21667D84200ED1E85 /* missionListData.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = missionListData.csv; path = Resources/data/missionListData.csv; sourceTree = "<group>"; };
 		CE361D29164353CF00339BB0 /* not_buy_cell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = not_buy_cell.png; path = Resources/tableView/not_buy_cell.png; sourceTree = "<group>"; };
 		CE4D94D1166126BA003743D7 /* StoreAppPurchaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StoreAppPurchaseViewController.h; path = src/System/StoreView/StoreAppPurchaseViewController.h; sourceTree = "<group>"; };
 		CE4D94D2166126BA003743D7 /* StoreAppPurchaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StoreAppPurchaseViewController.m; path = src/System/StoreView/StoreAppPurchaseViewController.m; sourceTree = "<group>"; };
@@ -294,6 +304,19 @@
 		CE51774216497376004DF4F6 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		CE5177511649D921004DF4F6 /* UINavigationControllerExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UINavigationControllerExt.h; path = src/UINavigationControllerExt.h; sourceTree = "<group>"; };
 		CE5177521649D921004DF4F6 /* UINavigationControllerExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UINavigationControllerExt.m; path = src/UINavigationControllerExt.m; sourceTree = "<group>"; };
+		CE5BAA421669776500BD3606 /* ActionCustomer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionCustomer.h; path = src/ActionCustomer/ActionCustomer.h; sourceTree = "<group>"; };
+		CE5BAA431669776500BD3606 /* ActionCustomer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActionCustomer.m; path = src/ActionCustomer/ActionCustomer.m; sourceTree = "<group>"; };
+		CE5BAA441669776500BD3606 /* ActionCustomerList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionCustomerList.h; path = src/ActionCustomer/ActionCustomerList.h; sourceTree = "<group>"; };
+		CE5BAA451669776500BD3606 /* ActionCustomerMng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionCustomerMng.h; path = src/ActionCustomer/ActionCustomerMng.h; sourceTree = "<group>"; };
+		CE5BAA461669776500BD3606 /* ActionCustomerMng.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActionCustomerMng.m; path = src/ActionCustomer/ActionCustomerMng.m; sourceTree = "<group>"; };
+		CE5BAA4A1669778F00BD3606 /* ActionCustomerBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionCustomerBase.h; path = src/ActionCustomer/Action/ActionCustomerBase.h; sourceTree = "<group>"; };
+		CE5BAA4B1669778F00BD3606 /* ActionCustomerBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActionCustomerBase.m; path = src/ActionCustomer/Action/ActionCustomerBase.m; sourceTree = "<group>"; };
+		CE5BAA4D16697C6E00BD3606 /* ActionCustomerPut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionCustomerPut.h; path = src/ActionCustomer/Action/ActionCustomerPut.h; sourceTree = "<group>"; };
+		CE5BAA4E16697C6E00BD3606 /* ActionCustomerPut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActionCustomerPut.m; path = src/ActionCustomer/Action/ActionCustomerPut.m; sourceTree = "<group>"; };
+		CE5BAA5016697DD500BD3606 /* ActionCustomerExit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionCustomerExit.h; path = src/ActionCustomer/Action/ActionCustomerExit.h; sourceTree = "<group>"; };
+		CE5BAA5116697DD500BD3606 /* ActionCustomerExit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActionCustomerExit.m; path = src/ActionCustomer/Action/ActionCustomerExit.m; sourceTree = "<group>"; };
+		CE5BAA5616697F9800BD3606 /* ActionCustomerTenpurHit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionCustomerTenpurHit.h; path = src/ActionCustomer/Action/ActionCustomerTenpurHit.h; sourceTree = "<group>"; };
+		CE5BAA5716697F9800BD3606 /* ActionCustomerTenpurHit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActionCustomerTenpurHit.m; path = src/ActionCustomer/Action/ActionCustomerTenpurHit.m; sourceTree = "<group>"; };
 		CE5F089216440C270005721C /* UseSelectItemScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UseSelectItemScene.h; path = src/Scene/SettingChildScene/UseSelectItemScene.h; sourceTree = "<group>"; };
 		CE5F089316440C270005721C /* UseSelectItemScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UseSelectItemScene.m; path = src/Scene/SettingChildScene/UseSelectItemScene.m; sourceTree = "<group>"; };
 		CE69CD5A1651155D00BFDBD2 /* SWTableViewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWTableViewHelper.h; path = src/System/TableView/SWTableViewHelper.h; sourceTree = "<group>"; };
@@ -633,8 +656,6 @@
 		CED24788163996D800506CA8 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = src/AppDelegate.m; sourceTree = "<group>"; };
 		CED247901639975000506CA8 /* BootScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BootScene.h; path = src/BootScene.h; sourceTree = "<group>"; };
 		CED247911639975000506CA8 /* BootScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BootScene.m; path = src/BootScene.m; sourceTree = "<group>"; };
-		CED2479A163997BB00506CA8 /* ActionCustomer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionCustomer.h; path = src/Action/ActionCustomer.h; sourceTree = "<group>"; };
-		CED2479B163997BB00506CA8 /* ActionCustomer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActionCustomer.m; path = src/Action/ActionCustomer.m; sourceTree = "<group>"; };
 		CED247AF163997D300506CA8 /* DataGlobal.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = DataGlobal.c; path = src/Data/DataGlobal.c; sourceTree = "<group>"; };
 		CED247B0163997D300506CA8 /* DataGlobal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataGlobal.h; path = src/Data/DataGlobal.h; sourceTree = "<group>"; };
 		CED247B1163997D300506CA8 /* DataNetaList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataNetaList.h; path = src/Data/DataNetaList.h; sourceTree = "<group>"; };
@@ -804,6 +825,34 @@
 				CE51773716494022004DF4F6 /* GameKitHelper.m */,
 			);
 			name = GameCenter;
+			sourceTree = "<group>";
+		};
+		CE5BAA411669774A00BD3606 /* ActionCustomer */ = {
+			isa = PBXGroup;
+			children = (
+				CE5BAA491669776F00BD3606 /* Action */,
+				CE5BAA421669776500BD3606 /* ActionCustomer.h */,
+				CE5BAA431669776500BD3606 /* ActionCustomer.m */,
+				CE5BAA441669776500BD3606 /* ActionCustomerList.h */,
+				CE5BAA451669776500BD3606 /* ActionCustomerMng.h */,
+				CE5BAA461669776500BD3606 /* ActionCustomerMng.m */,
+			);
+			name = ActionCustomer;
+			sourceTree = "<group>";
+		};
+		CE5BAA491669776F00BD3606 /* Action */ = {
+			isa = PBXGroup;
+			children = (
+				CE5BAA4A1669778F00BD3606 /* ActionCustomerBase.h */,
+				CE5BAA4B1669778F00BD3606 /* ActionCustomerBase.m */,
+				CE5BAA4D16697C6E00BD3606 /* ActionCustomerPut.h */,
+				CE5BAA4E16697C6E00BD3606 /* ActionCustomerPut.m */,
+				CE5BAA5016697DD500BD3606 /* ActionCustomerExit.h */,
+				CE5BAA5116697DD500BD3606 /* ActionCustomerExit.m */,
+				CE5BAA5616697F9800BD3606 /* ActionCustomerTenpurHit.h */,
+				CE5BAA5716697F9800BD3606 /* ActionCustomerTenpurHit.m */,
+			);
+			name = Action;
 			sourceTree = "<group>";
 		};
 		CE5F089016440C140005721C /* SettingChildScene */ = {
@@ -1266,6 +1315,7 @@
 		CED24786163996CA00506CA8 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				CE5BAA411669774A00BD3606 /* ActionCustomer */,
 				CEDD40F5165AA0450037F60B /* Admob */,
 				CEF24D7A163C131200ACE56F /* CCBReader */,
 				CED24799163997AB00506CA8 /* TableCells */,
@@ -1273,7 +1323,6 @@
 				CED24797163997A200506CA8 /* Scene */,
 				CED247961639979B00506CA8 /* Object */,
 				CED247951639979600506CA8 /* Data */,
-				CED247931639978900506CA8 /* Action */,
 				CED24787163996D800506CA8 /* AppDelegate.h */,
 				CED24788163996D800506CA8 /* AppDelegate.m */,
 				CED247901639975000506CA8 /* BootScene.h */,
@@ -1282,15 +1331,6 @@
 				CE5177521649D921004DF4F6 /* UINavigationControllerExt.m */,
 			);
 			name = src;
-			sourceTree = "<group>";
-		};
-		CED247931639978900506CA8 /* Action */ = {
-			isa = PBXGroup;
-			children = (
-				CED2479A163997BB00506CA8 /* ActionCustomer.h */,
-				CED2479B163997BB00506CA8 /* ActionCustomer.m */,
-			);
-			name = Action;
 			sourceTree = "<group>";
 		};
 		CED247951639979600506CA8 /* Data */ = {
@@ -1308,6 +1348,8 @@
 				CEC9CF6B16453C3300D446A3 /* DataSettingTenpura.m */,
 				CEE23B2D164676850033ADA0 /* DataBaseText.h */,
 				CEE23B2E164676850033ADA0 /* DataBaseText.m */,
+				CE18C49A1667ABA000ED1E85 /* DataMissionList.h */,
+				CE18C49B1667ABA000ED1E85 /* DataMissionList.m */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -1443,6 +1485,7 @@
 			isa = PBXGroup;
 			children = (
 				CEE23B2A1646764B0033ADA0 /* textData.csv */,
+				CE18C4A21667D84200ED1E85 /* missionListData.csv */,
 				CED24806163998DD00506CA8 /* netaList.csv */,
 				CED24807163998DD00506CA8 /* tenpuraPosList.csv */,
 			);
@@ -1823,6 +1866,7 @@
 				CEABDF831663DA6D00043570 /* tamanegi0.png in Resources */,
 				CEABDF841663DA6D00043570 /* taranome0.png in Resources */,
 				CEABDF851663DA6D00043570 /* toumorokoshi0.png in Resources */,
+				CE18C4A31667D84200ED1E85 /* missionListData.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1936,7 +1980,6 @@
 				CED247771639965100506CA8 /* main.m in Sources */,
 				CED2478D163996D800506CA8 /* AppDelegate.m in Sources */,
 				CED247921639975000506CA8 /* BootScene.m in Sources */,
-				CED2479C163997BB00506CA8 /* ActionCustomer.m in Sources */,
 				CED247B5163997D300506CA8 /* DataGlobal.c in Sources */,
 				CED247B6163997D300506CA8 /* DataNetaList.m in Sources */,
 				CED247B7163997D300506CA8 /* DataTenpuraPosList.m in Sources */,
@@ -1995,6 +2038,13 @@
 				CE69CD5C1651155D00BFDBD2 /* SWTableViewHelper.m in Sources */,
 				CEDD4108165AA1760037F60B /* BannerViewController.m in Sources */,
 				CE4D94D3166126BA003743D7 /* StoreAppPurchaseViewController.m in Sources */,
+				CE18C49C1667ABA000ED1E85 /* DataMissionList.m in Sources */,
+				CE5BAA471669776500BD3606 /* ActionCustomer.m in Sources */,
+				CE5BAA481669776500BD3606 /* ActionCustomerMng.m in Sources */,
+				CE5BAA4C1669778F00BD3606 /* ActionCustomerBase.m in Sources */,
+				CE5BAA4F16697C6E00BD3606 /* ActionCustomerPut.m in Sources */,
+				CE5BAA5216697DD500BD3606 /* ActionCustomerExit.m in Sources */,
+				CE5BAA5816697F9800BD3606 /* ActionCustomerTenpurHit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

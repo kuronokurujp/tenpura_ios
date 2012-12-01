@@ -64,6 +64,52 @@ static NSString*	s_pDataBaseTextFileName	= @"textData";
 	return nil;
 }
 
+/*
+	@brief	テキストフィールド込みの文字列を返す
+*/
++(NSString*)getStringOfField:(const char*)in_pText
+{
+	if( (in_pText != nil) && (s_pDataBaseTextInst != nil ) )
+	{
+		NSMutableString*	pRetTextString	= [NSMutableString stringWithUTF8String:in_pText];
+		{
+			NSMutableString*	pTextString	= [NSMutableString stringWithUTF8String:in_pText];
+
+			NSError*	pError	= nil;
+			NSRegularExpression*	pRegexp	= [NSRegularExpression regularExpressionWithPattern:@"<textid=(([0-9])*)/>" options:0 error:&pError];
+			if( pError != nil )
+			{
+				NSLog(@"%@", pError);
+			}
+			else
+			{
+				NSArray*	pMatch	= [pRegexp matchesInString:pTextString options:0 range:NSMakeRange(0, pTextString.length)];
+				for( SInt32 i = 0; i < [pMatch count]; ++i)
+				{
+					NSTextCheckingResult*	pRes	= [pMatch objectAtIndex:i];
+					if( pRes != nil )
+					{
+						//	テキストIDからテキストへ変換
+						SInt32	textId	= [[pTextString substringWithRange:[pRes rangeAtIndex:1]] intValue];
+						const char*	pRepText	= [s_pDataBaseTextInst getText:textId];
+						if( pRepText != nil )
+						{
+							//	指定したテキストフィールドを置換する
+							NSString*	pTextFieldStr	= [pTextString substringWithRange:[pRes rangeAtIndex:0]];
+							NSString*	pRepTextStr	= [NSString stringWithUTF8String:pRepText];
+							[pRetTextString replaceOccurrencesOfString:pTextFieldStr withString:pRepTextStr options:0 range:NSMakeRange(0, [pRetTextString length])];
+						}
+					}
+				}
+			}
+		}
+		
+		return pRetTextString;
+	}
+	
+	return nil;
+}
+
 +(id)	alloc
 {
 	NSAssert(s_pDataBaseTextInst == nil, @"Attempted to allocate a second instance of a singleton.");
