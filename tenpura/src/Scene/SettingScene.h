@@ -10,6 +10,7 @@
 #import "cocos2d.h"
 
 #import	"./../Data/DataNetaList.h"
+#import "./../Object/Ticker.h"
 #import "./../../libs/CCControlExtension/CCControl/CCControlButton.h"
 
 @interface SettingScene : CCLayer
@@ -20,10 +21,9 @@
 @private
 	//	セッティング用項目リスト
 	CCArray*			mp_useItemNoList;
-	CCLabelTTF*			mp_nowMoneyText;
-	CCLabelTTF*			mp_nowHiScoreText;
 	CCControlButton*	mp_gameStartBtn;
 	UIAlertView*		mp_missionSucceesAlertView;
+	LeftMoveTicker*		mp_ticker;
 }
 
 @property	(nonatomic, retain)CCArray*	useItemNoList;

@@ -69,7 +69,7 @@
 }
 
 /*
-	@brief
+	@brief	ゲーム変移
 */
 -(void)	pressGameBtn
 {
@@ -82,11 +82,25 @@
 }
 
 /*
-	@brief
+	@brief	ゲームセンター変移
 */
 -(void)	pressGameCenterBtn
 {
 	[[GameKitHelper shared] showGameCenter];
+}
+
+/*
+	@brief	ヘルプ画面変移
+*/
+-(void)	pressHelpBtn
+{
+}
+
+/*
+	@brief	アプリ画面変移
+*/
+-(void)	pressMoreAppBtn
+{
 }
 
 @end

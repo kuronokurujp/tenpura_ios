@@ -24,7 +24,6 @@
 @synthesize idx		= m_idx;
 @synthesize money	= m_money;
 @synthesize score	= m_score;
-@synthesize regeistTenpuraDelPermitName	= mp_registTenpuraDelPermitName;
 
 //	食べれる最大数
 enum
@@ -70,7 +69,6 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 	
 		mb_put	= NO;
 		m_idx	= in_idx;
-		mp_registTenpuraDelPermitName	= [[NSString stringWithFormat:@"customer%ld_TenpuraDel", in_idx] retain];
 
 		NSString*	pFileName	= @"";
 		if( in_type == eTYPE_BASIC )
@@ -96,12 +94,9 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 */
 -(void)	dealloc
 {
-	[mp_registTenpuraDelPermitName release];
-
 	mp_sp	= nil;
 	mp_act	= nil;
 	mp_nabe	= nil;
-	mp_registTenpuraDelPermitName	= nil;
 	mp_settingTenpuraList	= nil;
 
 	[super dealloc];
@@ -128,9 +123,6 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 		Tenpura*	pTenpura	= [mp_nabe addTenpura:*pData];
 		if( pTenpura != nil )
 		{
-			//	退場時の通知依頼
-			[pTenpura registDeletePermitObserver:mp_registTenpuraDelPermitName];
-
 			NSString*	pFileName	= [NSString stringWithFormat:@"cust_%s.png", pData->fileName];
 
 			//	アイコン作成

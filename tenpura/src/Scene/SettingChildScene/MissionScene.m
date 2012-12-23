@@ -53,15 +53,6 @@ static const char*	sp_MissionListCellSpriteName	= "neta_cell.png";
 	[[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:2];
 }
 
-/*
-	@brief
-*/
--(void)	pressGameCenterBtn
-{
-	CCLOG(@"GameCenter");
-	[[GameKitHelper shared] showGameCenter];
-}
-
 //	デリゲート定義
 /*
 	@brief	テーブルがセルにタッチしたときに呼ばれる

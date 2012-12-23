@@ -383,6 +383,7 @@
         
         if (setProp)
         {
+/*
             if ([name isEqualToString:@"touchEnabled"] &&
                 [node respondsToSelector:@selector(setTouchEnabled:)])
             {
@@ -393,7 +394,16 @@
             {
                 name = @"isMouseEnabled";
             }
-            
+*/
+            if ([name isEqualToString:@"touchEnabled"])
+            {
+                name = @"isTouchEnabled";
+            }
+            if ([name isEqualToString:@"mouseEnabled"])
+            {
+                name = @"isMouseEnabled";
+            }
+
             id value = [NSNumber numberWithBool:b];
             [node setValue:value forKey:name];
             

@@ -10,7 +10,7 @@
 
 #import "./GameChildScene/GameStartScene.h"
 #import "./GameChildScene/GameInScene.h"
-#import "./GameChildScene/GameResultScene.h"
+#import "./GameChildScene/GameEndScene.h"
 
 #import "./../ActionCustomer/ActionCustomer.h"
 #import "./../Data/DataNetaList.h"
@@ -37,7 +37,7 @@
 @implementation GameScene
 
 static const Float32	s_basicFontSize	= 32.f;
-static const Float32	s_baseTimeVal	= 30.f;
+static const Float32	s_baseTimeVal	= 1.f;
 
 //	各ゲームシーン
 enum
@@ -197,7 +197,7 @@ enum
 -(void)	onEnterTransitionDidFinish
 {
 	//	ゲームスタート演出
-	[self addChild:[GameStartScene node] z:0 tag:eGAME_START_SCENE_TAG];
+	[self addChild:[GameStartScene node] z:10 tag:eGAME_START_SCENE_TAG];
 	[self schedule:@selector(_updateGameStart:)];
 }
 
@@ -231,7 +231,7 @@ enum
 
 		[self unschedule:_cmd];
 		
-		[self addChild:[GameResultScene node] z:10 tag:eGAME_RESULT_SCENE_TAG];
+		[self addChild:[GameEndScene node] z:10 tag:eGAME_RESULT_SCENE_TAG];
 		[self schedule:@selector(_updateResult:)];
 	}
 }
@@ -241,12 +241,12 @@ enum
 */
 -(void)	_updateResult:(ccTime)delta
 {
-	GameResultScene*	pGameResultScene	= (GameResultScene*)[self getChildByTag:eGAME_RESULT_SCENE_TAG];
-	if( pGameResultScene.visible == NO )
+	GameEndScene*	pGameEndScene	= (GameEndScene*)[self getChildByTag:eGAME_RESULT_SCENE_TAG];
+	if( pGameEndScene.visible == NO )
 	{
 		[self unschedule:_cmd];
 		
-		switch ((SInt32)pGameResultScene.resultType)
+		switch ((SInt32)pGameEndScene.resultType)
 		{
 			case eRESULT_TYPE_RESTART:
 			{

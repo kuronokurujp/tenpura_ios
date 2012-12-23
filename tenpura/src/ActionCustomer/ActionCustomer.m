@@ -113,13 +113,6 @@ enum ACTION_LIST_ENUM
 	}
 
 	mp_customer.bPut	= NO;
-	// 通知を作成する
-	NSNotification *n = [NSNotification notificationWithName:mp_customer.regeistTenpuraDelPermitName object:mp_customer];
-	if( n != nil )
-	{
-		// 通知実行！
-		[[NSNotificationCenter defaultCenter] postNotification:n];
-	}
 
 	CGSize	winSize	= [[CCDirector sharedDirector] winSize];
 	CGPoint	pos	= ccp( winSize.width, mp_customer.position.y );

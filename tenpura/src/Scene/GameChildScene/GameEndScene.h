@@ -1,5 +1,5 @@
 //
-//  GameResultScene.h
+//  GameEndScene.h
 //  tenpura
 //
 //  Created by y.uchida on 12/10/06.
@@ -16,9 +16,11 @@ typedef enum
 	eRESULT_TYPE_SINAGAKI,
 } ResultTypeEnum;
 
-@interface GameResultScene : CCLayer {
-	
+@interface GameEndScene : CCLayer
+{
+@private
 	ResultTypeEnum	m_resultType;
+	CCSprite*		mp_endLogoSp;
 }
 
 @property (nonatomic, readonly)ResultTypeEnum resultType;

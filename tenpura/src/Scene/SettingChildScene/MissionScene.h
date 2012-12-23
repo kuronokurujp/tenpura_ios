@@ -9,9 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
+#import "./../BaseMenuScene.h"
 #import "./../../System/TableView/SWTableViewHelper.h"
 
-@interface MissionScene : SWTableViewHelper {
+@interface MissionScene : SWTableViewHelper
+{
 }
 
 @end

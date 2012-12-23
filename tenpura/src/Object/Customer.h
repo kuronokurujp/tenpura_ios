@@ -22,7 +22,6 @@
 	ActionCustomer*	mp_act;
 	Nabe*			mp_nabe;
 	CCArray*		mp_settingTenpuraList;
-	NSString*		mp_registTenpuraDelPermitName;
 	
 	BOOL	mb_put;
 	SInt32	m_idx;

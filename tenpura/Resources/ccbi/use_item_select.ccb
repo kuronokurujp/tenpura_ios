@@ -22,30 +22,19 @@
 		<array>
 			<dict>
 				<key>baseClass</key>
-				<string>CCSprite</string>
+				<string>CCBFile</string>
 				<key>children</key>
 				<array/>
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>CCSprite</string>
+				<string>CCBFile</string>
 				<key>memberVarAssignmentName</key>
 				<string></string>
 				<key>memberVarAssignmentType</key>
 				<integer>0</integer>
 				<key>properties</key>
 				<array>
-					<dict>
-						<key>name</key>
-						<string>anchorPoint</string>
-						<key>type</key>
-						<string>Point</string>
-						<key>value</key>
-						<array>
-							<real>0.0</real>
-							<real>0.0</real>
-						</array>
-					</dict>
 					<dict>
 						<key>name</key>
 						<string>scale</string>
@@ -61,22 +50,11 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>ignoreAnchorPointForPosition</string>
+						<string>ccbFile</string>
 						<key>type</key>
-						<string>Check</string>
+						<string>CCBFile</string>
 						<key>value</key>
-						<false/>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>displayFrame</string>
-						<key>type</key>
-						<string>SpriteFrame</string>
-						<key>value</key>
-						<array>
-							<string></string>
-							<string>bg/set_back.png</string>
-						</array>
+						<string>ccbi/base_menu.ccb</string>
 					</dict>
 				</array>
 			</dict>
@@ -102,7 +80,7 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>46</real>
+							<real>40</real>
 							<real>25</real>
 							<integer>0</integer>
 						</array>

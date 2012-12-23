@@ -36,7 +36,7 @@
 	if( self = [super init] )
 	{
 		mp_useItemNoList	= [[CCArray alloc] init];
-		mp_missionSucceesAlertView	= nil;		
+		mp_missionSucceesAlertView	= nil;
 	}
 	
 	return self;
@@ -47,9 +47,6 @@
 */
 -(void)dealloc
 {
-	mp_nowHiScoreText	= nil;
-	mp_nowMoneyText	= nil;
-
 	if( mp_missionSucceesAlertView != nil )
 	{
 		[mp_missionSucceesAlertView release];
@@ -70,6 +67,8 @@
 */
 -(void)	onEnter
 {
+	[mp_ticker setVisible:YES];
+
 	//	受け渡しためのデータリスト作成
 	SettingItemBtn*	pSettingItemBtn	= nil;
 	CCARRAY_FOREACH(mp_useItemNoList, pSettingItemBtn)
@@ -77,17 +76,10 @@
 		if( 0 < pSettingItemBtn.itemNo  )
 		{
 			[mp_gameStartBtn setVisible:YES];
+			[mp_ticker setVisible:NO];
 			break;
 		}
 	}
-	
-	DataSaveGame*	pDataSaveGame	= [DataSaveGame shared];
-	NSAssert(pDataSaveGame, @"セーブデータがない");
-	const SAVE_DATA_ST*	pSaveData	= [pDataSaveGame getData];
-	NSAssert(pSaveData, @"セーブデータの中身がない");
-
-	//	金額反映
-	[mp_nowMoneyText setString:[NSString stringWithFormat:@"%06ld", pSaveData->money]];
 
 	[super onEnter];
 }
@@ -163,9 +155,9 @@
 }
 
 /*
-	@brief	購入へ
+	@brief	ネタ購入へ
 */
--(void)	pressShopBtn
+-(void)	pressNetaShopBtn
 {
 	CCLOG(@"Shop");
 	
@@ -178,9 +170,17 @@
 }
 
 /*
+	@brief	アイテム購入
+*/
+-(void)	pressItemShopBtn
+{
+	CCLOG(@"ItemShop");
+}
+
+/*
 	@brief	天ぷら設定
 */
--(void)	pressSettingItemBtn:(id)sender
+-(void)	pressSettingNetaBtn:(id)sender
 {
 	CCLOG(@"SelectItem");
 	
@@ -213,6 +213,14 @@
 }
 
 /*
+	@brief	アイテム設定
+*/
+-(void)	pressSettingItemBtn:(id)sender
+{
+	CCLOG(@"settingItemBtn");
+}
+
+/*
 	@brief	ミッション画面へ移行
 */
 -(void)	pressMissionBtn
@@ -228,13 +236,22 @@
 }
 
 /*
+	@brief	タイトル画面へ移行
+*/
+-(void)	pressTitleBtn
+{
+	CCScene*	pTitleScene	= [CCBReader sceneWithNodeGraphFromFile:@"title.ccbi"];
+	CCTransitionFade*	pTransFade	=
+	[CCTransitionFade transitionWithDuration:2 scene:pTitleScene withColor:ccBLACK];
+	
+	[[CCDirector sharedDirector] replaceScene:pTransFade];
+}
+
+/*
 	@brief	CCBI読み込み終了
 */
 - (void) didLoadFromCCB
 {
-	DataSaveGame*	pDataSaveGame	= [DataSaveGame shared];
-	const SAVE_DATA_ST*	pSaveData	= [pDataSaveGame getData];
-
 	CCNode*	pNode	= nil;
 	CCARRAY_FOREACH(children_, pNode)
 	{
@@ -250,24 +267,14 @@
 				}
 			}
 		}
-		else if( [pNode isKindOfClass:[CCLabelTTF class]] )
-		{
-			CCLabelTTF*	pLabel	= (CCLabelTTF*)pNode;
-			if( [pLabel.string isEqualToString:@"moneyNum"] )
-			{
-				mp_nowMoneyText	= pLabel;
-				[mp_nowMoneyText setString:[NSString stringWithFormat:@"%06ld", pSaveData->money]];
-			}
-			else if( [pLabel.string isEqualToString:@"scoreNum"] )
-			{
-				mp_nowHiScoreText	= pLabel;
-				[mp_nowHiScoreText setString:[NSString stringWithFormat:@"%06lld", pSaveData->score]];
-			}
-		}
 		else if( [pNode isKindOfClass:[SettingGameStartBtn class]] )
 		{
 			mp_gameStartBtn	= (CCControlButton*)pNode;
 			[mp_gameStartBtn setVisible:NO];
+		}
+		else if( [pNode isKindOfClass:[LeftMoveTicker class]] )
+		{
+			mp_ticker	= (LeftMoveTicker*)pNode;
 		}
 	}
 }
@@ -279,14 +286,6 @@
 {
 	//	他に成功しているミッションがないかチェック
 	[self _checkMissionSuccess];
-	
-	DataSaveGame*	pDataSaveGame	= [DataSaveGame shared];
-	NSAssert(pDataSaveGame, @"セーブデータがない");
-	const SAVE_DATA_ST*	pSaveData	= [pDataSaveGame getData];
-	NSAssert(pSaveData, @"セーブデータの中身がない");
-
-	//	金額反映
-	[mp_nowMoneyText setString:[NSString stringWithFormat:@"%06ld", pSaveData->money]];
 }
 
 /*
