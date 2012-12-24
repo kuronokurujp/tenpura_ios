@@ -11,6 +11,8 @@
 		CE12811916429D0200D369CF /* setting.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE12811816429D0200D369CF /* setting.ccbi */; };
 		CE18C49C1667ABA000ED1E85 /* DataMissionList.m in Sources */ = {isa = PBXBuildFile; fileRef = CE18C49B1667ABA000ED1E85 /* DataMissionList.m */; };
 		CE18C4A31667D84200ED1E85 /* missionListData.csv in Resources */ = {isa = PBXBuildFile; fileRef = CE18C4A21667D84200ED1E85 /* missionListData.csv */; };
+		CE33C89516888852004782A4 /* help.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE33C89416888852004782A4 /* help.ccbi */; };
+		CE33C899168888BD004782A4 /* HelpScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CE33C898168888BD004782A4 /* HelpScene.m */; };
 		CE361D2A164353CF00339BB0 /* not_buy_cell.png in Resources */ = {isa = PBXBuildFile; fileRef = CE361D29164353CF00339BB0 /* not_buy_cell.png */; };
 		CE4D94D3166126BA003743D7 /* StoreAppPurchaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4D94D2166126BA003743D7 /* StoreAppPurchaseViewController.m */; };
 		CE51773816494022004DF4F6 /* GameKitHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = CE51773716494022004DF4F6 /* GameKitHelper.m */; };
@@ -26,6 +28,8 @@
 		CE8360D11648172200CC11E0 /* MissionScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8360D01648172200CC11E0 /* MissionScene.m */; };
 		CE93630F16507F3A00C22286 /* gameIn.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE93630E16507F3A00C22286 /* gameIn.ccbi */; };
 		CE93631116507F4400C22286 /* gameResult.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE93631016507F4400C22286 /* gameResult.ccbi */; };
+		CE9AB754168816C700C7AF08 /* checkoff.png in Resources */ = {isa = PBXBuildFile; fileRef = CE9AB752168816C700C7AF08 /* checkoff.png */; };
+		CE9AB755168816C700C7AF08 /* checkon.png in Resources */ = {isa = PBXBuildFile; fileRef = CE9AB753168816C700C7AF08 /* checkon.png */; };
 		CEABDF171663D7BD00043570 /* title_back.png in Resources */ = {isa = PBXBuildFile; fileRef = CEABDF141663D7BD00043570 /* title_back.png */; };
 		CEABDF181663D7BD00043570 /* title_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = CEABDF151663D7BD00043570 /* title_btn.png */; };
 		CEABDF191663D7BD00043570 /* title_rogo.png in Resources */ = {isa = PBXBuildFile; fileRef = CEABDF161663D7BD00043570 /* title_rogo.png */; };
@@ -308,6 +312,9 @@
 		CE18C49A1667ABA000ED1E85 /* DataMissionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataMissionList.h; path = src/Data/DataMissionList.h; sourceTree = "<group>"; };
 		CE18C49B1667ABA000ED1E85 /* DataMissionList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataMissionList.m; path = src/Data/DataMissionList.m; sourceTree = "<group>"; };
 		CE18C4A21667D84200ED1E85 /* missionListData.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = missionListData.csv; path = Resources/data/missionListData.csv; sourceTree = "<group>"; };
+		CE33C89416888852004782A4 /* help.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = help.ccbi; path = Resources/ccbi/help.ccbi; sourceTree = "<group>"; };
+		CE33C897168888BD004782A4 /* HelpScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelpScene.h; path = src/Scene/HelpScene.h; sourceTree = "<group>"; };
+		CE33C898168888BD004782A4 /* HelpScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HelpScene.m; path = src/Scene/HelpScene.m; sourceTree = "<group>"; };
 		CE361D29164353CF00339BB0 /* not_buy_cell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = not_buy_cell.png; path = Resources/tableView/not_buy_cell.png; sourceTree = "<group>"; };
 		CE4D94D1166126BA003743D7 /* StoreAppPurchaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StoreAppPurchaseViewController.h; path = src/System/StoreView/StoreAppPurchaseViewController.h; sourceTree = "<group>"; };
 		CE4D94D2166126BA003743D7 /* StoreAppPurchaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StoreAppPurchaseViewController.m; path = src/System/StoreView/StoreAppPurchaseViewController.m; sourceTree = "<group>"; };
@@ -331,6 +338,8 @@
 		CE8360D01648172200CC11E0 /* MissionScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MissionScene.m; path = src/Scene/SettingChildScene/MissionScene.m; sourceTree = "<group>"; };
 		CE93630E16507F3A00C22286 /* gameIn.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = gameIn.ccbi; path = Resources/ccbi/gameIn.ccbi; sourceTree = "<group>"; };
 		CE93631016507F4400C22286 /* gameResult.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = gameResult.ccbi; path = Resources/ccbi/gameResult.ccbi; sourceTree = "<group>"; };
+		CE9AB752168816C700C7AF08 /* checkoff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = checkoff.png; path = Resources/checkBox/checkoff.png; sourceTree = "<group>"; };
+		CE9AB753168816C700C7AF08 /* checkon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = checkon.png; path = Resources/checkBox/checkon.png; sourceTree = "<group>"; };
 		CEABDF141663D7BD00043570 /* title_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = title_back.png; path = Resources/title/title_back.png; sourceTree = "<group>"; };
 		CEABDF151663D7BD00043570 /* title_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = title_btn.png; path = Resources/title/title_btn.png; sourceTree = "<group>"; };
 		CEABDF161663D7BD00043570 /* title_rogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = title_rogo.png; path = Resources/title/title_rogo.png; sourceTree = "<group>"; };
@@ -891,6 +900,15 @@
 			name = btn;
 			sourceTree = "<group>";
 		};
+		CE9AB750168816B700C7AF08 /* checkBox */ = {
+			isa = PBXGroup;
+			children = (
+				CE9AB752168816C700C7AF08 /* checkoff.png */,
+				CE9AB753168816C700C7AF08 /* checkon.png */,
+			);
+			name = checkBox;
+			sourceTree = "<group>";
+		};
 		CEABDF121663D79F00043570 /* title */ = {
 			isa = PBXGroup;
 			children = (
@@ -952,6 +970,7 @@
 		CED246011639964D00506CA8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CE9AB750168816B700C7AF08 /* checkBox */,
 				CEFBC2B016876D9E00C3C233 /* game */,
 				CEFBC2AC1687188C00C3C233 /* setting */,
 				CEF4CFAF16793C8F00DCB74C /* icon */,
@@ -1393,6 +1412,8 @@
 				CE1281151642974800D369CF /* SettingScene.m */,
 				CED247C6163997FD00506CA8 /* GameScene.h */,
 				CED247C7163997FD00506CA8 /* GameScene.m */,
+				CE33C897168888BD004782A4 /* HelpScene.h */,
+				CE33C898168888BD004782A4 /* HelpScene.m */,
 			);
 			name = Scene;
 			sourceTree = "<group>";
@@ -1478,6 +1499,7 @@
 				CE93630E16507F3A00C22286 /* gameIn.ccbi */,
 				CE93631016507F4400C22286 /* gameResult.ccbi */,
 				CE8360CA164815FE00CC11E0 /* mission.ccbi */,
+				CE33C89416888852004782A4 /* help.ccbi */,
 				CE12811816429D0200D369CF /* setting.ccbi */,
 				CEB815EA163C36F0002814DD /* siire.ccbi */,
 				CEFBC2A316870B9400C3C233 /* base_menu.ccbi */,
@@ -1926,6 +1948,9 @@
 				CEFBC2AE1687189900C3C233 /* slot_select.png in Resources */,
 				CEFBC2B316876DC100C3C233 /* play_end.png in Resources */,
 				CEFBC2B416876DC100C3C233 /* play_start.png in Resources */,
+				CE9AB754168816C700C7AF08 /* checkoff.png in Resources */,
+				CE9AB755168816C700C7AF08 /* checkon.png in Resources */,
+				CE33C89516888852004782A4 /* help.ccbi in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2101,6 +2126,7 @@
 				CEF4CFC1167947C600DCB74C /* BaseMenuScene.m in Sources */,
 				CEFBC2AB1687182100C3C233 /* Ticker.m in Sources */,
 				CEFBC2B716877DE100C3C233 /* GameEndScene.m in Sources */,
+				CE33C899168888BD004782A4 /* HelpScene.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

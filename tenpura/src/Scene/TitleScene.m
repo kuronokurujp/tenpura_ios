@@ -94,6 +94,12 @@
 */
 -(void)	pressHelpBtn
 {
+	CCScene*	helpScene	= [CCBReader sceneWithNodeGraphFromFile:@"help.ccbi"];
+
+	CCTransitionFade*	pTransFade	=
+	[CCTransitionFade transitionWithDuration:2 scene:helpScene withColor:ccBLACK];
+	
+	[[CCDirector sharedDirector] replaceScene:pTransFade];
 }
 
 /*

@@ -15,6 +15,14 @@
 @implementation MissionScene
 
 static const char*	sp_MissionListCellSpriteName	= "neta_cell.png";
+static NSString*	sp_MissionChkBoxOffSpriteName	= @"checkoff.png";
+static NSString*	sp_MissionChkBoxOnSpriteName	= @"checkon.png";
+
+enum
+{
+	eTAG_MISSION_TABLE_CHK_BOX_ON	= eSW_TABLE_TAG_CELL_MAX + 1,
+	eTAG_MISSION_TABLE_CHK_BOX_OFF,
+};
 
 /*
 	@brief
@@ -39,7 +47,6 @@ static const char*	sp_MissionListCellSpriteName	= "neta_cell.png";
 
 	if( self = [super initWithData:&data] )
 	{
-		
 	}
 	
 	return self;
@@ -75,7 +82,6 @@ static const char*	sp_MissionListCellSpriteName	= "neta_cell.png";
 	CCNode*	pNode	= [pCell getChildByTag:eSW_TABLE_TAG_CELL_SPRITE];
 	if( pNode != nil )
 	{
-		CCSprite*	pCellSp	= (CCSprite*)pNode;
 		//	ミッション名
 		CCNode*	pNode02	= [pNode getChildByTag:eSW_TABLE_TAG_CELL_TEXT];
 		if( ( pNode02 != nil ) && ( [pNode02 isKindOfClass:[CCLabelTTF class]] ) )
@@ -83,16 +89,41 @@ static const char*	sp_MissionListCellSpriteName	= "neta_cell.png";
 			CCLabelTTF*	pCellTextLabel	= (CCLabelTTF*)pNode02;
 			[pCellTextLabel setString:[pMissionInst getMissonName:idx]];
 		}
-		
-		//	達成しているミッションがあるかチェック
-		[pCellSp setColor:ccWHITE];
-		if( [pMissionInst isSuccess:idx] == YES )
+
+		//	チェックボックス
 		{
-			//	使用中はセルの色を変える
-			[pCellSp setColor:ccGRAY];
+			CGSize	cellSize	= self.data.cellSize;
+			CGPoint	pos	= ccp(20.f, cellSize.height * 0.5f);
+
+			CCSprite*	pChkBoxOn	= (CCSprite*)[pNode getChildByTag:eTAG_MISSION_TABLE_CHK_BOX_ON];
+			if( pChkBoxOn == nil )
+			{
+				pChkBoxOn	= [CCSprite spriteWithFile:sp_MissionChkBoxOnSpriteName];
+				[pChkBoxOn setPosition:pos];
+				[pCell addChild:pChkBoxOn];
+			}
+			[pChkBoxOn setVisible:NO];
+
+			CCSprite*	pChkBoxOff	= (CCSprite*)[pCell getChildByTag:eTAG_MISSION_TABLE_CHK_BOX_OFF];
+			if( pChkBoxOff == nil )
+			{
+				pChkBoxOff	= [CCSprite spriteWithFile:sp_MissionChkBoxOffSpriteName];
+				[pChkBoxOff setPosition:pos];
+				[pCell addChild:pChkBoxOff];
+			}
+			[pChkBoxOff setVisible:NO];
+
+			if( [pMissionInst isSuccess:idx] == YES )
+			{
+				[pChkBoxOn setVisible:YES];
+			}
+			else
+			{
+				[pChkBoxOff setVisible:YES];
+			}
 		}
 	}
-	
+		
 	return pCell;
 }
 
