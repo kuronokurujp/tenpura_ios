@@ -30,6 +30,12 @@
 		CE93631116507F4400C22286 /* gameResult.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE93631016507F4400C22286 /* gameResult.ccbi */; };
 		CE9AB754168816C700C7AF08 /* checkoff.png in Resources */ = {isa = PBXBuildFile; fileRef = CE9AB752168816C700C7AF08 /* checkoff.png */; };
 		CE9AB755168816C700C7AF08 /* checkon.png in Resources */ = {isa = PBXBuildFile; fileRef = CE9AB753168816C700C7AF08 /* checkon.png */; };
+		CE9C551716905A6F006B0F39 /* help1.html in Resources */ = {isa = PBXBuildFile; fileRef = CE9C551116905A6F006B0F39 /* help1.html */; };
+		CE9C551816905A6F006B0F39 /* help2.html in Resources */ = {isa = PBXBuildFile; fileRef = CE9C551216905A6F006B0F39 /* help2.html */; };
+		CE9C551916905A6F006B0F39 /* help3.html in Resources */ = {isa = PBXBuildFile; fileRef = CE9C551316905A6F006B0F39 /* help3.html */; };
+		CE9C551A16905A6F006B0F39 /* help4.html in Resources */ = {isa = PBXBuildFile; fileRef = CE9C551416905A6F006B0F39 /* help4.html */; };
+		CE9C551B16905A6F006B0F39 /* help5.html in Resources */ = {isa = PBXBuildFile; fileRef = CE9C551516905A6F006B0F39 /* help5.html */; };
+		CE9C551C16905A6F006B0F39 /* help6.html in Resources */ = {isa = PBXBuildFile; fileRef = CE9C551616905A6F006B0F39 /* help6.html */; };
 		CEABDF171663D7BD00043570 /* title_back.png in Resources */ = {isa = PBXBuildFile; fileRef = CEABDF141663D7BD00043570 /* title_back.png */; };
 		CEABDF181663D7BD00043570 /* title_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = CEABDF151663D7BD00043570 /* title_btn.png */; };
 		CEABDF191663D7BD00043570 /* title_rogo.png in Resources */ = {isa = PBXBuildFile; fileRef = CEABDF161663D7BD00043570 /* title_rogo.png */; };
@@ -340,6 +346,12 @@
 		CE93631016507F4400C22286 /* gameResult.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = gameResult.ccbi; path = Resources/ccbi/gameResult.ccbi; sourceTree = "<group>"; };
 		CE9AB752168816C700C7AF08 /* checkoff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = checkoff.png; path = Resources/checkBox/checkoff.png; sourceTree = "<group>"; };
 		CE9AB753168816C700C7AF08 /* checkon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = checkon.png; path = Resources/checkBox/checkon.png; sourceTree = "<group>"; };
+		CE9C551116905A6F006B0F39 /* help1.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = help1.html; path = Resources/help/help1.html; sourceTree = "<group>"; };
+		CE9C551216905A6F006B0F39 /* help2.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = help2.html; path = Resources/help/help2.html; sourceTree = "<group>"; };
+		CE9C551316905A6F006B0F39 /* help3.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = help3.html; path = Resources/help/help3.html; sourceTree = "<group>"; };
+		CE9C551416905A6F006B0F39 /* help4.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = help4.html; path = Resources/help/help4.html; sourceTree = "<group>"; };
+		CE9C551516905A6F006B0F39 /* help5.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = help5.html; path = Resources/help/help5.html; sourceTree = "<group>"; };
+		CE9C551616905A6F006B0F39 /* help6.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = help6.html; path = Resources/help/help6.html; sourceTree = "<group>"; };
 		CEABDF141663D7BD00043570 /* title_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = title_back.png; path = Resources/title/title_back.png; sourceTree = "<group>"; };
 		CEABDF151663D7BD00043570 /* title_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = title_btn.png; path = Resources/title/title_btn.png; sourceTree = "<group>"; };
 		CEABDF161663D7BD00043570 /* title_rogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = title_rogo.png; path = Resources/title/title_rogo.png; sourceTree = "<group>"; };
@@ -909,6 +921,19 @@
 			name = checkBox;
 			sourceTree = "<group>";
 		};
+		CE9C551016905A52006B0F39 /* help */ = {
+			isa = PBXGroup;
+			children = (
+				CE9C551116905A6F006B0F39 /* help1.html */,
+				CE9C551216905A6F006B0F39 /* help2.html */,
+				CE9C551316905A6F006B0F39 /* help3.html */,
+				CE9C551416905A6F006B0F39 /* help4.html */,
+				CE9C551516905A6F006B0F39 /* help5.html */,
+				CE9C551616905A6F006B0F39 /* help6.html */,
+			);
+			name = help;
+			sourceTree = "<group>";
+		};
 		CEABDF121663D79F00043570 /* title */ = {
 			isa = PBXGroup;
 			children = (
@@ -970,6 +995,7 @@
 		CED246011639964D00506CA8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CE9C551016905A52006B0F39 /* help */,
 				CE9AB750168816B700C7AF08 /* checkBox */,
 				CEFBC2B016876D9E00C3C233 /* game */,
 				CEFBC2AC1687188C00C3C233 /* setting */,
@@ -1407,9 +1433,9 @@
 				CED247CB1639980600506CA8 /* TitleScene.h */,
 				CED247CC1639980600506CA8 /* TitleScene.m */,
 				CE1281141642974800D369CF /* SettingScene.h */,
+				CE1281151642974800D369CF /* SettingScene.m */,
 				CEF4CFBF167947C500DCB74C /* BaseMenuScene.h */,
 				CEF4CFC0167947C600DCB74C /* BaseMenuScene.m */,
-				CE1281151642974800D369CF /* SettingScene.m */,
 				CED247C6163997FD00506CA8 /* GameScene.h */,
 				CED247C7163997FD00506CA8 /* GameScene.m */,
 				CE33C897168888BD004782A4 /* HelpScene.h */,
@@ -1951,6 +1977,12 @@
 				CE9AB754168816C700C7AF08 /* checkoff.png in Resources */,
 				CE9AB755168816C700C7AF08 /* checkon.png in Resources */,
 				CE33C89516888852004782A4 /* help.ccbi in Resources */,
+				CE9C551716905A6F006B0F39 /* help1.html in Resources */,
+				CE9C551816905A6F006B0F39 /* help2.html in Resources */,
+				CE9C551916905A6F006B0F39 /* help3.html in Resources */,
+				CE9C551A16905A6F006B0F39 /* help4.html in Resources */,
+				CE9C551B16905A6F006B0F39 /* help5.html in Resources */,
+				CE9C551C16905A6F006B0F39 /* help6.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

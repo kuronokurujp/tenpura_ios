@@ -308,7 +308,7 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 
 /*
 	@brief	客が食べる
-	@return	食べるのに成功かどうか
+	@return	食べたかどうか
 	@note	取得スコア/金額の反映させる
 */
 -(BOOL)	_eatCustomer:(Customer*)in_pCustomer:(TENPURA_STATE_ET)in_tenpuraState:(NETA_DATA_ST*)in_pData
@@ -328,7 +328,7 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 	//	客が欲しい天ぷらかチェック
 	if( [in_pCustomer isEatTenpura:in_pData->no] == NO )
 	{
-		[in_pCustomer.act eatBat:in_pData->no];
+		[in_pCustomer.act eatVeryBat:in_pData->no];
 	}
 	else
 	{
@@ -338,7 +338,7 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 			//	揚げてない
 			case eTENPURA_STATE_NOT:
 			{
-				[in_pCustomer.act eatBat:in_pData->no];
+				[in_pCustomer.act eatVeryBat:in_pData->no];
 				break;
 			}
 			//　ちょうど良い
@@ -364,7 +364,11 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 			//	焦げ
 			case eTENPURA_STATE_BAD:
 			{
-				[in_pCustomer.act eatBat:in_pData->no];
+				addMoneyNum	= -1;
+				addScoreNum	= -1;
+				[in_pCustomer.act eatBat:in_pData->no:addScoreNum:addMoneyNum];
+				
+				bEat	= YES;
 				break;
 			}
 			//	丸焦げ

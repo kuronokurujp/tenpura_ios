@@ -9,8 +9,24 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
+#import "./../../libs/CCControlExtension/CCControl/CCControlButton.h"
+
+/*
+	@brief	ヘルプ画面表示
+	@note	html内にimgタグを使って画像を参照している時には
+			htmlファイルと同じフォルダに画像を配置する
+*/
 @interface HelpScene : CCLayer
 {
+@private
+	SInt32	m_nowPageNum;
+	SInt32	m_maxPageNum;
+	UIWebView*			mp_helpView;
+	
+	Float32	helpSceneXPos;
+	Float32	helpSceneYPos;
+	Float32	helpSceneSizeWidth;
+	Float32	helpSceneSizeHeight;
 }
 
 @end

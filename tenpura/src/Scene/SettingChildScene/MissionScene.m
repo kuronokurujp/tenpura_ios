@@ -10,7 +10,6 @@
 
 #import "./../../Data/DataGlobal.h"
 #import "./../../Data/DataMissionList.h"
-#import "./../../System/GameCenter/GameKitHelper.h"
 
 @implementation MissionScene
 

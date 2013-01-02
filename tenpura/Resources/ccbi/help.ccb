@@ -305,7 +305,20 @@
 				<key>children</key>
 				<array/>
 				<key>customClass</key>
-				<string></string>
+				<string>HelpChangePageBtn</string>
+				<key>customProperties</key>
+				<array>
+					<dict>
+						<key>name</key>
+						<string>btnTypeName</string>
+						<key>optimized</key>
+						<false/>
+						<key>type</key>
+						<integer>3</integer>
+						<key>value</key>
+						<string>prev</string>
+					</dict>
+				</array>
 				<key>displayName</key>
 				<string>CCControlButton</string>
 				<key>memberVarAssignmentName</key>
@@ -321,7 +334,7 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>65</real>
+							<real>40</real>
 							<real>149</real>
 							<integer>0</integer>
 						</array>
@@ -365,8 +378,8 @@
 						<string>BlockCCControl</string>
 						<key>value</key>
 						<array>
-							<string></string>
-							<integer>0</integer>
+							<string>pressPagePrevBtn</string>
+							<integer>1</integer>
 							<integer>32</integer>
 						</array>
 					</dict>
@@ -506,6 +519,8 @@
 						</array>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
@@ -514,6 +529,19 @@
 				<array/>
 				<key>customClass</key>
 				<string></string>
+				<key>customProperties</key>
+				<array>
+					<dict>
+						<key>name</key>
+						<string>btnTypeName</string>
+						<key>optimized</key>
+						<false/>
+						<key>type</key>
+						<integer>3</integer>
+						<key>value</key>
+						<string>next</string>
+					</dict>
+				</array>
 				<key>displayName</key>
 				<string>CCControlButton</string>
 				<key>memberVarAssignmentName</key>
@@ -529,7 +557,7 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>414</real>
+							<real>441</real>
 							<real>152</real>
 							<integer>0</integer>
 						</array>
@@ -573,8 +601,8 @@
 						<string>BlockCCControl</string>
 						<key>value</key>
 						<array>
-							<string></string>
-							<integer>0</integer>
+							<string>pressPageNextBtn</string>
+							<integer>1</integer>
 							<integer>32</integer>
 						</array>
 					</dict>
@@ -842,12 +870,53 @@
 						<string>textId:71</string>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>
 		<string>HelpScene</string>
+		<key>customProperties</key>
+		<array>
+			<dict>
+				<key>name</key>
+				<string>helpSceneXPos</string>
+				<key>optimized</key>
+				<false/>
+				<key>type</key>
+				<integer>1</integer>
+				<key>value</key>
+				<string>80.000000</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>helpSceneYPos</string>
+				<key>optimized</key>
+				<false/>
+				<key>type</key>
+				<integer>1</integer>
+				<key>value</key>
+				<string>50.000000</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>helpSceneSizeWidth</string>
+				<key>optimized</key>
+				<false/>
+				<key>type</key>
+				<integer>1</integer>
+				<key>value</key>
+				<string>320.000000</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>helpSceneSizeHeight</string>
+				<key>optimized</key>
+				<false/>
+				<key>type</key>
+				<integer>1</integer>
+				<key>value</key>
+				<string>220.000000</string>
+			</dict>
+		</array>
 		<key>displayName</key>
 		<string>CCLayer</string>
 		<key>memberVarAssignmentName</key>

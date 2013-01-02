@@ -37,7 +37,7 @@
 @implementation GameScene
 
 static const Float32	s_basicFontSize	= 32.f;
-static const Float32	s_baseTimeVal	= 1.f;
+static const Float32	s_baseTimeVal	= 30.f;
 
 //	各ゲームシーン
 enum

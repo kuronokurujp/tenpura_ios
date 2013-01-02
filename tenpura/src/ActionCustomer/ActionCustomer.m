@@ -219,12 +219,15 @@ enum ACTION_LIST_ENUM
 /*
 	@breif	食べる失敗
 */
--(void)eatBat:(const SInt32)in_no
+-(void)eatBat:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money
 {
 	if( [mp_customer numberOfRunningActions] > 0 )
 	{
 		[mp_customer stopAllActions];
 	}
+	
+	[self _createPutScoreAction:in_score];
+	[self _createPutMoneyAction:in_money];
 }
 
 /*
