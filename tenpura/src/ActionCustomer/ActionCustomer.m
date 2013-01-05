@@ -12,6 +12,7 @@
 #import "./../Object/TenpuraIcon.h"
 
 #include "./../Data/DataGlobal.h"
+#import "./../System/Sound/SoundManager.h"
 
 //	アクション一覧
 enum ACTION_LIST_ENUM
@@ -144,6 +145,8 @@ enum ACTION_LIST_ENUM
 
 		pRepeat.tag	= eACT_TAG_FLAH;
 		[pCustomer.charSprite runAction:pRepeat];
+		
+		[[SoundManager shared] play:eSOUND_CLICK05];
 	}
 }
 
@@ -191,6 +194,8 @@ enum ACTION_LIST_ENUM
 	{
 		[self exit];
 	}
+	
+	[[SoundManager shared] play:eSOUND_EAT01];
 }
 
 /*
@@ -214,6 +219,8 @@ enum ACTION_LIST_ENUM
 	{
 		[self exit];
 	}
+	
+	[[SoundManager shared] play:eSOUND_EAT01];
 }
 
 /*
@@ -228,6 +235,8 @@ enum ACTION_LIST_ENUM
 	
 	[self _createPutScoreAction:in_score];
 	[self _createPutMoneyAction:in_money];
+	
+	[[SoundManager shared] play:eSOUND_EAT01];
 }
 
 /*
@@ -239,6 +248,8 @@ enum ACTION_LIST_ENUM
 	{
 		[mp_customer stopAllActions];
 	}
+	
+	[[SoundManager shared] play:eSOUND_SEKI01];
 }
 
 /*

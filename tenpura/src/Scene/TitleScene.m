@@ -12,6 +12,7 @@
 #import "./../Data/DataSaveGame.h"
 #import "./../Data/DataGlobal.h"
 #import "./../System/GameCenter/GameKitHelper.h"
+#import "./../System/Sound/SoundManager.h"
 #import "./../Data/DataBaseText.h"
 
 @implementation TitleScene
@@ -66,6 +67,8 @@
 	[NSNotification notificationWithName:pOBName object:self userInfo:pDlc];
 	
 	[[NSNotificationCenter defaultCenter] postNotification:pNotification];
+	
+	[[SoundManager shared] play:eSOUND_CLICK01];
 }
 
 /*
@@ -79,6 +82,8 @@
 	[CCTransitionFade transitionWithDuration:2 scene:sinagakiScene withColor:ccBLACK];
 	
 	[[CCDirector sharedDirector] replaceScene:pTransFade];
+	
+	[[SoundManager shared] play:eSOUND_CLICK01];
 }
 
 /*
@@ -87,6 +92,8 @@
 -(void)	pressGameCenterBtn
 {
 	[[GameKitHelper shared] showGameCenter];
+	
+	[[SoundManager shared] play:eSOUND_CLICK01];
 }
 
 /*
@@ -100,6 +107,8 @@
 	[CCTransitionFade transitionWithDuration:2 scene:helpScene withColor:ccBLACK];
 	
 	[[CCDirector sharedDirector] replaceScene:pTransFade];
+	
+	[[SoundManager shared] play:eSOUND_CLICK01];
 }
 
 /*
@@ -107,6 +116,12 @@
 */
 -(void)	pressMoreAppBtn
 {
+	[[SoundManager shared] play:eSOUND_CLICK01];
+	
+	DataBaseText*	pDataText	= [DataBaseText shared];
+    NSString*	pURLText	= [NSString stringWithUTF8String:[pDataText getText:72]];
+	NSURL*	pUrl	= [NSURL URLWithString:pURLText];
+	[[UIApplication sharedApplication] openURL:pUrl];
 }
 
 @end

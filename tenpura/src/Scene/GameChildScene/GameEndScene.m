@@ -11,10 +11,12 @@
 #import "./../GameScene.h"
 #import "./../../Object/Customer.h"
 #import "./../../ActionCustomer/ActionCustomer.h"
+#import "./../../CCBReader/CCBReader.h"
 #import "./../../Data/DataGlobal.h"
 #import "./../../Data/DataSaveGame.h"
-#import "./../../CCBReader/CCBReader.h"
 #import	"./../../Data/DataBaseText.h"
+#import "./../../Data/DataGlobal.h"
+#import "./../../System/Sound/SoundManager.h"
 
 //	非公開関数
 @interface GameEndScene (PrivateMethod)
@@ -50,7 +52,7 @@
 		
 		mp_endLogoSp	= [CCSprite spriteWithFile:@"play_end.png"];
 		[mp_endLogoSp setVisible:NO];
-		[self addChild:mp_endLogoSp];
+		[self addChild:mp_endLogoSp];		
 	}
 	
 	return	self;
@@ -78,6 +80,8 @@
 		CCSequence*	pSeq		= [CCSequence actions:pFadeIn, pEndFunc, nil];
 		[mp_endLogoSp runAction:pSeq];
 	}
+
+	[[SoundManager shared] play:eSOUND_END01];
 
 	[self unschedule:_cmd];
 }
@@ -219,15 +223,16 @@
 /*
 	@brief
 */
--(void)	_menuRestartTouched
+-(void)	_pressRestartBtn
 {
 	m_resultType	= eRESULT_TYPE_RESTART;
+	[[SoundManager shared] play:eSOUND_CLICK01];
 }
 
 /*
 	@brief
 */
--(void)	_menuTwitterTouched
+-(void)	_pressTwitterBtn
 {
 	GameScene*	pGameScene	= (GameScene*)[self parent];
 	DataBaseText*	pDataText	= [DataBaseText shared];
@@ -247,14 +252,18 @@
 	[NSNotification notificationWithName:pOBName object:self userInfo:pDlc];
 	
 	[[NSNotificationCenter defaultCenter] postNotification:pNotification];
+	
+	[[SoundManager shared] play:eSOUND_CLICK01];
 }
 
 /*
 	@brief
 */
--(void)	_menuEndTouched
+-(void)	_pressGametEndBtn
 {
 	m_resultType	= eRESULT_TYPE_SINAGAKI;
+	
+	[[SoundManager shared] play:eSOUND_CLICK01];
 }
 
 @end

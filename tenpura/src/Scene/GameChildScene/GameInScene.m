@@ -14,7 +14,8 @@
 #import "./../../Object/Nabe.h"
 #import "./../../ActionCustomer/ActionCustomer.h"
 #import "./../../Data/DataNetaList.h"
-
+#import "./../../Data/DataGlobal.h"
+#import "./../../System/Sound/SoundManager.h"
 
 //	非公開関数
 @interface GameInScene (PrivateMethod)

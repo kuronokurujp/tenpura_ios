@@ -14,6 +14,7 @@
 #import "./Data/DataTenpuraPosList.h"
 #import "./Data/DataSaveGame.h"
 #import "./Data/DataBaseText.h"
+#import "./System/Sound/SoundManager.h"
 #import "./CCBReader/CCBReader.h"
 
 // BootScene implementation
@@ -39,8 +40,8 @@
 {
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super" return value
-	if( (self=[super init])) {
-	
+	if( (self=[super init]))
+	{
 		[self scheduleUpdate];
 	}
 	return self;
@@ -48,6 +49,8 @@
 
 -(void) update:(ccTime)delta
 {
+//	[[SoundManager shared] preLoad:@"caf"];
+
 	//	シーン変更
 	CCScene*	mainScene	= [CCBReader sceneWithNodeGraphFromFile:@"title.ccbi"];
 	[[CCDirector sharedDirector] replaceScene:mainScene];

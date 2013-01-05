@@ -38,3 +38,53 @@ const float ga_initCustomerPos[ eCUSTOMER_MAX ][ 2 ]	=
 //	リーダーボードID名
 const char*	gp_leaderboardDataName	= "Score";
 
+//	サウンドデータ管理ファイル名
+const char*	gp_soundDataListName	= "soundListData";
+
+/*
+//	ローディング対象のテクスチャーファイル名一覧
+static const char*	gp_MissionListCellSpriteName	= "neta_cell.png";
+static const char*	gp_MissionChkBoxOffSpriteName	= "checkoff.png";
+static const char*	gp_MissionChkBoxOnSpriteName	= "checkon.png";
+static const char*	gp_NabeSpriteName	= "nabe0.png";
+static const char*	gp_SireCellFileName		= "sire_cell.png";
+static const char*	gp_NotBuyCellFileName	= "not_buy_cell.png";
+static const char*	gp_CutomerCharFileName	= "customer0.png";
+static const char*	gp_GamePlayEndSpritFileName	= "play_end.png";
+static const char*	gp_GamePlayStartSpritFileName	= "play_start.png";
+*/
+
+//	爆発エフェクト(30fps)
+const char*	ga_effectBombFileNameList[]	=
+{
+	"bomb0001.png",
+	"bomb0002.png",
+	"bomb0003.png",
+	"bomb0004.png",
+	"bomb0005.png",
+	"bomb0006.png",
+	"bomb0007.png",
+	"bomb0008.png",
+	"bomb0009.png",
+	"bomb0010.png",
+	"bomb0011.png",
+	"bomb0012.png",
+	"bomb0013.png",
+	"bomb0014.png",
+	"bomb0015.png",
+	"bomb0016.png",
+	"bomb0017.png",
+	"bomb0018.png",
+	"bomb0019.png",
+	"bomb0020.png",
+	"bomb0021.png",
+	"bomb0022.png",
+	"bomb0023.png",
+	"bomb0024.png",
+	"bomb0025.png",
+	"bomb0026.png",
+	"bomb0027.png",
+	"bomb0028.png",
+	"bomb0029.png",
+	"bomb0030.png",
+};

@@ -13,6 +13,7 @@
 #import "./../../Data/DataSaveGame.h"
 #import "./../../Data/DataGlobal.h"
 #import "./../../Data/DataBaseText.h"
+#import "./../../System/Sound/SoundManager.h"
 
 #import "./../SettingScene.h"
 
@@ -107,6 +108,8 @@ enum
 		[mp_settingItemBtn settingItem:pNetaData];
 
 		[[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:2];
+		
+		[[SoundManager shared] play:eSOUND_CLICK01];
 	}
 }
 
@@ -234,6 +237,8 @@ enum
 -(void)	pressSinagakiBtn
 {
 	[[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:2];
+	
+	[[SoundManager shared] play:eSOUND_CLICK04];
 }
 
 /*

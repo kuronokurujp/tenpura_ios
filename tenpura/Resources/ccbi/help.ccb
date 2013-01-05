@@ -305,7 +305,7 @@
 				<key>children</key>
 				<array/>
 				<key>customClass</key>
-				<string>HelpChangePageBtn</string>
+				<string></string>
 				<key>customProperties</key>
 				<array>
 					<dict>

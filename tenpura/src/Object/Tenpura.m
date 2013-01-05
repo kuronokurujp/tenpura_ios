@@ -9,6 +9,8 @@
 #import "Tenpura.h"
 
 #import "./../Data/DataTenpuraPosList.h"
+#import "./../Data/DataGlobal.h"
+#import "./../System/Sound/SoundManager.h"
 
 @interface Tenpura (PrivateMethod)
 
@@ -221,6 +223,35 @@
 	{
 		ccTime	time	= 0.f;
 		BOOL	bFunc	= NO;
+/*
+		//	揚げた音
+		{
+			switch ((SInt32)m_state)
+			{
+				case eTENPURA_STATE_GOOD:		//　ちょうど良い
+				{
+					[[SoundManager shared] play:eSOUND_FRIED01];
+					break;
+				}
+				case eTENPURA_STATE_VERYGOOD:	//	最高
+				{
+					[[SoundManager shared] play:eSOUND_FRIED02];
+					break;
+				}
+				case eTENPURA_STATE_BAD:		//	焦げ
+				{
+					[[SoundManager shared] play:eSOUND_FRIED03];
+					break;
+				}
+				case eTENPURA_STATE_VERYBAD:	//	丸焦げ
+				{
+					[[SoundManager shared] play:eSOUND_FRIED04];
+					break;
+				}
+			}
+		}
+*/
+
 		switch ((SInt32)m_state)
 		{
 			case eTENPURA_STATE_NOT:		//	揚げてない

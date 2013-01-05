@@ -10,10 +10,10 @@
 #import "Nabe.h"
 #import "TenpuraIcon.h"
 
-#import "../ActionCustomer/ActionCustomer.h"
-#import "../Data/DataNetaList.h"
-#import "../Data/DataGlobal.h"
-#import "../Data/DataSettingTenpura.h"
+#import "./../ActionCustomer/ActionCustomer.h"
+#import "./../Data/DataNetaList.h"
+#import "./../Data/DataGlobal.h"
+#import "./../Data/DataSettingTenpura.h"
 
 @implementation Customer
 

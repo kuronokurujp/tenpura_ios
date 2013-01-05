@@ -10,6 +10,7 @@
 
 #import "./../../Data/DataGlobal.h"
 #import "./../../Data/DataMissionList.h"
+#import "./../../System/Sound/SoundManager.h"
 
 @implementation MissionScene
 
@@ -57,6 +58,8 @@ enum
 -(void)	pressBackBtn
 {
 	[[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:2];
+	
+	[[SoundManager shared] play:eSOUND_CLICK04];
 }
 
 //	デリゲート定義

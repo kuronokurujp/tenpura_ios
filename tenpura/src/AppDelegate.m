@@ -5,8 +5,9 @@
 //  Created by y.uchida on 12/10/26.
 //  Copyright __MyCompanyName__ 2012年. All rights reserved.
 //
-
+#import <Twitter/Twitter.h>
 #import "cocos2d.h"
+#import "SimpleAudioEngine.h"
 
 #import "AppDelegate.h"
 #import "BootScene.h"
@@ -17,6 +18,7 @@
 #import "./Data/DataTenpuraPosList.h"
 #import "./Data/DataGlobal.h"
 #import "./Data/DataMissionList.h"
+#import "./System/Sound/SoundManager.h"
 #import "./System/GameCenter/GameKitHelper.h"
 #import "./System/BannerView/BannerViewController.h"
 
@@ -112,7 +114,9 @@ void uncaughtExceptionHandler( NSException* in_pException )
 	*/
 	[DataMissionList shared];
 	[GameKitHelper shared].delegate	= self;
-	
+	//	サウンド管理データファイル設定
+	[[SoundManager shared] setup:[NSString stringWithUTF8String:gp_soundDataListName]];
+
 	//	広告ビュー作成
 	{
 		mp_bannerViewCtrl	= [[BannerViewController alloc] init];
@@ -214,8 +218,10 @@ void uncaughtExceptionHandler( NSException* in_pException )
 		[mp_bannerViewCtrl.view removeFromSuperview];
 	}
 
+	[SimpleAudioEngine end];
 	CC_DIRECTOR_END();
 
+	[SoundManager end];
 	[DataMissionList end];
 	[DataBaseText end];
 	[DataNetaList end];
@@ -337,7 +343,18 @@ void uncaughtExceptionHandler( NSException* in_pException )
 	NSString*	pTweetSearchURL	= [[in_pCenter userInfo] objectForKey:pSearchURLKeyName];
 	if( ( pTweetText != nil ) && ( pTweetSearchURL != nil ) )
 	{
-		[mp_tweetViewController startTweetViewWithTweetText:pTweetText:pTweetSearchURL];
+		if( [[[UIDevice currentDevice] systemVersion] floatValue] < 5.0 )
+		{
+			[mp_tweetViewController startTweetViewWithTweetText:pTweetText:pTweetSearchURL];
+		}
+		else
+		{
+			TWTweetComposeViewController*	pCtrl	= [[TWTweetComposeViewController alloc] init];
+			[pCtrl setInitialText:pTweetText];
+			AppController*	pApp	= (AppController*)[UIApplication sharedApplication].delegate;
+			[pApp.navController presentModalViewController:pCtrl animated:YES];
+			[pCtrl release];
+		}
 	}
 }
 

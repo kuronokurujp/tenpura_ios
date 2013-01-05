@@ -10,6 +10,7 @@
 
 #import "./../CCBReader/CCBReader.h"
 #import "./../Data/DataGlobal.h"
+#import "./../System/Sound/SoundManager.h"
 
 //	指定した値をループするマクロ(unsigneの型だと失敗するので注意)
 #define LOOP( _MIN_, _MAX_, _NUM_ ) (_MAX_) <= (_NUM_) ? (_MIN_) : (_NUM_) < (_MIN_) ? (_MAX_) - 1 : (_NUM_)
@@ -128,7 +129,7 @@ static NSString*	sp_helpHtmlNameList[]	=
 }
 
 /*
-	@brief
+	@brief	タイトルに戻る
 */
 -(void)	pressBackBtn
 {
@@ -138,6 +139,8 @@ static NSString*	sp_helpHtmlNameList[]	=
 	[CCTransitionFade transitionWithDuration:2 scene:pTitleScene withColor:ccBLACK];
 	
 	[[CCDirector sharedDirector] replaceScene:pTransFade];
+	
+	[[SoundManager shared] play:eSOUND_CLICK04];
 }
 
 /*
@@ -147,6 +150,8 @@ static NSString*	sp_helpHtmlNameList[]	=
 {
 	m_nowPageNum	= LOOP( 0, m_maxPageNum, m_nowPageNum + 1 );
 	[self changePage:m_nowPageNum];
+	
+	[[SoundManager shared] play:eSOUND_CLICK01];
 }
 
 /*
@@ -156,6 +161,8 @@ static NSString*	sp_helpHtmlNameList[]	=
 {
 	m_nowPageNum	= LOOP( 0, m_maxPageNum, m_nowPageNum - 1 );
 	[self changePage:m_nowPageNum];
+	
+	[[SoundManager shared] play:eSOUND_CLICK01];
 }
 
 /*

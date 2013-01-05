@@ -10,6 +10,9 @@
 
 #import "./../GameScene.h"
 #import "./../../Object/Customer.h"
+#import "./../../CCBReader/CCBReader.h"
+#import "./../../Data/DataGlobal.h"
+#import "./../../System/Sound/SoundManager.h"
 
 //	非公開関数
 @interface GameStartScene (PrivateMethod)
@@ -101,7 +104,7 @@
 		CGPoint	endPos		= ccp(size.width * 0.5f, startPos.y);
 		
 		[mp_startLogoSp setPosition:startPos];
-	
+
 		CCMoveTo*		pMove		= [CCMoveTo actionWithDuration:1.5f position:endPos];
 		CCEaseInOut*	pEaseMove	= [CCEaseInOut actionWithAction:pMove rate:4];
 
@@ -111,6 +114,8 @@
 		[mp_startLogoSp runAction:pSeq];
 		[mp_startLogoSp setVisible:YES];
 	}
+	
+	[[SoundManager shared] play:eSOUND_END02];
 }
 
 /*

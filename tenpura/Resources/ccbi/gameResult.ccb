@@ -86,7 +86,7 @@
 						<string>BlockCCControl</string>
 						<key>value</key>
 						<array>
-							<string>_menuRestartTouched</string>
+							<string>_pressRestartBtn</string>
 							<integer>2</integer>
 							<integer>32</integer>
 						</array>
@@ -227,8 +227,6 @@
 						</array>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
@@ -296,7 +294,7 @@
 						<string>BlockCCControl</string>
 						<key>value</key>
 						<array>
-							<string>_menuEndTouched</string>
+							<string>_pressGametEndBtn</string>
 							<integer>2</integer>
 							<integer>32</integer>
 						</array>
@@ -437,6 +435,8 @@
 						</array>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
@@ -504,7 +504,7 @@
 						<string>BlockCCControl</string>
 						<key>value</key>
 						<array>
-							<string>_menuTwitterTouched</string>
+							<string>_pressTwitterBtn</string>
 							<integer>2</integer>
 							<integer>32</integer>
 						</array>

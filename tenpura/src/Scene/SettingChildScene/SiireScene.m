@@ -14,6 +14,7 @@
 #import "./../../Data/DataBaseText.h"
 #import "./../../Data/DataGlobal.h"
 #import "./../../Object/Tenpura.h"
+#import "./../../System/Sound/SoundManager.h"
 
 #import "AppDelegate.h"
 
@@ -135,6 +136,8 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 
 			mp_buyItemCell	= cell;
 			[mp_buyCheckAlertView show];
+			
+			[[SoundManager shared] play:eSOUND_CLICK01];
 		}
 	}
 }
@@ -267,11 +270,13 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 }
 
 /*
-	@brief	品書きに戻る
+	@brief	元の画面に戻る
 */
 -(void)	pressSinagakiBtn
 {
 	[[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:2];
+
+	[[SoundManager shared] play:eSOUND_CLICK04];
 }
 
 /*
@@ -288,6 +293,8 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 	[mp_storeViewCtrl requestPurchase:pIdName];
 
 	[pView addSubview:mp_storeViewCtrl.view];
+	
+	[[SoundManager shared] play:eSOUND_CLICK01];
 }
 
 /*
@@ -295,6 +302,8 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 */
 -(void)	alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+	[[SoundManager shared] play:eSOUND_CLICK01];
+
 	if( alertView == mp_buyCheckAlertView )
 	{
 		if( buttonIndex == 1 )

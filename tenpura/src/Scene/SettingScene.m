@@ -16,6 +16,7 @@
 #import "./../Data/DataGlobal.h"
 #import "./../Data/DataSaveGame.h"
 #import "./../Data/DataMissionList.h"
+#import "./../System/Sound/SoundManager.h"
 #import "./SettingChildScene/UseSelectItemScene.h"
 
 @interface SettingScene (PriveteMethod)
@@ -152,6 +153,8 @@
 	}
 	
 	pDataSettingTenpura	= nil;
+	
+	[[SoundManager shared] play:eSOUND_CLICK01];
 }
 
 /*
@@ -167,6 +170,8 @@
 	[CCTransitionFade transitionWithDuration:2 scene:sinagakiScene withColor:ccBLACK];
 	
 	[[CCDirector sharedDirector] pushScene:pTransFade];
+	
+	[[SoundManager shared] play:eSOUND_CLICK01];
 }
 
 /*
@@ -175,6 +180,8 @@
 -(void)	pressItemShopBtn
 {
 	CCLOG(@"ItemShop");
+	
+	[[SoundManager shared] play:eSOUND_CLICK01];
 }
 
 /*
@@ -210,6 +217,8 @@
 	[CCTransitionFade transitionWithDuration:2 scene:scene withColor:ccBLACK];
 
 	[[CCDirector sharedDirector] pushScene:pTransFade];
+	
+	[[SoundManager shared] play:eSOUND_CLICK01];
 }
 
 /*
@@ -218,6 +227,8 @@
 -(void)	pressSettingItemBtn:(id)sender
 {
 	CCLOG(@"settingItemBtn");
+	
+	[[SoundManager shared] play:eSOUND_CLICK01];
 }
 
 /*
@@ -233,6 +244,8 @@
 	[CCTransitionFade transitionWithDuration:2 scene:sinagakiScene withColor:ccBLACK];
 	
 	[[CCDirector sharedDirector] pushScene:pTransFade];
+	
+	[[SoundManager shared] play:eSOUND_CLICK01];
 }
 
 /*
@@ -245,6 +258,8 @@
 	[CCTransitionFade transitionWithDuration:2 scene:pTitleScene withColor:ccBLACK];
 	
 	[[CCDirector sharedDirector] replaceScene:pTransFade];
+	
+	[[SoundManager shared] play:eSOUND_CLICK04];
 }
 
 /*
