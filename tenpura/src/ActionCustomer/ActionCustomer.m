@@ -79,10 +79,7 @@ enum ACTION_LIST_ENUM
 */
 -(void)put:(BOOL)in_bSettingEat
 {
-	if( [mp_customer numberOfRunningActions] > 0 )
-	{
-		[mp_customer stopAllActions];
-	}
+	[mp_customer stopAllActions];
 
 	mb_SettingEat	= in_bSettingEat;
 
@@ -108,10 +105,7 @@ enum ACTION_LIST_ENUM
 */
 -(void)	exit
 {
-	if( [mp_customer numberOfRunningActions] > 0 )
-	{
-		[mp_customer stopAllActions];
-	}
+	[mp_customer stopAllActions];
 
 	mp_customer.bPut	= NO;
 
@@ -178,10 +172,7 @@ enum ACTION_LIST_ENUM
 */
 -(void)eatGood:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money
 {
-	if( [mp_customer numberOfRunningActions] > 0 )
-	{
-		[mp_customer stopAllActions];
-	}
+	[mp_customer stopAllActions];
 
 	//	食べた天ぷらアイコン消滅
 	assert( [mp_customer removeEatIcon:in_no] == YES);
@@ -203,10 +194,7 @@ enum ACTION_LIST_ENUM
 */
 -(void)eatVeryGood:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money
 {
-	if( [mp_customer numberOfRunningActions] > 0 )
-	{
-		[mp_customer stopAllActions];
-	}
+	[mp_customer stopAllActions];
 
 	//	食べた天ぷらアイコン消滅
 	assert( [mp_customer removeEatIcon:in_no] == YES);
@@ -228,10 +216,10 @@ enum ACTION_LIST_ENUM
 */
 -(void)eatBat:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money
 {
-	if( [mp_customer numberOfRunningActions] > 0 )
-	{
-		[mp_customer stopAllActions];
-	}
+	[mp_customer stopAllActions];
+
+	//	食べた天ぷらアイコン消滅
+	assert( [mp_customer removeEatIcon:in_no] == YES);
 	
 	[self _createPutScoreAction:in_score];
 	[self _createPutMoneyAction:in_money];
@@ -244,10 +232,7 @@ enum ACTION_LIST_ENUM
 */
 -(void)eatVeryBat:(const SInt32)in_no
 {
-	if( [mp_customer numberOfRunningActions] > 0 )
-	{
-		[mp_customer stopAllActions];
-	}
+	[mp_customer stopAllActions];
 	
 	[[SoundManager shared] play:eSOUND_SEKI01];
 }

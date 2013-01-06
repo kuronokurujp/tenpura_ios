@@ -263,4 +263,14 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 	return cnt;
 }
 
+/*
+	@brief
+*/
+-(void) stopAllActions
+{
+	[mp_act endFlash];
+	[super stopAllActions];
+	
+}
+
 @end

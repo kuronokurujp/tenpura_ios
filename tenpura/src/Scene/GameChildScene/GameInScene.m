@@ -112,6 +112,16 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 */
 -(void)	_end:(ccTime)in_time
 {
+	GameScene*	pGameScene	= (GameScene*)[self parent];
+	//	客の後始末
+	{
+		Customer*	pCustomer	= nil;
+		CCARRAY_FOREACH( pGameScene->mp_customerArray, pCustomer )
+		{
+			[pCustomer stopAllActions];
+		}
+	}
+
 	[self unschedule:_cmd];
 	[self setVisible:NO];
 }

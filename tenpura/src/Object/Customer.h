@@ -67,4 +67,6 @@ typedef enum
 //	天ぷら食べる個数
 -(const SInt32)	getEatCnt;
 
+-(void) stopAllActions;
+
 @end

@@ -1013,6 +1013,13 @@
 			name = bomb;
 			sourceTree = "<group>";
 		};
+		CE32FE891699354E00E0E80D /* effect */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = effect;
+			sourceTree = "<group>";
+		};
 		CE41972C1695A4BA00EAD614 /* Sound */ = {
 			isa = PBXGroup;
 			children = (
@@ -1662,6 +1669,7 @@
 		CED24798163997A700506CA8 /* System */ = {
 			isa = PBXGroup;
 			children = (
+				CE32FE891699354E00E0E80D /* effect */,
 				CE41972C1695A4BA00EAD614 /* Sound */,
 				CE4D94D01661268B003743D7 /* StoreView */,
 				CEDD4105165AA1650037F60B /* BannerView */,

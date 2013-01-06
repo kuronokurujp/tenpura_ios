@@ -24,6 +24,11 @@
 
 @implementation Tenpura
 
+enum
+{
+	eACTTAG_LOCK_SCALE	= 1
+};
+
 //	プロパティ定義
 @synthesize state		= m_state;
 @synthesize bTouch		= mb_touch;
@@ -179,6 +184,8 @@
 	[scheduler_ pauseTarget:self];
 
 	CCScaleBy*	pScaleBy	= [CCScaleBy actionWithDuration:0.1f scale:1.5f];
+	[pScaleBy setTag:eACTTAG_LOCK_SCALE];
+
 	[mp_sp setScale:1.f];
 	[mp_sp runAction:pScaleBy];
 	
@@ -196,6 +203,12 @@
 {
 	[scheduler_ resumeTarget:self];
 	[mp_sp setScale:1.f];
+	
+	//	ロック用のスケールが残っていたら削除する
+	if( [mp_sp getActionByTag:eACTTAG_LOCK_SCALE] )
+	{
+		[mp_sp stopActionByTag:eACTTAG_LOCK_SCALE];
+	}
 	
 	[self setZOrder:m_oldZOrder];
 	
