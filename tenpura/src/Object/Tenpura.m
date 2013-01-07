@@ -18,7 +18,6 @@
 -(CGRect)	_getTexRect:(SInt32)in_idx;
 
 -(void)	_doNextRaise:(ccTime)delta;
--(void)	_onDoDeleteState;
 
 @end
 
@@ -36,6 +35,7 @@ enum
 @synthesize bDelete		= mb_delete;
 @synthesize posDataIdx	= m_posDataIdx;
 @synthesize data		= m_data;
+@synthesize delegate	= m_delegate;
 
 /*
 	@brief	初期化
@@ -46,6 +46,7 @@ enum
 	{
 		memset( &m_data, 0, sizeof(m_data) );
 		mp_sp			= nil;
+		m_delegate		= nil;
 		mb_touch		= NO;
 		mb_raise		= NO;
 		mb_delete		= NO;
@@ -62,8 +63,6 @@ enum
 -(void)	dealloc
 {
 	mp_sp	= nil;
-	
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[super dealloc];
 }
 
@@ -107,7 +106,6 @@ enum
 
 	[self unschedule:@selector(_doNextRaise:)];
 	[self setVisible:NO];
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 /*
@@ -148,17 +146,6 @@ enum
 	[self schedule:@selector(_doNextRaise:) interval:m_data.changeTime[m_state]];
 
 	[mp_sp setTextureRect:[self _getTexRect:(SInt32)m_state]];
-}
-
-/*
-	@brief	天ぷら削除許可通知設定
-*/
--(void)	registDeletePermitObserver:(NSString*)in_pName
-{
-	NSAssert(in_pName, @"名前設定がない");
-	
-	NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-	[nc addObserver:self selector:@selector(_onDoDeleteState) name:in_pName object:nil];
 }
 
 /*
@@ -236,7 +223,7 @@ enum
 	{
 		ccTime	time	= 0.f;
 		BOOL	bFunc	= NO;
-/*
+
 		//	揚げた音
 		{
 			switch ((SInt32)m_state)
@@ -263,7 +250,6 @@ enum
 				}
 			}
 		}
-*/
 
 		switch ((SInt32)m_state)
 		{
@@ -289,6 +275,14 @@ enum
 			}
 			case eTENPURA_STATE_DEL:	//	消滅
 			{
+				if( m_delegate != nil )
+				{
+					if( [m_delegate respondsToSelector:@selector(onDeleteTenpura:)] )
+					{
+						[m_delegate onDeleteTenpura:self];
+					}
+				}
+				
 				if( mb_delete == NO )
 				{
 					bFunc	= YES;
@@ -311,15 +305,6 @@ enum
 			[self schedule:@selector(_doNextRaise:) interval:time];
 		}
 	}
-}
-
-/*
-	@brief
-*/
--(void)	_onDoDeleteState
-{
-	mb_delete	= YES;
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 /*

@@ -7,9 +7,10 @@
 //
 
 #import "Nabe.h"
-#import "Tenpura.h"
 
 #import "./../Data/DataTenpuraPosList.h"
+#import "./../Data/DataGlobal.h"
+#import "./../System/Effect/EffectManager.h"
 
 @implementation Nabe
 
@@ -37,6 +38,7 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 		for( UInt32 i = 0; i < eTEPURA_MAX; ++i )
 		{
 			Tenpura*	pTenpura	= [Tenpura node];
+			pTenpura.delegate	= self;
 			[pTenpura setVisible:NO];
 			[self addChild:pTenpura z:s_startTenpuraZOrder];
 		}
@@ -156,11 +158,23 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 		if( [pNode isKindOfClass:[Tenpura class]] == YES )
 		{
 			pTenpura	= (Tenpura*)pNode;
-			if( pTenpura.bRaise == YES )
-			{
-				[pTenpura end];
-			}
+			[pTenpura end];
 		}
+	}
+}
+
+/*
+	@brief	配置した天ぷらが消滅時に呼ばれる
+*/
+-(void)	onDeleteTenpura:(CCNode *)in_pTenpura
+{
+	//	爆発エフェクト
+	EffectManager*	pEffManager	= [EffectManager shared];
+	CCNode*	pEff	= [pEffManager play:[NSString stringWithUTF8String:ga_effPlayName[eEFF_BOMG]]];
+	if( pEff != nil )
+	{
+		[pEff setPosition:in_pTenpura.position];
+		[self addChild:pEff z:20];
 	}
 }
 

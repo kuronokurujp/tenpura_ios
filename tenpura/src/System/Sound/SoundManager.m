@@ -48,6 +48,12 @@ static	SoundManager*	sp_inst	= nil;
 	}
 }
 
++(id)alloc
+{
+	NSAssert(sp_inst == nil, @"Attempted to allocate a second instance of a singleton.");
+	return [super alloc];
+}
+
 /*
 	@brief	初期化
 */

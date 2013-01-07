@@ -37,6 +37,9 @@ enum ACTION_LIST_ENUM
 -(CCAction*)	_createPutResultScoreAction:(SInt32)in_num;
 -(CCAction*)	_createPutResultMoneyAction:(SInt32)in_num;
 
+//	食べる処理
+-(void)	_eat:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money;
+
 @end
 
 @implementation ActionCustomer
@@ -174,17 +177,7 @@ enum ACTION_LIST_ENUM
 {
 	[mp_customer stopAllActions];
 
-	//	食べた天ぷらアイコン消滅
-	assert( [mp_customer removeEatIcon:in_no] == YES);
-	
-	[self _createPutScoreAction:in_score];
-	[self _createPutMoneyAction:in_money];
-	
-	//	食べる天ぷらがないと退場
-	if([mp_customer getEatTenpura] <= 0)
-	{
-		[self exit];
-	}
+	[self _eat:in_no:in_score:in_money];
 	
 	[[SoundManager shared] play:eSOUND_EAT01];
 }
@@ -196,18 +189,8 @@ enum ACTION_LIST_ENUM
 {
 	[mp_customer stopAllActions];
 
-	//	食べた天ぷらアイコン消滅
-	assert( [mp_customer removeEatIcon:in_no] == YES);
+	[self _eat:in_no:in_score:in_money];
 
-	[self _createPutScoreAction:in_score];
-	[self _createPutMoneyAction:in_money];
-	
-	//	食べる天ぷらがないと退場
-	if([mp_customer getEatTenpura] <= 0)
-	{
-		[self exit];
-	}
-	
 	[[SoundManager shared] play:eSOUND_EAT01];
 }
 
@@ -218,11 +201,7 @@ enum ACTION_LIST_ENUM
 {
 	[mp_customer stopAllActions];
 
-	//	食べた天ぷらアイコン消滅
-	assert( [mp_customer removeEatIcon:in_no] == YES);
-	
-	[self _createPutScoreAction:in_score];
-	[self _createPutMoneyAction:in_money];
+	[self _eat:in_no:in_score:in_money];
 	
 	[[SoundManager shared] play:eSOUND_EAT01];
 }
@@ -339,6 +318,24 @@ enum ACTION_LIST_ENUM
 	[mp_scoreLabel setVisible:YES];
 
 	return pFaedIn;
+}
+
+/*
+	@brief	食べる処理
+*/
+-(void)	_eat:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money
+{
+	//	食べた天ぷらアイコン消滅
+	assert( [mp_customer removeEatIcon:in_no] == YES);
+	
+	[self _createPutScoreAction:in_score];
+	[self _createPutMoneyAction:in_money];
+	
+	//	食べる天ぷらがないと退場
+	if([mp_customer getEatTenpura] <= 0)
+	{
+		[self exit];
+	}
 }
 
 @end

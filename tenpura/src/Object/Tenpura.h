@@ -10,6 +10,15 @@
 #import "cocos2d.h"
 #import "../Data/DataNetaList.h"
 
+/*
+	@brief	天ぷらデリゲータ
+*/
+@protocol TenpuraProtocol<NSObject>
+
+-(void)	onDeleteTenpura:(CCNode*)in_pTenpura;
+
+@end
+
 typedef enum
 {
 	eTENPURA_STATE_NOT	= 0,	//	揚げてない
@@ -29,6 +38,7 @@ typedef enum
 	//	変数定義
 	NETA_DATA_ST		m_data;
 	CCSprite*			mp_sp;
+	id<TenpuraProtocol>	m_delegate;
 	
 	TENPURA_STATE_ET	m_state;
 	BOOL				mb_touch;
@@ -48,6 +58,7 @@ typedef enum
 @property	(nonatomic, readonly)	BOOL	bDelete;
 @property	(nonatomic, readonly)	UInt32	posDataIdx;
 @property	(nonatomic, readonly)	NETA_DATA_ST data;
+@property	(nonatomic, retain)		id<TenpuraProtocol>	delegate;
 
 //	セットアップ
 -(void)	setupToPosIndex:(NETA_DATA_ST)in_data:(const UInt32)in_posDataIdx;
@@ -61,8 +72,6 @@ typedef enum
 -(void)	startRaise;
 //	リセット
 -(void)	reset;
-//	天ぷら削除許可通知設定
--(void)	registDeletePermitObserver:(NSString*)in_pName;
 
 //	タッチロック
 -(void)	lockTouch;

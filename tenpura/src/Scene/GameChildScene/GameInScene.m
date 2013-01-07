@@ -16,6 +16,7 @@
 #import "./../../Data/DataNetaList.h"
 #import "./../../Data/DataGlobal.h"
 #import "./../../System/Sound/SoundManager.h"
+#import "./../../System/Effect/EffectManager.h"
 
 //	非公開関数
 @interface GameInScene (PrivateMethod)

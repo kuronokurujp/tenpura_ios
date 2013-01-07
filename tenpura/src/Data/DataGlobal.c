@@ -8,6 +8,12 @@
 
 #include "DataGlobal.h"
 
+//	エフェクト再生名一覧
+const char*	ga_effPlayName[eEFF_MAX]	=
+{
+	"bomb",
+};
+
 //	バナー更新リクエスト時間（秒）
 const float	g_bannerRequestTimeSecVal	= 15.f;
 
@@ -55,7 +61,7 @@ static const char*	gp_GamePlayStartSpritFileName	= "play_start.png";
 */
 
 //	爆発エフェクト(30fps)
-const char*	ga_effectBombFileNameList[]	=
+const char*	ga_effectBombFrameNameList[30]	=
 {
 	"bomb0001.png",
 	"bomb0002.png",
@@ -88,3 +94,6 @@ const char*	ga_effectBombFileNameList[]	=
 	"bomb0029.png",
 	"bomb0030.png",
 };
+
+const char*	gp_effectBombFileName	= "bomb.png";
+const char*	gp_effectBombFileFrameName	= "bomb.plist";

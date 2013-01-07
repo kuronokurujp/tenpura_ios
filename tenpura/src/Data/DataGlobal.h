@@ -47,6 +47,14 @@ enum
 	eSOUND_SEKI05
 };
 
+enum
+{
+	eEFF_BOMG	= 0,
+	eEFF_MAX
+};
+//	エフェクト再生名一覧
+extern const char*	ga_effPlayName[eEFF_MAX];
+
 extern const float	g_bannerRequestTimeSecVal;
 extern const float	ga_bannerPos[ 2 ];
 
@@ -60,7 +68,10 @@ extern const char*	gp_tweetTextKeyName;
 extern const char*	gp_tweetSearchURLKeyName;
 extern const char*	gp_soundDataListName;
 
-//	画像ファイル名一覧
-extern const char*	ga_effectBombFileNameList[];
+//	エフェクトアニメ
+//	爆発
+extern const char*	ga_effectBombFrameNameList[30];
+extern const char*	gp_effectBombFileFrameName;
+extern const char*	gp_effectBombFileName;
 
 #endif

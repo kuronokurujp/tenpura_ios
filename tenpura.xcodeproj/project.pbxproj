@@ -11,36 +11,11 @@
 		CE12811916429D0200D369CF /* setting.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE12811816429D0200D369CF /* setting.ccbi */; };
 		CE18C49C1667ABA000ED1E85 /* DataMissionList.m in Sources */ = {isa = PBXBuildFile; fileRef = CE18C49B1667ABA000ED1E85 /* DataMissionList.m */; };
 		CE18C4A31667D84200ED1E85 /* missionListData.csv in Resources */ = {isa = PBXBuildFile; fileRef = CE18C4A21667D84200ED1E85 /* missionListData.csv */; };
-		CE32FE671698A5F600E0E80D /* bomb0001.png in Resources */ = {isa = PBXBuildFile; fileRef = CE32FE491698A5F600E0E80D /* bomb0001.png */; };
-		CE32FE681698A5F600E0E80D /* bomb0002.png in Resources */ = {isa = PBXBuildFile; fileRef = CE32FE4A1698A5F600E0E80D /* bomb0002.png */; };
-		CE32FE691698A5F600E0E80D /* bomb0003.png in Resources */ = {isa = PBXBuildFile; fileRef = CE32FE4B1698A5F600E0E80D /* bomb0003.png */; };
-		CE32FE6A1698A5F600E0E80D /* bomb0004.png in Resources */ = {isa = PBXBuildFile; fileRef = CE32FE4C1698A5F600E0E80D /* bomb0004.png */; };
-		CE32FE6B1698A5F600E0E80D /* bomb0005.png in Resources */ = {isa = PBXBuildFile; fileRef = CE32FE4D1698A5F600E0E80D /* bomb0005.png */; };
-		CE32FE6C1698A5F600E0E80D /* bomb0006.png in Resources */ = {isa = PBXBuildFile; fileRef = CE32FE4E1698A5F600E0E80D /* bomb0006.png */; };
-		CE32FE6D1698A5F600E0E80D /* bomb0007.png in Resources */ = {isa = PBXBuildFile; fileRef = CE32FE4F1698A5F600E0E80D /* bomb0007.png */; };
-		CE32FE6E1698A5F600E0E80D /* bomb0008.png in Resources */ = {isa = PBXBuildFile; fileRef = CE32FE501698A5F600E0E80D /* bomb0008.png */; };
-		CE32FE6F1698A5F600E0E80D /* bomb0009.png in Resources */ = {isa = PBXBuildFile; fileRef = CE32FE511698A5F600E0E80D /* bomb0009.png */; };
-		CE32FE701698A5F600E0E80D /* bomb0010.png in Resources */ = {isa = PBXBuildFile; fileRef = CE32FE521698A5F600E0E80D /* bomb0010.png */; };
-		CE32FE711698A5F600E0E80D /* bomb0011.png in Resources */ = {isa = PBXBuildFile; fileRef = CE32FE531698A5F600E0E80D /* bomb0011.png */; };
-		CE32FE721698A5F600E0E80D /* bomb0012.png in Resources */ = {isa = PBXBuildFile; fileRef = CE32FE541698A5F600E0E80D /* bomb0012.png */; };
-		CE32FE731698A5F600E0E80D /* bomb0013.png in Resources */ = {isa = PBXBuildFile; fileRef = CE32FE551698A5F600E0E80D /* bomb0013.png */; };
-		CE32FE741698A5F600E0E80D /* bomb0014.png in Resources */ = {isa = PBXBuildFile; fileRef = CE32FE561698A5F600E0E80D /* bomb0014.png */; };
-		CE32FE751698A5F600E0E80D /* bomb0015.png in Resources */ = {isa = PBXBuildFile; fileRef = CE32FE571698A5F600E0E80D /* bomb0015.png */; };
-		CE32FE761698A5F600E0E80D /* bomb0016.png in Resources */ = {isa = PBXBuildFile; fileRef = CE32FE581698A5F600E0E80D /* bomb0016.png */; };
-		CE32FE771698A5F600E0E80D /* bomb0017.png in Resources */ = {isa = PBXBuildFile; fileRef = CE32FE591698A5F600E0E80D /* bomb0017.png */; };
-		CE32FE781698A5F600E0E80D /* bomb0018.png in Resources */ = {isa = PBXBuildFile; fileRef = CE32FE5A1698A5F600E0E80D /* bomb0018.png */; };
-		CE32FE791698A5F600E0E80D /* bomb0019.png in Resources */ = {isa = PBXBuildFile; fileRef = CE32FE5B1698A5F600E0E80D /* bomb0019.png */; };
-		CE32FE7A1698A5F600E0E80D /* bomb0020.png in Resources */ = {isa = PBXBuildFile; fileRef = CE32FE5C1698A5F600E0E80D /* bomb0020.png */; };
-		CE32FE7B1698A5F600E0E80D /* bomb0021.png in Resources */ = {isa = PBXBuildFile; fileRef = CE32FE5D1698A5F600E0E80D /* bomb0021.png */; };
-		CE32FE7C1698A5F600E0E80D /* bomb0022.png in Resources */ = {isa = PBXBuildFile; fileRef = CE32FE5E1698A5F600E0E80D /* bomb0022.png */; };
-		CE32FE7D1698A5F600E0E80D /* bomb0023.png in Resources */ = {isa = PBXBuildFile; fileRef = CE32FE5F1698A5F600E0E80D /* bomb0023.png */; };
-		CE32FE7E1698A5F600E0E80D /* bomb0024.png in Resources */ = {isa = PBXBuildFile; fileRef = CE32FE601698A5F600E0E80D /* bomb0024.png */; };
-		CE32FE7F1698A5F600E0E80D /* bomb0025.png in Resources */ = {isa = PBXBuildFile; fileRef = CE32FE611698A5F600E0E80D /* bomb0025.png */; };
-		CE32FE801698A5F600E0E80D /* bomb0026.png in Resources */ = {isa = PBXBuildFile; fileRef = CE32FE621698A5F600E0E80D /* bomb0026.png */; };
-		CE32FE811698A5F600E0E80D /* bomb0027.png in Resources */ = {isa = PBXBuildFile; fileRef = CE32FE631698A5F600E0E80D /* bomb0027.png */; };
-		CE32FE821698A5F600E0E80D /* bomb0028.png in Resources */ = {isa = PBXBuildFile; fileRef = CE32FE641698A5F600E0E80D /* bomb0028.png */; };
-		CE32FE831698A5F600E0E80D /* bomb0029.png in Resources */ = {isa = PBXBuildFile; fileRef = CE32FE651698A5F600E0E80D /* bomb0029.png */; };
-		CE32FE841698A5F600E0E80D /* bomb0030.png in Resources */ = {isa = PBXBuildFile; fileRef = CE32FE661698A5F600E0E80D /* bomb0030.png */; };
+		CE1B74C91699D6BE00DD2C07 /* FileTexLoadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1B74C81699D6BE00DD2C07 /* FileTexLoadManager.m */; };
+		CE1B74CC1699E79C00DD2C07 /* bomb.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE1B74CA1699E79C00DD2C07 /* bomb.plist */; };
+		CE1B74CD1699E79C00DD2C07 /* bomb.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1B74CB1699E79C00DD2C07 /* bomb.png */; };
+		CE2D4297169989B6003BF31D /* EffectManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2D4296169989B6003BF31D /* EffectManager.m */; };
+		CE2D429F16998A59003BF31D /* EffectActionSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2D429E16998A59003BF31D /* EffectActionSprite.m */; };
 		CE33C89516888852004782A4 /* help.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE33C89416888852004782A4 /* help.ccbi */; };
 		CE33C899168888BD004782A4 /* HelpScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CE33C898168888BD004782A4 /* HelpScene.m */; };
 		CE361D2A164353CF00339BB0 /* not_buy_cell.png in Resources */ = {isa = PBXBuildFile; fileRef = CE361D29164353CF00339BB0 /* not_buy_cell.png */; };
@@ -376,36 +351,14 @@
 		CE18C49A1667ABA000ED1E85 /* DataMissionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataMissionList.h; path = src/Data/DataMissionList.h; sourceTree = "<group>"; };
 		CE18C49B1667ABA000ED1E85 /* DataMissionList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataMissionList.m; path = src/Data/DataMissionList.m; sourceTree = "<group>"; };
 		CE18C4A21667D84200ED1E85 /* missionListData.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = missionListData.csv; path = Resources/data/missionListData.csv; sourceTree = "<group>"; };
-		CE32FE491698A5F600E0E80D /* bomb0001.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb0001.png; path = Resources/effect/bomb/bomb0001.png; sourceTree = "<group>"; };
-		CE32FE4A1698A5F600E0E80D /* bomb0002.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb0002.png; path = Resources/effect/bomb/bomb0002.png; sourceTree = "<group>"; };
-		CE32FE4B1698A5F600E0E80D /* bomb0003.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb0003.png; path = Resources/effect/bomb/bomb0003.png; sourceTree = "<group>"; };
-		CE32FE4C1698A5F600E0E80D /* bomb0004.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb0004.png; path = Resources/effect/bomb/bomb0004.png; sourceTree = "<group>"; };
-		CE32FE4D1698A5F600E0E80D /* bomb0005.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb0005.png; path = Resources/effect/bomb/bomb0005.png; sourceTree = "<group>"; };
-		CE32FE4E1698A5F600E0E80D /* bomb0006.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb0006.png; path = Resources/effect/bomb/bomb0006.png; sourceTree = "<group>"; };
-		CE32FE4F1698A5F600E0E80D /* bomb0007.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb0007.png; path = Resources/effect/bomb/bomb0007.png; sourceTree = "<group>"; };
-		CE32FE501698A5F600E0E80D /* bomb0008.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb0008.png; path = Resources/effect/bomb/bomb0008.png; sourceTree = "<group>"; };
-		CE32FE511698A5F600E0E80D /* bomb0009.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb0009.png; path = Resources/effect/bomb/bomb0009.png; sourceTree = "<group>"; };
-		CE32FE521698A5F600E0E80D /* bomb0010.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb0010.png; path = Resources/effect/bomb/bomb0010.png; sourceTree = "<group>"; };
-		CE32FE531698A5F600E0E80D /* bomb0011.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb0011.png; path = Resources/effect/bomb/bomb0011.png; sourceTree = "<group>"; };
-		CE32FE541698A5F600E0E80D /* bomb0012.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb0012.png; path = Resources/effect/bomb/bomb0012.png; sourceTree = "<group>"; };
-		CE32FE551698A5F600E0E80D /* bomb0013.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb0013.png; path = Resources/effect/bomb/bomb0013.png; sourceTree = "<group>"; };
-		CE32FE561698A5F600E0E80D /* bomb0014.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb0014.png; path = Resources/effect/bomb/bomb0014.png; sourceTree = "<group>"; };
-		CE32FE571698A5F600E0E80D /* bomb0015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb0015.png; path = Resources/effect/bomb/bomb0015.png; sourceTree = "<group>"; };
-		CE32FE581698A5F600E0E80D /* bomb0016.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb0016.png; path = Resources/effect/bomb/bomb0016.png; sourceTree = "<group>"; };
-		CE32FE591698A5F600E0E80D /* bomb0017.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb0017.png; path = Resources/effect/bomb/bomb0017.png; sourceTree = "<group>"; };
-		CE32FE5A1698A5F600E0E80D /* bomb0018.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb0018.png; path = Resources/effect/bomb/bomb0018.png; sourceTree = "<group>"; };
-		CE32FE5B1698A5F600E0E80D /* bomb0019.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb0019.png; path = Resources/effect/bomb/bomb0019.png; sourceTree = "<group>"; };
-		CE32FE5C1698A5F600E0E80D /* bomb0020.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb0020.png; path = Resources/effect/bomb/bomb0020.png; sourceTree = "<group>"; };
-		CE32FE5D1698A5F600E0E80D /* bomb0021.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb0021.png; path = Resources/effect/bomb/bomb0021.png; sourceTree = "<group>"; };
-		CE32FE5E1698A5F600E0E80D /* bomb0022.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb0022.png; path = Resources/effect/bomb/bomb0022.png; sourceTree = "<group>"; };
-		CE32FE5F1698A5F600E0E80D /* bomb0023.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb0023.png; path = Resources/effect/bomb/bomb0023.png; sourceTree = "<group>"; };
-		CE32FE601698A5F600E0E80D /* bomb0024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb0024.png; path = Resources/effect/bomb/bomb0024.png; sourceTree = "<group>"; };
-		CE32FE611698A5F600E0E80D /* bomb0025.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb0025.png; path = Resources/effect/bomb/bomb0025.png; sourceTree = "<group>"; };
-		CE32FE621698A5F600E0E80D /* bomb0026.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb0026.png; path = Resources/effect/bomb/bomb0026.png; sourceTree = "<group>"; };
-		CE32FE631698A5F600E0E80D /* bomb0027.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb0027.png; path = Resources/effect/bomb/bomb0027.png; sourceTree = "<group>"; };
-		CE32FE641698A5F600E0E80D /* bomb0028.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb0028.png; path = Resources/effect/bomb/bomb0028.png; sourceTree = "<group>"; };
-		CE32FE651698A5F600E0E80D /* bomb0029.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb0029.png; path = Resources/effect/bomb/bomb0029.png; sourceTree = "<group>"; };
-		CE32FE661698A5F600E0E80D /* bomb0030.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb0030.png; path = Resources/effect/bomb/bomb0030.png; sourceTree = "<group>"; };
+		CE1B74C71699D6BE00DD2C07 /* FileTexLoadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileTexLoadManager.h; path = src/System/FileLoad/FileTexLoadManager.h; sourceTree = "<group>"; };
+		CE1B74C81699D6BE00DD2C07 /* FileTexLoadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileTexLoadManager.m; path = src/System/FileLoad/FileTexLoadManager.m; sourceTree = "<group>"; };
+		CE1B74CA1699E79C00DD2C07 /* bomb.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = bomb.plist; path = Resources/effect/bomb/bomb.plist; sourceTree = "<group>"; };
+		CE1B74CB1699E79C00DD2C07 /* bomb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb.png; path = Resources/effect/bomb/bomb.png; sourceTree = "<group>"; };
+		CE2D4295169989B6003BF31D /* EffectManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectManager.h; path = src/System/effect/EffectManager.h; sourceTree = "<group>"; };
+		CE2D4296169989B6003BF31D /* EffectManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectManager.m; path = src/System/effect/EffectManager.m; sourceTree = "<group>"; };
+		CE2D429D16998A59003BF31D /* EffectActionSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectActionSprite.h; path = src/System/Effect/Action/EffectActionSprite.h; sourceTree = "<group>"; };
+		CE2D429E16998A59003BF31D /* EffectActionSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectActionSprite.m; path = src/System/Effect/Action/EffectActionSprite.m; sourceTree = "<group>"; };
 		CE33C89416888852004782A4 /* help.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = help.ccbi; path = Resources/ccbi/help.ccbi; sourceTree = "<group>"; };
 		CE33C897168888BD004782A4 /* HelpScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelpScene.h; path = src/Scene/HelpScene.h; sourceTree = "<group>"; };
 		CE33C898168888BD004782A4 /* HelpScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HelpScene.m; path = src/Scene/HelpScene.m; sourceTree = "<group>"; };
@@ -968,6 +921,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE1B74C61699D68D00DD2C07 /* FileLoad */ = {
+			isa = PBXGroup;
+			children = (
+				CE1B74C71699D6BE00DD2C07 /* FileTexLoadManager.h */,
+				CE1B74C81699D6BE00DD2C07 /* FileTexLoadManager.m */,
+			);
+			name = FileLoad;
+			sourceTree = "<group>";
+		};
+		CE2D429916998A02003BF31D /* Action */ = {
+			isa = PBXGroup;
+			children = (
+				CE2D429D16998A59003BF31D /* EffectActionSprite.h */,
+				CE2D429E16998A59003BF31D /* EffectActionSprite.m */,
+			);
+			name = Action;
+			sourceTree = "<group>";
+		};
 		CE32FE451698A5C200E0E80D /* effect */ = {
 			isa = PBXGroup;
 			children = (
@@ -979,45 +950,20 @@
 		CE32FE481698A5E400E0E80D /* bomb */ = {
 			isa = PBXGroup;
 			children = (
-				CE32FE491698A5F600E0E80D /* bomb0001.png */,
-				CE32FE4A1698A5F600E0E80D /* bomb0002.png */,
-				CE32FE4B1698A5F600E0E80D /* bomb0003.png */,
-				CE32FE4C1698A5F600E0E80D /* bomb0004.png */,
-				CE32FE4D1698A5F600E0E80D /* bomb0005.png */,
-				CE32FE4E1698A5F600E0E80D /* bomb0006.png */,
-				CE32FE4F1698A5F600E0E80D /* bomb0007.png */,
-				CE32FE501698A5F600E0E80D /* bomb0008.png */,
-				CE32FE511698A5F600E0E80D /* bomb0009.png */,
-				CE32FE521698A5F600E0E80D /* bomb0010.png */,
-				CE32FE531698A5F600E0E80D /* bomb0011.png */,
-				CE32FE541698A5F600E0E80D /* bomb0012.png */,
-				CE32FE551698A5F600E0E80D /* bomb0013.png */,
-				CE32FE561698A5F600E0E80D /* bomb0014.png */,
-				CE32FE571698A5F600E0E80D /* bomb0015.png */,
-				CE32FE581698A5F600E0E80D /* bomb0016.png */,
-				CE32FE591698A5F600E0E80D /* bomb0017.png */,
-				CE32FE5A1698A5F600E0E80D /* bomb0018.png */,
-				CE32FE5B1698A5F600E0E80D /* bomb0019.png */,
-				CE32FE5C1698A5F600E0E80D /* bomb0020.png */,
-				CE32FE5D1698A5F600E0E80D /* bomb0021.png */,
-				CE32FE5E1698A5F600E0E80D /* bomb0022.png */,
-				CE32FE5F1698A5F600E0E80D /* bomb0023.png */,
-				CE32FE601698A5F600E0E80D /* bomb0024.png */,
-				CE32FE611698A5F600E0E80D /* bomb0025.png */,
-				CE32FE621698A5F600E0E80D /* bomb0026.png */,
-				CE32FE631698A5F600E0E80D /* bomb0027.png */,
-				CE32FE641698A5F600E0E80D /* bomb0028.png */,
-				CE32FE651698A5F600E0E80D /* bomb0029.png */,
-				CE32FE661698A5F600E0E80D /* bomb0030.png */,
+				CE1B74CA1699E79C00DD2C07 /* bomb.plist */,
+				CE1B74CB1699E79C00DD2C07 /* bomb.png */,
 			);
 			name = bomb;
 			sourceTree = "<group>";
 		};
-		CE32FE891699354E00E0E80D /* effect */ = {
+		CE32FE891699354E00E0E80D /* Effect */ = {
 			isa = PBXGroup;
 			children = (
+				CE2D429916998A02003BF31D /* Action */,
+				CE2D4295169989B6003BF31D /* EffectManager.h */,
+				CE2D4296169989B6003BF31D /* EffectManager.m */,
 			);
-			name = effect;
+			name = Effect;
 			sourceTree = "<group>";
 		};
 		CE41972C1695A4BA00EAD614 /* Sound */ = {
@@ -1669,7 +1615,8 @@
 		CED24798163997A700506CA8 /* System */ = {
 			isa = PBXGroup;
 			children = (
-				CE32FE891699354E00E0E80D /* effect */,
+				CE1B74C61699D68D00DD2C07 /* FileLoad */,
+				CE32FE891699354E00E0E80D /* Effect */,
 				CE41972C1695A4BA00EAD614 /* Sound */,
 				CE4D94D01661268B003743D7 /* StoreView */,
 				CEDD4105165AA1650037F60B /* BannerView */,
@@ -2234,36 +2181,8 @@
 				CE41976C1695C28900EAD614 /* seki03.caf in Resources */,
 				CE41976D1695C28900EAD614 /* seki04.caf in Resources */,
 				CE41976E1695C28900EAD614 /* seki05.caf in Resources */,
-				CE32FE671698A5F600E0E80D /* bomb0001.png in Resources */,
-				CE32FE681698A5F600E0E80D /* bomb0002.png in Resources */,
-				CE32FE691698A5F600E0E80D /* bomb0003.png in Resources */,
-				CE32FE6A1698A5F600E0E80D /* bomb0004.png in Resources */,
-				CE32FE6B1698A5F600E0E80D /* bomb0005.png in Resources */,
-				CE32FE6C1698A5F600E0E80D /* bomb0006.png in Resources */,
-				CE32FE6D1698A5F600E0E80D /* bomb0007.png in Resources */,
-				CE32FE6E1698A5F600E0E80D /* bomb0008.png in Resources */,
-				CE32FE6F1698A5F600E0E80D /* bomb0009.png in Resources */,
-				CE32FE701698A5F600E0E80D /* bomb0010.png in Resources */,
-				CE32FE711698A5F600E0E80D /* bomb0011.png in Resources */,
-				CE32FE721698A5F600E0E80D /* bomb0012.png in Resources */,
-				CE32FE731698A5F600E0E80D /* bomb0013.png in Resources */,
-				CE32FE741698A5F600E0E80D /* bomb0014.png in Resources */,
-				CE32FE751698A5F600E0E80D /* bomb0015.png in Resources */,
-				CE32FE761698A5F600E0E80D /* bomb0016.png in Resources */,
-				CE32FE771698A5F600E0E80D /* bomb0017.png in Resources */,
-				CE32FE781698A5F600E0E80D /* bomb0018.png in Resources */,
-				CE32FE791698A5F600E0E80D /* bomb0019.png in Resources */,
-				CE32FE7A1698A5F600E0E80D /* bomb0020.png in Resources */,
-				CE32FE7B1698A5F600E0E80D /* bomb0021.png in Resources */,
-				CE32FE7C1698A5F600E0E80D /* bomb0022.png in Resources */,
-				CE32FE7D1698A5F600E0E80D /* bomb0023.png in Resources */,
-				CE32FE7E1698A5F600E0E80D /* bomb0024.png in Resources */,
-				CE32FE7F1698A5F600E0E80D /* bomb0025.png in Resources */,
-				CE32FE801698A5F600E0E80D /* bomb0026.png in Resources */,
-				CE32FE811698A5F600E0E80D /* bomb0027.png in Resources */,
-				CE32FE821698A5F600E0E80D /* bomb0028.png in Resources */,
-				CE32FE831698A5F600E0E80D /* bomb0029.png in Resources */,
-				CE32FE841698A5F600E0E80D /* bomb0030.png in Resources */,
+				CE1B74CC1699E79C00DD2C07 /* bomb.plist in Resources */,
+				CE1B74CD1699E79C00DD2C07 /* bomb.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2441,6 +2360,9 @@
 				CEFBC2B716877DE100C3C233 /* GameEndScene.m in Sources */,
 				CE33C899168888BD004782A4 /* HelpScene.m in Sources */,
 				CE4197301695A4E900EAD614 /* SoundManager.m in Sources */,
+				CE2D4297169989B6003BF31D /* EffectManager.m in Sources */,
+				CE2D429F16998A59003BF31D /* EffectActionSprite.m in Sources */,
+				CE1B74C91699D6BE00DD2C07 /* FileTexLoadManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

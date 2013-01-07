@@ -17,6 +17,7 @@
 #import "./../Data/DataGlobal.h"
 #import "./../Data/DataSettingTenpura.h"
 #import "./../Data/DataTenpuraPosList.h"
+#import "./../System/Effect/EffectManager.h"
 
 #import "./../CCBReader/CCBReader.h"
 
@@ -192,10 +193,36 @@ enum
 }
 
 /*
+	@brief
+*/
+-(void)	onExit
+{
+	//	エフェクト管理をいったんすべて解放
+	[EffectManager end];
+
+	[super onExit];
+}
+
+/*
 	@brief	シーン変異演出終了
 */
 -(void)	onEnterTransitionDidFinish
 {
+	//	エフェクト登録
+	{
+		EffectManager*	pEffMng	= [EffectManager shared];
+		UInt32	fileNum	= sizeof(ga_effectBombFrameNameList) / sizeof(ga_effectBombFrameNameList[0]);
+		EffectData*	pEffData	=
+		[[[EffectData alloc] initWithData
+		:gp_effectBombFileFrameName
+		:gp_effectBombFileName
+		:ga_effectBombFrameNameList
+		:fileNum:
+		60] autorelease];
+		
+		[pEffMng addEffect:[NSString stringWithUTF8String:ga_effPlayName[eEFF_BOMG]]:pEffData];
+	}
+
 	//	ゲームスタート演出
 	[self addChild:[GameStartScene node] z:10 tag:eGAME_START_SCENE_TAG];
 	[self schedule:@selector(_updateGameStart:)];

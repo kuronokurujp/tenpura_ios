@@ -14,7 +14,9 @@
 #import "./Data/DataTenpuraPosList.h"
 #import "./Data/DataSaveGame.h"
 #import "./Data/DataBaseText.h"
+#import "./Data/DataGlobal.h"
 #import "./System/Sound/SoundManager.h"
+#import "./System/FileLoad/FileTexLoadManager.h"
 #import "./CCBReader/CCBReader.h"
 
 // BootScene implementation
@@ -43,14 +45,20 @@
 	if( (self=[super init]))
 	{
 		[self scheduleUpdate];
+		
+		//	テクスチャー先読み
+		{
+			[[FileTexLoadManager shared] LoadAsync:[NSString stringWithUTF8String:gp_effectBombFileName]];
+		}
+		//	SE先読み
+		[[SoundManager shared] preLoad:@"caf"];
 	}
+
 	return self;
 }
 
 -(void) update:(ccTime)delta
 {
-//	[[SoundManager shared] preLoad:@"caf"];
-
 	//	シーン変更
 	CCScene*	mainScene	= [CCBReader sceneWithNodeGraphFromFile:@"title.ccbi"];
 	[[CCDirector sharedDirector] replaceScene:mainScene];

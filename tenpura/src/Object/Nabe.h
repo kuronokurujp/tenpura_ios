@@ -10,12 +10,13 @@
 #import "cocos2d.h"
 
 #import "../Data/DataNetaList.h"
+#import "Tenpura.h"
 
-//	前方宣言
-@class Tenpura;
-
-@interface Nabe : CCNode {
-    	
+@interface Nabe : CCNode
+<
+	TenpuraProtocol
+>
+{
 @private
 	//	変数定義
 	CCSprite*		mp_sp;
@@ -30,6 +31,8 @@
 -(void)	removeTenpura:(Tenpura*)in_pTenpura;
 //	追加天ぷらすべて削除
 -(void)	allRemoveTenpura;
+//	配置した天ぷらが消滅時に呼ばれる
+-(void)	onDeleteTenpura:(CCNode *)in_pTenpura;
 
 //	オーバーライド定義
 -(CGRect)	boundingBox;

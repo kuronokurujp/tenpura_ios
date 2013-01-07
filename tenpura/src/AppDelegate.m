@@ -21,6 +21,7 @@
 #import "./System/Sound/SoundManager.h"
 #import "./System/GameCenter/GameKitHelper.h"
 #import "./System/BannerView/BannerViewController.h"
+#import "./System/FileLoad/FileTexLoadManager.h"
 
 @interface AppController (PrivateMethod)
 
@@ -116,6 +117,8 @@ void uncaughtExceptionHandler( NSException* in_pException )
 	[GameKitHelper shared].delegate	= self;
 	//	サウンド管理データファイル設定
 	[[SoundManager shared] setup:[NSString stringWithUTF8String:gp_soundDataListName]];
+	//	ファイルテクスチャーロード
+	[FileTexLoadManager shared];
 
 	//	広告ビュー作成
 	{
