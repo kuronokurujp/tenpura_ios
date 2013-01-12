@@ -81,7 +81,7 @@
 		[mp_endLogoSp runAction:pSeq];
 	}
 
-	[[SoundManager shared] play:eSOUND_END01];
+	[[SoundManager shared] play:eSOUND_GAME_END];
 
 	[self unschedule:_cmd];
 }
@@ -226,7 +226,7 @@
 -(void)	_pressRestartBtn
 {
 	m_resultType	= eRESULT_TYPE_RESTART;
-	[[SoundManager shared] play:eSOUND_CLICK01];
+	[[SoundManager shared] play:eSOUND_BTN_CLICK];
 }
 
 /*
@@ -253,7 +253,7 @@
 	
 	[[NSNotificationCenter defaultCenter] postNotification:pNotification];
 	
-	[[SoundManager shared] play:eSOUND_CLICK01];
+	[[SoundManager shared] play:eSOUND_BTN_CLICK];
 }
 
 /*
@@ -263,7 +263,7 @@
 {
 	m_resultType	= eRESULT_TYPE_SINAGAKI;
 	
-	[[SoundManager shared] play:eSOUND_CLICK01];
+	[[SoundManager shared] play:eSOUND_BTN_CLICK];
 }
 
 @end

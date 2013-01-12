@@ -19,6 +19,7 @@
 		CE33C89516888852004782A4 /* help.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE33C89416888852004782A4 /* help.ccbi */; };
 		CE33C899168888BD004782A4 /* HelpScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CE33C898168888BD004782A4 /* HelpScene.m */; };
 		CE361D2A164353CF00339BB0 /* not_buy_cell.png in Resources */ = {isa = PBXBuildFile; fileRef = CE361D29164353CF00339BB0 /* not_buy_cell.png */; };
+		CE409A3B169B167800653C69 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE409A3A169B167800653C69 /* Default-568h@2x.png */; };
 		CE4197301695A4E900EAD614 /* SoundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE41972F1695A4E900EAD614 /* SoundManager.m */; };
 		CE4197321695AAC200EAD614 /* soundListData.csv in Resources */ = {isa = PBXBuildFile; fileRef = CE4197311695AAC200EAD614 /* soundListData.csv */; };
 		CE4197341695B38A00EAD614 /* click01.caf in Resources */ = {isa = PBXBuildFile; fileRef = CE4197331695B38A00EAD614 /* click01.caf */; };
@@ -363,6 +364,7 @@
 		CE33C897168888BD004782A4 /* HelpScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelpScene.h; path = src/Scene/HelpScene.h; sourceTree = "<group>"; };
 		CE33C898168888BD004782A4 /* HelpScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HelpScene.m; path = src/Scene/HelpScene.m; sourceTree = "<group>"; };
 		CE361D29164353CF00339BB0 /* not_buy_cell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = not_buy_cell.png; path = Resources/tableView/not_buy_cell.png; sourceTree = "<group>"; };
+		CE409A3A169B167800653C69 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 		CE41972E1695A4E900EAD614 /* SoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundManager.h; path = src/System/Sound/SoundManager.h; sourceTree = "<group>"; };
 		CE41972F1695A4E900EAD614 /* SoundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SoundManager.m; path = src/System/Sound/SoundManager.m; sourceTree = "<group>"; };
 		CE4197311695AAC200EAD614 /* soundListData.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = soundListData.csv; path = Resources/data/soundListData.csv; sourceTree = "<group>"; };
@@ -1177,6 +1179,7 @@
 				CED247F91639989400506CA8 /* ccbi */,
 				CED247F81639988F00506CA8 /* bg */,
 				CED246021639964D00506CA8 /* Default.png */,
+				CE409A3A169B167800653C69 /* Default-568h@2x.png */,
 				CED246041639964D00506CA8 /* Default-Landscape~ipad.png */,
 				CED246061639964D00506CA8 /* fps_images.png */,
 				CED246081639964D00506CA8 /* fps_images-hd.png */,
@@ -2183,6 +2186,7 @@
 				CE41976E1695C28900EAD614 /* seki05.caf in Resources */,
 				CE1B74CC1699E79C00DD2C07 /* bomb.plist in Resources */,
 				CE1B74CD1699E79C00DD2C07 /* bomb.png in Resources */,
+				CE409A3B169B167800653C69 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -154,7 +154,7 @@
 	
 	pDataSettingTenpura	= nil;
 	
-	[[SoundManager shared] play:eSOUND_CLICK01];
+	[[SoundManager shared] play:eSOUND_BTN_CLICK];
 }
 
 /*
@@ -171,7 +171,7 @@
 	
 	[[CCDirector sharedDirector] pushScene:pTransFade];
 	
-	[[SoundManager shared] play:eSOUND_CLICK01];
+	[[SoundManager shared] play:eSOUND_BTN_CLICK];
 }
 
 /*
@@ -181,7 +181,7 @@
 {
 	CCLOG(@"ItemShop");
 	
-	[[SoundManager shared] play:eSOUND_CLICK01];
+	[[SoundManager shared] play:eSOUND_BTN_CLICK];
 }
 
 /*
@@ -218,7 +218,7 @@
 
 	[[CCDirector sharedDirector] pushScene:pTransFade];
 	
-	[[SoundManager shared] play:eSOUND_CLICK01];
+	[[SoundManager shared] play:eSOUND_BTN_CLICK];
 }
 
 /*
@@ -228,7 +228,7 @@
 {
 	CCLOG(@"settingItemBtn");
 	
-	[[SoundManager shared] play:eSOUND_CLICK01];
+	[[SoundManager shared] play:eSOUND_BTN_CLICK];
 }
 
 /*
@@ -245,7 +245,7 @@
 	
 	[[CCDirector sharedDirector] pushScene:pTransFade];
 	
-	[[SoundManager shared] play:eSOUND_CLICK01];
+	[[SoundManager shared] play:eSOUND_BTN_CLICK];
 }
 
 /*
@@ -259,7 +259,7 @@
 	
 	[[CCDirector sharedDirector] replaceScene:pTransFade];
 	
-	[[SoundManager shared] play:eSOUND_CLICK04];
+	[[SoundManager shared] play:eSOUND_PRESS_BTN_CLICK];
 }
 
 /*

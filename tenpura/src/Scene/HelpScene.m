@@ -140,7 +140,7 @@ static NSString*	sp_helpHtmlNameList[]	=
 	
 	[[CCDirector sharedDirector] replaceScene:pTransFade];
 	
-	[[SoundManager shared] play:eSOUND_CLICK04];
+	[[SoundManager shared] play:eSOUND_PRESS_BTN_CLICK];
 }
 
 /*
@@ -151,7 +151,7 @@ static NSString*	sp_helpHtmlNameList[]	=
 	m_nowPageNum	= LOOP( 0, m_maxPageNum, m_nowPageNum + 1 );
 	[self changePage:m_nowPageNum];
 	
-	[[SoundManager shared] play:eSOUND_CLICK01];
+	[[SoundManager shared] play:eSOUND_BTN_CLICK];
 }
 
 /*
@@ -162,7 +162,7 @@ static NSString*	sp_helpHtmlNameList[]	=
 	m_nowPageNum	= LOOP( 0, m_maxPageNum, m_nowPageNum - 1 );
 	[self changePage:m_nowPageNum];
 	
-	[[SoundManager shared] play:eSOUND_CLICK01];
+	[[SoundManager shared] play:eSOUND_BTN_CLICK];
 }
 
 /*

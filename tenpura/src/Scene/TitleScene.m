@@ -68,7 +68,7 @@
 	
 	[[NSNotificationCenter defaultCenter] postNotification:pNotification];
 	
-	[[SoundManager shared] play:eSOUND_CLICK01];
+	[[SoundManager shared] play:eSOUND_BTN_CLICK];
 }
 
 /*
@@ -83,7 +83,7 @@
 	
 	[[CCDirector sharedDirector] replaceScene:pTransFade];
 	
-	[[SoundManager shared] play:eSOUND_CLICK01];
+	[[SoundManager shared] play:eSOUND_BTN_CLICK];
 }
 
 /*
@@ -93,7 +93,7 @@
 {
 	[[GameKitHelper shared] showGameCenter];
 	
-	[[SoundManager shared] play:eSOUND_CLICK01];
+	[[SoundManager shared] play:eSOUND_BTN_CLICK];
 }
 
 /*
@@ -108,7 +108,7 @@
 	
 	[[CCDirector sharedDirector] replaceScene:pTransFade];
 	
-	[[SoundManager shared] play:eSOUND_CLICK01];
+	[[SoundManager shared] play:eSOUND_BTN_CLICK];
 }
 
 /*
@@ -116,7 +116,7 @@
 */
 -(void)	pressMoreAppBtn
 {
-	[[SoundManager shared] play:eSOUND_CLICK01];
+	[[SoundManager shared] play:eSOUND_BTN_CLICK];
 	
 	DataBaseText*	pDataText	= [DataBaseText shared];
     NSString*	pURLText	= [NSString stringWithUTF8String:[pDataText getText:72]];

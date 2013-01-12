@@ -115,7 +115,7 @@
 		[mp_startLogoSp setVisible:YES];
 	}
 	
-	[[SoundManager shared] play:eSOUND_END02];
+	[[SoundManager shared] play:eSOUND_GAME_START];
 }
 
 /*

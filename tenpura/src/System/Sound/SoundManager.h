@@ -10,6 +10,8 @@
 
 typedef struct
 {
+	Float32	delayTime;
+	char	aDataName[64];
 	char	aSoundName[64];
 	char	aFormatName[16];
 } SOUDN_DATA_ST;
@@ -31,6 +33,9 @@ typedef struct
 
 //	サウンド再生
 -(const SInt32)	play:(const UInt32)in_idx;
+//	サウンド再生(名前指定)
+-(const SInt32)	playByName:(NSString*)in_pName;
+
 //	前読み込み
 -(void)	preLoad:(NSString*)in_pFormatName;
 

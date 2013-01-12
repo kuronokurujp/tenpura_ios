@@ -127,7 +127,7 @@ enum
 {
 	//	揚げる段階を設定
 	m_state		= eTENPURA_STATE_NOT;
-	[self schedule:@selector(_doNextRaise:) interval:m_data.changeTime[m_state]];
+	[self schedule:@selector(_doNextRaise:) interval:m_data.aStatusList[m_state].changeTime];
 	[self setVisible:YES];
 	mb_raise	= YES;
 }
@@ -143,7 +143,7 @@ enum
 	
 	//	揚げる段階を設定
 	[self unschedule:@selector(_doNextRaise:)];
-	[self schedule:@selector(_doNextRaise:) interval:m_data.changeTime[m_state]];
+	[self schedule:@selector(_doNextRaise:) interval:m_data.aStatusList[m_state].changeTime];
 
 	[mp_sp setTextureRect:[self _getTexRect:(SInt32)m_state]];
 }
@@ -259,7 +259,7 @@ enum
 			case eTENPURA_STATE_BAD:		//	焦げ
 			{
 				bFunc	= YES;
-				time	= m_data.changeTime[m_state];
+				time	= m_data.aStatusList[m_state].changeTime;
 				
 				[mp_sp setTextureRect:[self _getTexRect:(SInt32)m_state]];
 				break;

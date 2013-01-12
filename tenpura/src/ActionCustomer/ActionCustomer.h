@@ -46,6 +46,9 @@
 -(void)eatGood:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money;
 -(void)eatVeryGood:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money;
 -(void)eatBat:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money;
--(void)eatVeryBat:(const SInt32)in_not;
+-(void)eatVeryBat:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money;
+
+//	違う食べ物を与えたときの怒りアクション
+-(void)anger;
 
 @end

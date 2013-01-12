@@ -15,10 +15,15 @@ typedef struct
 	SInt32		no;
 	UInt32		textID;
 	Float32		eatTime;
-	Float32		changeTime[5];
-	SInt32		score;
-	SInt32		sellMoney;
-	SInt32		buyMoney;
+	//	各揚げた状態のステータス
+	struct
+	{
+		Float32	changeTime;
+		SInt32	score;
+		SInt32	money;
+	}aStatusList[5];
+
+	SInt32	sellMoney;
 	char		fileName[128];
 } NETA_DATA_ST;
 

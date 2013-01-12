@@ -109,7 +109,7 @@ enum
 
 		[[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:2];
 		
-		[[SoundManager shared] play:eSOUND_CLICK01];
+		[[SoundManager shared] play:eSOUND_BTN_CLICK];
 	}
 }
 
@@ -238,7 +238,7 @@ enum
 {
 	[[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:2];
 	
-	[[SoundManager shared] play:eSOUND_CLICK04];
+	[[SoundManager shared] play:eSOUND_PRESS_BTN_CLICK];
 }
 
 /*

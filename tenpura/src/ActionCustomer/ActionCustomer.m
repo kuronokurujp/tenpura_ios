@@ -143,7 +143,7 @@ enum ACTION_LIST_ENUM
 		pRepeat.tag	= eACT_TAG_FLAH;
 		[pCustomer.charSprite runAction:pRepeat];
 		
-		[[SoundManager shared] play:eSOUND_CLICK05];
+		[[SoundManager shared] play:eSOUND_TENPURA_HIT_CUSTOMER];
 	}
 }
 
@@ -179,7 +179,7 @@ enum ACTION_LIST_ENUM
 
 	[self _eat:in_no:in_score:in_money];
 	
-	[[SoundManager shared] play:eSOUND_EAT01];
+	[[SoundManager shared] play:eSOUND_EAT];
 }
 
 /*
@@ -191,7 +191,7 @@ enum ACTION_LIST_ENUM
 
 	[self _eat:in_no:in_score:in_money];
 
-	[[SoundManager shared] play:eSOUND_EAT01];
+	[[SoundManager shared] play:eSOUND_EAT];
 }
 
 /*
@@ -203,17 +203,28 @@ enum ACTION_LIST_ENUM
 
 	[self _eat:in_no:in_score:in_money];
 	
-	[[SoundManager shared] play:eSOUND_EAT01];
+	[[SoundManager shared] play:eSOUND_EAT];
 }
 
 /*
 	@breif	食べる大失敗
 */
--(void)eatVeryBat:(const SInt32)in_no
+-(void)eatVeryBat:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money;
 {
 	[mp_customer stopAllActions];
+
+	[self _eat:in_no:in_score:in_money];
 	
-	[[SoundManager shared] play:eSOUND_SEKI01];
+	[[SoundManager shared] play:eSOUND_SEKI];
+}
+
+/*
+	@brief	怒りアクション
+*/
+-(void)anger
+{
+	[mp_customer stopAllActions];
+	[[SoundManager shared] play:eSOUND_SEKI];
 }
 
 /*
@@ -268,7 +279,7 @@ enum ACTION_LIST_ENUM
 	CCCallFuncN*	pEndFunc	= [CCCallFuncN actionWithTarget:self selector:@selector(_endPutNumber:)];
 	CCSequence*		pSeq		= [CCSequence actions:pFaedIn,pFadeOut,pEndFunc,nil];
 
-	[mp_moneyLabel setString:[NSString stringWithFormat:@"+%ld", in_num]];
+	[mp_moneyLabel setString:[NSString stringWithFormat:@"%ld", in_num]];
 	[mp_moneyLabel runAction:pSeq];
 	[mp_moneyLabel setVisible:YES];
 
@@ -285,7 +296,7 @@ enum ACTION_LIST_ENUM
 	CCCallFuncN*	pEndFunc	= [CCCallFuncN actionWithTarget:self selector:@selector(_endPutNumber:)];
 	CCSequence*		pSeq		= [CCSequence actions:pFaedIn,pFadeOut,pEndFunc,nil];
 
-	[mp_scoreLabel setString:[NSString stringWithFormat:@"+%ld", in_num]];
+	[mp_scoreLabel setString:[NSString stringWithFormat:@"%ld", in_num]];
 	[mp_scoreLabel runAction:pSeq];
 	[mp_scoreLabel setVisible:YES];
 
@@ -299,7 +310,7 @@ enum ACTION_LIST_ENUM
 {
 	CCFadeIn*		pFadeIn		= [CCFadeIn actionWithDuration:0.1f];
 
-	[mp_moneyLabel setString:[NSString stringWithFormat:@"+%ld", in_num]];
+	[mp_moneyLabel setString:[NSString stringWithFormat:@"%ld", in_num]];
 	[mp_moneyLabel runAction:pFadeIn];
 	[mp_moneyLabel setVisible:YES];
 
@@ -313,7 +324,7 @@ enum ACTION_LIST_ENUM
 {
 	CCFadeIn*		pFaedIn		= [CCFadeIn actionWithDuration:0.1f];
 
-	[mp_scoreLabel setString:[NSString stringWithFormat:@"+%ld", in_num]];
+	[mp_scoreLabel setString:[NSString stringWithFormat:@"%ld", in_num]];
 	[mp_scoreLabel runAction:pFaedIn];
 	[mp_scoreLabel setVisible:YES];
 

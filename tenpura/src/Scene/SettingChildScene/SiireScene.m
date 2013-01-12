@@ -130,14 +130,14 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 	if( pData != nil )
 	{
 		UInt32	nowMoney	= [[DataSaveGame shared] getData]->money;
-		if( pData->buyMoney <= nowMoney )
+		if( pData->sellMoney <= nowMoney )
 		{
 			[self actionCellTouch:cell];
 
 			mp_buyItemCell	= cell;
 			[mp_buyCheckAlertView show];
 			
-			[[SoundManager shared] play:eSOUND_CLICK01];
+			[[SoundManager shared] play:eSOUND_BTN_CLICK];
 		}
 	}
 }
@@ -191,7 +191,7 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 		[pNotBuyCellSprite setVisible:NO];
 
 		[pCellSprite setColor:ccWHITE];
-		if( (pData != nil) && (nowMoney < pData->buyMoney) )
+		if( (pData != nil) && (nowMoney < pData->sellMoney) )
 		{
 			//	購入できない
 			[pCellSprite setColor:ccGRAY];
@@ -230,7 +230,7 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 		if( pLabel != nil )
 		{
 			NSString*	pTitleName		= [NSString stringWithUTF8String:[pDataBaseTextShared getText:58]];
-			NSString*	pStr	= [NSString stringWithFormat:@"%@:%04ld", pTitleName, pData->buyMoney];
+			NSString*	pStr	= [NSString stringWithFormat:@"%@:%04ld", pTitleName, pData->sellMoney];
 			[pLabel setString:pStr];
 		}
 	}
@@ -276,7 +276,7 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 {
 	[[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:2];
 
-	[[SoundManager shared] play:eSOUND_CLICK04];
+	[[SoundManager shared] play:eSOUND_PRESS_BTN_CLICK];
 }
 
 /*
@@ -294,7 +294,7 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 
 	[pView addSubview:mp_storeViewCtrl.view];
 	
-	[[SoundManager shared] play:eSOUND_CLICK01];
+	[[SoundManager shared] play:eSOUND_BTN_CLICK];
 }
 
 /*
@@ -302,7 +302,7 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 */
 -(void)	alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-	[[SoundManager shared] play:eSOUND_CLICK01];
+	[[SoundManager shared] play:eSOUND_BTN_CLICK];
 
 	if( alertView == mp_buyCheckAlertView )
 	{
@@ -325,7 +325,7 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 					[pCellSprite setColor:ccGRAY];
 				}
 				
-				[pDataSaveGameInst addSaveMoeny:-pData->buyMoney];
+				[pDataSaveGameInst addSaveMoeny:-pData->sellMoney];
 				[self setMoneyString:[[DataSaveGame shared] getData]->money];
 
 				//	スクロールビュー描画更新

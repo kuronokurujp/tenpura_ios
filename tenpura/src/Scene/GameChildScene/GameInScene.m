@@ -334,64 +334,59 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 
 	SInt32	addScoreNum	= 0;
 	SInt32	addMoneyNum	= 0;
-
+	
 	BOOL	bEat		= NO;
 	
-	//	客が欲しい天ぷらかチェック
+	//	客が欲しい天ぷらでなければ客がおこって終了
 	if( [in_pCustomer isEatTenpura:in_pData->no] == NO )
 	{
-		[in_pCustomer.act eatVeryBat:in_pData->no];
+		[in_pCustomer.act anger];
+		return	bEat;
 	}
-	else
+
+	bEat	= YES;
+	addScoreNum	= in_pData->aStatusList[in_tenpuraState].score;
+	addMoneyNum	= in_pData->aStatusList[in_tenpuraState].money;
 	{
 		//	食べたい天ぷらがあるかチェック
 		switch( (SInt32)in_tenpuraState )
 		{
+			default:
+			{
+				assert(0);
+				break;
+			}
+
 			//	揚げてない
 			case eTENPURA_STATE_NOT:
 			{
-				[in_pCustomer.act eatVeryBat:in_pData->no];
+				[in_pCustomer.act eatVeryBat:in_pData->no:addScoreNum:addMoneyNum];
 				break;
 			}
 			//　ちょうど良い
 			case eTENPURA_STATE_GOOD:
 			{
-				addMoneyNum	= in_pData->buyMoney;
-				addScoreNum	= in_pData->score;
 				[in_pCustomer.act eatGood:in_pData->no:addScoreNum:addMoneyNum];
-
-				bEat	= YES;
 				break;
 			}
 			//	最高
 			case eTENPURA_STATE_VERYGOOD:
 			{
-				addMoneyNum	= in_pData->buyMoney * 2;
-				addScoreNum	= in_pData->score * 2;
 				[in_pCustomer.act eatVeryGood:in_pData->no:addScoreNum:addMoneyNum];
 			
-				bEat	= YES;
 				break;
 			}
 			//	焦げ
 			case eTENPURA_STATE_BAD:
 			{
-				addMoneyNum	= -1;
-				addScoreNum	= -1;
 				[in_pCustomer.act eatBat:in_pData->no:addScoreNum:addMoneyNum];
 				
-				bEat	= YES;
 				break;
 			}
 			//	丸焦げ
 			case eTENPURA_STATE_VERYBAD:
 			{
-				[in_pCustomer.act eatVeryBat:in_pData->no];
-				break;
-			}
-			default:
-			{
-				assert(0);
+				[in_pCustomer.act eatVeryBat:in_pData->no:addScoreNum:addMoneyNum];
 				break;
 			}
 		}

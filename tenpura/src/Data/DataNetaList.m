@@ -128,20 +128,20 @@ static DataNetaList*	s_pInst	= nil;
 	//	揚げる時間
 	for( SInt32 i = 0; i < 5; ++i )
 	{
-		data.changeTime[i]	= [(NSNumber*)[in_dataArray objectAtIndex:dataIdx] floatValue];
+		data.aStatusList[i].changeTime	= [(NSNumber*)[in_dataArray objectAtIndex:dataIdx] floatValue];
+		++dataIdx;
+		
+		//	スコア
+		data.aStatusList[i].score		= [(NSNumber*)[in_dataArray objectAtIndex:dataIdx] integerValue];
+		++dataIdx;
+	
+		//	取得金額
+		data.aStatusList[i].money	= [(NSNumber*)[in_dataArray objectAtIndex:dataIdx] integerValue];
 		++dataIdx;
 	}
-	
-	//	スコア
-	data.score		= [(NSNumber*)[in_dataArray objectAtIndex:dataIdx] integerValue];
-	++dataIdx;
-	
-	//	販売金額
+		
+	//	ショップ販売金額
 	data.sellMoney	= [(NSNumber*)[in_dataArray objectAtIndex:dataIdx] integerValue];
-	++dataIdx;
-	
-	//	購入金額
-	data.buyMoney	= [(NSNumber*)[in_dataArray objectAtIndex:dataIdx] integerValue];
 	++dataIdx;
 	
 	//	データファイル名
