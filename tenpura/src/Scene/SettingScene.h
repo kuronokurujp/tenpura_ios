@@ -35,14 +35,23 @@
 */
 @interface SettingItemBtn : CCMenuItemImage
 {
+@public
+	enum ITEM_TYPE_ENUM
+	{
+		eITEM_TYPE_NETA	= 0,
+		eITEM_TYPE_OPTION,
+	};
 @private
 	CCLabelTTF*	mp_itemName;
+	
 	UInt32	m_itemNo;
+	SInt32	m_type;
 }
 
 @property	(nonatomic, readonly)UInt32 itemNo;
+@property	(nonatomic, readonly)SInt32	type;
 
--(void)settingItem:(const NETA_DATA_ST*)in_pData;
+-(void)settingItem:(SInt32)in_type:(SInt32)in_textId:(SInt32)in_no;
 
 @end
 

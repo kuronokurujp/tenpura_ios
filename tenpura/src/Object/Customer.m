@@ -120,7 +120,7 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 		NSAssert( pData, @"ゲーム中に使用する天ぷらデータがない" );
 
 		//	鍋に揚げる天ぷらを通知
-		Tenpura*	pTenpura	= [mp_nabe addTenpura:*pData];
+		Tenpura*	pTenpura	= [mp_nabe addTenpura:*pData:pSettingTenpura.raiseSpeedRate];
 		if( pTenpura != nil )
 		{
 			NSString*	pFileName	= [NSString stringWithFormat:@"cust_%s.png", pData->fileName];
@@ -271,6 +271,30 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 	[mp_act endFlash];
 	[super stopAllActions];
 	
+}
+
+/*
+	@brief	金額設定
+*/
+-(void)	_setMoney:(SInt32)money
+{
+	m_money	+= money;
+	if( m_money < 0 )
+	{
+		m_money	= 0;
+	}
+}
+
+/*
+	@brief	スコア設定
+*/
+-(void)	_setScore:(SInt32)score
+{
+	m_score	+= score;
+	if( m_score < 0 )
+	{
+		m_score	= 0;
+	}
 }
 
 @end

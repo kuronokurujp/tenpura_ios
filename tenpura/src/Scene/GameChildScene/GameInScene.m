@@ -30,6 +30,11 @@
 -(Customer*)	_isHitCustomer:(CGRect)in_rect;
 -(void)	_endTouch;
 
+//	スコア設定
+-(void)	_setScore:(Customer*)in_pCustomer:(SInt32)in_num;
+//	金額設定
+-(void)	_setMoney:(Customer*)in_pCustomer:(SInt32)in_num;
+
 @end
 
 @implementation GameInScene
@@ -329,8 +334,12 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 	{
 		return NO;
 	}
-
+	
 	GameScene*	pGameScene	= (GameScene*)[self parent];
+	if( pGameScene == nil )
+	{
+		return NO;
+	}
 
 	SInt32	addScoreNum	= 0;
 	SInt32	addMoneyNum	= 0;
@@ -347,6 +356,17 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 	bEat	= YES;
 	addScoreNum	= in_pData->aStatusList[in_tenpuraState].score;
 	addMoneyNum	= in_pData->aStatusList[in_tenpuraState].money;
+	
+	if( addMoneyNum > 0 )
+	{
+		addMoneyNum	*=	pGameScene->m_moneyRate;
+	}
+	
+	if( addScoreNum > 0 )
+	{
+		addScoreNum	*=	pGameScene->m_scoreRate;
+	}
+	
 	{
 		//	食べたい天ぷらがあるかチェック
 		switch( (SInt32)in_tenpuraState )
@@ -393,12 +413,10 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 	}
 	
 	//	スコア反映
-	pGameScene->m_scoreNum		+= addScoreNum;
-	in_pCustomer.score			+= addScoreNum;
+	[self _setScore:in_pCustomer:addScoreNum];
 
 	//	取得金額反映
-	pGameScene->m_addMoneyNum	+= addMoneyNum;
-	in_pCustomer.money			+= addMoneyNum;
+	[self _setMoney:in_pCustomer:addMoneyNum];
 	
 	return bEat;
 }
@@ -444,6 +462,30 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 	{
 		[pCustomer.act endFlash];
 	}
+}
+
+/*
+	@brief	スコア設定
+	@note	設定した客とゲームに設定
+*/
+-(void)	_setScore:(Customer*)in_pCustomer:(SInt32)in_num
+{
+	GameScene*	pGameScene	= (GameScene*)[self parent];
+
+	pGameScene.score			+= in_num;
+	in_pCustomer.score			+= in_num;
+}
+
+/*
+	@brief	金額設定
+	@note	設定した客とゲームに設定
+*/
+-(void)	_setMoney:(Customer*)in_pCustomer:(SInt32)in_num
+{
+	GameScene*	pGameScene	= (GameScene*)[self parent];
+
+	pGameScene.money	+= in_num;
+	in_pCustomer.money	+= in_num;
 }
 
 @end

@@ -1,5 +1,5 @@
 //
-//  SiireScene.h
+//  ItemShopScene.h
 //  tenpura
 //
 //  Created by y.uchida on 12/09/08.
@@ -9,12 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
-#import "./../../System/StoreView/StoreAppPurchaseViewController.h"
-#import "./../../System/TableView/SWTableViewHelper.h"
-
 #import "./ShopBaseScene.h"
 
-@interface SiireScene : ShopBaseScene
+@interface ItemShopScene : ShopBaseScene
 {
 }
 

@@ -93,7 +93,7 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 /*
 	@brief	天ぷら追加
 */
--(Tenpura*)	addTenpura:(NETA_DATA_ST)in_data
+-(Tenpura*)	addTenpura:(NETA_DATA_ST)in_data:(Float32)in_raiseSpeedRate
 {
 	DataTenpuraPosList*	pDataTenpuraPosList	= [DataTenpuraPosList shared];
 
@@ -111,7 +111,7 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 				UInt32	posIdx	= [pDataTenpuraPosList getIdxNoUse];
 				[pDataTenpuraPosList setUseFlg:YES :posIdx];
 
-				[pTenpura setupToPosIndex:in_data:posIdx];
+				[pTenpura setupToPosIndex:in_data:posIdx:in_raiseSpeedRate];
 				[pTenpura startRaise];
 				[pTenpura setZOrder:m_tenpuraZOrder];
 				m_tenpuraZOrder += 1;

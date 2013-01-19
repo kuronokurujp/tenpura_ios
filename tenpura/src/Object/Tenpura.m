@@ -51,6 +51,7 @@ enum
 		mb_raise		= NO;
 		mb_delete		= NO;
 		m_posDataIdx	= 0;
+		m_raiseSpeedRate	= 1.f;
 		m_state			= eTENPURA_STATE_VERYBAD;
 	}
 	
@@ -69,7 +70,7 @@ enum
 /*
 	@brief	セットアップ
 */
--(void)	setupToPosIndex:(NETA_DATA_ST)in_data:(const UInt32)in_posDataIdx
+-(void)	setupToPosIndex:(NETA_DATA_ST)in_data:(const UInt32)in_posDataIdx:(Float32)in_raiseSpeedRate
 {
 	[self _setup:in_data];
 	
@@ -81,16 +82,19 @@ enum
 		
 		m_posDataIdx	= in_posDataIdx;
 	}
+	m_raiseSpeedRate	= in_raiseSpeedRate;
 }
 
 /*
 	@brief
 */
--(void)	setupToPos:(NETA_DATA_ST)in_data:(const CGPoint)in_pos
+-(void)	setupToPos:(NETA_DATA_ST)in_data:(const CGPoint)in_pos:(Float32)in_raiseSpeedRate
 {
 	[self _setup:in_data];
 
 	[self setPosition:in_pos];
+	
+	m_raiseSpeedRate	= in_raiseSpeedRate;
 }
 
 /*
@@ -259,7 +263,7 @@ enum
 			case eTENPURA_STATE_BAD:		//	焦げ
 			{
 				bFunc	= YES;
-				time	= m_data.aStatusList[m_state].changeTime;
+				time	= (m_data.aStatusList[m_state].changeTime * m_raiseSpeedRate);
 				
 				[mp_sp setTextureRect:[self _getTexRect:(SInt32)m_state]];
 				break;

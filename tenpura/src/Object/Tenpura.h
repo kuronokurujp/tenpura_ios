@@ -45,6 +45,7 @@ typedef enum
 	BOOL				mb_delete;
 	BOOL				mb_raise;	//	揚げる開始
 	
+	Float32				m_raiseSpeedRate;	//	揚げる速度のレート
 	UInt32				m_posDataIdx;
 	SInt32				m_oldZOrder;
 	CGSize				m_texSize;
@@ -61,8 +62,8 @@ typedef enum
 @property	(nonatomic, retain)		id<TenpuraProtocol>	delegate;
 
 //	セットアップ
--(void)	setupToPosIndex:(NETA_DATA_ST)in_data:(const UInt32)in_posDataIdx;
--(void)	setupToPos:(NETA_DATA_ST)in_data:(const CGPoint)in_pos;
+-(void)	setupToPosIndex:(NETA_DATA_ST)in_data:(const UInt32)in_posDataIdx:(Float32)in_raiseSpeedRate;
+-(void)	setupToPos:(NETA_DATA_ST)in_data:(const CGPoint)in_pos:(Float32)in_raiseSpeedRate;
 
 -(void)	end;
 

@@ -16,8 +16,10 @@
 //	セーブデータ内容
 enum
 {
-	eITEMS_MAX	= 64,
+	eNETAS_MAX	= 64,
+	eITEMS_MAX	= 32,
 	eMISSION_MAX	= 64,
+	eNETA_USE_MAX	= 99,
 };
 
 typedef struct
@@ -29,25 +31,29 @@ typedef struct
 //
 typedef struct
 {
+	//	ネタ所持数
+	SAVE_DATA_ITEM_ST	aNetas[eNETAS_MAX];	//	0(128)
+	long	netaNum;				//	128(4)
+	
 	//	アイテム所持数
-	SAVE_DATA_ITEM_ST	aItems[eITEMS_MAX];	//	0(128)
-	long	itemNum;				//	128(4)
-	
+	SAVE_DATA_ITEM_ST	aItems[eITEMS_MAX];	//	132(64)
+	long	itemNum;					//	196(4)
+
 	//	所持金
-	long	money;					//	132(4)
+	long	money;					//	200(4)
 	//	日付
-	long	year, month, day;		//	136(12)
+	long	year, month, day;		//	204(12)
 		
-	int64_t	score;				//	148(8)
-	char	use;				//	156(1)
-	char	check;				//	157(1)
+	int64_t	score;				//	216(8)
+	char	use;				//	224(1)
+	char	check;				//	225(1)
 	
-	char	aMissionFlg[eMISSION_MAX];		//	158(64)
-	char	rank;							//	221(1)
+	char	aMissionFlg[eMISSION_MAX];		//	226(64)
+	char	rank;							//	290(1)
 	
 	//	予約領域
-	char	dummy[34];				//	222(34)
-} SAVE_DATA_ST;	//	256byte
+	char	dummy[221];				//	291(221)
+} SAVE_DATA_ST;	//	512byte
 
 @interface DataSaveGame : NSObject
 {
@@ -62,11 +68,18 @@ typedef struct
 
 //	データリセット
 -(BOOL)reset;
+//	ネタ取得
+-(const SAVE_DATA_ITEM_ST*)getNeta:(UInt32)in_no;
+//	ネタ取得(リストidx)
+-(const SAVE_DATA_ITEM_ST*)getNetaOfIndex:(UInt32)in_idx;
+
 //	アイテム取得
 -(const SAVE_DATA_ITEM_ST*)getItem:(UInt32)in_no;
 //	アイテム取得(リストidx)
 -(const SAVE_DATA_ITEM_ST*)getItemOfIndex:(UInt32)in_idx;
 
+//	ネタ追加
+-(BOOL)addNeta:(UInt32)in_no;
 //	アイテム追加
 -(BOOL)addItem:(UInt32)in_no;
 //	金額加算

@@ -227,7 +227,7 @@ enum
 		{
 			case eMISSION_TYPE_ID_GET_ITEM:
 			{
-				const SAVE_DATA_ITEM_ST*	pItem	= [pSaveDataInst getItem:pData->customData.itemuGet.no];
+				const SAVE_DATA_ITEM_ST*	pItem	= [pSaveDataInst getNeta:pData->customData.itemuGet.no];
 				if( (pItem != nil) && (pData->customData.itemuGet.num <= pItem->num) )
 				{
 					//	成功

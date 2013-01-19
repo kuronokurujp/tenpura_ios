@@ -35,6 +35,7 @@
 @property	(nonatomic, assign, setter = _setBannerRequestTimeSecVal: )float requestTime;
 
 //	関数
+-(id)	initWithID:(NSString*)in_pIdName;
 -(void)	setBannerPos:(CGPoint)in_pos;
 -(void)	setBannerID:(const char*)in_pName;
 

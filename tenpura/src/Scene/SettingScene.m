@@ -16,7 +16,9 @@
 #import "./../Data/DataGlobal.h"
 #import "./../Data/DataSaveGame.h"
 #import "./../Data/DataMissionList.h"
+
 #import "./../System/Sound/SoundManager.h"
+#import "./SettingChildScene/UseSelectNetaScene.h"
 #import "./SettingChildScene/UseSelectItemScene.h"
 
 @interface SettingScene (PriveteMethod)
@@ -59,7 +61,7 @@
 		[mp_useItemNoList release];
 	}
 	mp_useItemNoList	= nil;
-
+	
 	[super dealloc];
 }
 
@@ -74,7 +76,7 @@
 	SettingItemBtn*	pSettingItemBtn	= nil;
 	CCARRAY_FOREACH(mp_useItemNoList, pSettingItemBtn)
 	{
-		if( 0 < pSettingItemBtn.itemNo  )
+		if( ( 0 < pSettingItemBtn.itemNo ) && ( pSettingItemBtn.type == eITEM_TYPE_NETA ) )
 		{
 			[mp_gameStartBtn setVisible:YES];
 			[mp_ticker setVisible:NO];
@@ -133,7 +135,7 @@
 		SettingItemBtn*	pSettingItemBtn	= nil;
 		CCARRAY_FOREACH(mp_useItemNoList, pSettingItemBtn)
 		{
-			if( 0 < pSettingItemBtn.itemNo  )
+			if( ( 0 < pSettingItemBtn.itemNo ) && ( pSettingItemBtn.type == eITEM_TYPE_NETA ) )
 			{
 				DataSettingTenpura*	pSettingData	= [[[DataSettingTenpura alloc] init] autorelease];
 				pSettingData.no	= pSettingItemBtn.itemNo;
@@ -142,10 +144,28 @@
 		}
 	}
 
+	CCArray*	pDataSettingItem	= [[[CCArray alloc] init] autorelease];
+	//	受け渡しためのデータリスト作成
+	{
+		SettingItemBtn*	pSettingItemBtn	= nil;
+		CCARRAY_FOREACH(mp_useItemNoList, pSettingItemBtn)
+		{
+			if( ( 0 < pSettingItemBtn.itemNo ) && ( pSettingItemBtn.type == eITEM_TYPE_OPTION ) )
+			{
+				[pDataSettingItem addObject:[NSNumber numberWithInt:pSettingItemBtn.itemNo]];
+			}
+		}
+	}
+
 	//	データがないと先へ進めない
 	if( 0 < [pDataSettingTenpura count] )
 	{
-		CCScene*	pGameScene	= [GameScene scene:pDataSettingTenpura];
+		GameData*	pGameData	= [[GameData alloc] autorelease];
+		pGameData->mp_netaList	= [pDataSettingTenpura retain];
+		pGameData->mp_itemList	= [pDataSettingItem retain];
+
+		CCScene*	pGameScene	= [GameScene scene:pGameData];
+
 		CCTransitionFade*	pTransFade	=
 		[CCTransitionFade transitionWithDuration:2 scene:pGameScene withColor:ccBLACK];
 
@@ -180,6 +200,13 @@
 -(void)	pressItemShopBtn
 {
 	CCLOG(@"ItemShop");
+
+	CCScene*	sinagakiScene	= [CCBReader sceneWithNodeGraphFromFile:@"itemShop.ccbi"];
+
+	CCTransitionFade*	pTransFade	=
+	[CCTransitionFade transitionWithDuration:2 scene:sinagakiScene withColor:ccBLACK];
+	
+	[[CCDirector sharedDirector] pushScene:pTransFade];
 	
 	[[SoundManager shared] play:eSOUND_BTN_CLICK];
 }
@@ -191,14 +218,14 @@
 {
 	CCLOG(@"SelectItem");
 	
-    CCNode* node = [CCBReader nodeGraphFromFile:@"use_item_select.ccbi" owner:nil];
+    CCNode* node = [CCBReader nodeGraphFromFile:@"use_neta_select.ccbi" owner:nil];
 	
 	//	選択したセッティング項目を選択リストにアタッチ
 	//	選択したオブジェクトがセッティング項目用かチェックもする
 	//	(デリゲーダーが使える？)
-	if( ( [node isKindOfClass:[UseSelectItemScene class]] ) && ([sender isKindOfClass:[SettingItemBtn class]]) )
+	if( ( [node isKindOfClass:[UseSelectNetaScene class]] ) && ([sender isKindOfClass:[SettingItemBtn class]]) )
 	{
-		UseSelectItemScene*	pUseSelectItemScene	= (UseSelectItemScene*)node;
+		UseSelectNetaScene*	pUseSelectNetaScene	= (UseSelectNetaScene*)node;
 		SettingItemBtn*	pSettingUseItemBtn	= (SettingItemBtn*)sender;
 		
 		//	タッチしたときのアクション
@@ -206,8 +233,8 @@
 			CCBlink*	pActBlink	= [CCBlink actionWithDuration:0.5f blinks:2];
 			[pSettingUseItemBtn runAction:pActBlink];
 		}
-		
-		[pUseSelectItemScene setup:pSettingUseItemBtn:mp_useItemNoList];
+
+		[pUseSelectNetaScene setup:pSettingUseItemBtn:mp_useItemNoList];
 	}
 
     CCScene* scene = [CCScene node];
@@ -228,6 +255,33 @@
 {
 	CCLOG(@"settingItemBtn");
 	
+    CCNode* node = [CCBReader nodeGraphFromFile:@"use_item_select.ccbi" owner:nil];
+	
+	//	選択したセッティング項目を選択リストにアタッチ
+	//	選択したオブジェクトがセッティング項目用かチェックもする
+	//	(デリゲーダーが使える？)
+	if( ( [node isKindOfClass:[UseSelectItemScene class]] ) && ([sender isKindOfClass:[SettingItemBtn class]]) )
+	{
+		UseSelectItemScene*	pUseSelectItemScene	= (UseSelectItemScene*)node;
+		SettingItemBtn*	pSettingUseItemBtn	= (SettingItemBtn*)sender;
+		
+		//	タッチしたときのアクション
+		{
+			CCBlink*	pActBlink	= [CCBlink actionWithDuration:0.5f blinks:2];
+			[pSettingUseItemBtn runAction:pActBlink];
+		}
+
+		[pUseSelectItemScene setup:pSettingUseItemBtn:mp_useItemNoList];
+	}
+
+    CCScene* scene = [CCScene node];
+    [scene addChild:node];
+
+	CCTransitionFade*	pTransFade	=
+	[CCTransitionFade transitionWithDuration:2 scene:scene withColor:ccBLACK];
+
+	[[CCDirector sharedDirector] pushScene:pTransFade];
+
 	[[SoundManager shared] play:eSOUND_BTN_CLICK];
 }
 
@@ -341,6 +395,7 @@
 @implementation SettingItemBtn
 
 @synthesize itemNo	= m_itemNo;
+@synthesize type	= m_type;
 
 /*
 	@brief
@@ -370,17 +425,13 @@
 }
 
 /*
-	@brief
+	@brief	アイテム項目設定
 */
--(void)settingItem:(const NETA_DATA_ST*)in_pData
+-(void)settingItem:(SInt32)in_type:(SInt32)in_textId:(SInt32)in_no;
 {
-	if( in_pData == nil )
-	{
-		return;
-	}
-	
-	[mp_itemName setString:[NSString stringWithUTF8String:[[DataBaseText shared] getText:in_pData->textID]]];
-	m_itemNo	= in_pData->no;
+	[mp_itemName setString:[NSString stringWithUTF8String:[[DataBaseText shared] getText:in_textId]]];
+	m_itemNo	= in_no;
+	m_type	= in_type;
 }
 
 @end

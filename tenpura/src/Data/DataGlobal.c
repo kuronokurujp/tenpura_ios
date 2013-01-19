@@ -42,9 +42,9 @@ const float ga_initCustomerPos[ eCUSTOMER_MAX ][ 2 ]	=
 };
 
 //	リーダーボードID名
-const char*	gp_leaderboardDataName	= "Score";
+const char*	gp_leaderboardDataName	= "GameScore";
 
-//	サウンドデータ管理ファイル名
+//	サウンドデータ管理ファイル名GameScore
 const char*	gp_soundDataListName	= "soundListData";
 
 /*

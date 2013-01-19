@@ -5,8 +5,8 @@ tenpuraHitCustomer,click05,caf,0,天ぷらが客にヒット
 eat,eat01,caf,0,客が食べる
 gameEnd,end01,caf,0,ゲーム終了
 gameStart,end02,caf,1.5,ゲーム開始
-fried01,fried01,caf,0,天ぷらを揚げる
-fried02,fried02,caf,0,天ぷらを揚げる
-fried03,fried03,caf,0,天ぷらを揚げる
+fried01,fried04,caf,0,天ぷらを揚げる
+fried02,fried04,caf,0,天ぷらを揚げる
+fried03,fried04,caf,0,天ぷらを揚げる
 fried04,fried04,caf,0,天ぷらを揚げる
 seki,seki01,caf,0,客が咳

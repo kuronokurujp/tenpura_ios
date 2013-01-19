@@ -18,6 +18,7 @@
 #import "./Data/DataTenpuraPosList.h"
 #import "./Data/DataGlobal.h"
 #import "./Data/DataMissionList.h"
+#import "./Data/DataItemList.h"
 #import "./System/Sound/SoundManager.h"
 #import "./System/GameCenter/GameKitHelper.h"
 #import "./System/BannerView/BannerViewController.h"
@@ -107,6 +108,8 @@ void uncaughtExceptionHandler( NSException* in_pException )
 	[DataNetaList shared];
 	[DataTenpuraPosList shared];
 	[DataBaseText shared];
+	[DataItemList shared];
+
 	/*
 		ミッションリストデータ読み込み順序が下記のより上だとハングするので注意
 			テキスト
@@ -122,7 +125,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
 
 	//	広告ビュー作成
 	{
-		mp_bannerViewCtrl	= [[BannerViewController alloc] init];
+		mp_bannerViewCtrl	= [[BannerViewController alloc] initWithID:[DataBaseText getString:73]];
 		[mp_bannerViewCtrl setBannerID:gp_admobBannerID];
 		[mp_bannerViewCtrl setBannerPos:ccp(ga_bannerPos[0], ga_bannerPos[1])];
 		mp_bannerViewCtrl.requestTime	= g_bannerRequestTimeSecVal;
@@ -257,10 +260,8 @@ void uncaughtExceptionHandler( NSException* in_pException )
 	if( pSaveData->score > 0 )
 	{
 		NSString*	pDataName	= [NSString stringWithUTF8String:gp_leaderboardDataName];
-		[[GameKitHelper shared] submitScore:pSaveData->year category:pDataName];
+		[[GameKitHelper shared] submitScore:pSaveData->score category:pDataName];
 	}
-	
-	//	ミッションを最新にする。
 }
 
 /*

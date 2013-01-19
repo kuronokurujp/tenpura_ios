@@ -1,15 +1,15 @@
 //
-//  UseSelectItemScene.m
+//  UseSelectNetaScene.m
 //  tenpura
 //
 //  Created by y.uchida on 12/09/08.
 //  Copyright 2012年 __MyCompanyName__. All rights reserved.
 //
 
-#import "UseSelectItemScene.h"
+#import "UseSelectNetaScene.h"
 
 #import "./../../CCBReader/CCBReader.h"
-#import	"./../../Data/DataItemList.h"
+#import	"./../../Data/DataNetaList.h"
 #import "./../../Data/DataSaveGame.h"
 #import "./../../Data/DataGlobal.h"
 #import "./../../Data/DataBaseText.h"
@@ -17,20 +17,21 @@
 
 #import "./../SettingScene.h"
 
-@interface UseSelectItemScene (PriveteMethod)
+@interface UseSelectNetaScene (PriveteMethod)
 
 -(const UInt32)getNotUsenetaNum:(SInt32)in_idx;
 
 @end
 
-@implementation UseSelectItemScene
+@implementation UseSelectNetaScene
 
-static const char*	s_pNetaCellFileName	= "sire_cell.png";
+static const char*	s_pNetaCellFileName	= "neta_cell.png";
 static const SInt32	s_netaTableViewCellMax	= 6;
 
 enum
 {
-	eTAG_USE_SELECT_TABLE_USE_ITEM_CONTENT_TEXT	= eSW_TABLE_TAG_CELL_MAX + 1,
+	eTAG_USE_SELECT_TABLE_USE_ITEM_NUM_TEXT	= eSW_TABLE_TAG_CELL_MAX + 1,
+	eTAG_USE_SELECT_TABLE_USE_ITEM_ICON_SPRITE,
 };
 
 /*
@@ -41,14 +42,14 @@ enum
 	SW_INIT_DATA_ST	data	= { 0 };
 
 	const SAVE_DATA_ST*	pData	= [[DataSaveGame shared] getData];
-	data.viewMax	= pData->itemNum > s_netaTableViewCellMax ? pData->itemNum : s_netaTableViewCellMax;
+	data.viewMax	= pData->netaNum > s_netaTableViewCellMax ? pData->netaNum : s_netaTableViewCellMax;
 	data.fontSize	= 30;
 
 	strcpy(data.aCellFileName, s_pNetaCellFileName);
 
 	CCSprite*	pTmpSp	= [CCSprite spriteWithFile:[NSString stringWithFormat:@"%s", data.aCellFileName]];
 	data.cellSize	= [pTmpSp contentSize];
-	data.viewPos	= ccp( 0, data.cellSize.height * 0.5f );
+	data.viewPos	= ccp( 0, data.cellSize.height + 10.f );
 	
 	CGSize	winSize	= [[CCDirector sharedDirector] winSize];
 	data.viewSize	= CGSizeMake(winSize.width, winSize.height - data.viewPos.y );
@@ -98,13 +99,13 @@ enum
 	
 	UInt32	idx	= [cell objectID];
 	const UInt32 NotUsenetaNum	= [self getNotUsenetaNum:idx];
-	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] getItemOfIndex:idx];
+	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] getNetaOfIndex:idx];
 	if( (pItem != nil) && (0 < NotUsenetaNum) )
 	{
 		[self actionCellTouch:cell];
 
-		const ITEM_DATA_ST*	pItemData	= [[DataItemList shared] getDataSearchId:pItem->no];
-		[mp_settingItemBtn settingItem:eITEM_TYPE_OPTION:pItemData->textID:pItemData->no];
+		const NETA_DATA_ST*	pNetaData	= [[DataNetaList shared] getDataSearchId:pItem->no];
+		[mp_settingItemBtn settingItem:eITEM_TYPE_NETA:pNetaData->textID:pNetaData->no];
 
 		[[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:2];
 		
@@ -121,6 +122,8 @@ enum
 	CCSprite *pCellSp = (CCSprite*)[pCell getChildByTag:eSW_TABLE_TAG_CELL_SPRITE];
 	CGSize	cellTexSize	= [pCellSp textureRect].size;
 
+	DataBaseText*	pDataBaseText	= [DataBaseText shared];
+	
 	//	すでに使用設定中か
 	const UInt32 NotUsenetaNum	= [self getNotUsenetaNum:idx];
 	if( NotUsenetaNum <= 0 )
@@ -133,40 +136,57 @@ enum
 		[pCellSp setColor:ccWHITE];
 	}
 
-	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] getItemOfIndex:idx];
+	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] getNetaOfIndex:idx];
 	if( pItem != nil )
 	{
-		const ITEM_DATA_ST*	pItemData	= [[DataItemList shared] getDataSearchId:pItem->no];
-		NSAssert(pItemData, @"");
+		const NETA_DATA_ST*	pNetaData	= [[DataNetaList shared] getDataSearchId:pItem->no];
+		NSAssert(pNetaData, @"");
+		//	所持数表示
+		{
+			NSString*	pUseNameStr	= [NSString stringWithUTF8String:[pDataBaseText getText:57]];
+			NSString*	pNetaNumStr	= [NSString stringWithFormat:@"%@ %02ld", pUseNameStr, NotUsenetaNum];
+
+			CCLabelTTF*	pNetaNumLabel	= (CCLabelTTF*)[pCellSp getChildByTag:eTAG_USE_SELECT_TABLE_USE_ITEM_NUM_TEXT];
+			if( pNetaNumLabel == nil )
+			{
+				pNetaNumLabel	= [CCLabelTTF labelWithString:pNetaNumStr fontName:self.textFontName fontSize:self.data.fontSize];
+				CGPoint	pos	= ccp( cellTexSize.width - 150.f, cellTexSize.height * 0.5f );
+				[pNetaNumLabel setPosition:pos];
+				CGPoint	anchorPoint	= pNetaNumLabel.anchorPoint;
+				[pNetaNumLabel setAnchorPoint:ccp(0.f, anchorPoint.y)];
+
+				[pCellSp addChild:pNetaNumLabel z:0 tag:eTAG_USE_SELECT_TABLE_USE_ITEM_NUM_TEXT];
+			}
+
+			if( pNetaNumLabel != nil )
+			{
+				[pNetaNumLabel setString:pNetaNumStr];
+				[pNetaNumLabel setColor:ccc3(0, 0, 0)];
+			}
+		}
 
 		//	アイテム名
 		{
 			CCLabelTTF*	pLabel	= (CCLabelTTF*)[pCellSp getChildByTag:eSW_TABLE_TAG_CELL_TEXT];
-			NSString*	pStr	= [NSString stringWithUTF8String:[[DataBaseText shared] getText:pItemData->textID]];
+			NSString*	pStr	= [NSString stringWithUTF8String:[[DataBaseText shared] getText:pNetaData->textID]];
 			[pLabel setString:pStr];
 
 			CGPoint	anchorPos	= pLabel.anchorPoint;
 			[pLabel setAnchorPoint:ccp(0,anchorPos.y)];
-			[pLabel setPosition:ccp(129, cellTexSize.height * 0.7f)];
+			[pLabel setPosition:ccp(129, cellTexSize.height * 0.5f)];
 		}
 		
-		//	効果内容
+		//	アイコン
 		{
-			NSString*	pStr	= [NSString stringWithUTF8String:[[DataBaseText shared] getText:pItemData->contentTextID]];
-
-			CCLabelTTF*	pLabel	= (CCLabelTTF*)[pCellSp getChildByTag:eTAG_USE_SELECT_TABLE_USE_ITEM_CONTENT_TEXT];
-			if( pLabel == nil )
+			CCSprite*	pItemIconSp	= (CCSprite*)[pCellSp getChildByTag:eTAG_USE_SELECT_TABLE_USE_ITEM_ICON_SPRITE];
+			if( pItemIconSp == nil )
 			{
-				pLabel	= [CCLabelTTF labelWithString:pStr fontName:self.textFontName fontSize:self.data.fontSize];
-				[pCellSp addChild:pLabel z:1 tag:eTAG_USE_SELECT_TABLE_USE_ITEM_CONTENT_TEXT];
+				NSString*	pFileName	= [NSString stringWithFormat:@"cust_%s.png", pNetaData->fileName];
+				pItemIconSp	= [CCSprite spriteWithFile:pFileName];
+				
+				[pItemIconSp setPosition:ccp(64, cellTexSize.height * 0.5f)];
+				[pCellSp addChild:pItemIconSp z:0 tag:eTAG_USE_SELECT_TABLE_USE_ITEM_ICON_SPRITE];
 			}
-			
-			[pLabel setColor:ccc3(0, 0, 0)];
-
-			CGPoint	anchorPos	= pLabel.anchorPoint;
-			[pLabel setAnchorPoint:ccp(0,anchorPos.y)];
-			[pLabel setPosition:ccp(129, cellTexSize.height * 0.4f)];
-			
 		}
 	}
 
@@ -183,13 +203,31 @@ enum
 		return NO;
 	}
 	
-	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] getItemOfIndex:in_idx];
+	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] getNetaOfIndex:in_idx];
 	if( pItem == nil )
 	{
 		return 0;
 	}
 
 	UInt32	useNum	= 0;
+	const NETA_DATA_ST*	pNetaData	= [[DataNetaList shared] getDataSearchId:pItem->no];
+
+	SettingItemBtn*	pItemBtn	= nil;
+	CCARRAY_FOREACH(mp_useItemNoList, pItemBtn)
+	{
+		if( pItemBtn.type != eITEM_TYPE_NETA )
+		{
+			continue;
+		}
+
+		if( pItemBtn.itemNo == pNetaData->no )
+		{
+			//	使用中
+			++useNum;
+		}
+	}
+	
+	//	現在選択中のボタンで設定されている天ぷらと同じ天ぷらなら設定個数を一つ外す
 	if( mp_settingItemBtn.itemNo == pItem->no )
 	{
 		--useNum;

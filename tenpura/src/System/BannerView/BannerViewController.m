@@ -24,6 +24,16 @@
 @synthesize bStopAnim	= mb_stopAnim;
 @synthesize requestTime;
 
+-(id)	initWithID:(NSString*)in_pIdName
+{
+	mp_bannerView.adUnitID	= in_pIdName;
+	if( self = [super init] )
+	{
+	}
+	
+	return self;
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -39,7 +49,7 @@
 										GAD_SIZE_320x50.width,
 										GAD_SIZE_320x50.height);
 		mp_bannerView	= [[GADBannerView alloc] initWithFrame:bannerRect];
-		mp_bannerView.adUnitID	= @"a150a203dfecc8a";
+//		mp_bannerView.adUnitID	= @"a150a203dfecc8a";
     }
 
     return self;

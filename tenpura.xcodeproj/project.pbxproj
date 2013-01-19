@@ -19,7 +19,6 @@
 		CE33C89516888852004782A4 /* help.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE33C89416888852004782A4 /* help.ccbi */; };
 		CE33C899168888BD004782A4 /* HelpScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CE33C898168888BD004782A4 /* HelpScene.m */; };
 		CE361D2A164353CF00339BB0 /* not_buy_cell.png in Resources */ = {isa = PBXBuildFile; fileRef = CE361D29164353CF00339BB0 /* not_buy_cell.png */; };
-		CE409A3B169B167800653C69 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE409A3A169B167800653C69 /* Default-568h@2x.png */; };
 		CE4197301695A4E900EAD614 /* SoundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE41972F1695A4E900EAD614 /* SoundManager.m */; };
 		CE4197321695AAC200EAD614 /* soundListData.csv in Resources */ = {isa = PBXBuildFile; fileRef = CE4197311695AAC200EAD614 /* soundListData.csv */; };
 		CE4197341695B38A00EAD614 /* click01.caf in Resources */ = {isa = PBXBuildFile; fileRef = CE4197331695B38A00EAD614 /* click01.caf */; };
@@ -51,8 +50,10 @@
 		CE51773816494022004DF4F6 /* GameKitHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = CE51773716494022004DF4F6 /* GameKitHelper.m */; };
 		CE51774316497376004DF4F6 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE51774216497376004DF4F6 /* GameKit.framework */; };
 		CE5177531649D921004DF4F6 /* UINavigationControllerExt.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5177521649D921004DF4F6 /* UINavigationControllerExt.m */; };
+		CE54FC7516A98F4200717356 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE54FC7416A98F4200717356 /* Default-568h@2x.png */; };
+		CE54FC7716A98FF500717356 /* itemShop.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE54FC7616A98FF500717356 /* itemShop.ccbi */; };
+		CE54FC7F16A9979300717356 /* ItemShopScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CE54FC7E16A9979300717356 /* ItemShopScene.m */; };
 		CE5BAA471669776500BD3606 /* ActionCustomer.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5BAA431669776500BD3606 /* ActionCustomer.m */; };
-		CE5F089416440C270005721C /* UseSelectItemScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5F089316440C270005721C /* UseSelectItemScene.m */; };
 		CE69CD5C1651155D00BFDBD2 /* SWTableViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = CE69CD5B1651155D00BFDBD2 /* SWTableViewHelper.m */; };
 		CE7C358316972FBC00E6E2EC /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7C358216972FBC00E6E2EC /* Twitter.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		CE8360B51647FA2700CC11E0 /* SiireScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8360B31647FA2700CC11E0 /* SiireScene.m */; };
@@ -283,6 +284,12 @@
 		CEE23B2B1646764B0033ADA0 /* textData.csv in Resources */ = {isa = PBXBuildFile; fileRef = CEE23B2A1646764B0033ADA0 /* textData.csv */; };
 		CEE23B2F164676850033ADA0 /* DataBaseText.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE23B2E164676850033ADA0 /* DataBaseText.m */; };
 		CEE23B3716468A070033ADA0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEE23B3916468A070033ADA0 /* Localizable.strings */; };
+		CEEAEECC16AA945B0088B718 /* DataItemList.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEAEECB16AA945B0088B718 /* DataItemList.m */; };
+		CEEAEECE16AA958C0088B718 /* itemList.csv in Resources */ = {isa = PBXBuildFile; fileRef = CEEAEECD16AA958C0088B718 /* itemList.csv */; };
+		CEEAEED116AAA3350088B718 /* ShopBaseScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEAEED016AAA3350088B718 /* ShopBaseScene.m */; };
+		CEEAEED416AAB8C00088B718 /* UseSelectNetaScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEAEED316AAB8C00088B718 /* UseSelectNetaScene.m */; };
+		CEEAEED716AAB9CC0088B718 /* UseSelectItemScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEAEED616AAB9CB0088B718 /* UseSelectItemScene.m */; };
+		CEEAEED916AAC1F90088B718 /* use_neta_select.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CEEAEED816AAC1F90088B718 /* use_neta_select.ccbi */; };
 		CEF24D87163C131200ACE56F /* CCBAnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF24D7C163C131200ACE56F /* CCBAnimationManager.m */; };
 		CEF24D88163C131200ACE56F /* CCBKeyframe.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF24D7E163C131200ACE56F /* CCBKeyframe.m */; };
 		CEF24D89163C131200ACE56F /* CCBReader.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF24D80163C131200ACE56F /* CCBReader.m */; };
@@ -364,7 +371,6 @@
 		CE33C897168888BD004782A4 /* HelpScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelpScene.h; path = src/Scene/HelpScene.h; sourceTree = "<group>"; };
 		CE33C898168888BD004782A4 /* HelpScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HelpScene.m; path = src/Scene/HelpScene.m; sourceTree = "<group>"; };
 		CE361D29164353CF00339BB0 /* not_buy_cell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = not_buy_cell.png; path = Resources/tableView/not_buy_cell.png; sourceTree = "<group>"; };
-		CE409A3A169B167800653C69 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 		CE41972E1695A4E900EAD614 /* SoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundManager.h; path = src/System/Sound/SoundManager.h; sourceTree = "<group>"; };
 		CE41972F1695A4E900EAD614 /* SoundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SoundManager.m; path = src/System/Sound/SoundManager.m; sourceTree = "<group>"; };
 		CE4197311695AAC200EAD614 /* soundListData.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = soundListData.csv; path = Resources/data/soundListData.csv; sourceTree = "<group>"; };
@@ -400,10 +406,12 @@
 		CE51774216497376004DF4F6 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		CE5177511649D921004DF4F6 /* UINavigationControllerExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UINavigationControllerExt.h; path = src/UINavigationControllerExt.h; sourceTree = "<group>"; };
 		CE5177521649D921004DF4F6 /* UINavigationControllerExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UINavigationControllerExt.m; path = src/UINavigationControllerExt.m; sourceTree = "<group>"; };
+		CE54FC7416A98F4200717356 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Resources/Default-568h@2x.png"; sourceTree = "<group>"; };
+		CE54FC7616A98FF500717356 /* itemShop.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = itemShop.ccbi; path = Resources/ccbi/itemShop.ccbi; sourceTree = "<group>"; };
+		CE54FC7D16A9979300717356 /* ItemShopScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ItemShopScene.h; path = src/Scene/SettingChildScene/ItemShopScene.h; sourceTree = "<group>"; };
+		CE54FC7E16A9979300717356 /* ItemShopScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ItemShopScene.m; path = src/Scene/SettingChildScene/ItemShopScene.m; sourceTree = "<group>"; };
 		CE5BAA421669776500BD3606 /* ActionCustomer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionCustomer.h; path = src/ActionCustomer/ActionCustomer.h; sourceTree = "<group>"; };
 		CE5BAA431669776500BD3606 /* ActionCustomer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActionCustomer.m; path = src/ActionCustomer/ActionCustomer.m; sourceTree = "<group>"; };
-		CE5F089216440C270005721C /* UseSelectItemScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UseSelectItemScene.h; path = src/Scene/SettingChildScene/UseSelectItemScene.h; sourceTree = "<group>"; };
-		CE5F089316440C270005721C /* UseSelectItemScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UseSelectItemScene.m; path = src/Scene/SettingChildScene/UseSelectItemScene.m; sourceTree = "<group>"; };
 		CE69CD5A1651155D00BFDBD2 /* SWTableViewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWTableViewHelper.h; path = src/System/TableView/SWTableViewHelper.h; sourceTree = "<group>"; };
 		CE69CD5B1651155D00BFDBD2 /* SWTableViewHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SWTableViewHelper.m; path = src/System/TableView/SWTableViewHelper.m; sourceTree = "<group>"; };
 		CE7C358216972FBC00E6E2EC /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
@@ -805,6 +813,16 @@
 		CEE23B2E164676850033ADA0 /* DataBaseText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataBaseText.m; path = src/Data/DataBaseText.m; sourceTree = "<group>"; };
 		CEE23B3816468A070033ADA0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEE23B3A16468A5E0033ADA0 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEEAEECA16AA945B0088B718 /* DataItemList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataItemList.h; path = src/Data/DataItemList.h; sourceTree = "<group>"; };
+		CEEAEECB16AA945B0088B718 /* DataItemList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataItemList.m; path = src/Data/DataItemList.m; sourceTree = "<group>"; };
+		CEEAEECD16AA958C0088B718 /* itemList.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = itemList.csv; path = Resources/data/itemList.csv; sourceTree = "<group>"; };
+		CEEAEECF16AAA3340088B718 /* ShopBaseScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShopBaseScene.h; path = src/Scene/SettingChildScene/ShopBaseScene.h; sourceTree = "<group>"; };
+		CEEAEED016AAA3350088B718 /* ShopBaseScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShopBaseScene.m; path = src/Scene/SettingChildScene/ShopBaseScene.m; sourceTree = "<group>"; };
+		CEEAEED216AAB8BF0088B718 /* UseSelectNetaScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UseSelectNetaScene.h; path = src/Scene/SettingChildScene/UseSelectNetaScene.h; sourceTree = "<group>"; };
+		CEEAEED316AAB8C00088B718 /* UseSelectNetaScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UseSelectNetaScene.m; path = src/Scene/SettingChildScene/UseSelectNetaScene.m; sourceTree = "<group>"; };
+		CEEAEED516AAB9CB0088B718 /* UseSelectItemScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UseSelectItemScene.h; path = src/Scene/SettingChildScene/UseSelectItemScene.h; sourceTree = "<group>"; };
+		CEEAEED616AAB9CB0088B718 /* UseSelectItemScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UseSelectItemScene.m; path = src/Scene/SettingChildScene/UseSelectItemScene.m; sourceTree = "<group>"; };
+		CEEAEED816AAC1F90088B718 /* use_neta_select.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = use_neta_select.ccbi; path = Resources/ccbi/use_neta_select.ccbi; sourceTree = "<group>"; };
 		CEF24D7B163C131200ACE56F /* CCBAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBAnimationManager.h; sourceTree = "<group>"; };
 		CEF24D7C163C131200ACE56F /* CCBAnimationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBAnimationManager.m; sourceTree = "<group>"; };
 		CEF24D7D163C131200ACE56F /* CCBKeyframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBKeyframe.h; sourceTree = "<group>"; };
@@ -1009,10 +1027,16 @@
 			children = (
 				CE8360CF1648172100CC11E0 /* MissionScene.h */,
 				CE8360D01648172200CC11E0 /* MissionScene.m */,
+				CE54FC7D16A9979300717356 /* ItemShopScene.h */,
+				CE54FC7E16A9979300717356 /* ItemShopScene.m */,
 				CE8360B21647FA2700CC11E0 /* SiireScene.h */,
 				CE8360B31647FA2700CC11E0 /* SiireScene.m */,
-				CE5F089216440C270005721C /* UseSelectItemScene.h */,
-				CE5F089316440C270005721C /* UseSelectItemScene.m */,
+				CEEAEED616AAB9CB0088B718 /* UseSelectItemScene.m */,
+				CEEAEED516AAB9CB0088B718 /* UseSelectItemScene.h */,
+				CEEAEED216AAB8BF0088B718 /* UseSelectNetaScene.h */,
+				CEEAEED316AAB8C00088B718 /* UseSelectNetaScene.m */,
+				CEEAEECF16AAA3340088B718 /* ShopBaseScene.h */,
+				CEEAEED016AAA3350088B718 /* ShopBaseScene.m */,
 			);
 			name = SettingChildScene;
 			sourceTree = "<group>";
@@ -1179,8 +1203,8 @@
 				CED247F91639989400506CA8 /* ccbi */,
 				CED247F81639988F00506CA8 /* bg */,
 				CED246021639964D00506CA8 /* Default.png */,
-				CE409A3A169B167800653C69 /* Default-568h@2x.png */,
 				CED246041639964D00506CA8 /* Default-Landscape~ipad.png */,
+				CE54FC7416A98F4200717356 /* Default-568h@2x.png */,
 				CED246061639964D00506CA8 /* fps_images.png */,
 				CED246081639964D00506CA8 /* fps_images-hd.png */,
 				CED2460A1639964D00506CA8 /* fps_images-ipadhd.png */,
@@ -1564,6 +1588,8 @@
 				CED247AF163997D300506CA8 /* DataGlobal.c */,
 				CED247B0163997D300506CA8 /* DataGlobal.h */,
 				CED247B1163997D300506CA8 /* DataNetaList.h */,
+				CEEAEECA16AA945B0088B718 /* DataItemList.h */,
+				CEEAEECB16AA945B0088B718 /* DataItemList.m */,
 				CED247B2163997D300506CA8 /* DataNetaList.m */,
 				CED247B3163997D300506CA8 /* DataTenpuraPosList.h */,
 				CED247B4163997D300506CA8 /* DataTenpuraPosList.m */,
@@ -1696,6 +1722,7 @@
 		CED247F91639989400506CA8 /* ccbi */ = {
 			isa = PBXGroup;
 			children = (
+				CE54FC7616A98FF500717356 /* itemShop.ccbi */,
 				CE93630E16507F3A00C22286 /* gameIn.ccbi */,
 				CE93631016507F4400C22286 /* gameResult.ccbi */,
 				CE8360CA164815FE00CC11E0 /* mission.ccbi */,
@@ -1703,6 +1730,7 @@
 				CE12811816429D0200D369CF /* setting.ccbi */,
 				CEB815EA163C36F0002814DD /* siire.ccbi */,
 				CEFBC2A316870B9400C3C233 /* base_menu.ccbi */,
+				CEEAEED816AAC1F90088B718 /* use_neta_select.ccbi */,
 				CED24802163998C800506CA8 /* title.ccbi */,
 				CEC9CF671644F8D700D446A3 /* use_item_select.ccbi */,
 			);
@@ -1720,6 +1748,7 @@
 		CED247FB163998A000506CA8 /* data */ = {
 			isa = PBXGroup;
 			children = (
+				CEEAEECD16AA958C0088B718 /* itemList.csv */,
 				CEE23B2A1646764B0033ADA0 /* textData.csv */,
 				CE18C4A21667D84200ED1E85 /* missionListData.csv */,
 				CE4197311695AAC200EAD614 /* soundListData.csv */,
@@ -2186,7 +2215,10 @@
 				CE41976E1695C28900EAD614 /* seki05.caf in Resources */,
 				CE1B74CC1699E79C00DD2C07 /* bomb.plist in Resources */,
 				CE1B74CD1699E79C00DD2C07 /* bomb.png in Resources */,
-				CE409A3B169B167800653C69 /* Default-568h@2x.png in Resources */,
+				CE54FC7516A98F4200717356 /* Default-568h@2x.png in Resources */,
+				CE54FC7716A98FF500717356 /* itemShop.ccbi in Resources */,
+				CEEAEECE16AA958C0088B718 /* itemList.csv in Resources */,
+				CEEAEED916AAC1F90088B718 /* use_neta_select.ccbi in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2347,7 +2379,6 @@
 				CEF39116163DEB9800EC8B75 /* TweetViewController.m in Sources */,
 				CEC4D99B16414CD500157DDB /* DataSaveGame.m in Sources */,
 				CE1281161642974800D369CF /* SettingScene.m in Sources */,
-				CE5F089416440C270005721C /* UseSelectItemScene.m in Sources */,
 				CEC9CF6C16453C3300D446A3 /* DataSettingTenpura.m in Sources */,
 				CEE23B2F164676850033ADA0 /* DataBaseText.m in Sources */,
 				CE8360B51647FA2700CC11E0 /* SiireScene.m in Sources */,
@@ -2367,6 +2398,11 @@
 				CE2D4297169989B6003BF31D /* EffectManager.m in Sources */,
 				CE2D429F16998A59003BF31D /* EffectActionSprite.m in Sources */,
 				CE1B74C91699D6BE00DD2C07 /* FileTexLoadManager.m in Sources */,
+				CE54FC7F16A9979300717356 /* ItemShopScene.m in Sources */,
+				CEEAEECC16AA945B0088B718 /* DataItemList.m in Sources */,
+				CEEAEED116AAA3350088B718 /* ShopBaseScene.m in Sources */,
+				CEEAEED416AAB8C00088B718 /* UseSelectNetaScene.m in Sources */,
+				CEEAEED716AAB9CC0088B718 /* UseSelectItemScene.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

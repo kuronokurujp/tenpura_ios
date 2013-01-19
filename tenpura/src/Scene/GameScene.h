@@ -13,6 +13,18 @@
 #import "../Object/Customer.h"
 #import "../Object/Tenpura.h"
 
+/*
+	@brief	ゲーム開始時に設定するデータ
+*/
+@interface GameData : NSObject
+{
+@public
+	//	ネタリスト
+	CCArray*	mp_netaList;
+	CCArray*	mp_itemList;
+}
+@end
+
 @interface GameScene : CCLayer {
 
 @public
@@ -25,16 +37,23 @@
 	int64_t	m_scoreNum;
 	SInt32	m_addMoneyNum;
 	Float32	m_timeVal;
-	
+	UInt32	m_scoreRate;
+	UInt32	m_moneyRate;
+
 	CCArray*	mp_settingItemList;
+	GameData*	mp_gameData;
 }
+
+//	設定用定義
+@property	(nonatomic, assign, setter = _setScore:)SInt32	score;
+@property	(nonatomic, assign, setter = _setMoney:)SInt32	money;
 
 //	関数定義
 //	シーン作成
-+(CCScene*)	scene:(CCArray*)in_pItemList;
++(CCScene*)	scene:(GameData*)in_pData;
 
 //	初期化
--(id)init:(CCArray*)in_pItemList;
+-(id)init:(GameData*)in_pData;
 
 //	客を一人出す
 -(Customer*) putCustomer:(BOOL)in_bCreateEat;
@@ -43,7 +62,5 @@
 
 //	登場している客の個数を取得
 -(UInt32)	getPutCustomerNum;
-
-
 
 @end

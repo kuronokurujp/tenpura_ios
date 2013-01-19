@@ -21,6 +21,34 @@
 
 #import "./../CCBReader/CCBReader.h"
 
+@implementation GameData
+
+/*
+	@brief	初期化
+*/
+-(id)	init
+{
+	if( self = [super init] )
+	{
+		mp_netaList	= nil;
+	}
+	
+	return self;
+}
+
+-(void)	dealloc
+{
+	if( mp_netaList != nil )
+	{
+		[mp_netaList release];
+	}
+	mp_netaList	= nil;
+	
+	[super dealloc];
+}
+
+@end
+
 //	非公開関数
 @interface GameScene (PrivateMethod)
 
@@ -32,6 +60,10 @@
 
 //	リザルト
 -(void)	_updateResult:(ccTime)delta;
+
+//	設定用関数
+-(void)	_setScore:(SInt32)in_score;
+-(void)	_setMoney:(SInt32)in_money;
 
 @end
 
@@ -51,14 +83,12 @@ enum
 /*
 	@brief	シーン作成
 */
-+(CCScene*)	scene:(CCArray*)in_pItemList
++(CCScene*)	scene:(GameData*)in_pData
 {
-	NSAssert( 0 < [in_pItemList count], @"セッティングした天ぷらアイテムが一つもない");
-	NSAssert( in_pItemList, @"セッティングした天ぷらアイテムリストがない");
-
+	NSAssert( in_pData, @"ゲームデータがない" );
 	CCScene*	pScene	= [CCScene node];
 	
-	CCLayer*	pLayer	= [[[GameScene alloc] init:in_pItemList] autorelease];
+	CCLayer*	pLayer	= [[[GameScene alloc] init:in_pData] autorelease];
 	[pScene addChild:pLayer];
 	
 	return pScene;
@@ -67,16 +97,31 @@ enum
 /*
 	@brief	初期化
 */
--(id)	init:(CCArray*)in_pItemList
+-(id)	init:(GameData*)in_pData
 {
 	if( self = [super init] )
 	{
+		mp_gameData	= [in_pData retain];
+
 		m_addMoneyNum	= 0;
 		m_scoreNum	= 0;
+		m_timeVal	= 0.f;
+		m_scoreRate	= 1;
+		m_moneyRate	= 1;
+
+		Float32	raiseSpeedRate	= 1.f;
 
 		{
 			DataTenpuraPosList*	pDataTenpuraPosList	= [DataTenpuraPosList shared];
 			[pDataTenpuraPosList clearFlg];
+		}
+
+		//	オプションアイテムによる追加設定
+		{
+			CCNode*	pNode	= nil;
+			CCARRAY_FOREACH(in_pData->mp_itemList, pNode)
+			{
+			}
 		}
 
 		//	なべに配置できるてんぷらリスト作成
@@ -84,11 +129,12 @@ enum
 			mp_settingItemList	= [[CCArray alloc] init];
 
 			CCNode*	pNode	= nil;
-			CCARRAY_FOREACH(in_pItemList, pNode)
+			CCARRAY_FOREACH(in_pData->mp_netaList, pNode)
 			{
 				if( [pNode isKindOfClass:[DataSettingTenpura class]] )
 				{
 					DataSettingTenpura*	pDataSettingTenpura	= (DataSettingTenpura*)pNode;
+					pDataSettingTenpura.raiseSpeedRate	= raiseSpeedRate;
 				
 					DataSettingTenpura*	pAddData	= [[[DataSettingTenpura alloc] init] autorelease];
 					[pAddData CopyData:pDataSettingTenpura];
@@ -99,7 +145,7 @@ enum
 			
 			m_timeVal	= [mp_settingItemList count] * s_baseTimeVal;
 		}
-
+		
 		CGSize size = [[CCDirector sharedDirector] winSize];
 
 		{
@@ -177,6 +223,12 @@ enum
 */
 -(void)	dealloc
 {
+	if( mp_gameData != nil )
+	{
+		[mp_gameData release];
+	}
+	mp_gameData	= nil;
+	
 	if( mp_settingItemList != nil )
 	{
 		[mp_settingItemList release];
@@ -279,7 +331,7 @@ enum
 			{
 				//	再スタート
 				CCTransitionFade*	pTransFade	=
-				[CCTransitionFade transitionWithDuration:2 scene:[GameScene scene:mp_settingItemList] withColor:ccBLACK];
+				[CCTransitionFade transitionWithDuration:2 scene:[GameScene scene:mp_gameData] withColor:ccBLACK];
 	
 				[[CCDirector sharedDirector] replaceScene:pTransFade];
 
@@ -359,6 +411,30 @@ enum
 	}
 	
 	return cnt;
+}
+
+/*
+	@brief	スコア設定
+*/
+-(void)	_setScore:(SInt32)in_score
+{
+	m_scoreNum	+= in_score;
+	if( m_scoreNum < 0 )
+	{
+		m_scoreNum	= 0;
+	}
+}
+
+/*
+	@brief	金額設定
+*/
+-(void)	_setMoney:(SInt32)in_money
+{
+	m_addMoneyNum	+= in_money;
+	if( m_addMoneyNum < 0 )
+	{
+		m_addMoneyNum	= 0;
+	}
 }
 
 @end

@@ -1,5 +1,5 @@
 //
-//  SiireScene.h
+//  ShopBaseScene.h
 //  tenpura
 //
 //  Created by y.uchida on 12/09/08.
@@ -12,10 +12,18 @@
 #import "./../../System/StoreView/StoreAppPurchaseViewController.h"
 #import "./../../System/TableView/SWTableViewHelper.h"
 
-#import "./ShopBaseScene.h"
-
-@interface SiireScene : ShopBaseScene
+@interface ShopBaseScene : SWTableViewHelper
+<
+	UIAlertViewDelegate,
+	StoreAppPurchaseViewControllerProtocol
+>
 {
+	UIAlertView*	mp_buyCheckAlertView;
+	UIAlertView*	mp_buyAlertView;
+	StoreAppPurchaseViewController*	mp_storeViewCtrl;
+	
+	SWTableViewCell*	mp_buyItemCell;
+	CCLabelTTF*	mp_moneyTextLable;
 }
 
 //	セル最大数

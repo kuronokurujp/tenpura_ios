@@ -13,6 +13,7 @@
 //	非公開関数
 @interface DataSaveGame (PriveteMethod)
 
+-(SAVE_DATA_ITEM_ST*)	_getNeta:(UInt32)in_no;
 -(SAVE_DATA_ITEM_ST*)	_getItem:(UInt32)in_no;
 
 @end
@@ -115,6 +116,35 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 }
 
 /*
+	@brief	指定したnoネタを取得
+	@param	in_no	: アイテムno
+	@return	アイテムnoのデータアドレス
+*/
+-(const SAVE_DATA_ITEM_ST*)getNeta:(UInt32)in_no
+{
+	return [self _getNeta:in_no];
+}
+
+/*
+	@brief	指定したリストidxからネタ取得
+	@parma	in_idx	: アイテムリストidx
+	@return	指定したアイテムリストidxのデータアドレス
+*/
+-(const SAVE_DATA_ITEM_ST*)getNetaOfIndex:(UInt32)in_idx
+{
+	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
+	if( pData != nil )
+	{
+		if( 0 < pData->aNetas[in_idx].num )
+		{
+			return &pData->aNetas[in_idx];
+		}
+	}
+	
+	return nil;
+}
+
+/*
 	@brief	指定したnoアイテムを取得
 	@param	in_no	: アイテムno
 	@return	アイテムnoのデータアドレス
@@ -134,13 +164,53 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
 	if( pData != nil )
 	{
-		if( 0 < pData->aItems[in_idx].num )
+		if( 0 < pData->aNetas[in_idx].num )
 		{
-			return &pData->aItems[in_idx];
+			return &pData->aNetas[in_idx];
 		}
 	}
 	
 	return nil;
+}
+
+/*
+	@brief	ネタ追加
+	@param	in_no	: 追加するネタno(1つ追加)
+	@return	追加成功 = YES / 追加失敗 = NO
+*/
+-(BOOL)addNeta:(UInt32)in_no
+{
+	SAVE_DATA_ITEM_ST*	pItem	= [self _getNeta:in_no];
+
+	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
+	if( pData != nil )
+	{
+		if( ( pData->netaNum < ( eITEMS_MAX - 1 ) ) && ( pItem == nil ) )
+		{
+			//	追加可能
+			pData->aNetas[ pData->netaNum ].no	= in_no;
+			++pData->aNetas[ pData->netaNum ].num;
+			++pData->netaNum;
+			
+			[mp_SaveData save];
+
+			return YES;
+		}
+		else if( ( pItem != nil ) && ( pItem->num < eNETA_USE_MAX ) )
+		{
+			pItem->num += 1;
+			
+			[mp_SaveData save];
+
+			return YES;
+		}
+		else
+		{
+			NSAssert(0, @"これ以上セーブデータに所持ネタ追加ができません");
+		}
+	}
+	
+	return NO;
 }
 
 /*
@@ -299,15 +369,37 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 	
 	memset( out_pData, 0, sizeof( SAVE_DATA_ST ) );
 	out_pData->money	= 1000;
-	out_pData->aItems[ 0 ].no	= 1;
-	out_pData->aItems[ 0 ].num	= 1;
-	out_pData->itemNum	= 1;
+	out_pData->aNetas[ 0 ].no	= 1;
+	out_pData->aNetas[ 0 ].num	= 1;
+	out_pData->netaNum	= 1;
+}
+
+/*
+	@brief	指定したnoから特定のネタデータを取得
+	@param	in_no : ネタno
+	@return	noネタデータ / nil = ネタデータがない or アイテム数が０
+*/
+-(SAVE_DATA_ITEM_ST*)	_getNeta:(UInt32)in_no
+{
+	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
+	if( pData != nil )
+	{
+		for( SInt32 i = 0; i < pData->netaNum; ++i )
+		{
+			if( ( pData->aNetas[ i ].no == in_no ) && ( 0 < pData->aNetas[ i ].num ) )
+			{
+				return &pData->aNetas[ i ];
+			}
+		}
+	}
+	
+	return nil;
 }
 
 /*
 	@brief	指定したnoから特定のアイテムデータを取得
 	@param	in_no : アイテムno
-	@return	noアイテムデータ / nil = アイテムデータがない＋アイテム数が０
+	@return	noアイテムデータ / nil = アイテムデータがない or アイテム数が０
 */
 -(SAVE_DATA_ITEM_ST*)	_getItem:(UInt32)in_no
 {
