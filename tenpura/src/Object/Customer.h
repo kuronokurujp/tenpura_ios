@@ -40,8 +40,6 @@ typedef enum
 @property	(nonatomic, readonly)ActionCustomer*	act;
 @property	(nonatomic, readonly)SInt32	idx;
 @property	(nonatomic, retain)NSString*	regeistTenpuraDelPermitName;
-//@property	SInt32	money;
-//@property	SInt32	score;
 @property	(nonatomic, assign, setter = _setMoney: )SInt32 money;
 @property	(nonatomic, assign, setter = _setScore: )SInt32 score;
 

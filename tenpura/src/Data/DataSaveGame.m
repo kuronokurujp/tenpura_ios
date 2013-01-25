@@ -164,9 +164,9 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
 	if( pData != nil )
 	{
-		if( 0 < pData->aNetas[in_idx].num )
+		if( 0 < pData->aItems[in_idx].num )
 		{
-			return &pData->aNetas[in_idx];
+			return &pData->aItems[in_idx];
 		}
 	}
 	
