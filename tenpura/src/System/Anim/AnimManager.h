@@ -1,5 +1,5 @@
 //
-//  EffectManager.h
+//  AnimManager.h
 //  tenpura
 //
 //  Created by y.uchida on 13/01/06.
@@ -9,19 +9,19 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
-#import "Action/EffectActionSprite.h"
+#import "Action/AnimActionSprite.h"
 
-@interface EffectManager : NSObject
+@interface AnimManager : NSObject
 {
 @private
 	NSMutableDictionary*	mp_dicData;
 }
 
-+(EffectManager*)	shared;
++(AnimManager*)	shared;
 +(void)	end;
 
 //	エフェクト登録
--(CCNode*)	addEffect:(NSString*)in_pEffName:(EffectData*)in_pEffData;
+-(CCNode*)	addEffect:(NSString*)in_pEffName:(AnimData*)in_pEffData;
 
 //	エフェクトバッチ作成
 -(CCNode*)	createBath:(const NSString*)in_pEffName;

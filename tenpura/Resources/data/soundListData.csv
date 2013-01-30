@@ -10,3 +10,5 @@ fried02,fried04,caf,0,天ぷらを揚げる
 fried03,fried04,caf,0,天ぷらを揚げる
 fried04,fried04,caf,0,天ぷらを揚げる
 seki,seki01,caf,0,客が咳
+playBGM,play,mp3,0,ゲーム中のBGM
+normalBGM,title,mp3,0,通常時のBGM

@@ -81,7 +81,7 @@
 		[mp_endLogoSp runAction:pSeq];
 	}
 
-	[[SoundManager shared] play:eSOUND_GAME_END];
+	[[SoundManager shared] playSe:@"gameEnd"];
 
 	[self unschedule:_cmd];
 }
@@ -200,12 +200,14 @@
 	const SAVE_DATA_ST*	pSaveData	= [pDataSaveGame getData];
 	
 	//	ハイスコアであれば記録
-	if( pSaveData->score < pGameScene->m_scoreNum )
+	int64_t	score	= [pGameScene getScore];
+	if( pSaveData->score < score )
 	{
-		[pDataSaveGame addSaveScore:pGameScene->m_scoreNum];
+		[pDataSaveGame addSaveScore:score];
 	}
-
-	[pDataSaveGame addSaveMoeny:pGameScene->m_addMoneyNum];
+	
+	int64_t	money	= [pGameScene getMoney];
+	[pDataSaveGame addSaveMoeny:money];
 
 	[self setVisible:NO];
 }
@@ -216,7 +218,20 @@
 -(void)	_createMenu
 {
 	CGSize	winSize	= [[CCDirector sharedDirector] winSize];
-	CCNode*	pNode	= [CCBReader nodeGraphFromFile:@"gameResult.ccbi" owner:self parentSize:winSize];
+	
+	GameScene*	pGameScene	= (GameScene*)[self parent];
+	DataSaveGame*	pDataSaveGame	= [DataSaveGame shared];
+	const SAVE_DATA_ST*	pSaveData	= [pDataSaveGame getData];
+	
+	//	ハイスコアであれば記録
+	int64_t	score	= [pGameScene getScore];
+	NSString*	pResultCcbiFileName	= @"game_result.ccbi";
+	if( pSaveData->score < score )
+	{
+		pResultCcbiFileName	= @"game_result_hiscore.ccbi";
+	}
+
+	CCNode*	pNode	= [CCBReader nodeGraphFromFile:pResultCcbiFileName owner:self parentSize:winSize];
 	[self addChild:pNode];
 }
 
@@ -226,7 +241,7 @@
 -(void)	_pressRestartBtn
 {
 	m_resultType	= eRESULT_TYPE_RESTART;
-	[[SoundManager shared] play:eSOUND_BTN_CLICK];
+	[[SoundManager shared] playSe:@"btnClick"];
 }
 
 /*
@@ -237,7 +252,7 @@
 	GameScene*	pGameScene	= (GameScene*)[self parent];
 	DataBaseText*	pDataText	= [DataBaseText shared];
 
-    NSString*	tweetText	= [NSString stringWithFormat:[NSString stringWithUTF8String:[pDataText getText:70]], pGameScene->m_scoreNum];
+    NSString*	tweetText	= [NSString stringWithFormat:[NSString stringWithUTF8String:[pDataText getText:70]], [pGameScene getScore]];
 	NSString*	searchURL	= [NSString stringWithUTF8String:[pDataText getText:56]];
 
 	NSString*	pTextKeyName		= [NSString stringWithUTF8String:gp_tweetTextKeyName];
@@ -253,7 +268,7 @@
 	
 	[[NSNotificationCenter defaultCenter] postNotification:pNotification];
 	
-	[[SoundManager shared] play:eSOUND_BTN_CLICK];
+	[[SoundManager shared] playSe:@"btnClick"];
 }
 
 /*
@@ -263,7 +278,7 @@
 {
 	m_resultType	= eRESULT_TYPE_SINAGAKI;
 	
-	[[SoundManager shared] play:eSOUND_BTN_CLICK];
+	[[SoundManager shared] playSe:@"btnClick"];
 }
 
 @end

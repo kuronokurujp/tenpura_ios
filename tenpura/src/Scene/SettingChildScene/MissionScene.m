@@ -59,7 +59,7 @@ enum
 {
 	[[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:2];
 	
-	[[SoundManager shared] play:eSOUND_PRESS_BTN_CLICK];
+	[[SoundManager shared] playSe:@"pressBtnClick"];
 }
 
 //	デリゲート定義

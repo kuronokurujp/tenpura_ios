@@ -274,9 +274,37 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 }
 
 /*
+	@brief
+*/
+-(void)	pauseSchedulerAndActions
+{
+	CCNode*	pNode	= nil;
+	CCARRAY_FOREACH(children_, pNode)
+	{
+		[pNode pauseSchedulerAndActions];
+	}
+	
+	[super pauseSchedulerAndActions];
+}
+
+/*
+	@brief
+*/
+-(void)	resumeSchedulerAndActions
+{
+	CCNode*	pNode	= nil;
+	CCARRAY_FOREACH(children_, pNode)
+	{
+		[pNode resumeSchedulerAndActions];
+	}
+	
+	[super resumeSchedulerAndActions];
+}
+
+/*
 	@brief	金額設定
 */
--(void)	_setMoney:(SInt32)money
+-(void)	_addMoney:(SInt32)money
 {
 	m_money	+= money;
 	if( m_money < 0 )
@@ -288,7 +316,7 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 /*
 	@brief	スコア設定
 */
--(void)	_setScore:(SInt32)score
+-(void)	_addScore:(SInt32)score
 {
 	m_score	+= score;
 	if( m_score < 0 )

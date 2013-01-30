@@ -17,7 +17,8 @@
 #import "./../Data/DataGlobal.h"
 #import "./../Data/DataSettingTenpura.h"
 #import "./../Data/DataTenpuraPosList.h"
-#import "./../System/Effect/EffectManager.h"
+#import "./../System/Anim/AnimManager.h"
+#import "./../System/Sound/SoundManager.h"
 
 #import "./../CCBReader/CCBReader.h"
 
@@ -49,6 +50,27 @@
 
 @end
 
+/*
+	@brief
+*/
+@implementation GameSceneData
+
+@synthesize combDelTime	= combDelTime;
+
+/*
+	@brief
+*/
+-(id)	init
+{
+	if( self = [super init] )
+	{
+	}
+	
+	return self;
+}
+
+@end
+
 //	非公開関数
 @interface GameScene (PrivateMethod)
 
@@ -60,10 +82,6 @@
 
 //	リザルト
 -(void)	_updateResult:(ccTime)delta;
-
-//	設定用関数
--(void)	_setScore:(SInt32)in_score;
--(void)	_setMoney:(SInt32)in_money;
 
 @end
 
@@ -103,8 +121,6 @@ enum
 	{
 		mp_gameData	= [in_pData retain];
 
-		m_addMoneyNum	= 0;
-		m_scoreNum	= 0;
 		m_timeVal	= 0.f;
 		m_scoreRate	= 1;
 		m_moneyRate	= 1;
@@ -173,26 +189,40 @@ enum
 					else if( [pLabel.string isEqualToString:@"scoreNum"] )
 					{
 						mp_scorePut	= pLabel;
-						[mp_scorePut setString:[NSString stringWithFormat:@"%06lld", m_scoreNum]];
+						[mp_scorePut setString:[NSString stringWithFormat:@"%06d", 0]];
 					}
 					
 					[pCCLabelTTFArray addObject:pLabel];
 				}
+				else if( [pChildNode isKindOfClass:[GameInFeverMessage class]] )
+				{
+					mp_feverMessage	= (GameInFeverMessage*)pChildNode;
+				}
+				else if( [pChildNode isKindOfClass:[GameInFliterColorBG class]] )
+				{
+					mp_fliterColorBG	= (GameInFliterColorBG*)pChildNode;
+				}
+				else if( [pChildNode isKindOfClass:[GameInFeverEvent class]] )
+				{
+					mp_feverEvent	= (GameInFeverEvent*)pChildNode;
+				}
 			}
 
 			[self addChild:pCCBReader];
+			mp_gameSceneData	= (GameSceneData*)pCCBReader;
 			
 			//	オブジェクトの描画プライオリティ修正
 			{
-				[pCCBReader removeChild:mp_nabe cleanup:NO];
-				[self addChild:mp_nabe z:2.f];
+				[mp_nabe setZOrder:2.f];
 				
 				CCLabelTTF*	pLabel	= nil;
 				CCARRAY_FOREACH(pCCLabelTTFArray, pLabel)
 				{
-					[pCCBReader removeChild:pLabel cleanup:NO];
-					[self addChild:pLabel z:3.f];
+					[pLabel setZOrder:3.f];
 				}
+				
+				[mp_feverMessage setZOrder:19.f];
+				[mp_feverEvent setZOrder:20.f];
 			}
 		}
 
@@ -247,10 +277,19 @@ enum
 /*
 	@brief
 */
+-(void)	onEnter
+{
+	[[SoundManager shared] stopBgm:1.f];
+	[super onEnter];
+}
+
+/*
+	@brief
+*/
 -(void)	onExit
 {
 	//	エフェクト管理をいったんすべて解放
-	[EffectManager end];
+	[AnimManager end];
 
 	[super onExit];
 }
@@ -262,17 +301,22 @@ enum
 {
 	//	エフェクト登録
 	{
-		EffectManager*	pEffMng	= [EffectManager shared];
-		UInt32	fileNum	= sizeof(ga_effectBombFrameNameList) / sizeof(ga_effectBombFrameNameList[0]);
-		EffectData*	pEffData	=
-		[[[EffectData alloc] initWithData
-		:gp_effectBombFileFrameName
-		:gp_effectBombFileName
-		:ga_effectBombFrameNameList
-		:fileNum:
-		60] autorelease];
+		AnimManager*	pEffMng	= [AnimManager shared];
 		
-		[pEffMng addEffect:[NSString stringWithUTF8String:ga_effPlayName[eEFF_BOMG]]:pEffData];
+		UInt32	num	= sizeof(ga_animDataList) / sizeof(ga_animDataList[0]);
+		for( UInt32 i = 0; i < num; ++i )
+		{
+			UInt32	fileNum	= ga_animDataList[i].frameNum;
+			AnimData*	pEffData	=
+			[[[AnimData alloc] initWithData
+			:ga_animDataList[i].pListFileName
+			:ga_animDataList[i].pImageFileName
+			:ga_animDataList[i].ppFrameNameList
+			:fileNum:
+			60] autorelease];
+		
+			[pEffMng addEffect:[NSString stringWithUTF8String:ga_AnimPlayName[i]]:pEffData];
+		}
 	}
 
 	//	ゲームスタート演出
@@ -293,7 +337,7 @@ enum
 
 		[self unschedule:_cmd];
 		
-		[self addChild:[[[GameInScene alloc] init:m_timeVal] autorelease] z:0 tag:eGAME_IN_SCENE_TAG];
+		[self addChild:[[[GameInScene alloc] init:m_timeVal:mp_gameSceneData] autorelease] z:10 tag:eGAME_IN_SCENE_TAG];
 		[self schedule:@selector(_updateInGame:)];
 	}
 }
@@ -414,27 +458,61 @@ enum
 }
 
 /*
-	@brief	スコア設定
+	@brief	オブジェクトのポーズ
 */
--(void)	_setScore:(SInt32)in_score
+-(void)	pauseObject:(BOOL)in_bFlg
 {
-	m_scoreNum	+= in_score;
-	if( m_scoreNum < 0 )
+	if( in_bFlg == YES )
 	{
-		m_scoreNum	= 0;
+		[mp_nabe pauseSchedulerAndActions];
+	}
+	else
+	{
+		[mp_nabe resumeSchedulerAndActions];
+	}
+	
+	CCNode*	pCustomer	= nil;
+	CCARRAY_FOREACH(mp_customerArray, pCustomer)
+	{
+		if( in_bFlg == YES )
+		{
+			[pCustomer pauseSchedulerAndActions];
+		}
+		else
+		{
+			[pCustomer resumeSchedulerAndActions];
+		}
 	}
 }
 
 /*
-	@brief	金額設定
+	@brief	スコア取得
 */
--(void)	_setMoney:(SInt32)in_money
+-(int64_t)	getScore
 {
-	m_addMoneyNum	+= in_money;
-	if( m_addMoneyNum < 0 )
+	int64_t	score	= 0;
+	Customer*	pCustomer	= nil;
+	CCARRAY_FOREACH(mp_customerArray, pCustomer)
 	{
-		m_addMoneyNum	= 0;
+		score += pCustomer.score;
 	}
+	
+	return score;
+}
+
+/*
+	@brief	金額取得
+*/
+-(int64_t)	getMoney
+{
+	int64_t	money	= 0;
+	Customer*	pCustomer	= nil;
+	CCARRAY_FOREACH(mp_customerArray, pCustomer)
+	{
+		money += pCustomer.money;
+	}
+	
+	return money;
 }
 
 @end

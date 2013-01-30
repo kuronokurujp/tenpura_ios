@@ -33,6 +33,13 @@
 -(void)	allRemoveTenpura;
 //	配置した天ぷらが消滅時に呼ばれる
 -(void)	onDeleteTenpura:(CCNode *)in_pTenpura;
+//	揚げる天ぷらの揚げるスピートレートを変更
+-(void)	setRaiseSpeedRate:(Float32)in_rate;
+
+//	配置した天ぷらもポーズする
+-(void)	pauseSchedulerAndActions;
+//	配置した天ぷらも再開
+-(void)	resumeSchedulerAndActions;
 
 //	オーバーライド定義
 -(CGRect)	boundingBox;

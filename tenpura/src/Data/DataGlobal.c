@@ -9,9 +9,12 @@
 #include "DataGlobal.h"
 
 //	エフェクト再生名一覧
-const char*	ga_effPlayName[eEFF_MAX]	=
+const char*	ga_AnimPlayName[eANIM_MAX]	=
 {
 	"bomb",
+	"cursor",
+	"star",
+//	"comb_num"
 };
 
 //	バナー更新リクエスト時間（秒）
@@ -61,7 +64,8 @@ static const char*	gp_GamePlayStartSpritFileName	= "play_start.png";
 */
 
 //	爆発エフェクト(30fps)
-const char*	ga_effectBombFrameNameList[30]	=
+static const int	s_effectBombFrameNum	= 30;
+static const char*	sa_effectBombFrameNameList[s_effectBombFrameNum]	=
 {
 	"bomb0001.png",
 	"bomb0002.png",
@@ -95,5 +99,51 @@ const char*	ga_effectBombFrameNameList[30]	=
 	"bomb0030.png",
 };
 
-const char*	gp_effectBombFileName	= "bomb.png";
-const char*	gp_effectBombFileFrameName	= "bomb.plist";
+//	カーソルエフェクト
+static const int	s_effectCursorFrameNum	= 3;
+static const char*	sa_effectCursorFrameNameList[s_effectCursorFrameNum]	=
+{
+	"Cursor0.png",
+	"Cursor1,png",
+	"Cursor2.png",
+};
+
+//	星のエフェクト
+static const int	s_effectStartFrameNum	= 3;
+static const char*	sa_effectStarFrameNameList[]	=
+{
+	"start0.png",
+	"start1.png",
+	"start2.png",
+};
+
+//	コンボ数字
+/*
+static const int	s_animComboNumFrameNum	= 9;
+static const char*	sa_animComboNumFrameNameList[s_animComboNumFrameNum]	=
+{
+	"combo_num0.png",
+	"combo_num1.png",
+	"combo_num2.png",
+	"combo_num3.png",
+	"combo_num4.png",
+	"combo_num5.png",
+	"combo_num6.png",
+	"combo_num7.png",
+	"combo_num8.png",
+	"combo_num9.png",
+};
+*/
+
+ANIM_DATA_ST	ga_animDataList[eANIM_MAX]	=
+{
+		{ sa_effectBombFrameNameList, s_effectBombFrameNum, "bomb.png", "bomb.plist" },
+		{ sa_effectCursorFrameNameList, s_effectCursorFrameNum, "cursor.png", "cursor.plist" },
+		{ sa_effectStarFrameNameList, s_effectStartFrameNum, "star.png", "star.plist" },
+//		{ sa_animComboNumFrameNameList, s_animComboNumFrameNum, "combo_num.png", "combo_num.plist" },
+};
+
+char*	gpa_spriteFileNameList[eSPRITE_FILE_MAX]	=
+{
+	"combo_message.png",
+};

@@ -1,5 +1,5 @@
 //
-//  EffectActionSprite.h
+//  AnimActionSprite.h
 //  tenpura
 //
 //  Created by y.uchida on 13/01/06.
@@ -10,9 +10,9 @@
 #import "cocos2d.h"
 
 /*
-	@brief	エフェクトデータ
+	@brief	アニメデータ
 */
-@interface EffectData : NSObject
+@interface AnimData : NSObject
 {
 @private
 	NSString*	mp_fileName;
@@ -31,14 +31,17 @@
 -(id)	initWithData:(const char*)in_pFileName:(const char*)in_pFileImageName:(const char**)in_pFrameNameList:(const UInt32)in_FrameNum:(const UInt32)in_fps;
 @end
 
-@interface EffectActionSprite : CCNode
+@interface AnimActionSprite : CCNode
 {
 @private
 	CCSprite*	mp_sp;
-	EffectData*	mp_data;
-	UInt32	m_idx;
+	AnimData*	mp_data;
+	CCAnimate*	mp_anim;
+	BOOL	mb_loop;
 }
 
--(id)	initWithData:(EffectData*)in_data;
+@property	(nonatomic)BOOL	bLoop;
+
+-(id)	initWithData:(AnimData*)in_data;
 
 @end

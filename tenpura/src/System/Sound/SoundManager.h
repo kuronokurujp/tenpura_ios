@@ -22,6 +22,7 @@ typedef struct
 	
 	SOUDN_DATA_ST*	mp_dataList;
 	UInt32	m_dataNum;
+	NSString*	mp_playNameBGM;
 }
 
 //	外部参照可能に
@@ -32,9 +33,11 @@ typedef struct
 -(BOOL)	setup:(NSString*)in_pFileName;
 
 //	サウンド再生
--(const SInt32)	play:(const UInt32)in_idx;
-//	サウンド再生(名前指定)
--(const SInt32)	playByName:(NSString*)in_pName;
+-(const SInt32)	playBgm:(NSString*)in_pName;
+-(const SInt32)	playSe:(NSString*)in_pName;
+
+//	サウンド停止
+-(void)	stopBgm:(Float32)in_fadeTime;
 
 //	前読み込み
 -(void)	preLoad:(NSString*)in_pFormatName;

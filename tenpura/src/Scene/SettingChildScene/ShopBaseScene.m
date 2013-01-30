@@ -124,7 +124,7 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 			mp_buyItemCell	= cell;
 			[mp_buyCheckAlertView show];
 
-			[[SoundManager shared] play:eSOUND_BTN_CLICK];
+			[[SoundManager shared] playSe:@"btnClick"];
 		}
 	}
 }
@@ -135,7 +135,7 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 {
 	[[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:2];
 
-	[[SoundManager shared] play:eSOUND_PRESS_BTN_CLICK];
+	[[SoundManager shared] playSe:@"pressBtnClick"];
 }
 
 /*
@@ -153,7 +153,7 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 
 	[pView addSubview:mp_storeViewCtrl.view];
 	
-	[[SoundManager shared] play:eSOUND_BTN_CLICK];
+	[[SoundManager shared] playSe:@"btnClick"];
 }
 
 /*
@@ -161,7 +161,7 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 */
 -(void)	alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-	[[SoundManager shared] play:eSOUND_BTN_CLICK];
+	[[SoundManager shared] playSe:@"btnClick"];
 
 	if( alertView == mp_buyCheckAlertView )
 	{

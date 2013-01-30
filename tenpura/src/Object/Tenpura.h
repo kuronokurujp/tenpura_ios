@@ -27,7 +27,7 @@ typedef enum
 	eTENPURA_STATE_BAD,			//	焦げ
 	eTENPURA_STATE_VERYBAD,		//	丸焦げ
 	eTENPURA_STATE_DEL,			//	消滅
-	eTENPUrA_STATE_RESTART,		//	再設定
+	eTENPURA_STATE_RESTART,		//	再設定
 	
 	eTENPURA_STATE_MAX,
 } TENPURA_STATE_ET;
@@ -45,7 +45,10 @@ typedef enum
 	BOOL				mb_delete;
 	BOOL				mb_raise;	//	揚げる開始
 	
+	Float32				m_baseSpeedRate;	//	揚げる速度の基本レート
 	Float32				m_raiseSpeedRate;	//	揚げる速度のレート
+	Float32				m_raiseTime;
+
 	UInt32				m_posDataIdx;
 	SInt32				m_oldZOrder;
 	CGSize				m_texSize;
@@ -68,6 +71,8 @@ typedef enum
 -(void)	end;
 
 -(void)	setPosOfIndex:(const UInt32)in_posDataIdx;
+//	揚げる速度変更
+-(void)	setRaiseSpeedRate:(Float32)in_rate;
 
 //	揚げる開始
 -(void)	startRaise;
@@ -79,4 +84,7 @@ typedef enum
 -(void)	unLockTouch;
 
 -(CGRect)	boundingBox;
+-(void)	pauseSchedulerAndActions;
+-(void)	resumeSchedulerAndActions;
+
 @end

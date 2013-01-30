@@ -18,6 +18,8 @@
 -(CGRect)	_getTexRect:(SInt32)in_idx;
 
 -(void)	_doNextRaise:(ccTime)delta;
+//	揚げる時間を取得
+-(Float32)	_getRaiseTime:(TENPURA_STATE_ET)in_state;
 
 @end
 
@@ -51,7 +53,10 @@ enum
 		mb_raise		= NO;
 		mb_delete		= NO;
 		m_posDataIdx	= 0;
-		m_raiseSpeedRate	= 1.f;
+		m_raiseSpeedRate	= 0.f;
+		m_baseSpeedRate	= 1.f;
+		m_raiseTime	= 0.f;
+
 		m_state			= eTENPURA_STATE_VERYBAD;
 	}
 	
@@ -65,6 +70,20 @@ enum
 {
 	mp_sp	= nil;
 	[super dealloc];
+}
+
+/*
+	@brief
+*/
+-(void)	update:(ccTime)delta
+{
+	m_raiseTime	+= delta;
+	Float32	nextRaiseTime	= [self _getRaiseTime:m_state];
+	if( (0.f <= nextRaiseTime) && ( nextRaiseTime <= m_raiseTime ) )
+	{
+		[self _doNextRaise:0.f];
+		m_raiseTime	= 0.f;
+	}
 }
 
 /*
@@ -82,7 +101,7 @@ enum
 		
 		m_posDataIdx	= in_posDataIdx;
 	}
-	m_raiseSpeedRate	= in_raiseSpeedRate;
+	m_baseSpeedRate	= in_raiseSpeedRate;
 }
 
 /*
@@ -107,8 +126,9 @@ enum
 	mb_raise		= NO;
 	mb_touch		= NO;
 	m_posDataIdx	= 0;
+	m_raiseTime	= 0.f;
 
-	[self unschedule:@selector(_doNextRaise:)];
+	[self unscheduleAllSelectors];
 	[self setVisible:NO];
 }
 
@@ -125,13 +145,21 @@ enum
 }
 
 /*
+	@brief	揚げる速度変更;
+*/
+-(void)	setRaiseSpeedRate:(Float32)in_rate
+{
+	m_raiseSpeedRate	= in_rate;
+}
+
+/*
 	@brief	揚げる開始
 */
 -(void)	startRaise
 {
 	//	揚げる段階を設定
-	m_state		= eTENPURA_STATE_NOT;
-	[self schedule:@selector(_doNextRaise:) interval:m_data.aStatusList[m_state].changeTime];
+	[self reset];
+
 	[self setVisible:YES];
 	mb_raise	= YES;
 }
@@ -142,28 +170,15 @@ enum
 -(void)	reset
 {
 	mb_touch	= NO;
+	m_raiseTime	= 0.f;
 	m_state		= eTENPURA_STATE_NOT;
 	[mp_sp setScale:1.f];
 	
 	//	揚げる段階を設定
-	[self unschedule:@selector(_doNextRaise:)];
-	[self schedule:@selector(_doNextRaise:) interval:m_data.aStatusList[m_state].changeTime];
+	[self unscheduleUpdate];
+	[self scheduleUpdate];
 
 	[mp_sp setTextureRect:[self _getTexRect:(SInt32)m_state]];
-}
-
-/*
-	@brief	オブジェクト矩形取得
-*/
--(CGRect)	boundingBox
-{
-	CGSize	texSize	= [mp_sp textureRect].size;
-	//	左下の点を開始点に
-	CGPoint	pos	= ccp(	self.position.x - mp_sp.anchorPoint.x * texSize.width,
-						self.position.y - mp_sp.anchorPoint.y * texSize.height);
-	CGRect	boxRect	= CGRectMake(pos.x, pos.y, texSize.width, texSize.height);
-	
-	return boxRect;
 }
 
 /*
@@ -208,6 +223,48 @@ enum
 }
 
 /*
+	@brief	オブジェクト矩形取得
+*/
+-(CGRect)	boundingBox
+{
+	CGSize	texSize	= [mp_sp textureRect].size;
+	//	左下の点を開始点に
+	CGPoint	pos	= ccp(	self.position.x - mp_sp.anchorPoint.x * texSize.width,
+						self.position.y - mp_sp.anchorPoint.y * texSize.height);
+	CGRect	boxRect	= CGRectMake(pos.x, pos.y, texSize.width, texSize.height);
+	
+	return boxRect;
+}
+
+/*
+	@brief	ポーズ
+*/
+-(void)	pauseSchedulerAndActions
+{
+	[super pauseSchedulerAndActions];
+	
+	CCNode*	pNode	= nil;
+	CCARRAY_FOREACH(children_, pNode)
+	{
+		[pNode pauseSchedulerAndActions];
+	}
+}
+
+/*
+	@brief	再開
+*/
+-(void)	resumeSchedulerAndActions
+{
+	[super resumeSchedulerAndActions];
+	
+	CCNode*	pNode	= nil;
+	CCARRAY_FOREACH(children_, pNode)
+	{
+		[pNode resumeSchedulerAndActions];
+	}
+}
+
+/*
 	@brief
 */
 -(CGRect)	_getTexRect:(SInt32)in_idx
@@ -221,35 +278,31 @@ enum
 -(void)	_doNextRaise:(ccTime)delta
 {
 	++m_state;
-	[self unschedule:@selector(_doNextRaise:)];
 	
 	if( m_state < eTENPURA_STATE_MAX )
 	{
-		ccTime	time	= 0.f;
-		BOOL	bFunc	= NO;
-
 		//	揚げた音
 		{
 			switch ((SInt32)m_state)
 			{
 				case eTENPURA_STATE_GOOD:		//　ちょうど良い
 				{
-					[[SoundManager shared] play:eSOUND_FRIED01];
+					[[SoundManager shared] playSe:@"fried01"];
 					break;
 				}
 				case eTENPURA_STATE_VERYGOOD:	//	最高
 				{
-					[[SoundManager shared] play:eSOUND_FRIED02];
+					[[SoundManager shared] playSe:@"fried02"];
 					break;
 				}
 				case eTENPURA_STATE_BAD:		//	焦げ
 				{
-					[[SoundManager shared] play:eSOUND_FRIED03];
+					[[SoundManager shared] playSe:@"fried03"];
 					break;
 				}
 				case eTENPURA_STATE_VERYBAD:	//	丸焦げ
 				{
-					[[SoundManager shared] play:eSOUND_FRIED04];
+					[[SoundManager shared] playSe:@"fried04"];
 					break;
 				}
 			}
@@ -262,17 +315,11 @@ enum
 			case eTENPURA_STATE_VERYGOOD:	//	最高
 			case eTENPURA_STATE_BAD:		//	焦げ
 			{
-				bFunc	= YES;
-				time	= (m_data.aStatusList[m_state].changeTime * m_raiseSpeedRate);
-				
 				[mp_sp setTextureRect:[self _getTexRect:(SInt32)m_state]];
 				break;
 			}
 			case eTENPURA_STATE_VERYBAD:		//	丸焦げ
 			{
-				bFunc	= YES;
-				time	= 1.f;
-				
 				[mp_sp setTextureRect:[self _getTexRect:(SInt32)m_state]];
 
 				break;
@@ -287,26 +334,15 @@ enum
 					}
 				}
 				
-				if( mb_delete == NO )
-				{
-					bFunc	= YES;
-					time	= 1.f;
-				}
-
 				[self setVisible:NO];
 				
 				break;
 			}
-			case eTENPUrA_STATE_RESTART:
+			case eTENPURA_STATE_RESTART:
 			{
 				//	再配置可能
 				break;
 			}
-		}
-
-		if( bFunc == YES)
-		{
-			[self schedule:@selector(_doNextRaise:) interval:time];
 		}
 	}
 }
@@ -341,6 +377,42 @@ enum
 	m_texSize.height	= m_texSize.height / (Float32)(eTENPURA_STATE_VERYBAD + 1);
 
 	[mp_sp setTextureRect:[self _getTexRect:(SInt32)m_state]];	
+}
+
+/*
+	@brief	揚げる時間を取得
+*/
+-(Float32)	_getRaiseTime:(TENPURA_STATE_ET)in_state
+{
+	Float32	raiseSpeedRate	= (m_baseSpeedRate + m_raiseSpeedRate);
+	Float32	time	= -1.f;
+	switch ((SInt32)m_state)
+	{
+		case eTENPURA_STATE_NOT:		//	揚げてない
+		case eTENPURA_STATE_GOOD:		//　ちょうど良い
+		case eTENPURA_STATE_VERYGOOD:	//	最高
+		case eTENPURA_STATE_BAD:		//	焦げ
+		{
+			time	= (m_data.aStatusList[m_state].changeTime / raiseSpeedRate);
+			break;
+		}
+		case eTENPURA_STATE_VERYBAD:		//	丸焦げ
+		{
+			time	= 1.f / raiseSpeedRate;
+			break;
+		}
+		case eTENPURA_STATE_DEL:	//	消滅
+		{
+			if( mb_delete == NO )
+			{
+				time	= 1.f;
+			}
+
+			break;
+		}
+	}
+	
+	return time;
 }
 
 #ifdef DEBUG

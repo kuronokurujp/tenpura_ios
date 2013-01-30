@@ -40,8 +40,11 @@ typedef enum
 @property	(nonatomic, readonly)ActionCustomer*	act;
 @property	(nonatomic, readonly)SInt32	idx;
 @property	(nonatomic, retain)NSString*	regeistTenpuraDelPermitName;
-@property	(nonatomic, assign, setter = _setMoney: )SInt32 money;
-@property	(nonatomic, assign, setter = _setScore: )SInt32 score;
+@property	(nonatomic, assign, setter = _addMoney: )SInt32 addMoney;
+@property	(nonatomic, assign, setter = _addScore: )SInt32 addScore;
+@property	(nonatomic, readonly )SInt32 money;
+@property	(nonatomic, readonly )SInt32 score;
+
 
 //	初期化
 -(id)	initToType:(TYPE_ENUM)in_type:(SInt32)in_idx:(Nabe*)in_pNabe:(CCArray*)in_pSettingTenpuraList;
@@ -68,5 +71,7 @@ typedef enum
 -(const SInt32)	getEatCnt;
 
 -(void) stopAllActions;
+-(void)	pauseSchedulerAndActions;
+-(void)	resumeSchedulerAndActions;
 
 @end

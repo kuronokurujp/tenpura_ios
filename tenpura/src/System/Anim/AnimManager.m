@@ -1,26 +1,26 @@
 //
-//  EffectManager.m
+//  AnimManager.m
 //  tenpura
 //
 //  Created by y.uchida on 13/01/06.
 //
 //
 
-#import "EffectManager.h"
-#import "Action/EffectActionSprite.h"
+#import "AnimManager.h"
+#import "Action/AnimActionSprite.h"
 
-@implementation EffectManager
+@implementation AnimManager
 
-static	EffectManager*	sp_inst	= nil;
+static	AnimManager*	sp_inst	= nil;
 
 /*
 	@brief
 */
-+(EffectManager*)	shared
++(AnimManager*)	shared
 {
 	if( sp_inst == nil )
 	{
-		sp_inst	= [[EffectManager alloc] init];
+		sp_inst	= [[AnimManager alloc] init];
 	}
 	
 	return sp_inst;
@@ -73,7 +73,7 @@ static	EffectManager*	sp_inst	= nil;
 /*
 	@brief	エフェクト登録
 */
--(CCNode*)	addEffect:(NSString*)in_pEffName:(EffectData*)in_pEffData
+-(CCNode*)	addEffect:(NSString*)in_pEffName:(AnimData*)in_pEffData
 {
 	id	pChkData	= [mp_dicData objectForKey:in_pEffName];
 	if( pChkData == nil )
@@ -93,10 +93,10 @@ static	EffectManager*	sp_inst	= nil;
 	id	pData	= [mp_dicData objectForKey:in_pEffName];
 	if( pData != nil )
 	{
-		if( [pData isKindOfClass:[EffectData class]] )
+		if( [pData isKindOfClass:[AnimData class]] )
 		{
 		//	CCSpriteBatchNode*	pBatchNode	= nil;
-			EffectData*	pEffData	= (EffectData*)pData;
+			AnimData*	pEffData	= (AnimData*)pData;
 			for( UInt32 i = 0; i < pEffData.fileNum; ++i )
 			{
 				
@@ -115,9 +115,9 @@ static	EffectManager*	sp_inst	= nil;
 	id	pEffData	= [mp_dicData objectForKey:in_pEffName];
 	if( pEffData != nil )
 	{
-		if( [pEffData isKindOfClass:[EffectData class]] )
+		if( [pEffData isKindOfClass:[AnimData class]] )
 		{
-			return [[[EffectActionSprite alloc] initWithData:(EffectData*)pEffData] autorelease];
+			return [[[AnimActionSprite alloc] initWithData:(AnimData*)pEffData] autorelease];
 		}
 	}
 	

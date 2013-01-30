@@ -10,7 +10,7 @@
 
 #import "./../Data/DataTenpuraPosList.h"
 #import "./../Data/DataGlobal.h"
-#import "./../System/Effect/EffectManager.h"
+#import "./../System/Anim/AnimManager.h"
 
 @implementation Nabe
 
@@ -74,7 +74,7 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 		if( [pNode isKindOfClass:[Tenpura class]] == YES )
 		{
 			pTenpura	= (Tenpura*)pNode;
-			if( (pTenpura.bRaise == YES) && (pTenpura.state == eTENPUrA_STATE_RESTART) )
+			if( (pTenpura.bRaise == YES) && (pTenpura.state == eTENPURA_STATE_RESTART) )
 			{
 				[pTenpura reset];
 				[pTenpura setVisible:YES];
@@ -169,13 +169,63 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 -(void)	onDeleteTenpura:(CCNode *)in_pTenpura
 {
 	//	爆発エフェクト
-	EffectManager*	pEffManager	= [EffectManager shared];
-	CCNode*	pEff	= [pEffManager play:[NSString stringWithUTF8String:ga_effPlayName[eEFF_BOMG]]];
+	AnimManager*	pEffManager	= [AnimManager shared];
+	CCNode*	pEff	= [pEffManager play:[NSString stringWithUTF8String:ga_AnimPlayName[eANIM_BOMG]]];
 	if( pEff != nil )
 	{
 		[pEff setPosition:in_pTenpura.position];
 		[self addChild:pEff z:20];
 	}
+}
+
+/*
+	@brief	揚げる天ぷらの揚げるスピートレートを変更
+*/
+-(void)	setRaiseSpeedRate:(Float32)in_rate
+{
+	CCNode*		pNode		= nil;
+	CCARRAY_FOREACH(children_, pNode)
+	{
+		if( [pNode isKindOfClass:[Tenpura class]] == YES )
+		{
+			Tenpura*	pTenpura	= (Tenpura*)pNode;
+			[pTenpura setRaiseSpeedRate:in_rate];
+		}
+	}
+}
+
+/*
+	@brief	配置した天ぷらもポーズする
+*/
+-(void)	pauseSchedulerAndActions
+{
+	CCNode*		pNode		= nil;
+	CCARRAY_FOREACH(children_, pNode)
+	{
+		if( [pNode isKindOfClass:[Tenpura class]] == YES )
+		{
+			[pNode pauseSchedulerAndActions];
+		}
+	}
+
+	[super pauseSchedulerAndActions];
+}
+
+/*
+	@brief	配置した天ぷらも再開
+*/
+-(void)	resumeSchedulerAndActions
+{
+	CCNode*	pNode	= nil;
+	CCARRAY_FOREACH(children_, pNode)
+	{
+		if( [pNode isKindOfClass:[Tenpura class]] == YES )
+		{
+			[pNode resumeSchedulerAndActions];
+		}
+	}
+	
+	[super resumeSchedulerAndActions];
 }
 
 /*

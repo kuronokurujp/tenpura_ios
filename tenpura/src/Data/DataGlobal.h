@@ -35,11 +35,15 @@ enum
 
 enum
 {
-	eEFF_BOMG	= 0,
-	eEFF_MAX
+	eANIM_BOMG	= 0,
+	eANIM_CURSOR,
+	eANIM_STAR,
+//	eANIM_COMBO_NUM,
+	eANIM_MAX
 };
+
 //	エフェクト再生名一覧
-extern const char*	ga_effPlayName[eEFF_MAX];
+extern const char*	ga_AnimPlayName[eANIM_MAX];
 
 extern const float	g_bannerRequestTimeSecVal;
 extern const float	ga_bannerPos[ 2 ];
@@ -54,10 +58,24 @@ extern const char*	gp_tweetTextKeyName;
 extern const char*	gp_tweetSearchURLKeyName;
 extern const char*	gp_soundDataListName;
 
-//	エフェクトアニメ
-//	爆発
-extern const char*	ga_effectBombFrameNameList[30];
-extern const char*	gp_effectBombFileFrameName;
-extern const char*	gp_effectBombFileName;
+//	アニメ
+typedef struct
+{
+	const	char**	ppFrameNameList;
+	int				frameNum;
+	const	char*	pImageFileName;
+	const	char*	pListFileName;
+} ANIM_DATA_ST;
+
+extern	ANIM_DATA_ST	ga_animDataList[eANIM_MAX];
+
+//	スプライトファイル名一覧(いずれすべてローディングする対象かも)
+enum
+{
+	eSPRITE_FILE_COMBO_MESSAGE	= 0,
+	eSPRITE_FILE_MAX,
+};
+
+extern	char*	gpa_spriteFileNameList[eSPRITE_FILE_MAX];
 
 #endif

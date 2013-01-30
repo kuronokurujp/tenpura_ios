@@ -16,6 +16,9 @@
 
 //	再生するサウンド名を取得
 -(NSString*)	_getPlaySoundName:(const UInt32)in_idx;
+//	再生
+-(const SInt32)	_play:(const UInt32)in_idx;
+
 //	再生単純再生
 -(const SInt32)	_playSimple:(const UInt32)in_idx;
 //	遅延再生
@@ -151,28 +154,18 @@ static	SoundManager*	sp_inst	= nil;
 }
 
 /*
-	@brief	サウンド再生
-	@param	リストidx
-	@return	サウンドハンドル(未使用)
+	@brief	サウンド再生(名前指定)
 */
--(const SInt32)	play:(const UInt32)in_idx
+-(const SInt32)	playSe:(NSString*)in_pName
 {
-	//	遅延値があるか
-	if( in_idx < m_dataNum )
+	NSAssert(in_pName, @"サウンドのデータ名を指定していない");
+	UInt32	dataMax	= m_dataNum;
+	for( UInt32 i = 0; i < dataMax; ++i )
 	{
-		SOUDN_DATA_ST*	pSoundDat	= &mp_dataList[in_idx];
-		if( pSoundDat->delayTime <= 0.f )
+		NSString*	pDataName	= [NSString stringWithUTF8String:mp_dataList[i].aDataName];
+		if( [pDataName isEqualToString:in_pName] )
 		{
-			return [self _playSimple:in_idx];
-		}
-		else
-		{
-			//	遅延再生
-			[NSTimer scheduledTimerWithTimeInterval:pSoundDat->delayTime
-			target:self
-			selector:@selector(_onPlayDelay:)
-			userInfo:[NSNumber numberWithInt:in_idx]
-			repeats:NO];
+			return [self _play:i];
 		}
 	}
 	
@@ -182,8 +175,9 @@ static	SoundManager*	sp_inst	= nil;
 /*
 	@brief	サウンド再生(名前指定)
 */
--(const SInt32)	playByName:(NSString*)in_pName
+-(const SInt32)	playBgm:(NSString*)in_pName
 {
+#if 0
 	NSAssert(in_pName, @"サウンドのデータ名を指定していない");
 	UInt32	dataMax	= m_dataNum;
 	for( UInt32 i = 0; i < dataMax; ++i )
@@ -191,11 +185,42 @@ static	SoundManager*	sp_inst	= nil;
 		NSString*	pDataName	= [NSString stringWithUTF8String:mp_dataList[i].aDataName];
 		if( [pDataName isEqualToString:in_pName] )
 		{
-			return [self play:i];
+			if( ( mp_playNameBGM != nil ) && ( [mp_playNameBGM isEqualToString:in_pName] ) )
+			{
+			}
+			else
+			{
+				mp_playNameBGM	=	[in_pName copy];
+				return [self _play:i];
+			}
 		}
 	}
+#endif
 	
 	return -1;
+}
+
+/*
+	@brief	BGM停止
+*/
+-(void)	stopBgm:(Float32)in_fadeTime
+{
+	if( mp_playNameBGM != nil )
+	{
+		mp_playNameBGM	= nil;
+		//	BGM停止
+		if( in_fadeTime <= 0.f )
+		{
+			SimpleAudioEngine*	pAudioEngine	= [SimpleAudioEngine sharedEngine];
+			[pAudioEngine stopBackgroundMusic];
+		}
+		else
+		{
+			//	指定した時間をかけて消す
+			SimpleAudioEngine*	pAudioEngine	= [SimpleAudioEngine sharedEngine];
+			[pAudioEngine stopBackgroundMusic];
+		}
+	}
 }
 
 /*
@@ -221,13 +246,16 @@ static	SoundManager*	sp_inst	= nil;
 		SimpleAudioEngine*	pAudioEngine	= [SimpleAudioEngine sharedEngine];
 
 		NSString*	pFormatName	= [NSString stringWithUTF8String:mp_dataList[in_idx].aFormatName];
-		if( [pFormatName isEqualToString:@"mp3"] )
+		if( [in_pFormatName isEqualToString:pFormatName] )
 		{
-			[pAudioEngine preloadBackgroundMusic:pSoundName];
-		}
-		else if( [pFormatName isEqualToString:@"caf"] )
-		{
-			[pAudioEngine preloadEffect:pSoundName];
+			if( [in_pFormatName isEqualToString:@"mp3"] )
+			{
+				[pAudioEngine preloadBackgroundMusic:pSoundName];
+			}
+			else if( [in_pFormatName isEqualToString:@"caf"] )
+			{
+				[pAudioEngine preloadEffect:pSoundName];
+			}
 		}
 	}
 }
@@ -266,6 +294,35 @@ static	SoundManager*	sp_inst	= nil;
 }
 
 /*
+	@brief	サウンド再生
+	@param	リストidx
+	@return	サウンドハンドル(未使用)
+*/
+-(const SInt32)	_play:(const UInt32)in_idx
+{
+	//	遅延値があるか
+	if( in_idx < m_dataNum )
+	{
+		SOUDN_DATA_ST*	pSoundDat	= &mp_dataList[in_idx];
+		if( pSoundDat->delayTime <= 0.f )
+		{
+			return [self _playSimple:in_idx];
+		}
+		else
+		{
+			//	遅延再生
+			[NSTimer scheduledTimerWithTimeInterval:pSoundDat->delayTime
+			target:self
+			selector:@selector(_onPlayDelay:)
+			userInfo:[NSNumber numberWithInt:in_idx]
+			repeats:NO];
+		}
+	}
+	
+	return -1;
+}
+
+/*
 	@brief	再生単純再生
 */
 -(const SInt32)	_playSimple:(const UInt32)in_idx
@@ -279,6 +336,13 @@ static	SoundManager*	sp_inst	= nil;
 		NSString*	pFormatName	= [NSString stringWithUTF8String:mp_dataList[in_idx].aFormatName];
 		if( [pFormatName isEqualToString:@"mp3"] )
 		{
+			//	すでに別のmp3を鳴らしているのであればそれは停止
+			if( [mp_playNameBGM isEqualToString:pSoundName] == NO )
+			{
+				[pAudioEngine stopBackgroundMusic];
+			}
+			
+			[pAudioEngine setBackgroundMusicVolume:1.f];
 			[pAudioEngine playBackgroundMusic:pSoundName];
 		}
 		else if( [pFormatName isEqualToString:@"caf"] )

@@ -9,9 +9,15 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
-#import "../Object/Nabe.h"
-#import "../Object/Customer.h"
-#import "../Object/Tenpura.h"
+#import "./../Object/Nabe.h"
+#import "./../Object/Customer.h"
+#import "./../Object/Tenpura.h"
+#import "./../Object/GameInFliterColorBG.h"
+#import "./../Object/GameInFeverEvent.h"
+#import "./../Object/GameInFeverMessage.h"
+
+@class GameInFeverMessage;
+@class GameInBG;
 
 /*
 	@brief	ゲーム開始時に設定するデータ
@@ -25,6 +31,18 @@
 }
 @end
 
+/*
+	@brief
+*/
+@interface GameSceneData : CCLayer
+{
+@private
+}
+
+@property	(nonatomic, readonly)Float32 combDelTime;
+
+@end
+
 @interface GameScene : CCLayer {
 
 @public
@@ -34,19 +52,18 @@
 	
 	CCLabelTTF*	mp_timerPut;
 	CCLabelTTF*	mp_scorePut;
-	int64_t	m_scoreNum;
-	SInt32	m_addMoneyNum;
 	Float32	m_timeVal;
 	UInt32	m_scoreRate;
 	UInt32	m_moneyRate;
 
 	CCArray*	mp_settingItemList;
 	GameData*	mp_gameData;
+	GameSceneData*	mp_gameSceneData;
+	
+	GameInFeverMessage*	mp_feverMessage;
+	GameInFliterColorBG*	mp_fliterColorBG;
+	GameInFeverEvent*		mp_feverEvent;
 }
-
-//	設定用定義
-@property	(nonatomic, assign, setter = _setScore:)SInt32	score;
-@property	(nonatomic, assign, setter = _setMoney:)SInt32	money;
 
 //	関数定義
 //	シーン作成
@@ -62,5 +79,12 @@
 
 //	登場している客の個数を取得
 -(UInt32)	getPutCustomerNum;
+
+//	オブジェクトのポーズ
+-(void)	pauseObject:(BOOL)in_bFlg;
+
+//	取得したスコア／金額
+-(int64_t)	getScore;
+-(int64_t)	getMoney;
 
 @end

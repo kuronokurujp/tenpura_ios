@@ -12,28 +12,22 @@
 #import "./../../Object/Customer.h"
 #import "./../../Object/Tenpura.h"
 #import "./../../Object/Nabe.h"
+#import "./../../Object/ComboMessage.h"
+#import	"./../../Object/GameInFeverEvent.h"
 #import "./../../ActionCustomer/ActionCustomer.h"
 #import "./../../Data/DataNetaList.h"
 #import "./../../Data/DataGlobal.h"
 #import "./../../System/Sound/SoundManager.h"
-#import "./../../System/Effect/EffectManager.h"
+#import "./../../System/Anim/AnimManager.h"
+#import "./../../CCBReader/CCBReader.h"
 
 //	非公開関数
 @interface GameInScene (PrivateMethod)
 
 -(void)	_begin:(ccTime)in_time;
+-(void)	_updateNormal:(ccTime)in_time;
+-(void)	_updateFever:(ccTime)in_time;
 -(void)	_end:(ccTime)in_time;
-
--(void)	_timer:(ccTime)in_time;
-
--(BOOL)	_eatCustomer:(Customer*)in_pCustomer:(TENPURA_STATE_ET)in_tenpuraState:(NETA_DATA_ST*)in_pData;
--(Customer*)	_isHitCustomer:(CGRect)in_rect;
--(void)	_endTouch;
-
-//	スコア設定
--(void)	_setScore:(Customer*)in_pCustomer:(SInt32)in_num;
-//	金額設定
--(void)	_setMoney:(Customer*)in_pCustomer:(SInt32)in_num;
 
 @end
 
@@ -42,19 +36,33 @@
 static const SInt32	s_AddCustomerEatMax	= 1;
 static const UInt32	s_PutCustomerCombNum	= 3;
 
+//	レイヤータグ
+enum
+{
+	eCHILD_TAG_SCENE_NORMAL	= 5,
+	eCHILD_TAG_SCENE_FEVER,
+};
+
 /*
 	@brief
 */
--(id)	init:(Float32)in_time;
+-(id)	init:(Float32)in_time:(GameSceneData*)in_pGameSceneData
 {
 	if( self = [super init] )
 	{
-		mp_touchTenpura	= nil;
-		m_time	= in_time;
-		m_combCnt	= 0;
-
+		NSAssert(in_pGameSceneData, @"ゲームシーンデータがない");
+		
 		[self setVisible:YES];
 		[self schedule:@selector(_begin:)];
+		
+		[[SoundManager shared] playBgm:@"playBGM"];
+		
+		mp_normalScene	= [[[GameInNormalScene alloc] init:in_time] autorelease];
+		mp_feverScene	= [GameInFeverScene node];
+		[self addChild:mp_normalScene z:1 tag:eCHILD_TAG_SCENE_NORMAL];
+		[self addChild:mp_feverScene z:2 tag:eCHILD_TAG_SCENE_FEVER];
+		
+		self.isTouchEnabled	= false;
 	}
 	
 	return self;
@@ -77,9 +85,12 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 		}
 	}
 	
+	//	開始
+	[mp_normalScene start:pGameScene];
+	
 	[self unschedule:_cmd];
-	[self schedule:@selector(_timer:) interval:1.f];
 	[self scheduleUpdate];
+	[self schedule:@selector(_updateNormal:)];
 }
 
 /*
@@ -89,27 +100,39 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 {
 	GameScene*	pGameScene	= (GameScene*)[self parent];
 
-	[pGameScene->mp_timerPut setString:[NSString stringWithFormat:@"%03ld", (SInt32)m_time]];
-	if( m_time <= 0.f )
+	[pGameScene->mp_timerPut setString:[NSString stringWithFormat:@"%03ld", (SInt32)mp_normalScene.time]];
+	if( mp_normalScene.time <= 0.f )
 	{
 		[self unscheduleUpdate];
 		[self schedule:@selector(_end:)];
 	}
 
-	[pGameScene->mp_scorePut setString:[NSString stringWithFormat:@"%06lld", pGameScene->m_scoreNum]];
+	[pGameScene->mp_scorePut setString:[NSString stringWithFormat:@"%06lld", [pGameScene getScore]]];
 }
 
 /*
-	@brief
+	@brief	通常更新
 */
--(void)	_timer:(ccTime)in_time
+-(void)	_updateNormal:(ccTime)in_time
 {
-	//	時間がなくなったらゲーム終了
-	m_time	-= 1.f;
-	if( m_time <= 0.f )
+	//	フィーバー状態になったら、フィーバ更新へ以降
+	if( mp_normalScene.bFever == YES )
 	{
-		m_time	= 0.f;
 		[self unschedule:_cmd];
+		[mp_feverScene start:(GameScene*)[self parent]:mp_normalScene];
+		[self schedule:@selector(_updateFever:)];
+	}
+}
+
+/*
+	@brief	フィーバー更新
+*/
+-(void)	_updateFever:(ccTime)in_time
+{
+	if( mp_normalScene.bFever == NO )
+	{
+		[self unschedule:_cmd];
+		[self schedule:@selector(_updateNormal:)];
 	}
 }
 
@@ -127,6 +150,9 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 			[pCustomer stopAllActions];
 		}
 	}
+
+	//	フィーバーの後処理
+	[mp_feverScene end];
 
 	[self unschedule:_cmd];
 	[self setVisible:NO];
@@ -151,14 +177,206 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 }
 
 /*
+	@brief	タッチ開始
+*/
+-(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
+{
+	CCNode*	pNode	= nil;
+	CCARRAY_FOREACH(children_, pNode)
+	{
+		if( [pNode isKindOfClass:[CCLayer class]] )
+		{
+			if( mp_normalScene.isTouchEnabled == YES )
+			{
+				if( [mp_normalScene ccTouchBegan:touch withEvent:event] == YES )
+				{
+				}
+			}
+		}
+	}
+
+	return YES;
+}
+
+/*
+	@brief	タッチしながら指を動かす
+*/
+-(void) ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
+{
+	CCNode*	pNode	= nil;
+	CCARRAY_FOREACH(children_, pNode)
+	{
+		if( [pNode isKindOfClass:[CCLayer class]] )
+		{
+			if( mp_normalScene.isTouchEnabled == YES )
+			{
+				[mp_normalScene ccTouchMoved:touch withEvent:event];
+			}
+		}
+	}
+}
+
+/*
+	@brief	タッチ離す
+*/
+-(void) ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
+{
+	CCNode*	pNode	= nil;
+	CCARRAY_FOREACH(children_, pNode)
+	{
+		if( [pNode isKindOfClass:[CCLayer class]] )
+		{
+			if( mp_normalScene.isTouchEnabled == YES )
+			{
+				[mp_normalScene ccTouchEnded:touch withEvent:event];
+			}
+		}
+	}
+}
+
+/*
+	@brief	タッチ中止
+*/
+-(void) ccTouchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
+{
+	CCNode*	pNode	= nil;
+	CCARRAY_FOREACH(children_, pNode)
+	{
+		if( [pNode isKindOfClass:[CCLayer class]] )
+		{
+			if( mp_normalScene.isTouchEnabled == YES )
+			{
+				[mp_normalScene ccTouchCancelled:touch withEvent:event];
+			}
+		}
+	}
+}
+
+@end
+
+@interface GameInNormalScene (PriveteMethod)
+
+//	タイムカウント
+-(void)	_timer:(ccTime)in_time;
+
+//	客がネタを食べるかどうか
+-(BOOL)	_eatCustomer:(Customer*)in_pCustomer:(TENPURA_STATE_ET)in_tenpuraState:(NETA_DATA_ST*)in_pData;
+//	ネタが客とヒットしているか
+-(Customer*)	_isHitCustomer:(CGRect)in_rect;
+-(void)	_endTouch;
+
+//	スコア設定
+-(void)	_setScore:(Customer*)in_pCustomer:(SInt32)in_num;
+//	金額設定
+-(void)	_setMoney:(Customer*)in_pCustomer:(SInt32)in_num;
+
+//	コンボ終了
+-(void)	_exitCombMessage;
+//	コンボ中の更新
+-(void)	_updateCombo;
+
+@end
+
+@implementation GameInNormalScene
+
+enum
+{
+	eNORMAL_SCENE_CHILD_TAG_COMBO_MESSAGE	= 10,
+};
+
+@synthesize time	= m_time;
+@synthesize bFever	= mb_fever;
+
+/*
 	@brief
+*/
+-(id)	init:(Float32)in_time
+{
+	if( self = [super init] )
+	{
+		mp_gameScene	= nil;
+		mp_touchTenpura	= nil;
+		m_time	= in_time;
+		m_combCnt	= 0;
+		m_veryEatCnt	= 0;
+		m_feverCnt	= 0;
+		mb_fever	= NO;
+
+		//	コンボ新規追加
+		CCNode*	pComboMessage	= [CCBReader nodeGraphFromFile:@"comboMessage.ccbi"];
+		[pComboMessage setVisible:NO];
+
+		[self addChild:pComboMessage z:10 tag:eNORMAL_SCENE_CHILD_TAG_COMBO_MESSAGE];
+		
+		self.isTouchEnabled	= YES;
+	}
+	
+	return self;
+}
+
+/*
+	@brief	開始
+*/
+-(void)	start:(GameScene*)in_pGameScene
+{
+	mp_gameScene	= in_pGameScene;
+
+	[self scheduleUpdate];
+	[self schedule:@selector(_timer:) interval:1.f];
+}
+
+/*
+	@brief	更新
+*/
+-(void)	update:(ccTime)delta
+{
+}
+
+/*
+	@brief	ポーズ
+*/
+-(void)	pauseSchedulerAndActions
+{
+	[super pauseSchedulerAndActions];
+	self.isTouchEnabled	= NO;
+	
+	[mp_gameScene pauseObject:YES];
+}
+
+/*
+	@brief	再開
+*/
+-(void)	resumeSchedulerAndActions
+{
+	[super resumeSchedulerAndActions];
+	self.isTouchEnabled	= YES;
+	
+	[mp_gameScene pauseObject:NO];
+}
+
+/*
+	@brief	タイムカウント
+*/
+-(void)	_timer:(ccTime)in_time
+{
+	//	時間がなくなったらゲーム終了
+	m_time	-= 1.f;
+	if( m_time <= 0.f )
+	{
+		m_time	= 0.f;
+		[self unschedule:_cmd];
+	}
+}
+
+/*
+	@brief	タッチ開始
 */
 -(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
 	CGPoint	touchPointView	= [touch locationInView:[touch view]];
 	CGPoint	touchPoint	= [[CCDirector sharedDirector] convertToGL:touchPointView];
 
-	GameScene*	pGameScene	= (GameScene*)[self parent];
+	GameScene*	pGameScene	= mp_gameScene;
 	CCNode*	pNode	= nil;
 	if( mp_touchTenpura == nil )
 	{
@@ -206,7 +424,7 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 
 		//	天ぷらとヒットしていない客はヒット演出を止める
 		Customer*	pCustomer	= nil;
-		GameScene*	pGameScene	= (GameScene*)[self parent];
+		GameScene*	pGameScene	= mp_gameScene;
 		CCARRAY_FOREACH(pGameScene->mp_customerArray,pCustomer)
 		{
 			if( pCustomer != pTenpuraHitCustomer )
@@ -223,7 +441,7 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 -(void) ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
 {
 	Customer*	pCustomer	= nil;
-	GameScene*	pGameScene	= (GameScene*)[self parent];
+	GameScene*	pGameScene	= mp_gameScene;
 	if( mp_touchTenpura != nil )
 	{
 		//	客にヒットしているか
@@ -246,12 +464,43 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 					case eTENPURA_STATE_GOOD:
 					case eTENPURA_STATE_VERYGOOD:
 					{
-						++m_combCnt;
+						mb_fever	= YES;
+
+						++m_veryEatCnt;
+						if( mp_touchTenpura.state == eTENPURA_STATE_VERYGOOD )
+						{
+							++m_combCnt;
+						
+							//	コンボメッセージを出す
+							{
+								CCNode*	pComboMessage	= [self getChildByTag:eNORMAL_SCENE_CHILD_TAG_COMBO_MESSAGE];
+								//	コンボ数値変更
+								if( 2 <= m_combCnt )
+								{
+									ComboMessage*	pCombo	= (ComboMessage*)pComboMessage;
+									[pCombo start:m_combCnt];
+								}
+						
+								[self unschedule:@selector(_updateCombo)];
+								[self schedule:@selector(_updateCombo)];
+	
+								[self unschedule:@selector(_exitCombMessage)];
+								[self scheduleOnce:@selector(_exitCombMessage) delay:pGameScene->mp_gameSceneData.combDelTime];
+							}
+
+							//	フィーバーを出すか
+							if( ( (m_feverCnt + 1) * 10 ) / m_combCnt )
+							{
+								++m_feverCnt;
+								mb_fever	= YES;
+							}
+						}
 						break;
 					}
 					default:
 					{
 						m_combCnt	= 0;
+						m_veryEatCnt	= 0;
 						break;
 					}
 				}
@@ -261,16 +510,16 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 					//	客が一人しかいない状態で退場する時客が新しく出す
 					[pGameScene putCustomer:YES];
 				}
-				else if( s_PutCustomerCombNum <= m_combCnt )
+				else if( s_PutCustomerCombNum <= m_veryEatCnt )
 				{
 					[pGameScene putCustomer:YES];
-					m_combCnt	= 0;
 				}
 			}
 			else
 			{
 				//	食べるのに失敗
 				m_combCnt	= 0;
+				m_veryEatCnt	= 0;
 			}
 			
 			[pCustomer.act endFlash];
@@ -335,7 +584,7 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 		return NO;
 	}
 	
-	GameScene*	pGameScene	= (GameScene*)[self parent];
+	GameScene*	pGameScene	= mp_gameScene;
 	if( pGameScene == nil )
 	{
 		return NO;
@@ -412,6 +661,12 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 		}
 	}
 	
+	if( mb_fever == YES )
+	{
+		addMoneyNum	*= 2;
+		addScoreNum	*= 2;
+	}
+	
 	//	スコア反映
 	[self _setScore:in_pCustomer:addScoreNum];
 
@@ -426,7 +681,7 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 */
 -(Customer*)	_isHitCustomer:(CGRect)in_rect
 {
-	GameScene*	pGameScene	= (GameScene*)[self parent];
+	GameScene*	pGameScene	= mp_gameScene;
 	if( pGameScene == nil )
 	{
 		return NO;
@@ -454,7 +709,7 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 */
 -(void)	_endTouch
 {
-	GameScene*	pGameScene	= (GameScene*)[self parent];
+	GameScene*	pGameScene	= mp_gameScene;
 
 	//	ヒットしたときの演出を終了
 	Customer*	pCustomer	= nil;
@@ -470,10 +725,7 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 */
 -(void)	_setScore:(Customer*)in_pCustomer:(SInt32)in_num
 {
-	GameScene*	pGameScene	= (GameScene*)[self parent];
-
-	pGameScene.score			+= in_num;
-	in_pCustomer.score			+= in_num;
+	in_pCustomer.addScore		= in_num;
 }
 
 /*
@@ -482,10 +734,143 @@ static const UInt32	s_PutCustomerCombNum	= 3;
 */
 -(void)	_setMoney:(Customer*)in_pCustomer:(SInt32)in_num
 {
-	GameScene*	pGameScene	= (GameScene*)[self parent];
+	in_pCustomer.addMoney	= in_num;
+}
 
-	pGameScene.money	+= in_num;
-	in_pCustomer.money	+= in_num;
+/*
+	@brief	コンボ時間チェック
+*/
+-(void)	_exitCombMessage
+{
+	CCNode*	pComboMessage	= [self getChildByTag:eNORMAL_SCENE_CHILD_TAG_COMBO_MESSAGE];
+	if( ( pComboMessage != nil ) && ( [pComboMessage isKindOfClass:[ComboMessage class]] ) )
+	{
+		ComboMessage*	pCombo	= (ComboMessage*)pComboMessage;
+		[pCombo end];
+	}
+	else
+	{
+		NSAssert(0, @"コンボメッセージオブジェクトがない");
+	}
+}
+
+/*
+	@brief	コンボメッセージ更新
+*/
+-(void)	_updateCombo
+{
+	if( m_combCnt <= 0 )
+	{
+		[self unschedule:_cmd];
+		[self unschedule:@selector(_exitCombMessage)];
+
+		CCNode*	pComboMessage	= [self getChildByTag:eNORMAL_SCENE_CHILD_TAG_COMBO_MESSAGE];
+		ComboMessage*	pCombo	= (ComboMessage*)pComboMessage;
+		[pCombo end];
+	}
+}
+
+@end
+
+/*
+	@brief	ゲーム中のフィーバ-シーン
+*/
+@interface GameInFeverScene (PriveteMethod)
+
+//	フィーバー開始イベント
+-(void)	_updateEvent;
+
+@end
+
+@implementation GameInFeverScene
+
+/*
+	@brief	初期化
+*/
+-(id)	init
+{
+	if( self = [super init] )
+	{
+		self.isTouchEnabled	= NO;
+	}
+	
+	return self;
+}
+
+/*
+	@brief	開始
+*/
+-(void)	start:(GameScene*)in_pGameScene:(GameInNormalScene*)in_pGameInNormalScene
+{
+	mp_gameScene	= in_pGameScene;
+	mp_gameInNormalScene	= in_pGameInNormalScene;
+
+	//	停止
+	{
+		[in_pGameInNormalScene pauseSchedulerAndActions];
+	}
+
+	[mp_gameScene->mp_fliterColorBG setVisible:YES];
+	[mp_gameScene->mp_fliterColorBG setOpacity:255];
+
+	[mp_gameScene->mp_feverEvent start];
+	[self schedule:@selector(_updateEvent)];
+}
+
+/*
+	@brief	フィーバーイベント
+*/
+-(void)	_updateEvent
+{
+	if( mp_gameScene->mp_feverEvent.visible == NO )
+	{
+		Float32	feverTime	= 5.f;
+		
+		[self unschedule:_cmd];
+
+		//	再開
+		{
+			[mp_gameInNormalScene resumeSchedulerAndActions];
+		}
+		
+		//	ボーナス設定
+		{
+			[mp_gameScene->mp_nabe setRaiseSpeedRate:2.f];
+		}
+		
+		//	フィーバーメッセージを出す
+		[mp_gameScene->mp_feverMessage setVisible:YES];
+		//	BGフィルターに演出
+		{
+			[mp_gameScene->mp_fliterColorBG setVisible:YES];
+			{
+				CCFadeOut*	pFadeOut	= [CCFadeOut actionWithDuration:feverTime];
+
+				CCCallFunc*	pEndCall	= [CCCallFunc actionWithTarget:self selector:@selector(end)];
+				CCSequence*	pRun	= [CCSequence actionOne:pFadeOut two:pEndCall];
+
+				[mp_gameScene->mp_fliterColorBG runAction:pRun];
+			}
+		}
+	}
+}
+
+/*
+	@breif	フィーバー終了
+*/
+-(void)	end
+{
+	[self stopAllActions];
+	[mp_gameScene->mp_fliterColorBG stopAllActions];
+
+	//	ボーナスを消す
+	[mp_gameScene->mp_nabe setRaiseSpeedRate:0.f];
+	mp_gameInNormalScene.bFever	= NO;
+
+	//	フィーバーの後処理
+	[mp_gameScene->mp_feverMessage setVisible:NO];
+	[mp_gameScene->mp_feverEvent setVisible:NO];
+	[mp_gameScene->mp_fliterColorBG setVisible:NO];
 }
 
 @end

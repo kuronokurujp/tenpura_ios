@@ -48,7 +48,11 @@
 		
 		//	テクスチャー先読み
 		{
-			[[FileTexLoadManager shared] LoadAsync:[NSString stringWithUTF8String:gp_effectBombFileName]];
+			UInt32	num	= sizeof(ga_animDataList) / sizeof(ga_animDataList[0]);
+			for( UInt32 i = 0; i < num; ++i )
+			{
+				[[FileTexLoadManager shared] LoadAsync:[NSString stringWithUTF8String:ga_animDataList[i].pImageFileName]];
+			}
 		}
 		//	SE先読み
 		[[SoundManager shared] preLoad:@"caf"];

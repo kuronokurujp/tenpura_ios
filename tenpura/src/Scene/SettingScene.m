@@ -40,6 +40,8 @@
 	{
 		mp_useItemNoList	= [[CCArray alloc] init];
 		mp_missionSucceesAlertView	= nil;
+		
+		[[SoundManager shared] playBgm:@"normalBGM"];
 	}
 	
 	return self;
@@ -174,7 +176,7 @@
 	
 	pDataSettingTenpura	= nil;
 	
-	[[SoundManager shared] play:eSOUND_BTN_CLICK];
+	[[SoundManager shared] playSe:@"btnClick"];
 }
 
 /*
@@ -191,7 +193,7 @@
 	
 	[[CCDirector sharedDirector] pushScene:pTransFade];
 	
-	[[SoundManager shared] play:eSOUND_BTN_CLICK];
+	[[SoundManager shared] playSe:@"btnClick"];
 }
 
 /*
@@ -208,7 +210,7 @@
 	
 	[[CCDirector sharedDirector] pushScene:pTransFade];
 	
-	[[SoundManager shared] play:eSOUND_BTN_CLICK];
+	[[SoundManager shared] playSe:@"btnClick"];
 }
 
 /*
@@ -245,7 +247,7 @@
 
 	[[CCDirector sharedDirector] pushScene:pTransFade];
 	
-	[[SoundManager shared] play:eSOUND_BTN_CLICK];
+	[[SoundManager shared] playSe:@"btnClick"];
 }
 
 /*
@@ -282,7 +284,7 @@
 
 	[[CCDirector sharedDirector] pushScene:pTransFade];
 
-	[[SoundManager shared] play:eSOUND_BTN_CLICK];
+	[[SoundManager shared] playSe:@"btnClick"];
 }
 
 /*
@@ -299,7 +301,7 @@
 	
 	[[CCDirector sharedDirector] pushScene:pTransFade];
 	
-	[[SoundManager shared] play:eSOUND_BTN_CLICK];
+	[[SoundManager shared] playSe:@"btnClick"];
 }
 
 /*
@@ -313,7 +315,7 @@
 	
 	[[CCDirector sharedDirector] replaceScene:pTransFade];
 	
-	[[SoundManager shared] play:eSOUND_PRESS_BTN_CLICK];
+	[[SoundManager shared] playSe:@"pressBtnClick"];
 }
 
 /*
