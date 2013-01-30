@@ -53,6 +53,8 @@
 		CE41976C1695C28900EAD614 /* seki03.caf in Resources */ = {isa = PBXBuildFile; fileRef = CE4197541695C28900EAD614 /* seki03.caf */; };
 		CE41976D1695C28900EAD614 /* seki04.caf in Resources */ = {isa = PBXBuildFile; fileRef = CE4197551695C28900EAD614 /* seki04.caf */; };
 		CE41976E1695C28900EAD614 /* seki05.caf in Resources */ = {isa = PBXBuildFile; fileRef = CE4197561695C28900EAD614 /* seki05.caf */; };
+		CE43777616B945B100BA2F96 /* bgm_fever.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CE43777416B945B100BA2F96 /* bgm_fever.mp3 */; };
+		CE43777716B945B100BA2F96 /* bgm_main.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CE43777516B945B100BA2F96 /* bgm_main.mp3 */; };
 		CE4D94D3166126BA003743D7 /* StoreAppPurchaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4D94D2166126BA003743D7 /* StoreAppPurchaseViewController.m */; };
 		CE51773816494022004DF4F6 /* GameKitHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = CE51773716494022004DF4F6 /* GameKitHelper.m */; };
 		CE51774316497376004DF4F6 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE51774216497376004DF4F6 /* GameKit.framework */; };
@@ -65,7 +67,6 @@
 		CE54FC7F16A9979300717356 /* ItemShopScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CE54FC7E16A9979300717356 /* ItemShopScene.m */; };
 		CE5BAA471669776500BD3606 /* ActionCustomer.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5BAA431669776500BD3606 /* ActionCustomer.m */; };
 		CE6446B716B33B9800203455 /* ComboMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6446B616B33B9800203455 /* ComboMessage.m */; };
-		CE6446C716B3592600203455 /* play.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CE6446C516B3592600203455 /* play.mp3 */; };
 		CE6446C816B3592600203455 /* title.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CE6446C616B3592600203455 /* title.mp3 */; };
 		CE69CD5C1651155D00BFDBD2 /* SWTableViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = CE69CD5B1651155D00BFDBD2 /* SWTableViewHelper.m */; };
 		CE7C358316972FBC00E6E2EC /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7C358216972FBC00E6E2EC /* Twitter.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -428,6 +429,8 @@
 		CE4197541695C28900EAD614 /* seki03.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = seki03.caf; path = Resources/sound/se/seki03.caf; sourceTree = "<group>"; };
 		CE4197551695C28900EAD614 /* seki04.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = seki04.caf; path = Resources/sound/se/seki04.caf; sourceTree = "<group>"; };
 		CE4197561695C28900EAD614 /* seki05.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = seki05.caf; path = Resources/sound/se/seki05.caf; sourceTree = "<group>"; };
+		CE43777416B945B100BA2F96 /* bgm_fever.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bgm_fever.mp3; path = Resources/sound/bgm/bgm_fever.mp3; sourceTree = "<group>"; };
+		CE43777516B945B100BA2F96 /* bgm_main.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bgm_main.mp3; path = Resources/sound/bgm/bgm_main.mp3; sourceTree = "<group>"; };
 		CE4D94D1166126BA003743D7 /* StoreAppPurchaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StoreAppPurchaseViewController.h; path = src/System/StoreView/StoreAppPurchaseViewController.h; sourceTree = "<group>"; };
 		CE4D94D2166126BA003743D7 /* StoreAppPurchaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StoreAppPurchaseViewController.m; path = src/System/StoreView/StoreAppPurchaseViewController.m; sourceTree = "<group>"; };
 		CE51773616494022004DF4F6 /* GameKitHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameKitHelper.h; path = src/System/GameCenter/GameKitHelper.h; sourceTree = "<group>"; };
@@ -446,7 +449,6 @@
 		CE5BAA431669776500BD3606 /* ActionCustomer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActionCustomer.m; path = src/ActionCustomer/ActionCustomer.m; sourceTree = "<group>"; };
 		CE6446B516B33B9800203455 /* ComboMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComboMessage.h; path = src/Object/ComboMessage.h; sourceTree = "<group>"; };
 		CE6446B616B33B9800203455 /* ComboMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ComboMessage.m; path = src/Object/ComboMessage.m; sourceTree = "<group>"; };
-		CE6446C516B3592600203455 /* play.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = play.mp3; path = Resources/sound/bgm/play.mp3; sourceTree = "<group>"; };
 		CE6446C616B3592600203455 /* title.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = title.mp3; path = Resources/sound/bgm/title.mp3; sourceTree = "<group>"; };
 		CE69CD5A1651155D00BFDBD2 /* SWTableViewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWTableViewHelper.h; path = src/System/TableView/SWTableViewHelper.h; sourceTree = "<group>"; };
 		CE69CD5B1651155D00BFDBD2 /* SWTableViewHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SWTableViewHelper.m; path = src/System/TableView/SWTableViewHelper.m; sourceTree = "<group>"; };
@@ -1120,8 +1122,9 @@
 		CE6446C316B3591900203455 /* bgm */ = {
 			isa = PBXGroup;
 			children = (
-				CE6446C516B3592600203455 /* play.mp3 */,
 				CE6446C616B3592600203455 /* title.mp3 */,
+				CE43777416B945B100BA2F96 /* bgm_fever.mp3 */,
+				CE43777516B945B100BA2F96 /* bgm_main.mp3 */,
 			);
 			name = bgm;
 			sourceTree = "<group>";
@@ -2302,7 +2305,6 @@
 				CE541E2D16B297E400CD07D8 /* moji01.png in Resources */,
 				CE541E2E16B297E400CD07D8 /* moji02.png in Resources */,
 				CE541E2F16B297E400CD07D8 /* slot_select.png in Resources */,
-				CE6446C716B3592600203455 /* play.mp3 in Resources */,
 				CE6446C816B3592600203455 /* title.mp3 in Resources */,
 				CE216D6516B37AD0000E0E29 /* star.plist in Resources */,
 				CE216D6616B37AD0000E0E29 /* star.png in Resources */,
@@ -2323,6 +2325,8 @@
 				CEBFB69B16B5E9770008E08B /* fever_event.ccbi in Resources */,
 				CEFE1FF316B69EFB009F3406 /* game_result_hiscore.ccbi in Resources */,
 				CEFE1FF516B69F04009F3406 /* game_result.ccbi in Resources */,
+				CE43777616B945B100BA2F96 /* bgm_fever.mp3 in Resources */,
+				CE43777716B945B100BA2F96 /* bgm_main.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

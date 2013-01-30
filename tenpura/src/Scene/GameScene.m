@@ -315,7 +315,7 @@ enum
 			:fileNum:
 			60] autorelease];
 		
-			[pEffMng addEffect:[NSString stringWithUTF8String:ga_AnimPlayName[i]]:pEffData];
+			[pEffMng add:[NSString stringWithUTF8String:ga_AnimPlayName[i]]:pEffData];
 		}
 	}
 

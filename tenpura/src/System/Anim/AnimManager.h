@@ -21,12 +21,12 @@
 +(void)	end;
 
 //	エフェクト登録
--(CCNode*)	addEffect:(NSString*)in_pEffName:(AnimData*)in_pEffData;
+-(CCNode*)	add:(NSString*)in_pName:(AnimData*)in_pData;
 
 //	エフェクトバッチ作成
--(CCNode*)	createBath:(const NSString*)in_pEffName;
+-(CCNode*)	createBath:(const NSString*)in_pName;
 
 //	エフェクト再生
--(CCNode*)	play:(const NSString*)in_pEffName;
+-(CCNode*)	play:(const NSString*)in_pName;
 
 @end

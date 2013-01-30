@@ -73,12 +73,12 @@ static	AnimManager*	sp_inst	= nil;
 /*
 	@brief	エフェクト登録
 */
--(CCNode*)	addEffect:(NSString*)in_pEffName:(AnimData*)in_pEffData
+-(CCNode*)	add:(NSString*)in_pName:(AnimData*)in_pData
 {
-	id	pChkData	= [mp_dicData objectForKey:in_pEffName];
+	id	pChkData	= [mp_dicData objectForKey:in_pName];
 	if( pChkData == nil )
 	{
-		[mp_dicData setValue:[in_pEffData retain] forKey:in_pEffName];
+		[mp_dicData setValue:[in_pData retain] forKey:in_pName];
 	}
 
 	return nil;
@@ -87,10 +87,10 @@ static	AnimManager*	sp_inst	= nil;
 /*
 	@brief	エフェクトバッチ作成
 */
--(CCNode*)	createBath:(const NSString*)in_pEffName
+-(CCNode*)	createBath:(const NSString*)in_pName
 {
-	NSAssert(in_pEffName, @"%s(%d):エフェクト名がない", __FILE__, __LINE__);
-	id	pData	= [mp_dicData objectForKey:in_pEffName];
+	NSAssert(in_pName, @"%s(%d):エフェクト名がない", __FILE__, __LINE__);
+	id	pData	= [mp_dicData objectForKey:in_pName];
 	if( pData != nil )
 	{
 		if( [pData isKindOfClass:[AnimData class]] )
@@ -110,9 +110,9 @@ static	AnimManager*	sp_inst	= nil;
 /*
 	@brief	エフェクト再生
 */
--(CCNode*)	play:(const NSString*)in_pEffName
+-(CCNode*)	play:(const NSString*)in_pName
 {
-	id	pEffData	= [mp_dicData objectForKey:in_pEffName];
+	id	pEffData	= [mp_dicData objectForKey:in_pName];
 	if( pEffData != nil )
 	{
 		if( [pEffData isKindOfClass:[AnimData class]] )
@@ -121,7 +121,7 @@ static	AnimManager*	sp_inst	= nil;
 		}
 	}
 	
-	NSAssert(nil, @"%s(%d):エフェクト名「%@」がない", __FILE__, __LINE__, in_pEffName);
+	NSAssert(nil, @"%s(%d):エフェクト名「%@」がない", __FILE__, __LINE__, in_pName);
 
 	return nil;
 }

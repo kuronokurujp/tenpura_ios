@@ -815,6 +815,9 @@ enum
 
 	[mp_gameScene->mp_feverEvent start];
 	[self schedule:@selector(_updateEvent)];
+	
+	//	BGM変更
+	[[SoundManager shared] playBgm:@"feverBGM"];
 }
 
 /*
@@ -871,6 +874,8 @@ enum
 	[mp_gameScene->mp_feverMessage setVisible:NO];
 	[mp_gameScene->mp_feverEvent setVisible:NO];
 	[mp_gameScene->mp_fliterColorBG setVisible:NO];
+	
+	[[SoundManager shared] playBgm:@"playBGM"];
 }
 
 @end
