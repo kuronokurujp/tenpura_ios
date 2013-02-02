@@ -51,8 +51,7 @@ enum
 	data.cellSize	= [pTmpSp contentSize];
 	data.viewPos	= ccp( 0, data.cellSize.height + 10.f );
 	
-	CGSize	winSize	= [[CCDirector sharedDirector] winSize];
-	data.viewSize	= CGSizeMake(winSize.width, winSize.height - data.viewPos.y );
+	data.viewSize	= CGSizeMake(data.cellSize.width, SCREEN_SIZE_HEIGHT - data.viewPos.y );
 
 	if( self = [super initWithData:&data] )
 	{

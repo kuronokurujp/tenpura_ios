@@ -28,5 +28,6 @@
 
 //	エフェクト再生
 -(CCNode*)	play:(const NSString*)in_pName;
+-(CCNode*)	playLoop:(const NSString*)in_pName;
 
 @end

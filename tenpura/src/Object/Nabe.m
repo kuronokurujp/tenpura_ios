@@ -112,7 +112,7 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 				[pDataTenpuraPosList setUseFlg:YES :posIdx];
 
 				[pTenpura setupToPosIndex:in_data:posIdx:in_raiseSpeedRate];
-				[pTenpura startRaise];
+				[pTenpura start];
 				[pTenpura setZOrder:m_tenpuraZOrder];
 				m_tenpuraZOrder += 1;
 				

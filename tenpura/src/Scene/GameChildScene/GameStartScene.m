@@ -99,9 +99,8 @@
 	
 	//	ロゴスタート演出
 	{
-		CGSize	size		= [CCDirector sharedDirector].winSize;
-		CGPoint	startPos	= ccp(size.width * 2.f, size.height * 0.5f);
-		CGPoint	endPos		= ccp(size.width * 0.5f, startPos.y);
+		CGPoint	startPos	= ccp(SCREEN_SIZE_WIDTH * 2.f, SCREEN_SIZE_HEIGHT * 0.5f);
+		CGPoint	endPos		= ccp(SCREEN_SIZE_WIDTH * 0.5f, startPos.y);
 		
 		[mp_startLogoSp setPosition:startPos];
 

@@ -1732,8 +1732,6 @@
 						<string>textID:69</string>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
@@ -2173,8 +2171,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>829</real>
-							<real>78</real>
+							<real>821</real>
+							<real>79</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -2218,10 +2216,12 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>setting/slot_select.png</string>
+							<string>text/slot_select.png</string>
 						</array>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>

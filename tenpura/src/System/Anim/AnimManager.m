@@ -96,11 +96,6 @@ static	AnimManager*	sp_inst	= nil;
 		if( [pData isKindOfClass:[AnimData class]] )
 		{
 		//	CCSpriteBatchNode*	pBatchNode	= nil;
-			AnimData*	pEffData	= (AnimData*)pData;
-			for( UInt32 i = 0; i < pEffData.fileNum; ++i )
-			{
-				
-			}
 		}
 	}
 	
@@ -125,5 +120,25 @@ static	AnimManager*	sp_inst	= nil;
 
 	return nil;
 }
+
+/*
+	@brief
+*/
+-(CCNode*)	playLoop:(const NSString*)in_pName
+{
+	id	pEffData	= [mp_dicData objectForKey:in_pName];
+	if( pEffData != nil )
+	{
+		if( [pEffData isKindOfClass:[AnimData class]] )
+		{
+			return [[[AnimActionSprite alloc] initWithDataAndLoop:(AnimData*)pEffData] autorelease];
+		}
+	}
+	
+	NSAssert(nil, @"%s(%d):エフェクト名「%@」がない", __FILE__, __LINE__, in_pName);
+
+	return nil;
+}
+
 
 @end

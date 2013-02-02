@@ -102,8 +102,8 @@
 	    [pCell addChild:pSprite z:0 tag:eSW_TABLE_TAG_CELL_SPRITE];
 	}
 
-	[pSprite setPosition:ccp(0, 0)];
 	[pSprite setAnchorPoint:ccp(0, 0)];
+	[pSprite setPosition:ccp(0, 0)];
 
 	NSString*	pStr	= @"";
 	CCLabelTTF*	pLabel	= (CCLabelTTF*)[pSprite getChildByTag:eSW_TABLE_TAG_CELL_TEXT];

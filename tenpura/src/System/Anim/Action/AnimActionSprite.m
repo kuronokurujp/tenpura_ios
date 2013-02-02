@@ -12,29 +12,38 @@
 
 @synthesize fileName	= mp_fileName;
 @synthesize fileImageName	= mp_fileImageName;
-@synthesize spriteFileNameList	= mp_spriteFileNamList;
-@synthesize fileNum	= m_fileNum;
+@synthesize frameNameList	= mp_frameNameList;
 @synthesize fps	= m_fps;
 
 /*
 	@brief
 */
--(id)	initWithData:(const char*)in_pFileName:(const char*)in_pFileImageName:(const char**)in_pFrameNameList:(const UInt32)in_FrameNum:(const UInt32)in_fps;
+-(id)	initWithData:(const char*)in_pFileName:(const char*)in_pFileImageName:(const UInt32)in_fps;
 {
 	if( self = [super init] )
 	{
 		mp_fileName	= [[NSString stringWithUTF8String:in_pFileName] retain];
 		mp_fileImageName	= [[NSString stringWithUTF8String:in_pFileImageName] retain];
 		m_fps	= in_fps;
-		m_fileNum	= in_FrameNum;
-		
-		mp_spriteFileNamList	= [[CCArray alloc] initWithCapacity:m_fileNum];
-		for( UInt32 i = 0; i < in_FrameNum; ++i )
-		{
-			[mp_spriteFileNamList addObject:[NSString stringWithUTF8String:in_pFrameNameList[i]]];
-		}
 	}
 	
+	//	フレームリスト作成
+	{
+		NSString*	pPath	= [[NSBundle mainBundle] pathForResource:mp_fileName ofType:@""];
+		NSDictionary*	pAnimList	= [NSDictionary dictionaryWithContentsOfFile:pPath];
+		NSDictionary*	pFrameList	= [pAnimList valueForKey:@"frames"];
+		if( pFrameList )
+		{
+			NSLog( @"FrameNum(%d)", [pFrameList count] );
+			NSArray*	pFrameNameList	= [[pFrameList allKeys] sortedArrayUsingSelector:@selector(compare:)];
+			for( SInt32 i = 0; i < [pFrameNameList count]; ++i )
+			{
+				NSLog( @"FrameName(%@)", [pFrameNameList objectAtIndex:i]);
+			}
+			mp_frameNameList	= [pFrameNameList retain];
+		}
+	}
+
 	return self;
 }
 
@@ -45,7 +54,8 @@
 {
 	[mp_fileImageName release];
 	[mp_fileName release];
-	[mp_spriteFileNamList release];
+	[mp_frameNameList release];
+
 	[super dealloc];
 }
 
@@ -53,7 +63,8 @@
 
 @interface AnimActionSprite (PriveteMethod)
 
--(void)	endAnim;
+-(void)	_init:(AnimData*)in_pData:(BOOL)in_bLoop;
+-(void)	_endAnim;
 
 @end
 @implementation AnimActionSprite
@@ -65,38 +76,24 @@
 */
 -(id)	initWithData:(AnimData*)in_data
 {
-	NSAssert(in_data, @"アニメデータがない");
 	if( self = [super init] )
 	{
-		mb_loop	= NO;
-		mp_data	= [in_data retain];
-
-		CCSpriteFrameCache*	pFrameCache	= [CCSpriteFrameCache sharedSpriteFrameCache];
-		[pFrameCache addSpriteFramesWithFile:in_data.fileName];
-
-		mp_sp	= [CCSprite spriteWithSpriteFrameName:[in_data.spriteFileNameList objectAtIndex:0]];
-		NSMutableArray*	pFrames	= [NSMutableArray arrayWithCapacity:in_data.fileNum];
-		for( UInt32 i = 1; i < in_data.fileNum; ++i )
-		{
-			NSString*	pFileName	= [in_data.spriteFileNameList objectAtIndex:i];
-			CCSpriteFrame*	pFrame	= [pFrameCache spriteFrameByName:pFileName];
-			
-			[pFrames addObject:pFrame];
-		}
-		
-		Float32	delay	= 1.f / (Float32)in_data.fps;
-		CCAnimation*	pAnim	= [[[CCAnimation alloc] initWithSpriteFrames:pFrames delay:delay] autorelease];
-		
-		CCAnimate*	pAnimate	= [CCAnimate actionWithAnimation:pAnim];
-		mp_anim	= [pAnimate retain];
-
-		CCCallFunc*	pEndCall	= [CCCallFunc actionWithTarget:self selector:@selector(endAnim)];
-		CCSequence*	pSeq	= [CCSequence actions:pAnimate, pEndCall, nil];
-		[mp_sp runAction:pSeq];
-
-		[self addChild:mp_sp];
+		[self _init:in_data :false];
 	}
 
+	return self;
+}
+
+/*
+	@brief
+*/
+-(id)	initWithDataAndLoop:(AnimData*)in_data
+{
+	if( self = [super init] )
+	{
+		[self _init:in_data :true];
+	}
+	
 	return self;
 }
 
@@ -116,20 +113,59 @@
 }
 
 /*
+	@brief	初期化
+*/
+-(void)	_init:(AnimData*)in_data:(BOOL)in_bLoop
+{
+	NSAssert(in_data, @"アニメデータがない");
+	{
+		mb_loop	= in_bLoop;
+		mp_data	= [in_data retain];
+
+		CCSpriteFrameCache*	pFrameCache	= [CCSpriteFrameCache sharedSpriteFrameCache];
+		[pFrameCache addSpriteFramesWithFile:in_data.fileName];
+
+		UInt32	frameNum	= [in_data.frameNameList count];
+
+		mp_sp	= [CCSprite spriteWithSpriteFrameName:[in_data.frameNameList objectAtIndex:0]];
+		NSMutableArray*	pFrames	= [NSMutableArray arrayWithCapacity:frameNum];
+		for( UInt32 i = 1; i < frameNum; ++i )
+		{
+			NSString*	pFileName	= [in_data.frameNameList objectAtIndex:i];
+			CCSpriteFrame*	pFrame	= [pFrameCache spriteFrameByName:pFileName];
+			
+			[pFrames addObject:pFrame];
+		}
+		
+		Float32	delay	= 1.f / (Float32)in_data.fps;
+		CCAnimation*	pAnim	= [[[CCAnimation alloc] initWithSpriteFrames:pFrames delay:delay] autorelease];
+		
+		CCAnimate*	pAnimate	= [CCAnimate actionWithAnimation:pAnim];
+		mp_anim	= [pAnimate retain];
+
+		if( in_bLoop == false )
+		{
+			CCCallFunc*	pEndCall	= [CCCallFunc actionWithTarget:self selector:@selector(_endAnim)];
+			CCSequence*	pSeq	= [CCSequence actions:pAnimate, pEndCall, nil];
+			[mp_sp runAction:pSeq];
+		}
+		else
+		{
+			//	ループの設定をしているならループ用アニメを作成する
+			CCRepeatForever*	pRepeat	= [CCRepeatForever actionWithAction:mp_anim];
+			[mp_sp runAction:pRepeat];
+		}
+
+		[self addChild:mp_sp];
+	}
+}
+
+/*
 	@brief
 */
--(void)	endAnim
+-(void)	_endAnim
 {
-	if( mb_loop == YES )
-	{
-		//	ループの設定をしているならループ用アニメを作成する
-		CCRepeatForever*	pRepeat	= [CCRepeatForever actionWithAction:mp_anim];
-		[mp_sp runAction:pRepeat];
-	}
-	else
-	{
-		[self removeFromParentAndCleanup:YES];
-	}
+	[self removeFromParentAndCleanup:YES];
 }
 
 /*

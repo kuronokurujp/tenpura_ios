@@ -64,7 +64,6 @@
 		CE541E2E16B297E400CD07D8 /* moji02.png in Resources */ = {isa = PBXBuildFile; fileRef = CE541E2A16B297E400CD07D8 /* moji02.png */; };
 		CE541E2F16B297E400CD07D8 /* slot_select.png in Resources */ = {isa = PBXBuildFile; fileRef = CE541E2B16B297E400CD07D8 /* slot_select.png */; };
 		CE54FC7716A98FF500717356 /* itemShop.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE54FC7616A98FF500717356 /* itemShop.ccbi */; };
-		CE54FC7F16A9979300717356 /* ItemShopScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CE54FC7E16A9979300717356 /* ItemShopScene.m */; };
 		CE5BAA471669776500BD3606 /* ActionCustomer.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5BAA431669776500BD3606 /* ActionCustomer.m */; };
 		CE6446B716B33B9800203455 /* ComboMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6446B616B33B9800203455 /* ComboMessage.m */; };
 		CE6446C816B3592600203455 /* title.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CE6446C616B3592600203455 /* title.mp3 */; };
@@ -142,6 +141,8 @@
 		CEABDF841663DA6D00043570 /* taranome0.png in Resources */ = {isa = PBXBuildFile; fileRef = CEABDF4E1663DA6D00043570 /* taranome0.png */; };
 		CEABDF851663DA6D00043570 /* toumorokoshi0.png in Resources */ = {isa = PBXBuildFile; fileRef = CEABDF4F1663DA6D00043570 /* toumorokoshi0.png */; };
 		CEB815EB163C36F0002814DD /* siire.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CEB815EA163C36F0002814DD /* siire.ccbi */; };
+		CEBB5D4416BB64530022776F /* ItemShopScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBB5D4316BB64530022776F /* ItemShopScene.m */; };
+		CEBB5D4916BB69920022776F /* black.png in Resources */ = {isa = PBXBuildFile; fileRef = CEBB5D4816BB69920022776F /* black.png */; };
 		CEBFB69B16B5E9770008E08B /* fever_event.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CEBFB69A16B5E9770008E08B /* fever_event.ccbi */; };
 		CEC4D99B16414CD500157DDB /* DataSaveGame.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC4D99A16414CD500157DDB /* DataSaveGame.m */; };
 		CEC9CF681644F8D700D446A3 /* use_item_select.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CEC9CF671644F8D700D446A3 /* use_item_select.ccbi */; };
@@ -443,8 +444,6 @@
 		CE541E2A16B297E400CD07D8 /* moji02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = moji02.png; path = Resources/text/moji02.png; sourceTree = "<group>"; };
 		CE541E2B16B297E400CD07D8 /* slot_select.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = slot_select.png; path = Resources/text/slot_select.png; sourceTree = "<group>"; };
 		CE54FC7616A98FF500717356 /* itemShop.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = itemShop.ccbi; path = Resources/ccbi/itemShop.ccbi; sourceTree = "<group>"; };
-		CE54FC7D16A9979300717356 /* ItemShopScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ItemShopScene.h; path = src/Scene/SettingChildScene/ItemShopScene.h; sourceTree = "<group>"; };
-		CE54FC7E16A9979300717356 /* ItemShopScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ItemShopScene.m; path = src/Scene/SettingChildScene/ItemShopScene.m; sourceTree = "<group>"; };
 		CE5BAA421669776500BD3606 /* ActionCustomer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionCustomer.h; path = src/ActionCustomer/ActionCustomer.h; sourceTree = "<group>"; };
 		CE5BAA431669776500BD3606 /* ActionCustomer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActionCustomer.m; path = src/ActionCustomer/ActionCustomer.m; sourceTree = "<group>"; };
 		CE6446B516B33B9800203455 /* ComboMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComboMessage.h; path = src/Object/ComboMessage.h; sourceTree = "<group>"; };
@@ -527,6 +526,9 @@
 		CEABDF4E1663DA6D00043570 /* taranome0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = taranome0.png; path = Resources/tenpura/taranome0.png; sourceTree = "<group>"; };
 		CEABDF4F1663DA6D00043570 /* toumorokoshi0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = toumorokoshi0.png; path = Resources/tenpura/toumorokoshi0.png; sourceTree = "<group>"; };
 		CEB815EA163C36F0002814DD /* siire.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = siire.ccbi; path = Resources/ccbi/siire.ccbi; sourceTree = "<group>"; };
+		CEBB5D4216BB64530022776F /* ItemShopScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ItemShopScene.h; path = src/Scene/SettingChildScene/ItemShopScene.h; sourceTree = "<group>"; };
+		CEBB5D4316BB64530022776F /* ItemShopScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ItemShopScene.m; path = src/Scene/SettingChildScene/ItemShopScene.m; sourceTree = "<group>"; };
+		CEBB5D4816BB69920022776F /* black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = black.png; path = Resources/bg/black.png; sourceTree = "<group>"; };
 		CEBFB69A16B5E9770008E08B /* fever_event.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = fever_event.ccbi; path = Resources/ccbi/fever_event.ccbi; sourceTree = "<group>"; };
 		CEC4D99916414CD500157DDB /* DataSaveGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataSaveGame.h; path = src/Data/DataSaveGame.h; sourceTree = "<group>"; };
 		CEC4D99A16414CD500157DDB /* DataSaveGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataSaveGame.m; path = src/Data/DataSaveGame.m; sourceTree = "<group>"; };
@@ -1105,10 +1107,10 @@
 			children = (
 				CE8360CF1648172100CC11E0 /* MissionScene.h */,
 				CE8360D01648172200CC11E0 /* MissionScene.m */,
-				CE54FC7D16A9979300717356 /* ItemShopScene.h */,
-				CE54FC7E16A9979300717356 /* ItemShopScene.m */,
 				CE8360B21647FA2700CC11E0 /* SiireScene.h */,
 				CE8360B31647FA2700CC11E0 /* SiireScene.m */,
+				CEBB5D4216BB64530022776F /* ItemShopScene.h */,
+				CEBB5D4316BB64530022776F /* ItemShopScene.m */,
 				CEEAEED616AAB9CB0088B718 /* UseSelectItemScene.m */,
 				CEEAEED516AAB9CB0088B718 /* UseSelectItemScene.h */,
 				CEEAEED216AAB8BF0088B718 /* UseSelectNetaScene.h */,
@@ -1810,6 +1812,7 @@
 			isa = PBXGroup;
 			children = (
 				CED247FE163998BB00506CA8 /* nabe0.png */,
+				CEBB5D4816BB69920022776F /* black.png */,
 				CE8360B61647FC4100CC11E0 /* set_back.png */,
 				CED247FF163998BB00506CA8 /* play_back.png */,
 			);
@@ -2327,6 +2330,7 @@
 				CEFE1FF516B69F04009F3406 /* game_result.ccbi in Resources */,
 				CE43777616B945B100BA2F96 /* bgm_fever.mp3 in Resources */,
 				CE43777716B945B100BA2F96 /* bgm_main.mp3 in Resources */,
+				CEBB5D4916BB69920022776F /* black.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2504,7 +2508,6 @@
 				CE33C899168888BD004782A4 /* HelpScene.m in Sources */,
 				CE4197301695A4E900EAD614 /* SoundManager.m in Sources */,
 				CE1B74C91699D6BE00DD2C07 /* FileTexLoadManager.m in Sources */,
-				CE54FC7F16A9979300717356 /* ItemShopScene.m in Sources */,
 				CEEAEECC16AA945B0088B718 /* DataItemList.m in Sources */,
 				CEEAEED116AAA3350088B718 /* ShopBaseScene.m in Sources */,
 				CEEAEED416AAB8C00088B718 /* UseSelectNetaScene.m in Sources */,
@@ -2515,6 +2518,7 @@
 				CE2F301C16B8C7E40010610D /* GameInFeverMessage.m in Sources */,
 				CE0C82FE16B914F80086CEEA /* GameInFeverEvent.m in Sources */,
 				CE0C830116B915890086CEEA /* GameInFliterColorBG.m in Sources */,
+				CEBB5D4416BB64530022776F /* ItemShopScene.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

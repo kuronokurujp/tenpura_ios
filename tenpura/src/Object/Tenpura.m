@@ -10,6 +10,7 @@
 
 #import "./../Data/DataTenpuraPosList.h"
 #import "./../Data/DataGlobal.h"
+#import	"./../System/Anim/AnimManager.h"
 #import "./../System/Sound/SoundManager.h"
 
 @interface Tenpura (PrivateMethod)
@@ -17,6 +18,9 @@
 -(void)		_setup:(NETA_DATA_ST)in_data;
 -(CGRect)	_getTexRect:(SInt32)in_idx;
 
+//	登場演出終了
+-(void)	_endPutEvent;
+//	揚げる処理
 -(void)	_doNextRaise:(ccTime)delta;
 //	揚げる時間を取得
 -(Float32)	_getRaiseTime:(TENPURA_STATE_ET)in_state;
@@ -27,12 +31,14 @@
 
 enum
 {
-	eACTTAG_LOCK_SCALE	= 1
+	eACTTAG_LOCK_SCALE	= 1,
+	eCHILD_TAG_ANIM_CURSOR,
+	eCHILD_TAG_ANIM_STAR,
 };
 
 //	プロパティ定義
 @synthesize state		= m_state;
-@synthesize bTouch		= mb_touch;
+@synthesize bTouch		= mb_lock;
 @synthesize bRaise		= mb_raise;
 @synthesize bDelete		= mb_delete;
 @synthesize posDataIdx	= m_posDataIdx;
@@ -49,7 +55,7 @@ enum
 		memset( &m_data, 0, sizeof(m_data) );
 		mp_sp			= nil;
 		m_delegate		= nil;
-		mb_touch		= NO;
+		mb_lock		= NO;
 		mb_raise		= NO;
 		mb_delete		= NO;
 		m_posDataIdx	= 0;
@@ -77,12 +83,29 @@ enum
 */
 -(void)	update:(ccTime)delta
 {
-	m_raiseTime	+= delta;
-	Float32	nextRaiseTime	= [self _getRaiseTime:m_state];
-	if( (0.f <= nextRaiseTime) && ( nextRaiseTime <= m_raiseTime ) )
+	if( mb_lock == NO )
 	{
-		[self _doNextRaise:0.f];
-		m_raiseTime	= 0.f;
+		m_raiseTime	+= delta;
+		Float32	nextRaiseTime	= [self _getRaiseTime:m_state];
+		if( (0.f <= nextRaiseTime) && ( nextRaiseTime <= m_raiseTime ) )
+		{
+			[self _doNextRaise:0.f];
+			m_raiseTime	= 0.f;
+		}
+	}
+	
+	{
+		CCNode*	pAnimCursor	= [self getChildByTag:eCHILD_TAG_ANIM_CURSOR];
+		CCNode*	pAnimStar	= [self getChildByTag:eCHILD_TAG_ANIM_STAR];
+		if( pAnimCursor )
+		{
+			[pAnimCursor setScale:mp_sp.scale];
+		}
+		
+		if( pAnimStar )
+		{
+			[pAnimStar setScale:mp_sp.scale];
+		}
 	}
 }
 
@@ -124,9 +147,12 @@ enum
 	[mp_sp setScale:1.f];
 	mb_delete		= NO;
 	mb_raise		= NO;
-	mb_touch		= NO;
+	mb_lock		= NO;
 	m_posDataIdx	= 0;
 	m_raiseTime	= 0.f;
+
+	[self removeChildByTag:eCHILD_TAG_ANIM_CURSOR cleanup:YES];
+	[self removeChildByTag:eCHILD_TAG_ANIM_STAR cleanup:YES];
 
 	[self unscheduleAllSelectors];
 	[self setVisible:NO];
@@ -155,11 +181,26 @@ enum
 /*
 	@brief	揚げる開始
 */
--(void)	startRaise
+-(void)	start
 {
 	//	揚げる段階を設定
 	[self reset];
+	
+	//	配置演出
+	{
+		[mp_sp setScale:1.2f];
+		[mp_sp setOpacity:0];
 
+		Float32	time	= 0.1f;
+		CCScaleTo*	pScaleBy	= [CCScaleTo actionWithDuration:time scale:1.f];
+		CCFadeIn*	pFadeIn		= [CCFadeIn actionWithDuration:time];
+		CCCallFunc*	pEndCall	= [CCCallFunc actionWithTarget:self selector:@selector(_endPutEvent)];
+		CCSequence*	pSeq		= [CCSequence actionOne:pScaleBy two:pEndCall];
+		
+		[mp_sp runAction:pSeq];
+		[mp_sp runAction:pFadeIn];
+	}
+	
 	[self setVisible:YES];
 	mb_raise	= YES;
 }
@@ -169,7 +210,7 @@ enum
 */
 -(void)	reset
 {
-	mb_touch	= NO;
+	mb_lock	= NO;
 	m_raiseTime	= 0.f;
 	m_state		= eTENPURA_STATE_NOT;
 	[mp_sp setScale:1.f];
@@ -177,6 +218,9 @@ enum
 	//	揚げる段階を設定
 	[self unscheduleUpdate];
 	[self scheduleUpdate];
+
+	[self removeChildByTag:eCHILD_TAG_ANIM_CURSOR cleanup:YES];
+	[self removeChildByTag:eCHILD_TAG_ANIM_STAR cleanup:YES];
 
 	[mp_sp setTextureRect:[self _getTexRect:(SInt32)m_state]];
 }
@@ -198,7 +242,7 @@ enum
 	m_oldZOrder	= self.zOrder;
 	[self setZOrder:30];
 	
-	mb_touch	= YES;
+	mb_lock	= YES;
 	m_touchPrevPos	= self.position;
 }
 
@@ -218,7 +262,7 @@ enum
 	
 	[self setZOrder:m_oldZOrder];
 	
-	mb_touch	= NO;
+	mb_lock	= NO;
 	[self setPosition:m_touchPrevPos];
 }
 
@@ -273,6 +317,14 @@ enum
 }
 
 /*
+	@brief	登場演出終了
+*/
+-(void)	_endPutEvent
+{
+	mb_lock	= NO;
+}
+
+/*
 	@brief
 */
 -(void)	_doNextRaise:(ccTime)delta
@@ -281,17 +333,24 @@ enum
 	
 	if( m_state < eTENPURA_STATE_MAX )
 	{
-		//	揚げた音
 		{
+			AnimManager*	pEffManager	= [AnimManager shared];
+			CCNode*	pEff	= nil;
 			switch ((SInt32)m_state)
 			{
 				case eTENPURA_STATE_GOOD:		//　ちょうど良い
 				{
+					pEff	= [pEffManager playLoop:[NSString stringWithUTF8String:ga_AnimPlayName[eANIM_CURSOR]]];
+					[self addChild:pEff z:1.f tag:eCHILD_TAG_ANIM_CURSOR];
+					
 					[[SoundManager shared] playSe:@"fried01"];
 					break;
 				}
 				case eTENPURA_STATE_VERYGOOD:	//	最高
 				{
+					pEff	= [pEffManager playLoop:[NSString stringWithUTF8String:ga_AnimPlayName[eANIM_STAR]]];
+					[self addChild:pEff z:2.f tag:eCHILD_TAG_ANIM_STAR];
+
 					[[SoundManager shared] playSe:@"fried02"];
 					break;
 				}
@@ -305,6 +364,12 @@ enum
 					[[SoundManager shared] playSe:@"fried04"];
 					break;
 				}
+			}
+			
+			if( pEff == nil )
+			{
+				[self removeChildByTag:eCHILD_TAG_ANIM_CURSOR cleanup:YES];
+				[self removeChildByTag:eCHILD_TAG_ANIM_STAR cleanup:YES];
 			}
 		}
 
@@ -359,7 +424,7 @@ enum
 	}
 	
 	mb_delete		= NO;
-	mb_touch		= NO;
+	mb_lock		= NO;
 	mb_raise		= NO;
 
 	m_data	= in_data;

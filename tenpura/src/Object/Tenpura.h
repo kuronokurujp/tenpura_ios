@@ -41,7 +41,7 @@ typedef enum
 	id<TenpuraProtocol>	m_delegate;
 	
 	TENPURA_STATE_ET	m_state;
-	BOOL				mb_touch;
+	BOOL				mb_lock;
 	BOOL				mb_delete;
 	BOOL				mb_raise;	//	揚げる開始
 	
@@ -75,7 +75,7 @@ typedef enum
 -(void)	setRaiseSpeedRate:(Float32)in_rate;
 
 //	揚げる開始
--(void)	startRaise;
+-(void)	start;
 //	リセット
 -(void)	reset;
 

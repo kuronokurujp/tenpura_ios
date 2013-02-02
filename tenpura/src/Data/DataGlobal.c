@@ -63,84 +63,11 @@ static const char*	gp_GamePlayEndSpritFileName	= "play_end.png";
 static const char*	gp_GamePlayStartSpritFileName	= "play_start.png";
 */
 
-//	爆発エフェクト(30fps)
-static const int	s_effectBombFrameNum	= 30;
-static const char*	sa_effectBombFrameNameList[s_effectBombFrameNum]	=
-{
-	"bomb0001.png",
-	"bomb0002.png",
-	"bomb0003.png",
-	"bomb0004.png",
-	"bomb0005.png",
-	"bomb0006.png",
-	"bomb0007.png",
-	"bomb0008.png",
-	"bomb0009.png",
-	"bomb0010.png",
-	"bomb0011.png",
-	"bomb0012.png",
-	"bomb0013.png",
-	"bomb0014.png",
-	"bomb0015.png",
-	"bomb0016.png",
-	"bomb0017.png",
-	"bomb0018.png",
-	"bomb0019.png",
-	"bomb0020.png",
-	"bomb0021.png",
-	"bomb0022.png",
-	"bomb0023.png",
-	"bomb0024.png",
-	"bomb0025.png",
-	"bomb0026.png",
-	"bomb0027.png",
-	"bomb0028.png",
-	"bomb0029.png",
-	"bomb0030.png",
-};
-
-//	カーソルエフェクト
-static const int	s_effectCursorFrameNum	= 3;
-static const char*	sa_effectCursorFrameNameList[s_effectCursorFrameNum]	=
-{
-	"Cursor0.png",
-	"Cursor1,png",
-	"Cursor2.png",
-};
-
-//	星のエフェクト
-static const int	s_effectStartFrameNum	= 3;
-static const char*	sa_effectStarFrameNameList[]	=
-{
-	"start0.png",
-	"start1.png",
-	"start2.png",
-};
-
-//	コンボ数字
-/*
-static const int	s_animComboNumFrameNum	= 9;
-static const char*	sa_animComboNumFrameNameList[s_animComboNumFrameNum]	=
-{
-	"combo_num0.png",
-	"combo_num1.png",
-	"combo_num2.png",
-	"combo_num3.png",
-	"combo_num4.png",
-	"combo_num5.png",
-	"combo_num6.png",
-	"combo_num7.png",
-	"combo_num8.png",
-	"combo_num9.png",
-};
-*/
-
 ANIM_DATA_ST	ga_animDataList[eANIM_MAX]	=
 {
-		{ sa_effectBombFrameNameList, s_effectBombFrameNum, "bomb.png", "bomb.plist" },
-		{ sa_effectCursorFrameNameList, s_effectCursorFrameNum, "cursor.png", "cursor.plist" },
-		{ sa_effectStarFrameNameList, s_effectStartFrameNum, "star.png", "star.plist" },
-//		{ sa_animComboNumFrameNameList, s_animComboNumFrameNum, "combo_num.png", "combo_num.plist" },
+		{ "bomb.png", "bomb.plist", 60.f },
+		{ "cursor.png", "cursor.plist", 110.f },
+		{ "star.png", "star.plist", 110.f },
 };
 
 char*	gpa_spriteFileNameList[eSPRITE_FILE_MAX]	=

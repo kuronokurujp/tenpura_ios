@@ -464,8 +464,6 @@ enum
 					case eTENPURA_STATE_GOOD:
 					case eTENPURA_STATE_VERYGOOD:
 					{
-						mb_fever	= YES;
-
 						++m_veryEatCnt;
 						if( mp_touchTenpura.state == eTENPURA_STATE_VERYGOOD )
 						{
@@ -489,7 +487,7 @@ enum
 							}
 
 							//	フィーバーを出すか
-							if( ( (m_feverCnt + 1) * 10 ) / m_combCnt )
+							if( ( ( (m_feverCnt + 1) * 10 ) / m_combCnt ) == 0 )
 							{
 								++m_feverCnt;
 								mb_fever	= YES;
@@ -864,18 +862,21 @@ enum
 -(void)	end
 {
 	[self stopAllActions];
-	[mp_gameScene->mp_fliterColorBG stopAllActions];
+	if( mp_gameScene != nil )
+	{
+		[mp_gameScene->mp_fliterColorBG stopAllActions];
 
-	//	ボーナスを消す
-	[mp_gameScene->mp_nabe setRaiseSpeedRate:0.f];
-	mp_gameInNormalScene.bFever	= NO;
+		//	ボーナスを消す
+		[mp_gameScene->mp_nabe setRaiseSpeedRate:0.f];
+		mp_gameInNormalScene.bFever	= NO;
 
-	//	フィーバーの後処理
-	[mp_gameScene->mp_feverMessage setVisible:NO];
-	[mp_gameScene->mp_feverEvent setVisible:NO];
-	[mp_gameScene->mp_fliterColorBG setVisible:NO];
+		//	フィーバーの後処理
+		[mp_gameScene->mp_feverMessage setVisible:NO];
+		[mp_gameScene->mp_feverEvent setVisible:NO];
+		[mp_gameScene->mp_fliterColorBG setVisible:NO];
 	
-	[[SoundManager shared] playBgm:@"playBGM"];
+		[[SoundManager shared] playBgm:@"playBGM"];
+	}
 }
 
 @end

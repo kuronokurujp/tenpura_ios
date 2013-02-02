@@ -306,14 +306,11 @@ enum
 		UInt32	num	= sizeof(ga_animDataList) / sizeof(ga_animDataList[0]);
 		for( UInt32 i = 0; i < num; ++i )
 		{
-			UInt32	fileNum	= ga_animDataList[i].frameNum;
 			AnimData*	pEffData	=
 			[[[AnimData alloc] initWithData
 			:ga_animDataList[i].pListFileName
 			:ga_animDataList[i].pImageFileName
-			:ga_animDataList[i].ppFrameNameList
-			:fileNum:
-			60] autorelease];
+			:ga_animDataList[i].fps] autorelease];
 		
 			[pEffMng add:[NSString stringWithUTF8String:ga_AnimPlayName[i]]:pEffData];
 		}

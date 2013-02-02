@@ -12,6 +12,9 @@
 //	色々な所で参照するデータをここに記述
 //	でも使いすぎに注意
 
+#define SCREEN_SIZE_WIDTH	(480.f)
+#define SCREEN_SIZE_HEIGHT	(320.f)
+
 enum
 {
 	eCUSTOMER_MAX	= 4,
@@ -38,7 +41,6 @@ enum
 	eANIM_BOMG	= 0,
 	eANIM_CURSOR,
 	eANIM_STAR,
-//	eANIM_COMBO_NUM,
 	eANIM_MAX
 };
 
@@ -61,10 +63,9 @@ extern const char*	gp_soundDataListName;
 //	アニメ
 typedef struct
 {
-	const	char**	ppFrameNameList;
-	int				frameNum;
 	const	char*	pImageFileName;
 	const	char*	pListFileName;
+	float	fps;
 } ANIM_DATA_ST;
 
 extern	ANIM_DATA_ST	ga_animDataList[eANIM_MAX];

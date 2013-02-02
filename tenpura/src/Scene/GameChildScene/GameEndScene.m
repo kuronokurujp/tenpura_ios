@@ -70,8 +70,7 @@
 	
 	//	ロゴ表示イベント
 	{
-		CGSize	winSize	= [CCDirector sharedDirector].winSize;
-		CGPoint	pos	= ccp(winSize.width * 0.5f, winSize.height * 0.5f);
+		CGPoint	pos	= ccp(SCREEN_SIZE_WIDTH * 0.5f, SCREEN_SIZE_HEIGHT * 0.5f);
 		[mp_endLogoSp setVisible:YES];
 		[mp_endLogoSp setPosition:pos];
 	
