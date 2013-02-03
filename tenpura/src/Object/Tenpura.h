@@ -15,7 +15,10 @@
 */
 @protocol TenpuraProtocol<NSObject>
 
--(void)	onDeleteTenpura:(CCNode*)in_pTenpura;
+//	天ぷら爆発
+-(void)	onExpTenpura:(CCNode*)in_pTenpura;
+//	天ぷらをつける
+-(void)	onAddChildTenpura:(CCNode*)in_pTenpura;
 
 @end
 
@@ -26,7 +29,7 @@ typedef enum
 	eTENPURA_STATE_VERYGOOD,	//	最高
 	eTENPURA_STATE_BAD,			//	焦げ
 	eTENPURA_STATE_VERYBAD,		//	丸焦げ
-	eTENPURA_STATE_DEL,			//	消滅
+	eTENPURA_STATE_EXP,			//	爆発
 	eTENPURA_STATE_RESTART,		//	再設定
 	
 	eTENPURA_STATE_MAX,
@@ -42,14 +45,13 @@ typedef enum
 	
 	TENPURA_STATE_ET	m_state;
 	BOOL				mb_lock;
-	BOOL				mb_delete;
 	BOOL				mb_raise;	//	揚げる開始
 	
 	Float32				m_baseSpeedRate;	//	揚げる速度の基本レート
 	Float32				m_raiseSpeedRate;	//	揚げる速度のレート
 	Float32				m_raiseTime;
 
-	UInt32				m_posDataIdx;
+	SInt32				m_posDataIdx;
 	SInt32				m_oldZOrder;
 	CGSize				m_texSize;
 	CGPoint				m_touchPrevPos;
@@ -59,25 +61,28 @@ typedef enum
 @property	(nonatomic, readonly)	TENPURA_STATE_ET state;
 @property	(nonatomic, readonly)	BOOL	bTouch;
 @property	(nonatomic, readonly)	BOOL	bRaise;
-@property	(nonatomic, readonly)	BOOL	bDelete;
-@property	(nonatomic, readonly)	UInt32	posDataIdx;
+@property	(nonatomic, readonly)	SInt32	posDataIdx;
 @property	(nonatomic, readonly)	NETA_DATA_ST data;
 @property	(nonatomic, retain)		id<TenpuraProtocol>	delegate;
 
 //	セットアップ
--(void)	setupToPosIndex:(NETA_DATA_ST)in_data:(const UInt32)in_posDataIdx:(Float32)in_raiseSpeedRate;
+-(void)	setupToPosIndex:(NETA_DATA_ST)in_data:(const SInt32)in_posDataIdx:(Float32)in_raiseSpeedRate;
 -(void)	setupToPos:(NETA_DATA_ST)in_data:(const CGPoint)in_pos:(Float32)in_raiseSpeedRate;
 
+//	開始
+-(void)	start;
+//	終了
 -(void)	end;
+
+//	リセット
+-(void)	reset;
+
+//	食べるアクション
+-(void)	eatAction:(Float32)in_time;
 
 -(void)	setPosOfIndex:(const UInt32)in_posDataIdx;
 //	揚げる速度変更
 -(void)	setRaiseSpeedRate:(Float32)in_rate;
-
-//	揚げる開始
--(void)	start;
-//	リセット
--(void)	reset;
 
 //	タッチロック
 -(void)	lockTouch;

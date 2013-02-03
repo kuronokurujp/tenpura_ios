@@ -14,12 +14,6 @@
 #include "./../Data/DataGlobal.h"
 #import "./../System/Sound/SoundManager.h"
 
-//	アクション一覧
-enum ACTION_LIST_ENUM
-{
-	eACT_TAG_FLAH	= 0,
-};
-
 //	非公開関数
 @interface ActionCustomer (PrivateMedhot)
 
@@ -27,6 +21,8 @@ enum ACTION_LIST_ENUM
 -(void)_endPut:(id)sender;
 
 -(void)_endExit:(id)sender;
+
+-(void)_endEat;
 
 -(void)_endPutNumber:(id)sender;
 
@@ -38,11 +34,18 @@ enum ACTION_LIST_ENUM
 -(CCAction*)	_createPutResultMoneyAction:(SInt32)in_num;
 
 //	食べる処理
--(void)	_eat:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money;
+-(void)	_eat:(Tenpura*)in_pTenpura:(SInt32)in_score:(SInt32)in_money;
 
 @end
 
 @implementation ActionCustomer
+
+//	アクション一覧
+enum ACTION_LIST_ENUM
+{
+	eACT_TAG_FLAH	= 0,
+	eACT_TAG_EAT,
+};
 
 /*
 	@brief	初期化
@@ -150,7 +153,7 @@ enum ACTION_LIST_ENUM
 /*
 	@breif
 */
--(void)endFlash
+-(void)	endFlash
 {
 	if( mb_flash == YES )
 	{
@@ -164,7 +167,7 @@ enum ACTION_LIST_ENUM
 /*
 	@breif
 */
--(void)putResultScore
+-(void)	putResultScore
 {
 	[self _createPutResultScoreAction:mp_customer.money];
 	[self _createPutResultMoneyAction:mp_customer.score];
@@ -173,11 +176,9 @@ enum ACTION_LIST_ENUM
 /*
 	@breif	食べる成功
 */
--(void)eatGood:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money
+-(void)	eatGood:(Tenpura*)in_pTenpura:(SInt32)in_score:(SInt32)in_money
 {
-	[mp_customer stopAllActions];
-
-	[self _eat:in_no:in_score:in_money];
+	[self _eat:in_pTenpura:in_score:in_money];
 	
 	[[SoundManager shared] playSe:@"eat"];
 }
@@ -185,11 +186,9 @@ enum ACTION_LIST_ENUM
 /*
 	@breif	食べる大成功
 */
--(void)eatVeryGood:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money
+-(void)	eatVeryGood:(Tenpura*)in_pTenpura:(SInt32)in_score:(SInt32)in_money
 {
-	[mp_customer stopAllActions];
-
-	[self _eat:in_no:in_score:in_money];
+	[self _eat:in_pTenpura:in_score:in_money];
 
 	[[SoundManager shared] playSe:@"eat"];
 }
@@ -197,11 +196,9 @@ enum ACTION_LIST_ENUM
 /*
 	@breif	食べる失敗
 */
--(void)eatBat:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money
+-(void)	eatBat:(Tenpura*)in_pTenpura:(SInt32)in_score:(SInt32)in_money
 {
-	[mp_customer stopAllActions];
-
-	[self _eat:in_no:in_score:in_money];
+	[self _eat:in_pTenpura:in_score:in_money];
 	
 	[[SoundManager shared] playSe:@"eat"];
 }
@@ -209,11 +206,9 @@ enum ACTION_LIST_ENUM
 /*
 	@breif	食べる大失敗
 */
--(void)eatVeryBat:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money;
+-(void)	eatVeryBat:(Tenpura*)in_pTenpura:(SInt32)in_score:(SInt32)in_money;
 {
-	[mp_customer stopAllActions];
-
-	[self _eat:in_no:in_score:in_money];
+	[self _eat:in_pTenpura:in_score:in_money];
 	
 	[[SoundManager shared] playSe:@"seki"];
 }
@@ -221,16 +216,29 @@ enum ACTION_LIST_ENUM
 /*
 	@brief	怒りアクション
 */
--(void)anger
+-(void)	anger
 {
 	[mp_customer stopAllActions];
 	[[SoundManager shared] playSe:@"seki"];
 }
 
 /*
+	@brief	食べている途中か
+*/
+-(BOOL)	isEatting
+{
+	if( [mp_customer getActionByTag:eACT_TAG_EAT] != nil  )
+	{
+		return YES;
+	}
+	
+	return NO;
+}
+
+/*
 	@breif	出現アクション初期
 */
--(void)_initPut:(id)sender
+-(void)	_initPut:(id)sender
 {
 	mp_customer.bPut	= NO;
 }
@@ -238,7 +246,7 @@ enum ACTION_LIST_ENUM
 /*
 	@brief	出現アクション終了
 */
--(void)_endPut:(id)sender
+-(void)	_endPut:(id)sender
 {
 	Customer*	pCustomer	= mp_customer;
 	pCustomer.bPut	= YES;
@@ -255,7 +263,7 @@ enum ACTION_LIST_ENUM
 /*
 	@brief
 */
--(void)_endExit:(id)sender
+-(void)	_endExit:(id)sender
 {
 	Customer*	pCustomer	= mp_customer;
 	[pCustomer setVisible:NO];
@@ -264,9 +272,27 @@ enum ACTION_LIST_ENUM
 /*
 	@brief
 */
--(void)_endPutNumber:(id)sender
+-(void)	_endPutNumber:(id)sender
 {
 	[sender setVisible:NO];
+}
+
+/*
+	@brief	食べるの終了
+*/
+-(void)	_endEat
+{
+	[self _createPutScoreAction:m_getScore];
+	[self _createPutMoneyAction:m_getMoeny];
+
+	//	食べる天ぷらがないと退場
+	if([mp_customer getEatTenpura] <= 0)
+	{
+		[self exit];
+	}
+	
+	m_getScore	= 0;
+	m_getMoeny	= 0;
 }
 
 /*
@@ -334,19 +360,61 @@ enum ACTION_LIST_ENUM
 /*
 	@brief	食べる処理
 */
--(void)	_eat:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money
+-(void)	_eat:(Tenpura*)in_pTenpura:(SInt32)in_score:(SInt32)in_money
 {
-	//	食べた天ぷらアイコン消滅
-	assert( [mp_customer removeEatIcon:in_no] == YES);
+	NSAssert(in_pTenpura, @"客が食べる天ぷらがない");	
+	[mp_customer stopAllActions];
+
+	//	食べる演出を入れる
+	[mp_customer setScale:1.f];
 	
-	[self _createPutScoreAction:in_score];
-	[self _createPutMoneyAction:in_money];
-	
-	//	食べる天ぷらがないと退場
-	if([mp_customer getEatTenpura] <= 0)
+	Float32	time	= 0.f;
 	{
-		[self exit];
+		Float32	scaleTime	= 0.1f;
+		
+		CCScaleTo*	pScaleUP	= [CCScaleTo actionWithDuration:scaleTime scale:1.2f];
+		CCScaleTo*	pScaleDown	= [CCScaleTo actionWithDuration:scaleTime scale:1.0f];
+		CCSequence*	pScaleSeq	= [CCSequence actions:pScaleUP, pScaleDown, nil];
+
+		Float32	repeatCnt	= 3.f;
+		CCRepeat*	pRepeat	= [CCRepeat actionWithAction:pScaleSeq times:repeatCnt];
+
+		CCCallFunc*	pEndCall	= [CCCallFunc actionWithTarget:self selector:@selector(_endEat)];
+		CCSequence*	pSeq	= [CCSequence actions:pRepeat, pEndCall, nil];
+	
+		pSeq.tag	= eACT_TAG_EAT;
+		[mp_customer runAction:pSeq];
+		
+		time	= scaleTime * 2.f;
+		time	*= repeatCnt;
 	}
+
+	//	天ぷらの消滅アクション
+	{
+		CGPoint	anthorPos	= mp_customer.anchorPoint;
+		if( anthorPos.x != 0.5f )
+		{
+			anthorPos.x	= 0.5f;
+		}
+		if( anthorPos.y != 0.5f )
+		{
+			anthorPos.y	= 0.5f;
+		}
+		CGRect	rect	= mp_customer.charSprite.textureRect;
+		
+		CGPoint	pos	= ccp(rect.size.width * anthorPos.x, rect.size.height * anthorPos.y);
+		[in_pTenpura setPosition:pos];
+		[in_pTenpura eatAction:time];
+		//	天ぷらの要素を客につけ直す
+		[in_pTenpura removeFromParentAndCleanup:NO];
+		[mp_customer addChild:in_pTenpura z:2.f];
+	}
+
+	m_getScore	= in_score;
+	m_getMoeny	= in_money;
+
+	//	食べた天ぷらアイコン消滅
+	assert( [mp_customer removeEatIcon:in_pTenpura.data.no] == YES);	
 }
 
 @end

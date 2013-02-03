@@ -19,7 +19,10 @@
 -(CGRect)	_getTexRect:(SInt32)in_idx;
 
 //	登場演出終了
--(void)	_endPutEvent;
+-(void)	_endPutAction;
+//	消滅演出終了
+-(void)	_endEatAction;
+
 //	揚げる処理
 -(void)	_doNextRaise:(ccTime)delta;
 //	揚げる時間を取得
@@ -40,7 +43,6 @@ enum
 @synthesize state		= m_state;
 @synthesize bTouch		= mb_lock;
 @synthesize bRaise		= mb_raise;
-@synthesize bDelete		= mb_delete;
 @synthesize posDataIdx	= m_posDataIdx;
 @synthesize data		= m_data;
 @synthesize delegate	= m_delegate;
@@ -57,8 +59,7 @@ enum
 		m_delegate		= nil;
 		mb_lock		= NO;
 		mb_raise		= NO;
-		mb_delete		= NO;
-		m_posDataIdx	= 0;
+		m_posDataIdx	= -1;
 		m_raiseSpeedRate	= 0.f;
 		m_baseSpeedRate	= 1.f;
 		m_raiseTime	= 0.f;
@@ -112,7 +113,7 @@ enum
 /*
 	@brief	セットアップ
 */
--(void)	setupToPosIndex:(NETA_DATA_ST)in_data:(const UInt32)in_posDataIdx:(Float32)in_raiseSpeedRate
+-(void)	setupToPosIndex:(NETA_DATA_ST)in_data:(const SInt32)in_posDataIdx:(Float32)in_raiseSpeedRate
 {
 	[self _setup:in_data];
 	
@@ -140,45 +141,6 @@ enum
 }
 
 /*
-	@brief
-*/
--(void)	end
-{
-	[mp_sp setScale:1.f];
-	mb_delete		= NO;
-	mb_raise		= NO;
-	mb_lock		= NO;
-	m_posDataIdx	= 0;
-	m_raiseTime	= 0.f;
-
-	[self removeChildByTag:eCHILD_TAG_ANIM_CURSOR cleanup:YES];
-	[self removeChildByTag:eCHILD_TAG_ANIM_STAR cleanup:YES];
-
-	[self unscheduleAllSelectors];
-	[self setVisible:NO];
-}
-
-/*
-	@brief
-*/
--(void)	setPosOfIndex:(const UInt32)in_posDataIdx
-{
-	DataTenpuraPosList*	pDataTenpuraPosList	= [DataTenpuraPosList shared];
-	TENPURA_POS_ST	tenpuraPosData	= [pDataTenpuraPosList getData:in_posDataIdx];
-	[self setPosition:ccp(tenpuraPosData.x, tenpuraPosData.y)];
-		
-	m_posDataIdx	= in_posDataIdx;
-}
-
-/*
-	@brief	揚げる速度変更;
-*/
--(void)	setRaiseSpeedRate:(Float32)in_rate
-{
-	m_raiseSpeedRate	= in_rate;
-}
-
-/*
 	@brief	揚げる開始
 */
 -(void)	start
@@ -194,7 +156,7 @@ enum
 		Float32	time	= 0.1f;
 		CCScaleTo*	pScaleBy	= [CCScaleTo actionWithDuration:time scale:1.f];
 		CCFadeIn*	pFadeIn		= [CCFadeIn actionWithDuration:time];
-		CCCallFunc*	pEndCall	= [CCCallFunc actionWithTarget:self selector:@selector(_endPutEvent)];
+		CCCallFunc*	pEndCall	= [CCCallFunc actionWithTarget:self selector:@selector(_endPutAction)];
 		CCSequence*	pSeq		= [CCSequence actionOne:pScaleBy two:pEndCall];
 		
 		[mp_sp runAction:pSeq];
@@ -203,6 +165,24 @@ enum
 	
 	[self setVisible:YES];
 	mb_raise	= YES;
+}
+
+/*
+	@brief
+*/
+-(void)	end
+{
+	[mp_sp setScale:1.f];
+	mb_raise		= NO;
+	mb_lock		= NO;
+	m_posDataIdx	= -1;
+	m_raiseTime	= 0.f;
+
+	[self removeChildByTag:eCHILD_TAG_ANIM_CURSOR cleanup:YES];
+	[self removeChildByTag:eCHILD_TAG_ANIM_STAR cleanup:YES];
+
+	[self unscheduleAllSelectors];
+	[self setVisible:NO];
 }
 
 /*
@@ -223,6 +203,44 @@ enum
 	[self removeChildByTag:eCHILD_TAG_ANIM_STAR cleanup:YES];
 
 	[mp_sp setTextureRect:[self _getTexRect:(SInt32)m_state]];
+}
+
+//	食べるアクション
+-(void)	eatAction:(Float32)in_time
+{
+	NSAssert(mb_raise == YES, @"天ぷらをあげていない");
+
+	DataTenpuraPosList*	pDataTenpuraPosList	= [DataTenpuraPosList shared];
+	[pDataTenpuraPosList setUseFlg:NO :m_posDataIdx];
+	m_posDataIdx	= -1;
+
+	mb_lock	= YES;
+	[mp_sp setScale:0.5f];
+	
+	CCScaleTo*	pScale	= [CCScaleTo actionWithDuration:in_time scale:0.1];
+	CCCallFunc*	pEndCall	= [CCCallFunc actionWithTarget:self selector:@selector(_endEatAction)];
+	CCSequence*	pSeq	= [CCSequence actions:pScale, pEndCall, nil];
+	[mp_sp runAction:pSeq];
+}
+
+/*
+	@brief
+*/
+-(void)	setPosOfIndex:(const UInt32)in_posDataIdx
+{
+	DataTenpuraPosList*	pDataTenpuraPosList	= [DataTenpuraPosList shared];
+	TENPURA_POS_ST	tenpuraPosData	= [pDataTenpuraPosList getData:in_posDataIdx];
+	[self setPosition:ccp(tenpuraPosData.x, tenpuraPosData.y)];
+		
+	m_posDataIdx	= in_posDataIdx;
+}
+
+/*
+	@brief	揚げる速度変更;
+*/
+-(void)	setRaiseSpeedRate:(Float32)in_rate
+{
+	m_raiseSpeedRate	= in_rate;
 }
 
 /*
@@ -319,9 +337,24 @@ enum
 /*
 	@brief	登場演出終了
 */
--(void)	_endPutEvent
+-(void)	_endPutAction
 {
 	mb_lock	= NO;
+}
+
+/*
+	@brief	消滅演出終了
+*/
+-(void)	_endEatAction
+{
+	mb_lock	= NO;
+	if( m_delegate != nil )
+	{
+		if( [m_delegate respondsToSelector:@selector(onAddChildTenpura:)] )
+		{
+			[m_delegate onAddChildTenpura:self];
+		}
+	}
 }
 
 /*
@@ -389,13 +422,13 @@ enum
 
 				break;
 			}
-			case eTENPURA_STATE_DEL:	//	消滅
+			case eTENPURA_STATE_EXP:	//	爆発
 			{
 				if( m_delegate != nil )
 				{
-					if( [m_delegate respondsToSelector:@selector(onDeleteTenpura:)] )
+					if( [m_delegate respondsToSelector:@selector(onExpTenpura:)] )
 					{
-						[m_delegate onDeleteTenpura:self];
+						[m_delegate onExpTenpura:self];
 					}
 				}
 				
@@ -423,7 +456,6 @@ enum
 		mp_sp	= nil;
 	}
 	
-	mb_delete		= NO;
 	mb_lock		= NO;
 	mb_raise		= NO;
 
@@ -466,13 +498,9 @@ enum
 			time	= 1.f / raiseSpeedRate;
 			break;
 		}
-		case eTENPURA_STATE_DEL:	//	消滅
+		case eTENPURA_STATE_EXP:	//	爆発
 		{
-			if( mb_delete == NO )
-			{
-				time	= 1.f;
-			}
-
+			time	= 1.f;
 			break;
 		}
 	}

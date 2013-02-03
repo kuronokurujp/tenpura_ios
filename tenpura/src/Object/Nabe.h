@@ -27,12 +27,12 @@
 
 //	天ぷら追加
 -(Tenpura*)	addTenpura:(NETA_DATA_ST)in_data:(Float32)in_raiseSpeedRate;
-//	追加した天ぷら削除
--(void)	removeTenpura:(Tenpura*)in_pTenpura;
 //	追加天ぷらすべて削除
--(void)	allRemoveTenpura;
-//	配置した天ぷらが消滅時に呼ばれる
--(void)	onDeleteTenpura:(CCNode *)in_pTenpura;
+-(void)	allCleanTenpura;
+//	配置した天ぷらが爆発
+-(void)	onExpTenpura:(CCNode *)in_pTenpura;
+//	天ぷらをつける
+-(void)	onAddChildTenpura:(CCNode*)in_pTenpura;
 //	揚げる天ぷらの揚げるスピートレートを変更
 -(void)	setRaiseSpeedRate:(Float32)in_rate;
 

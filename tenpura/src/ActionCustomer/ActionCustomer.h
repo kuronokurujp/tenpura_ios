@@ -11,6 +11,7 @@
 #import "../Data/DataNetaList.h"
 
 @class Customer;
+@class Tenpura;
 @class TenpuraIcon;
 
 /*
@@ -21,6 +22,9 @@
 	Customer*	mp_customer;
 	CCLabelTTF*	mp_scoreLabel;
 	CCLabelTTF*	mp_moneyLabel;
+	
+	SInt32	m_getScore;
+	SInt32	m_getMoeny;
 	
 	BOOL	mb_SettingEat;
 	BOOL	mb_flash;
@@ -43,12 +47,14 @@
 -(void)	putResultScore;
 
 //	食べた時のアクション
--(void)eatGood:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money;
--(void)eatVeryGood:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money;
--(void)eatBat:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money;
--(void)eatVeryBat:(const SInt32)in_no:(SInt32)in_score:(SInt32)in_money;
+-(void)eatGood:(Tenpura*)in_pTenpura:(SInt32)in_score:(SInt32)in_money;
+-(void)eatVeryGood:(Tenpura*)in_pTenpura:(SInt32)in_score:(SInt32)in_money;
+-(void)eatBat:(Tenpura*)in_pTenpura:(SInt32)in_score:(SInt32)in_money;
+-(void)eatVeryBat:(Tenpura*)in_pTenpura:(SInt32)in_score:(SInt32)in_money;
 
 //	違う食べ物を与えたときの怒りアクション
 -(void)anger;
+
+-(BOOL)	isEatting;
 
 @end

@@ -66,7 +66,7 @@
 	GameScene*	pGameScene	= (GameScene*)[self parent];
 	
 	//	天ぷらを消滅
-	[pGameScene->mp_nabe allRemoveTenpura];
+	[pGameScene->mp_nabe allCleanTenpura];
 	
 	//	ロゴ表示イベント
 	{

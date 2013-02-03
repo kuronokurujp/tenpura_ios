@@ -12,6 +12,13 @@
 #import "./../Data/DataGlobal.h"
 #import "./../System/Anim/AnimManager.h"
 
+@interface Nabe (PrivateMethod)
+
+//	追加した天ぷら削除
+-(void)	_cleanTenpura:(Tenpura*)in_pTenpura:(BOOL)in_bCleanUp;
+
+@end
+
 @implementation Nabe
 
 //	定数定義
@@ -127,27 +134,9 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 }
 
 /*
-	@brief	天ぷら削除
-*/
--(void)	removeTenpura:(Tenpura*)in_pTenpura
-{
-	if( ( in_pTenpura == nil ) || ( in_pTenpura.bRaise == NO ) )
-	{
-		return;
-	}
-
-	//	使用した座標データを未使用状態に
-	DataTenpuraPosList*	pDataTenpuraPosList	= [DataTenpuraPosList shared];
-	[pDataTenpuraPosList setUseFlg:NO :in_pTenpura.posDataIdx];
-
-	[in_pTenpura end];
-	m_tenpuraZOrder -= 1;
-}
-
-/*
 	@brief	配置した天ぷらをすべて外す
 */
--(void)	allRemoveTenpura
+-(void)	allCleanTenpura
 {
 	m_tenpuraZOrder	= s_startTenpuraZOrder;
 
@@ -158,15 +147,15 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 		if( [pNode isKindOfClass:[Tenpura class]] == YES )
 		{
 			pTenpura	= (Tenpura*)pNode;
-			[pTenpura end];
+			[self _cleanTenpura:pTenpura:YES];
 		}
 	}
 }
 
 /*
-	@brief	配置した天ぷらが消滅時に呼ばれる
+	@brief	配置した天ぷらが爆発
 */
--(void)	onDeleteTenpura:(CCNode *)in_pTenpura
+-(void)	onExpTenpura:(CCNode *)in_pTenpura
 {
 	//	爆発エフェクト
 	AnimManager*	pEffManager	= [AnimManager shared];
@@ -176,6 +165,17 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 		[pEff setPosition:in_pTenpura.position];
 		[self addChild:pEff z:20];
 	}
+}
+
+/*
+	@brief	天ぷらをつける
+*/
+-(void)	onAddChildTenpura:(CCNode*)in_pTenpura;
+{
+	NSAssert(in_pTenpura, @"天ぷらがない");
+	[self _cleanTenpura:(Tenpura*)in_pTenpura :YES];
+	[in_pTenpura removeFromParentAndCleanup:NO];
+	[self addChild:in_pTenpura];
 }
 
 /*
@@ -234,6 +234,34 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 -(CGRect)	boundingBox
 {
 	return mp_sp.boundingBox;
+}
+
+/*
+	@brief	天ぷら削除
+*/
+-(void)	_cleanTenpura:(Tenpura*)in_pTenpura:(BOOL)in_bCleanUp
+{
+	if( in_pTenpura == nil )
+	{
+		return;
+	}
+
+	//	使用した座標データを未使用状態に
+	if( in_pTenpura.posDataIdx != -1 )
+	{
+		DataTenpuraPosList*	pDataTenpuraPosList	= [DataTenpuraPosList shared];
+		[pDataTenpuraPosList setUseFlg:NO :in_pTenpura.posDataIdx];
+	}
+
+	if( in_bCleanUp == YES )
+	{
+		if( in_pTenpura.bRaise == YES )
+		{
+			m_tenpuraZOrder -= 1;
+		}
+
+		[in_pTenpura end];
+	}
 }
 
 #ifdef DEBUG

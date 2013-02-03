@@ -29,6 +29,9 @@
 -(void)	_updateFever:(ccTime)in_time;
 -(void)	_end:(ccTime)in_time;
 
+//	天ぷらを客に投げる
+-(BOOL)	_throwTenpuraToCutomer:(Customer*)in_pCustomer:(Tenpura*)in_pTenpura;
+
 @end
 
 @implementation GameInScene
@@ -260,7 +263,7 @@ enum
 -(void)	_timer:(ccTime)in_time;
 
 //	客がネタを食べるかどうか
--(BOOL)	_eatCustomer:(Customer*)in_pCustomer:(TENPURA_STATE_ET)in_tenpuraState:(NETA_DATA_ST*)in_pData;
+-(BOOL)	_throwTenpuraToCutomer:(Customer*)in_pCustomer:(TENPURA_STATE_ET)in_tenpuraState:(NETA_DATA_ST*)in_pData;
 //	ネタが客とヒットしているか
 -(Customer*)	_isHitCustomer:(CGRect)in_rect;
 -(void)	_endTouch;
@@ -451,12 +454,10 @@ enum
 		pCustomer	= [self _isHitCustomer:[mp_touchTenpura boundingBox]];
 		if( pCustomer != nil )
 		{
-			NETA_DATA_ST	data	= mp_touchTenpura.data;
-
 			//	ヒット
 			bHitCustomer	= YES;
 			//	天ぷらを消して客のアクションを決める
-			bEatTenpura	= [self _eatCustomer:pCustomer:mp_touchTenpura.state:&data];
+			bEatTenpura	= [self _throwTenpuraToCutomer:pCustomer:mp_touchTenpura];
 			if( bEatTenpura == YES )
 			{
 				switch ((SInt32)mp_touchTenpura.state)
@@ -523,13 +524,13 @@ enum
 			[pCustomer.act endFlash];
 		}
 
-		BOOL	bRemoveTenpura		= NO;
+		BOOL	bcleanTenpura		= NO;
 		BOOL	bNewPostionTenpura	= NO;
 		CGPoint	nowTenpuraPos	= mp_touchTenpura.position;
 		if( ( bHitCustomer == YES ) && ( bEatTenpura == YES ) )
 		{
 			//	食べるのに成功
-			bRemoveTenpura	= YES;
+			bcleanTenpura	= YES;
 		}
 		else if( CGRectContainsRect([pGameScene->mp_nabe boundingBox], [mp_touchTenpura boundingBox]) )
 		{
@@ -537,15 +538,15 @@ enum
 			bNewPostionTenpura	= YES;
 		}
 
-		//	タッチ前の位置に設定しているので注意！
-		[mp_touchTenpura unLockTouch];
-
-		if( bRemoveTenpura == YES )
+		if( bcleanTenpura == YES )
 		{
-			[pGameScene->mp_nabe removeTenpura:mp_touchTenpura];
+//			[pGameScene->mp_nabe cleanTenpura:mp_touchTenpura];
 		}
 		else if( bNewPostionTenpura == YES )
 		{
+			//	タッチ前の位置に設定しているので注意！
+			[mp_touchTenpura unLockTouch];
+
 			//	鍋枠内であれば現在を位置に変更
 			[mp_touchTenpura setPosition:nowTenpuraPos];
 		}
@@ -575,15 +576,20 @@ enum
 	@return	食べたかどうか
 	@note	取得スコア/金額の反映させる
 */
--(BOOL)	_eatCustomer:(Customer*)in_pCustomer:(TENPURA_STATE_ET)in_tenpuraState:(NETA_DATA_ST*)in_pData
+-(BOOL)	_throwTenpuraToCutomer:(Customer*)in_pCustomer:(Tenpura*)in_pTenpura
 {
-	if( (in_pData == nil) || in_pCustomer == nil )
+	if( (in_pTenpura == nil) || in_pCustomer == nil )
 	{
 		return NO;
 	}
 	
 	GameScene*	pGameScene	= mp_gameScene;
 	if( pGameScene == nil )
+	{
+		return NO;
+	}
+	
+	if( [in_pCustomer.act isEatting] == YES )
 	{
 		return NO;
 	}
@@ -594,15 +600,16 @@ enum
 	BOOL	bEat		= NO;
 	
 	//	客が欲しい天ぷらでなければ客がおこって終了
-	if( [in_pCustomer isEatTenpura:in_pData->no] == NO )
+	if( [in_pCustomer isEatTenpura:in_pTenpura.data.no] == NO )
 	{
 		[in_pCustomer.act anger];
 		return	bEat;
 	}
 
+	TENPURA_STATE_ET	tenpuraState	= in_pTenpura.state;
 	bEat	= YES;
-	addScoreNum	= in_pData->aStatusList[in_tenpuraState].score;
-	addMoneyNum	= in_pData->aStatusList[in_tenpuraState].money;
+	addScoreNum	= in_pTenpura.data.aStatusList[tenpuraState].score;
+	addMoneyNum	= in_pTenpura.data.aStatusList[tenpuraState].money;
 	
 	if( addMoneyNum > 0 )
 	{
@@ -614,9 +621,15 @@ enum
 		addScoreNum	*=	pGameScene->m_scoreRate;
 	}
 	
+	if( mb_fever == YES )
+	{
+		addMoneyNum	*= 2;
+		addScoreNum	*= 2;
+	}
+
 	{
 		//	食べたい天ぷらがあるかチェック
-		switch( (SInt32)in_tenpuraState )
+		switch( (SInt32)tenpuraState )
 		{
 			default:
 			{
@@ -627,44 +640,38 @@ enum
 			//	揚げてない
 			case eTENPURA_STATE_NOT:
 			{
-				[in_pCustomer.act eatVeryBat:in_pData->no:addScoreNum:addMoneyNum];
+				[in_pCustomer.act eatVeryBat:in_pTenpura:addScoreNum:addMoneyNum];
 				break;
 			}
 			//　ちょうど良い
 			case eTENPURA_STATE_GOOD:
 			{
-				[in_pCustomer.act eatGood:in_pData->no:addScoreNum:addMoneyNum];
+				[in_pCustomer.act eatGood:in_pTenpura:addScoreNum:addMoneyNum];
 				break;
 			}
 			//	最高
 			case eTENPURA_STATE_VERYGOOD:
 			{
-				[in_pCustomer.act eatVeryGood:in_pData->no:addScoreNum:addMoneyNum];
+				[in_pCustomer.act eatVeryGood:in_pTenpura:addScoreNum:addMoneyNum];
 			
 				break;
 			}
 			//	焦げ
 			case eTENPURA_STATE_BAD:
 			{
-				[in_pCustomer.act eatBat:in_pData->no:addScoreNum:addMoneyNum];
+				[in_pCustomer.act eatBat:in_pTenpura:addScoreNum:addMoneyNum];
 				
 				break;
 			}
 			//	丸焦げ
 			case eTENPURA_STATE_VERYBAD:
 			{
-				[in_pCustomer.act eatVeryBat:in_pData->no:addScoreNum:addMoneyNum];
+				[in_pCustomer.act eatVeryBat:in_pTenpura:addScoreNum:addMoneyNum];
 				break;
 			}
 		}
 	}
-	
-	if( mb_fever == YES )
-	{
-		addMoneyNum	*= 2;
-		addScoreNum	*= 2;
-	}
-	
+
 	//	スコア反映
 	[self _setScore:in_pCustomer:addScoreNum];
 

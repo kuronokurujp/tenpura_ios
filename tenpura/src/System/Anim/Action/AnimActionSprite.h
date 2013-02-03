@@ -11,6 +11,7 @@
 
 /*
 	@brief	アニメデータ
+	@note	アニメのフレーム名には必ず再生させる順序の数を設定する
 */
 @interface AnimData : NSObject
 {
