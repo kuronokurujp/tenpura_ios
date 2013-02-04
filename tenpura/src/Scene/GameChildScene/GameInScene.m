@@ -550,6 +550,11 @@ enum
 			//	鍋枠内であれば現在を位置に変更
 			[mp_touchTenpura setPosition:nowTenpuraPos];
 		}
+		else
+		{
+			//	タッチ前の位置に設定しているので注意！
+			[mp_touchTenpura unLockTouch];
+		}
 
 		mp_touchTenpura	= nil;
 	}
