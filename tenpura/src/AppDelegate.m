@@ -126,7 +126,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
 	//	広告ビュー作成
 	{
 		mp_bannerViewCtrl	= [[BannerViewController alloc] initWithID:[DataBaseText getString:73]];
-		[mp_bannerViewCtrl setBannerID:gp_admobBannerID];
+//		[mp_bannerViewCtrl setBannerID:gp_admobBannerID];
 		[mp_bannerViewCtrl setBannerPos:ccp(ga_bannerPos[0], ga_bannerPos[1])];
 		mp_bannerViewCtrl.requestTime	= g_bannerRequestTimeSecVal;
 	}

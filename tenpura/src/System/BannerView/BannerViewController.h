@@ -7,36 +7,36 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "./../../Admob/GADBannerView.h"
-#import "./../../Admob/GADBannerViewDelegate.h"
+#import "./../../AdWhirl/AdWhirlView.h"
+#import "./../../AdWhirl/AdWhirlDelegateProtocol.h"
 
 /*
-	@note	Admobの広告には二つある
-			１：アプリ内で広告を表示するケース
-				さらに別アプリに飛ぶことができる
-			２：別アプリを起動するケース
+	@note	AdWhirl
+			Web側で多数の広告対応ができる
 			
-			１の対処で広告を開いたらアプリ内の動きを止める必要がある。
-			さらに１から２に変異するケースもある。
+			現在対応している広告
+				Admob
 */
 @interface BannerViewController : UIViewController
 <
-	GADBannerViewDelegate
+	AdWhirlDelegate
 >
 {
 @private
-	GADBannerView*	mp_bannerView;
+	AdWhirlView*	mp_bannerView;
 	NSTimer*		mp_timer;
+	CGRect			m_rect;
+	NSString*		mp_keyId;
 	BOOL			mb_stopAnim;
 	float			m_requestTimeSecVal;
 }
 
 @property	(nonatomic, readonly)BOOL	bStopAnim;
 @property	(nonatomic, assign, setter = _setBannerRequestTimeSecVal: )float requestTime;
+@property	(nonatomic, retain)AdWhirlView*	pAwView;
 
 //	関数
 -(id)	initWithID:(NSString*)in_pIdName;
 -(void)	setBannerPos:(CGPoint)in_pos;
--(void)	setBannerID:(const char*)in_pName;
 
 @end

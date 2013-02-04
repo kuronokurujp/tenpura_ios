@@ -9,7 +9,6 @@
 #import "BannerViewController.h"
 #import "cocos2d.h"
 #import "AppDelegate.h"
-#import "./../../Admob/GADRequest.h"
 
 @interface BannerViewController (PrivateMethod)
 
@@ -23,12 +22,13 @@
 //	ゲーム内の動作停止させるかどうか
 @synthesize bStopAnim	= mb_stopAnim;
 @synthesize requestTime;
+@synthesize pAwView	= mp_bannerView;
 
 -(id)	initWithID:(NSString*)in_pIdName
 {
-	mp_bannerView.adUnitID	= in_pIdName;
 	if( self = [super init] )
 	{
+		mp_keyId	= [in_pIdName retain];
 	}
 	
 	return self;
@@ -42,14 +42,7 @@
 		mp_bannerView	= nil;
 		mb_stopAnim	= NO;
 		m_requestTimeSecVal	= 10.f;
-		
-		CGRect	bannerRect	= CGRectMake(
-										0,
-										0,
-										GAD_SIZE_320x50.width,
-										GAD_SIZE_320x50.height);
-		mp_bannerView	= [[GADBannerView alloc] initWithFrame:bannerRect];
-//		mp_bannerView.adUnitID	= @"a150a203dfecc8a";
+		m_rect	= CGRectMake( 0, 0, 320, 50);
     }
 
     return self;
@@ -60,6 +53,9 @@
 */
 -(void)	dealloc
 {
+	[mp_keyId release];
+	mp_keyId	= nil;
+
 	if( [mp_bannerView isDescendantOfView:self.view] == YES )
 	{
 		[mp_bannerView removeFromSuperview];
@@ -77,20 +73,12 @@
 {
     [super viewDidLoad];
 	
-	//	親のビューを呼ばないとサイト以降しない
-	AppController*	pApp	= (AppController*)[UIApplication sharedApplication].delegate;
-	mp_bannerView.rootViewController	= pApp.navController;
-	
+	mp_bannerView	= [AdWhirlView requestAdWhirlViewWithDelegate:self];
 	mp_bannerView.delegate	= self;
 	[self.view addSubview:mp_bannerView];
 	
-	GADRequest*	pRp	= [GADRequest request];
-#ifdef DEBUG
-	pRp.testing	= YES;
-	pRp.testDevices	= [NSArray arrayWithObjects:GAD_SIMULATOR_ID, nil];
-#endif
-	[mp_bannerView loadRequest:pRp];
-	
+	mp_bannerView.frame	= m_rect;
+
 	mp_timer	= [NSTimer scheduledTimerWithTimeInterval:m_requestTimeSecVal
 							target:self
 							selector:@selector(_onBannerRequest)
@@ -111,25 +99,18 @@
 	[super viewDidUnload];
 }
 
-/*
-	@brief	Admob広告をアプリ内で表示するケース
-*/
-- (void)adViewWillPresentScreen:(GADBannerView *)adView
+- (NSString *)adWhirlApplicationKey
 {
-    [[CCDirector sharedDirector] stopAnimation];
-    mb_stopAnim = YES;
+	return mp_keyId;
 }
 
 /*
-	@brief	アプリ内で表示した広告を閉じる時
+	@brief
 */
-- (void)adViewWillDismissScreen:(GADBannerView *)adView
+- (UIViewController *)viewControllerForPresentingModalView
 {
-    if (mb_stopAnim)
-	{
-        [[CCDirector sharedDirector] startAnimation];
-        mb_stopAnim = NO;
-    }
+	AppController*	pApp	= (AppController*)[UIApplication sharedApplication].delegate;
+    return pApp.navController;
 }
 
 /*
@@ -137,23 +118,8 @@
 */
 -(void)	setBannerPos:(CGPoint)in_pos
 {
-	CGRect	rect	= mp_bannerView.frame;
-	rect.origin	= in_pos;
-	[mp_bannerView setFrame:rect];
-}
-
-/*
-	@brief	バナーのパブリッシュID
-*/
--(void)	setBannerID:(const char*)in_pName
-{
-	if( in_pName == nil )
-	{
-		return;
-	}
-	
-	NSString*	pIDName	= [NSString stringWithUTF8String:in_pName];
-	[mp_bannerView setAdUnitID:pIDName];
+	m_rect.origin	= in_pos;
+	[mp_bannerView setFrame:m_rect];
 }
 
 /*
