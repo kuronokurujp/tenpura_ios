@@ -11,7 +11,7 @@
 @implementation DataSettingTenpura
 
 @synthesize no	= m_no;
-@synthesize raiseSpeedRate	= m_raiseSpeedRate;
+@synthesize raiseTimeRate	= m_raiseTimeRate;
 
 /*
 	@brief
@@ -21,7 +21,6 @@
 	if( self = [super init] )
 	{
 		m_no	= 0;
-		m_raiseSpeedRate	= 0.f;
 	}
 	
 	return self;
@@ -38,7 +37,7 @@
 	}
 	
 	m_no	= in_pData.no;
-	m_raiseSpeedRate	= in_pData.raiseSpeedRate;
+	m_raiseTimeRate	= in_pData.raiseTimeRate;
 }
 
 @end

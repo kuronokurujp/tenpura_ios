@@ -370,7 +370,7 @@ enum ACTION_LIST_ENUM
 	
 	Float32	time	= 0.f;
 	{
-		Float32	scaleTime	= 0.1f;
+		Float32	scaleTime	= 0.1f * mp_customer.eatTimeRate;
 		
 		CCScaleTo*	pScaleUP	= [CCScaleTo actionWithDuration:scaleTime scale:1.2f];
 		CCScaleTo*	pScaleDown	= [CCScaleTo actionWithDuration:scaleTime scale:1.0f];

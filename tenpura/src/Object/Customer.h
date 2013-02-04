@@ -27,6 +27,7 @@
 	SInt32	m_idx;
 	SInt32	m_money;
 	SInt32	m_score;
+	Float32	m_eatTimeRate;
 }
 
 typedef enum
@@ -44,7 +45,7 @@ typedef enum
 @property	(nonatomic, assign, setter = _addScore: )SInt32 addScore;
 @property	(nonatomic, readonly )SInt32 money;
 @property	(nonatomic, readonly )SInt32 score;
-
+@property	(nonatomic, assign)Float32	eatTimeRate;
 
 //	初期化
 -(id)	initToType:(TYPE_ENUM)in_type:(SInt32)in_idx:(Nabe*)in_pNabe:(CCArray*)in_pSettingTenpuraList;

@@ -164,7 +164,7 @@
 	{
 		GameData*	pGameData	= [[GameData alloc] autorelease];
 		pGameData->mp_netaList	= [pDataSettingTenpura retain];
-		pGameData->mp_itemList	= [pDataSettingItem retain];
+		pGameData->mp_itemNoList	= [pDataSettingItem retain];
 
 		CCScene*	pGameScene	= [GameScene scene:pGameData];
 

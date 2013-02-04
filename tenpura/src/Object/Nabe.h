@@ -33,8 +33,8 @@
 -(void)	onExpTenpura:(CCNode *)in_pTenpura;
 //	天ぷらをつける
 -(void)	onAddChildTenpura:(CCNode*)in_pTenpura;
-//	揚げる天ぷらの揚げるスピートレートを変更
--(void)	setRaiseSpeedRate:(Float32)in_rate;
+//	揚げる天ぷらの揚げる時間レートを変更(すくない値を渡すほど早くなる)
+-(void)	setRaiseTimeRate:(Float32)in_rate;
 
 //	配置した天ぷらもポーズする
 -(void)	pauseSchedulerAndActions;

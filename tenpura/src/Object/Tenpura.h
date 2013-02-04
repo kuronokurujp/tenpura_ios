@@ -47,9 +47,9 @@ typedef enum
 	BOOL				mb_lock;
 	BOOL				mb_raise;	//	揚げる開始
 	
-	Float32				m_baseSpeedRate;	//	揚げる速度の基本レート
-	Float32				m_raiseSpeedRate;	//	揚げる速度のレート
-	Float32				m_raiseTime;
+	Float32				m_baseTimeRate;	//	揚げる速度の基本レート
+	Float32				m_raiseTimeRate;	//	揚げる速度のレート
+	Float32				m_nowRaiseTime;
 
 	SInt32				m_posDataIdx;
 	SInt32				m_oldZOrder;
@@ -82,7 +82,7 @@ typedef enum
 
 -(void)	setPosOfIndex:(const UInt32)in_posDataIdx;
 //	揚げる速度変更
--(void)	setRaiseSpeedRate:(Float32)in_rate;
+-(void)	setRaiseTimeRate:(Float32)in_rate;
 
 //	タッチロック
 -(void)	lockTouch;

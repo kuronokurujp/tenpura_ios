@@ -17,6 +17,7 @@
 #import "./../Data/DataGlobal.h"
 #import "./../Data/DataSettingTenpura.h"
 #import "./../Data/DataTenpuraPosList.h"
+#import "./../Data/DataItemList.h"
 #import "./../System/Anim/AnimManager.h"
 #import "./../System/Sound/SoundManager.h"
 
@@ -124,19 +125,80 @@ enum
 		m_timeVal	= 0.f;
 		m_scoreRate	= 1;
 		m_moneyRate	= 1;
-
-		Float32	raiseSpeedRate	= 1.f;
+		m_combAddTime	= 0.f;
 
 		{
 			DataTenpuraPosList*	pDataTenpuraPosList	= [DataTenpuraPosList shared];
 			[pDataTenpuraPosList clearFlg];
 		}
 
+		Float32	customerEatRate	= 1.f;
+		Float32	raiseTimeRate	= 1.f;
+		
 		//	オプションアイテムによる追加設定
 		{
+			DataItemList*	pItemListInst	= [DataItemList shared];
 			CCNode*	pNode	= nil;
-			CCARRAY_FOREACH(in_pData->mp_itemList, pNode)
+			CCARRAY_FOREACH(in_pData->mp_itemNoList, pNode)
 			{
+				if( [pNode isKindOfClass:[NSNumber class]] )
+				{
+					NSNumber*	pNumber	= (NSNumber*)pNode;
+					//	アイテムNOからオプション設定
+					const ITEM_DATA_ST*	pItem	= [pItemListInst getDataSearchId:[pNumber intValue]];
+					if( pItem != nil )
+					{
+						SInt32	num	= sizeof(pItem->aItemDataNo) / sizeof(pItem->aItemDataNo[0]);
+						for( SInt32 i = 0; i < num; ++i )
+						{
+							switch( pItem->aItemDataNo[i] )
+							{
+								//	金額が２倍
+								case eITEM_IMPACT_MONEY_TWO_RATE:
+								{
+									m_moneyRate *= 2;
+									break;
+								}
+								//	スコアが２倍
+								case eITEM_IMPACT_SCORE_TWO_RATE:
+								{
+									m_scoreRate *= 2;
+									break;
+								}
+								//	揚げる速度が２倍
+								case eITEM_IMPACT_RAISE_TIME_HALF:
+								{
+									raiseTimeRate *= 0.5f;
+									break;
+								}
+								//	コンボタイムに１秒追加
+								case eITEM_IMPACT_COMB_ADD_ONE_TIME:
+								{
+									m_combAddTime	+= 1.f;
+									break;
+								}
+								//	コンボタイムに３秒追加
+								case eITEM_IMPACT_COMB_ADD_THREE_TIME:
+								{
+									m_combAddTime	+= 3.f;
+									break;
+								}
+								//	食べる時間が半分
+								case eITEM_IMPACT_EAT_TIME_HALF:
+								{
+									customerEatRate *= 0.5f;
+									break;
+								}
+								//	食べる時間が3/4
+								case eITEM_IMPACT_EAT_TIME_THREE_FOUR:
+								{
+									customerEatRate	*= (3.f / 4.f);
+									break;
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 
@@ -150,11 +212,11 @@ enum
 				if( [pNode isKindOfClass:[DataSettingTenpura class]] )
 				{
 					DataSettingTenpura*	pDataSettingTenpura	= (DataSettingTenpura*)pNode;
-					pDataSettingTenpura.raiseSpeedRate	= raiseSpeedRate;
+					pDataSettingTenpura.raiseTimeRate	= raiseTimeRate;
 				
 					DataSettingTenpura*	pAddData	= [[[DataSettingTenpura alloc] init] autorelease];
 					[pAddData CopyData:pDataSettingTenpura];
-				
+
 					[mp_settingItemList addObject:pAddData];
 				}
 			}
@@ -238,6 +300,7 @@ enum
 				[pCustomer setPosition:ccp(size.width, ga_initCustomerPos[i][1])];
 				[pCustomer setAnchorPoint:ccp(0,0)];
 				[pCustomer setVisible:NO];
+				pCustomer.eatTimeRate	= customerEatRate;
 
 				[self addChild:pCustomer];
 				[mp_customerArray addObject:pCustomer];

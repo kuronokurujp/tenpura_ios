@@ -179,9 +179,10 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 }
 
 /*
-	@brief	揚げる天ぷらの揚げるスピートレートを変更
+	@brief	揚げる天ぷらの揚げる時間レートを変更
+	@note	すくない値を渡すほど早くなる
 */
--(void)	setRaiseSpeedRate:(Float32)in_rate
+-(void)	setRaiseTimeRate:(Float32)in_rate
 {
 	CCNode*		pNode		= nil;
 	CCARRAY_FOREACH(children_, pNode)
@@ -189,7 +190,7 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 		if( [pNode isKindOfClass:[Tenpura class]] == YES )
 		{
 			Tenpura*	pTenpura	= (Tenpura*)pNode;
-			[pTenpura setRaiseSpeedRate:in_rate];
+			[pTenpura setRaiseTimeRate:in_rate];
 		}
 	}
 }

@@ -24,6 +24,7 @@
 @synthesize idx		= m_idx;
 @synthesize money	= m_money;
 @synthesize score	= m_score;
+@synthesize eatTimeRate	= m_eatTimeRate;
 
 //	食べれる最大数
 enum
@@ -63,6 +64,7 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 		mp_sp	= nil;
 		m_money	= 0;
 		m_score	= 0;
+		m_eatTimeRate	= 1.f;
 
 		mp_nabe	= in_pNabe;
 		mp_settingTenpuraList	= in_pSettingTenpuraList;
@@ -120,7 +122,7 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 		NSAssert( pData, @"ゲーム中に使用する天ぷらデータがない" );
 
 		//	鍋に揚げる天ぷらを通知
-		Tenpura*	pTenpura	= [mp_nabe addTenpura:*pData:pSettingTenpura.raiseSpeedRate];
+		Tenpura*	pTenpura	= [mp_nabe addTenpura:*pData:pSettingTenpura.raiseTimeRate];
 		if( pTenpura != nil )
 		{
 			NSString*	pFileName	= [NSString stringWithFormat:@"cust_%s.png", pData->fileName];

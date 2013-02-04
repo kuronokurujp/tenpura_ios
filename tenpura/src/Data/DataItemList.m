@@ -129,6 +129,16 @@ static DataItemList*	s_pInst	= nil;
 	data.sellMoney	= [(NSNumber*)[in_dataArray objectAtIndex:dataIdx] integerValue];
 	++dataIdx;
 	
+	//	アイテム効果ID
+	{
+		SInt32	num	= sizeof(data.aItemDataNo) / sizeof(data.aItemDataNo[0]);
+		for( SInt32 i = 0; i < num; ++i )
+		{
+			data.aItemDataNo[i]	= [(NSNumber*)[in_dataArray objectAtIndex:dataIdx] integerValue];
+			++dataIdx;
+		}
+	}
+
 	//	データファイル名
 	const char*	pStr	= [[in_dataArray objectAtIndex:dataIdx] UTF8String];
 	memcpy( data.fileName, pStr, [[in_dataArray objectAtIndex:dataIdx] length]);

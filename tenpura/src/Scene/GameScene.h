@@ -27,7 +27,8 @@
 @public
 	//	ネタリスト
 	CCArray*	mp_netaList;
-	CCArray*	mp_itemList;
+	//	設定したアイテムno
+	CCArray*	mp_itemNoList;
 }
 @end
 
@@ -53,6 +54,7 @@
 	CCLabelTTF*	mp_timerPut;
 	CCLabelTTF*	mp_scorePut;
 	Float32	m_timeVal;
+	Float32	m_combAddTime;
 	UInt32	m_scoreRate;
 	UInt32	m_moneyRate;
 

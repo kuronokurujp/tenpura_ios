@@ -60,9 +60,9 @@ enum
 		mb_lock		= NO;
 		mb_raise		= NO;
 		m_posDataIdx	= -1;
-		m_raiseSpeedRate	= 0.f;
-		m_baseSpeedRate	= 1.f;
-		m_raiseTime	= 0.f;
+		m_raiseTimeRate	= 1.f;
+		m_baseTimeRate	= 1.f;
+		m_nowRaiseTime	= 0.f;
 
 		m_state			= eTENPURA_STATE_VERYBAD;
 	}
@@ -86,12 +86,12 @@ enum
 {
 	if( mb_lock == NO )
 	{
-		m_raiseTime	+= delta;
+		m_nowRaiseTime	+= delta;
 		Float32	nextRaiseTime	= [self _getRaiseTime:m_state];
-		if( (0.f <= nextRaiseTime) && ( nextRaiseTime <= m_raiseTime ) )
+		if( (0.f <= nextRaiseTime) && ( nextRaiseTime <= m_nowRaiseTime ) )
 		{
 			[self _doNextRaise:0.f];
-			m_raiseTime	= 0.f;
+			m_nowRaiseTime	= 0.f;
 		}
 	}
 	
@@ -125,7 +125,7 @@ enum
 		
 		m_posDataIdx	= in_posDataIdx;
 	}
-	m_baseSpeedRate	= in_raiseSpeedRate;
+	m_baseTimeRate	= in_raiseSpeedRate;
 }
 
 /*
@@ -137,7 +137,7 @@ enum
 
 	[self setPosition:in_pos];
 	
-	m_raiseSpeedRate	= in_raiseSpeedRate;
+	m_raiseTimeRate	= in_raiseSpeedRate;
 }
 
 /*
@@ -176,10 +176,16 @@ enum
 	mb_raise		= NO;
 	mb_lock		= NO;
 	m_posDataIdx	= -1;
-	m_raiseTime	= 0.f;
+	m_nowRaiseTime	= 0.f;
 
-	[self removeChildByTag:eCHILD_TAG_ANIM_CURSOR cleanup:YES];
-	[self removeChildByTag:eCHILD_TAG_ANIM_STAR cleanup:YES];
+	if( [self getChildByTag:eCHILD_TAG_ANIM_CURSOR] )
+	{
+		[self removeChildByTag:eCHILD_TAG_ANIM_CURSOR cleanup:YES];
+	}
+	if( [self getChildByTag:eCHILD_TAG_ANIM_STAR] )
+	{
+		[self removeChildByTag:eCHILD_TAG_ANIM_STAR cleanup:YES];
+	}
 
 	[self unscheduleAllSelectors];
 	[self setVisible:NO];
@@ -191,7 +197,7 @@ enum
 -(void)	reset
 {
 	mb_lock	= NO;
-	m_raiseTime	= 0.f;
+	m_nowRaiseTime	= 0.f;
 	m_state		= eTENPURA_STATE_NOT;
 	[mp_sp setScale:1.f];
 	
@@ -199,8 +205,14 @@ enum
 	[self unscheduleUpdate];
 	[self scheduleUpdate];
 
-	[self removeChildByTag:eCHILD_TAG_ANIM_CURSOR cleanup:YES];
-	[self removeChildByTag:eCHILD_TAG_ANIM_STAR cleanup:YES];
+	if( [self getChildByTag:eCHILD_TAG_ANIM_CURSOR] )
+	{
+		[self removeChildByTag:eCHILD_TAG_ANIM_CURSOR cleanup:YES];
+	}
+	if( [self getChildByTag:eCHILD_TAG_ANIM_STAR] )
+	{
+		[self removeChildByTag:eCHILD_TAG_ANIM_STAR cleanup:YES];
+	}
 
 	[mp_sp setTextureRect:[self _getTexRect:(SInt32)m_state]];
 }
@@ -238,9 +250,9 @@ enum
 /*
 	@brief	揚げる速度変更;
 */
--(void)	setRaiseSpeedRate:(Float32)in_rate
+-(void)	setRaiseTimeRate:(Float32)in_rate
 {
-	m_raiseSpeedRate	= in_rate;
+	m_raiseTimeRate	= in_rate;
 }
 
 /*
@@ -401,8 +413,14 @@ enum
 			
 			if( pEff == nil )
 			{
-				[self removeChildByTag:eCHILD_TAG_ANIM_CURSOR cleanup:YES];
-				[self removeChildByTag:eCHILD_TAG_ANIM_STAR cleanup:YES];
+				if( [self getChildByTag:eCHILD_TAG_ANIM_CURSOR] )
+				{
+					[self removeChildByTag:eCHILD_TAG_ANIM_CURSOR cleanup:YES];
+				}
+				if( [self getChildByTag:eCHILD_TAG_ANIM_STAR] )
+				{
+					[self removeChildByTag:eCHILD_TAG_ANIM_STAR cleanup:YES];
+				}
 			}
 		}
 
@@ -481,7 +499,7 @@ enum
 */
 -(Float32)	_getRaiseTime:(TENPURA_STATE_ET)in_state
 {
-	Float32	raiseSpeedRate	= (m_baseSpeedRate + m_raiseSpeedRate);
+	Float32	raiseSpeedRate	= (m_baseTimeRate * m_raiseTimeRate);
 	Float32	time	= -1.f;
 	switch ((SInt32)m_state)
 	{
@@ -490,12 +508,12 @@ enum
 		case eTENPURA_STATE_VERYGOOD:	//	最高
 		case eTENPURA_STATE_BAD:		//	焦げ
 		{
-			time	= (m_data.aStatusList[m_state].changeTime / raiseSpeedRate);
+			time	= (m_data.aStatusList[m_state].changeTime * raiseSpeedRate);
 			break;
 		}
 		case eTENPURA_STATE_VERYBAD:		//	丸焦げ
 		{
-			time	= 1.f / raiseSpeedRate;
+			time	= 1.f * raiseSpeedRate;
 			break;
 		}
 		case eTENPURA_STATE_EXP:	//	爆発

@@ -469,7 +469,7 @@ enum
 						if( mp_touchTenpura.state == eTENPURA_STATE_VERYGOOD )
 						{
 							++m_combCnt;
-						
+
 							//	コンボメッセージを出す
 							{
 								CCNode*	pComboMessage	= [self getChildByTag:eNORMAL_SCENE_CHILD_TAG_COMBO_MESSAGE];
@@ -484,7 +484,7 @@ enum
 								[self schedule:@selector(_updateCombo)];
 	
 								[self unschedule:@selector(_exitCombMessage)];
-								[self scheduleOnce:@selector(_exitCombMessage) delay:pGameScene->mp_gameSceneData.combDelTime];
+								[self scheduleOnce:@selector(_exitCombMessage) delay:pGameScene->mp_gameSceneData.combDelTime + pGameScene->m_combAddTime];
 							}
 
 							//	フィーバーを出すか
@@ -620,7 +620,7 @@ enum
 	{
 		addScoreNum	*=	pGameScene->m_scoreRate;
 	}
-	
+
 	if( mb_fever == YES )
 	{
 		addMoneyNum	*= 2;
@@ -843,7 +843,7 @@ enum
 		
 		//	ボーナス設定
 		{
-			[mp_gameScene->mp_nabe setRaiseSpeedRate:2.f];
+			[mp_gameScene->mp_nabe setRaiseTimeRate:0.5f];
 		}
 		
 		//	フィーバーメッセージを出す
@@ -874,7 +874,7 @@ enum
 		[mp_gameScene->mp_fliterColorBG stopAllActions];
 
 		//	ボーナスを消す
-		[mp_gameScene->mp_nabe setRaiseSpeedRate:0.f];
+		[mp_gameScene->mp_nabe setRaiseTimeRate:0.f];
 		mp_gameInNormalScene.bFever	= NO;
 
 		//	フィーバーの後処理
