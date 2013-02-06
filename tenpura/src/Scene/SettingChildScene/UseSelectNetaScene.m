@@ -77,7 +77,7 @@ enum
 	@brief	初期化後に行う必須設定
 	@note	更新前にしないとハングする。
 */
--(void)	setup:(SettingItemBtn*)in_pItemBtn:(CCArray*)in_pUseItemNoList
+-(void)	setup:(SettingItemBtn*)in_pItemBtn :(CCArray*)in_pUseItemNoList
 {
 	NSAssert(in_pItemBtn, @"アイテム設定項目がnil");
 	NSAssert(in_pUseItemNoList, @"設定中のアイテムリストがnil");

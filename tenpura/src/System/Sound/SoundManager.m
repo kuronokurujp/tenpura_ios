@@ -12,7 +12,7 @@
 @interface SoundManager (PrivateMethod)
 
 //	事前読み込み
--(void)	_preLoad:(const UInt32)in_idx:(NSString*)in_pFormatName;
+-(void)	_preLoad:(const UInt32)in_idx :(NSString*)in_pFormatName;
 
 //	再生するサウンド名を取得
 -(NSString*)	_getPlaySoundName:(const UInt32)in_idx;
@@ -238,7 +238,7 @@ static	SoundManager*	sp_inst	= nil;
 /*
 	@brief	事前読み込み
 */
--(void)	_preLoad:(const UInt32)in_idx:(NSString*)in_pFormatName;
+-(void)	_preLoad:(const UInt32)in_idx :(NSString*)in_pFormatName;
 {
 	NSString*	pSoundName	= [self _getPlaySoundName:in_idx];
 	if( pSoundName != nil )

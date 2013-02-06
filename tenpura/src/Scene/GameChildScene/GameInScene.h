@@ -26,7 +26,7 @@
 	GameInFeverScene*	mp_feverScene;
 }
 
--(id)	init:(Float32)in_time:(GameSceneData*)in_pGameSceneData;
+-(id)	init:(Float32)in_time :(GameSceneData*)in_pGameSceneData;
 
 @end
 
@@ -67,7 +67,7 @@
 }
 
 //	開始
--(void)	start:(GameScene*)in_pGameScene:(GameInNormalScene*)in_pGameInNormalScene;
+-(void)	start:(GameScene*)in_pGameScene :(GameInNormalScene*)in_pGameInNormalScene;
 //	終了
 -(void)	end;
 

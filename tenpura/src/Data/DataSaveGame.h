@@ -91,7 +91,7 @@ typedef struct
 -(BOOL)	saveDate;
 
 //	ミッションフラグをたてる
--(void)	saveMissionFlg:(BOOL)in_flg:(UInt32)in_idx;
+-(void)	saveMissionFlg:(BOOL)in_flg :(UInt32)in_idx;
 
 //	ランク設定
 -(void)	saveRank:(char)in_rank;

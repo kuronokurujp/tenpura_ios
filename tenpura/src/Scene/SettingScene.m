@@ -429,7 +429,7 @@
 /*
 	@brief	アイテム項目設定
 */
--(void)settingItem:(SInt32)in_type:(SInt32)in_textId:(SInt32)in_no;
+-(void)settingItem:(SInt32)in_type :(SInt32)in_textId :(SInt32)in_no;
 {
 	[mp_itemName setString:[NSString stringWithUTF8String:[[DataBaseText shared] getText:in_textId]]];
 	m_itemNo	= in_no;

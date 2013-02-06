@@ -10,7 +10,7 @@
 
 @interface DataBaseText (PrivateMethod)
 
--(void)	parse:(DATA_TEXT_ST*)out_pData:(NSArray*)in_dataArray;
+-(void)	parse:(DATA_TEXT_ST*)out_pData :(NSArray*)in_dataArray;
 -(const DATA_TEXT_ST*)getData:(const UInt32)in_no;
 
 @end
@@ -236,7 +236,7 @@ static NSString*	s_pDataBaseTextFileName	= @"textData";
 /*
 	@brief	データ解析
 */
--(void)	parse:(DATA_TEXT_ST*)out_pData:(NSArray*)in_dataArray
+-(void)	parse:(DATA_TEXT_ST*)out_pData :(NSArray*)in_dataArray
 {
 	NSAssert(out_pData != nil, @"設定対象データがない");
 

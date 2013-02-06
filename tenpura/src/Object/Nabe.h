@@ -26,7 +26,7 @@
 //	関数定義
 
 //	天ぷら追加
--(Tenpura*)	addTenpura:(NETA_DATA_ST)in_data:(Float32)in_raiseSpeedRate;
+-(Tenpura*)	addTenpura:(NETA_DATA_ST)in_data :(Float32)in_raiseSpeedRate;
 //	追加天ぷらすべて削除
 -(void)	allCleanTenpura;
 //	配置した天ぷらが爆発

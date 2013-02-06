@@ -40,7 +40,7 @@ struct	MISSION_DATA_ST
 @interface DataMissionList (PriveteMethod)
 
 -(const struct MISSION_DATA_ST*)_getData:(UInt32)in_idx;
--(BOOL)	_parse:(struct MISSION_DATA_ST*)out_pData:(NSArray*)in_dataArray;
+-(BOOL)	_parse:(struct MISSION_DATA_ST*)out_pData :(NSArray*)in_dataArray;
 -(SInt32)	_getNetaTextToNo:(const char*)in_pStr;
 -(UInt32)	_getMissionNoToSaveDataMissionIdx:(UInt32)in_no;
 
@@ -183,7 +183,7 @@ enum
 /*
 	@brief	ミッション成功かどうかフラグ設定
 */
--(void)	setSuccess:(BOOL)in_flg:(UInt32)in_idx
+-(void)	setSuccess:(BOOL)in_flg :(UInt32)in_idx
 {
 	if( in_idx < m_dataNum )
 	{
@@ -279,7 +279,7 @@ enum
 	@param	データ出力/データ設定
 	@return	成功=YES / 失敗=NO
 */
--(BOOL)	_parse:(struct MISSION_DATA_ST*)out_pData:(NSArray*)in_dataArray
+-(BOOL)	_parse:(struct MISSION_DATA_ST*)out_pData :(NSArray*)in_dataArray
 {
 	if( out_pData == nil )
 	{

@@ -146,7 +146,7 @@ static DataTenpuraPosList*	s_pDatTenpuraPosListInst	= nil;
 /*
 	@brief
 */
--(void)setUseFlg:(BOOL)in_flg:(UInt32)in_idx
+-(void)setUseFlg:(BOOL)in_flg :(UInt32)in_idx
 {
 	if( in_idx < m_dataNum )
 	{

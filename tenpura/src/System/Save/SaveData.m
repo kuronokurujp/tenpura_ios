@@ -45,7 +45,7 @@
 */
 -(BOOL)setup:(NSString *)in_pIdName :(SInt32)in_size
 {
-	assert(in_pIdName != @"");
+	assert([in_pIdName isEqualToString:@""] == NO);
 	assert(in_size > 0);
 	
 	BOOL	bFlg	= YES;

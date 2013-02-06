@@ -73,7 +73,7 @@ static	AnimManager*	sp_inst	= nil;
 /*
 	@brief	エフェクト登録
 */
--(CCNode*)	add:(NSString*)in_pName:(AnimData*)in_pData
+-(CCNode*)	add:(NSString*)in_pName :(AnimData*)in_pData
 {
 	id	pChkData	= [mp_dicData objectForKey:in_pName];
 	if( pChkData == nil )

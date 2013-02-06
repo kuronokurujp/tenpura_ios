@@ -27,7 +27,7 @@
 @property	(nonatomic, retain)NSArray*	frameNameList;
 @property	(nonatomic, readonly)UInt32	fps;
 
--(id)	initWithData:(const char*)in_pFileName:(const char*)in_pFileImageName:(const UInt32)in_fps;
+-(id)	initWithData:(const char*)in_pFileName :(const char*)in_pFileImageName :(const UInt32)in_fps;
 @end
 
 @interface AnimActionSprite : CCNode

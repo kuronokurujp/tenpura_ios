@@ -19,7 +19,7 @@
 }
 
 //	必ず最初に呼ぶ
--(BOOL)setup:(NSString*)in_pIdName:(SInt32)in_size;
+-(BOOL)setup:(NSString*)in_pIdName :(SInt32)in_size;
 
 //	ロード
 -(BOOL)load;

@@ -26,7 +26,7 @@
 //	ミッション成功時のメッセージ取得
 -(NSString*)	getSuccessMsg:(UInt32)in_idx;
 //	ミッション成功しているかどうかの設定
--(void)	setSuccess:(BOOL)in_flg:(UInt32)in_idx;
+-(void)	setSuccess:(BOOL)in_flg :(UInt32)in_idx;
 //	ミッションが成功しているかのフラグ取得
 -(BOOL)	isSuccess:(UInt32)in_idx;
 //	ミッション成功しているかとうかのチェック(内部でチェック処理をするので重い)

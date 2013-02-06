@@ -51,7 +51,7 @@
 @property	(nonatomic, readonly)UInt32 itemNo;
 @property	(nonatomic, readonly)SInt32	type;
 
--(void)settingItem:(SInt32)in_type:(SInt32)in_textId:(SInt32)in_no;
+-(void)settingItem:(SInt32)in_type :(SInt32)in_textId :(SInt32)in_no;
 
 @end
 

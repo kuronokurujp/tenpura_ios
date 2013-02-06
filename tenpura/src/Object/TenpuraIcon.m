@@ -16,7 +16,7 @@
 /*
 	@brief	初期化
 */
--(id)	initWithFile:(NSString*)in_pFileName:(SInt32)in_no
+-(id)	initWithFile:(NSString*)in_pFileName :(SInt32)in_no
 {
 	if( self = [super init] )
 	{

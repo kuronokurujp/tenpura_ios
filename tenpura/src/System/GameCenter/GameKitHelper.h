@@ -64,7 +64,7 @@
 //	リーダーボードの１〜１０までのスコア取得送信
 -(void)	retrieveTopTenAllTimeGlobalScores;
 //	アチーブメントのデータ送信
--(void)	reportAchievmentWithID:(NSString*)identifier:(float)percent;
+-(void)	reportAchievmentWithID:(NSString*)identifier :(float)percent;
 
 //	リーダーボード表示
 -(void)	showLeaderboard;

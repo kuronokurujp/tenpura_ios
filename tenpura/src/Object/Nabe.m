@@ -15,7 +15,7 @@
 @interface Nabe (PrivateMethod)
 
 //	追加した天ぷら削除
--(void)	_cleanTenpura:(Tenpura*)in_pTenpura:(BOOL)in_bCleanUp;
+-(void)	_cleanTenpura:(Tenpura*)in_pTenpura :(BOOL)in_bCleanUp;
 
 @end
 
@@ -100,7 +100,7 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 /*
 	@brief	天ぷら追加
 */
--(Tenpura*)	addTenpura:(NETA_DATA_ST)in_data:(Float32)in_raiseSpeedRate
+-(Tenpura*)	addTenpura:(NETA_DATA_ST)in_data :(Float32)in_raiseSpeedRate
 {
 	DataTenpuraPosList*	pDataTenpuraPosList	= [DataTenpuraPosList shared];
 
@@ -240,7 +240,7 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 /*
 	@brief	天ぷら削除
 */
--(void)	_cleanTenpura:(Tenpura*)in_pTenpura:(BOOL)in_bCleanUp
+-(void)	_cleanTenpura:(Tenpura*)in_pTenpura :(BOOL)in_bCleanUp
 {
 	if( in_pTenpura == nil )
 	{

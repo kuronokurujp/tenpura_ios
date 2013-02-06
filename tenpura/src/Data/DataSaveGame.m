@@ -315,7 +315,7 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 	@brief	ミッションフラグをたてる
 	@param	設定するフラグ / 設定するミッションリストidx
 */
--(void)	saveMissionFlg:(BOOL)in_flg:(UInt32)in_idx;
+-(void)	saveMissionFlg:(BOOL)in_flg :(UInt32)in_idx;
 {
 	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
 	if( (pData != nil) && (in_idx < eMISSION_MAX) )

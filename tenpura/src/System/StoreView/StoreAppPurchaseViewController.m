@@ -23,7 +23,7 @@
 /*
 	@brief	初期化
 */
--(id)	initToData:(CGPoint)in_indicatorPos:(CGSize)in_grayViewSize
+-(id)	initToData:(CGPoint)in_indicatorPos :(CGSize)in_grayViewSize
 {
 	if( self = [super init] )
 	{

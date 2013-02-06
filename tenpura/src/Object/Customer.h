@@ -48,7 +48,7 @@ typedef enum
 @property	(nonatomic, assign)Float32	eatTimeRate;
 
 //	初期化
--(id)	initToType:(TYPE_ENUM)in_type:(SInt32)in_idx:(Nabe*)in_pNabe:(CCArray*)in_pSettingTenpuraList;
+-(id)	initToType:(TYPE_ENUM)in_type :(SInt32)in_idx :(Nabe*)in_pNabe :(CCArray*)in_pSettingTenpuraList;
 
 //	食べた天ぷらリスト作成
 -(void)	createEatList;

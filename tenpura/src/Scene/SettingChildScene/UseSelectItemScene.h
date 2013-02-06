@@ -24,6 +24,6 @@
 
 //	セットアップ
 //	※必ず初期化後に呼ぶ（呼ばないとハングする）
--(void)setup:(SettingItemBtn*)in_pItemBtn:(CCArray*)in_pUseItemNoList;
+-(void)setup:(SettingItemBtn*)in_pItemBtn :(CCArray*)in_pUseItemNoList;
 
 @end

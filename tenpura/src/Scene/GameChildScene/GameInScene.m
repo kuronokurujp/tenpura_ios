@@ -30,7 +30,7 @@
 -(void)	_end:(ccTime)in_time;
 
 //	天ぷらを客に投げる
--(BOOL)	_throwTenpuraToCutomer:(Customer*)in_pCustomer:(Tenpura*)in_pTenpura;
+-(BOOL)	_throwTenpuraToCutomer:(Customer*)in_pCustomer :(Tenpura*)in_pTenpura;
 
 @end
 
@@ -49,7 +49,7 @@ enum
 /*
 	@brief
 */
--(id)	init:(Float32)in_time:(GameSceneData*)in_pGameSceneData
+-(id)	init:(Float32)in_time :(GameSceneData*)in_pGameSceneData
 {
 	if( self = [super init] )
 	{
@@ -263,15 +263,15 @@ enum
 -(void)	_timer:(ccTime)in_time;
 
 //	客がネタを食べるかどうか
--(BOOL)	_throwTenpuraToCutomer:(Customer*)in_pCustomer:(TENPURA_STATE_ET)in_tenpuraState:(NETA_DATA_ST*)in_pData;
+-(BOOL)	_throwTenpuraToCutomer:(Customer*)in_pCustomer :(TENPURA_STATE_ET)in_tenpuraState :(NETA_DATA_ST*)in_pData;
 //	ネタが客とヒットしているか
 -(Customer*)	_isHitCustomer:(CGRect)in_rect;
 -(void)	_endTouch;
 
 //	スコア設定
--(void)	_setScore:(Customer*)in_pCustomer:(SInt32)in_num;
+-(void)	_setScore:(Customer*)in_pCustomer :(SInt32)in_num;
 //	金額設定
--(void)	_setMoney:(Customer*)in_pCustomer:(SInt32)in_num;
+-(void)	_setMoney:(Customer*)in_pCustomer :(SInt32)in_num;
 
 //	コンボ終了
 -(void)	_exitCombMessage;
@@ -581,7 +581,7 @@ enum
 	@return	食べたかどうか
 	@note	取得スコア/金額の反映させる
 */
--(BOOL)	_throwTenpuraToCutomer:(Customer*)in_pCustomer:(Tenpura*)in_pTenpura
+-(BOOL)	_throwTenpuraToCutomer:(Customer*)in_pCustomer :(Tenpura*)in_pTenpura
 {
 	if( (in_pTenpura == nil) || in_pCustomer == nil )
 	{
@@ -733,7 +733,7 @@ enum
 	@brief	スコア設定
 	@note	設定した客とゲームに設定
 */
--(void)	_setScore:(Customer*)in_pCustomer:(SInt32)in_num
+-(void)	_setScore:(Customer*)in_pCustomer :(SInt32)in_num
 {
 	in_pCustomer.addScore		= in_num;
 }
@@ -742,7 +742,7 @@ enum
 	@brief	金額設定
 	@note	設定した客とゲームに設定
 */
--(void)	_setMoney:(Customer*)in_pCustomer:(SInt32)in_num
+-(void)	_setMoney:(Customer*)in_pCustomer :(SInt32)in_num
 {
 	in_pCustomer.addMoney	= in_num;
 }
@@ -810,7 +810,7 @@ enum
 /*
 	@brief	開始
 */
--(void)	start:(GameScene*)in_pGameScene:(GameInNormalScene*)in_pGameInNormalScene
+-(void)	start:(GameScene*)in_pGameScene :(GameInNormalScene*)in_pGameInNormalScene
 {
 	mp_gameScene	= in_pGameScene;
 	mp_gameInNormalScene	= in_pGameInNormalScene;

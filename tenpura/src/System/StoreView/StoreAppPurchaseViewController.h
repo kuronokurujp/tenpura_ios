@@ -52,7 +52,7 @@ typedef enum
 @property	(nonatomic, retain)	id<StoreAppPurchaseViewControllerProtocol>	delegate;
 
 //	関数定義
--(id)	initToData:(CGPoint)in_indicatorPos:(CGSize)in_grayViewSize;
+-(id)	initToData:(CGPoint)in_indicatorPos :(CGSize)in_grayViewSize;
 
 //	課金リクエスト
 -(BOOL)	requestPurchase:(NSString*)in_pIdName;

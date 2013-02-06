@@ -18,7 +18,7 @@
 /*
 	@brief
 */
--(id)	initWithData:(const char*)in_pFileName:(const char*)in_pFileImageName:(const UInt32)in_fps;
+-(id)	initWithData:(const char*)in_pFileName :(const char*)in_pFileImageName :(const UInt32)in_fps;
 {
 	if( self = [super init] )
 	{
@@ -63,7 +63,7 @@
 
 @interface AnimActionSprite (PriveteMethod)
 
--(void)	_init:(AnimData*)in_pData:(BOOL)in_bLoop;
+-(void)	_init:(AnimData*)in_pData :(BOOL)in_bLoop;
 -(void)	_endAnim;
 
 @end
@@ -115,7 +115,7 @@
 /*
 	@brief	初期化
 */
--(void)	_init:(AnimData*)in_data:(BOOL)in_bLoop
+-(void)	_init:(AnimData*)in_data :(BOOL)in_bLoop
 {
 	NSAssert(in_data, @"アニメデータがない");
 	{

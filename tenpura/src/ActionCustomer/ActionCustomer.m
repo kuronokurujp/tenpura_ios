@@ -34,7 +34,7 @@
 -(CCAction*)	_createPutResultMoneyAction:(SInt32)in_num;
 
 //	食べる処理
--(void)	_eat:(Tenpura*)in_pTenpura:(SInt32)in_score:(SInt32)in_money;
+-(void)	_eat:(Tenpura*)in_pTenpura :(SInt32)in_score :(SInt32)in_money;
 
 @end
 
@@ -176,7 +176,7 @@ enum ACTION_LIST_ENUM
 /*
 	@breif	食べる成功
 */
--(void)	eatGood:(Tenpura*)in_pTenpura:(SInt32)in_score:(SInt32)in_money
+-(void)	eatGood:(Tenpura*)in_pTenpura :(SInt32)in_score :(SInt32)in_money
 {
 	[self _eat:in_pTenpura:in_score:in_money];
 	
@@ -186,7 +186,7 @@ enum ACTION_LIST_ENUM
 /*
 	@breif	食べる大成功
 */
--(void)	eatVeryGood:(Tenpura*)in_pTenpura:(SInt32)in_score:(SInt32)in_money
+-(void)	eatVeryGood:(Tenpura*)in_pTenpura :(SInt32)in_score :(SInt32)in_money
 {
 	[self _eat:in_pTenpura:in_score:in_money];
 
@@ -196,7 +196,7 @@ enum ACTION_LIST_ENUM
 /*
 	@breif	食べる失敗
 */
--(void)	eatBat:(Tenpura*)in_pTenpura:(SInt32)in_score:(SInt32)in_money
+-(void)	eatBat:(Tenpura*)in_pTenpura :(SInt32)in_score :(SInt32)in_money
 {
 	[self _eat:in_pTenpura:in_score:in_money];
 	
@@ -206,7 +206,7 @@ enum ACTION_LIST_ENUM
 /*
 	@breif	食べる大失敗
 */
--(void)	eatVeryBat:(Tenpura*)in_pTenpura:(SInt32)in_score:(SInt32)in_money;
+-(void)	eatVeryBat:(Tenpura*)in_pTenpura :(SInt32)in_score :(SInt32)in_money;
 {
 	[self _eat:in_pTenpura:in_score:in_money];
 	
@@ -360,7 +360,7 @@ enum ACTION_LIST_ENUM
 /*
 	@brief	食べる処理
 */
--(void)	_eat:(Tenpura*)in_pTenpura:(SInt32)in_score:(SInt32)in_money
+-(void)	_eat:(Tenpura*)in_pTenpura :(SInt32)in_score :(SInt32)in_money
 {
 	NSAssert(in_pTenpura, @"客が食べる天ぷらがない");	
 	[mp_customer stopAllActions];

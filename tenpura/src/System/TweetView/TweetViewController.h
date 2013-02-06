@@ -10,9 +10,13 @@
 
 @interface TweetViewController : UIViewController<UIWebViewDelegate>
 {
-    UIWebView *tweetWebView;
+@private
+    UIWebView *m_pTweetWebView;
+	NSString*	mp_retBtnText;
+	NSString*	mp_retBtnImageFileName;
 }
 
-- (void)pressBackBtn:(id)sender;
-- (void)startTweetViewWithTweetText:(NSString*)tweetText:(NSString*)in_pSearchURL;
+- (id)initToSetup:(NSString*)in_pRetBtnText :(NSString*)in_pRetImageFileName;
+
+- (void)startTweetViewWithTweetText:(NSString*)tweetText :(NSString*)in_pSearchURL;
 @end

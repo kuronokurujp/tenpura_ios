@@ -260,7 +260,7 @@ static GameKitHelper*	s_pGameKitHelperInst	= nil;
 /*
 	@brief	アチーブメントのデータ送信
 */
--(void)	reportAchievmentWithID:(NSString*)identifier:(float)percent
+-(void)	reportAchievmentWithID:(NSString*)identifier :(float)percent
 {
 	GKLocalPlayer*	pLocalPlayer	= [GKLocalPlayer localPlayer];
 	if( ( mb_isGameCenterAvaliable == NO ) || ( pLocalPlayer.authenticated == NO ) )

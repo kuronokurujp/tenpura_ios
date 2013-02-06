@@ -113,7 +113,7 @@ enum
 /*
 	@brief	セットアップ
 */
--(void)	setupToPosIndex:(NETA_DATA_ST)in_data:(const SInt32)in_posDataIdx:(Float32)in_raiseSpeedRate
+-(void)	setupToPosIndex:(NETA_DATA_ST)in_data :(const SInt32)in_posDataIdx :(Float32)in_raiseSpeedRate
 {
 	[self _setup:in_data];
 	
@@ -131,7 +131,7 @@ enum
 /*
 	@brief
 */
--(void)	setupToPos:(NETA_DATA_ST)in_data:(const CGPoint)in_pos:(Float32)in_raiseSpeedRate
+-(void)	setupToPos:(NETA_DATA_ST)in_data :(const CGPoint)in_pos :(Float32)in_raiseSpeedRate
 {
 	[self _setup:in_data];
 

@@ -47,10 +47,10 @@
 -(void)	putResultScore;
 
 //	食べた時のアクション
--(void)eatGood:(Tenpura*)in_pTenpura:(SInt32)in_score:(SInt32)in_money;
--(void)eatVeryGood:(Tenpura*)in_pTenpura:(SInt32)in_score:(SInt32)in_money;
--(void)eatBat:(Tenpura*)in_pTenpura:(SInt32)in_score:(SInt32)in_money;
--(void)eatVeryBat:(Tenpura*)in_pTenpura:(SInt32)in_score:(SInt32)in_money;
+-(void)eatGood:(Tenpura*)in_pTenpura :(SInt32)in_score :(SInt32)in_money;
+-(void)eatVeryGood:(Tenpura*)in_pTenpura :(SInt32)in_score :(SInt32)in_money;
+-(void)eatBat:(Tenpura*)in_pTenpura :(SInt32)in_score :(SInt32)in_money;
+-(void)eatVeryBat:(Tenpura*)in_pTenpura :(SInt32)in_score :(SInt32)in_money;
 
 //	違う食べ物を与えたときの怒りアクション
 -(void)anger;

@@ -19,7 +19,7 @@
 @property	(nonatomic, readonly)SInt32 no;
 
 //	関数
--(id)	initWithFile:(NSString*)in_pFileName:(SInt32)in_no;
+-(id)	initWithFile:(NSString*)in_pFileName :(SInt32)in_no;
 
 
 @end

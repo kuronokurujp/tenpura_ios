@@ -21,7 +21,7 @@
 +(void)	end;
 
 //	エフェクト登録
--(CCNode*)	add:(NSString*)in_pName:(AnimData*)in_pData;
+-(CCNode*)	add:(NSString*)in_pName :(AnimData*)in_pData;
 
 //	エフェクトバッチ作成
 -(CCNode*)	createBath:(const NSString*)in_pName;

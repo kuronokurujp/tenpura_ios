@@ -66,8 +66,8 @@ typedef enum
 @property	(nonatomic, retain)		id<TenpuraProtocol>	delegate;
 
 //	セットアップ
--(void)	setupToPosIndex:(NETA_DATA_ST)in_data:(const SInt32)in_posDataIdx:(Float32)in_raiseSpeedRate;
--(void)	setupToPos:(NETA_DATA_ST)in_data:(const CGPoint)in_pos:(Float32)in_raiseSpeedRate;
+-(void)	setupToPosIndex:(NETA_DATA_ST)in_data :(const SInt32)in_posDataIdx :(Float32)in_raiseSpeedRate;
+-(void)	setupToPos:(NETA_DATA_ST)in_data :(const CGPoint)in_pos :(Float32)in_raiseSpeedRate;
 
 //	開始
 -(void)	start;

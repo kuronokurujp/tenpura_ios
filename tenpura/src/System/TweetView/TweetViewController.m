@@ -6,6 +6,13 @@
 #import "cocos2d.h"
 #import "AppDelegate.h"
 
+@interface TweetViewController (PriveteMethod)
+
+
+- (void)pressBackBtn:(id)sender;
+
+@end
+
 @implementation TweetViewController
 
 //	それぞれのビューのタグ
@@ -16,6 +23,22 @@ enum
 	eTAG_WEB_VIEW,
 	eTAB_BTN_VIEW,
 };
+
+/*
+	@brief
+*/
+- (id)initToSetup:(NSString*)in_pRetBtnText :(NSString*)in_pRetImageFileName
+{
+	mp_retBtnText	= [in_pRetBtnText retain];
+	mp_retBtnImageFileName	= [in_pRetImageFileName retain];
+
+	if( self = [super init] )
+	{
+		
+	}
+	
+	return self;
+}
 
 /*
 	@brief	初期化
@@ -42,9 +65,9 @@ enum
 			UIView*	pOldWebView	= [self.view viewWithTag:eTAG_WEB_VIEW];
 			[pOldWebView removeFromSuperview];
 			
-			tweetWebView = [[UIWebView alloc] init];
-			[tweetWebView setDelegate:self];
-			[self.view addSubview:tweetWebView];
+			m_pTweetWebView = [[UIWebView alloc] init];
+			[m_pTweetWebView setDelegate:self];
+			[self.view addSubview:m_pTweetWebView];
 		}
         
 		//	 戻るボタンビュー設置
@@ -53,8 +76,8 @@ enum
 			[pOldBtnView removeFromSuperview];
 
 			UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-			[btn setBackgroundImage:[UIImage imageNamed:@"Default.png"] forState:UIControlStateNormal];
-			[btn setTitle:@"戻る" forState:UIControlStateNormal];
+			[btn setBackgroundImage:[UIImage imageNamed:mp_retBtnImageFileName] forState:UIControlStateNormal];
+			[btn setTitle:mp_retBtnText forState:UIControlStateNormal];
 		
 			btn.tag	= eTAB_BTN_VIEW;
 			[btn addTarget:self action:@selector(pressBackBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -63,6 +86,18 @@ enum
     }
 
     return self;
+}
+
+/*
+	@brief	解放
+*/
+- (void)dealloc
+{
+	[mp_retBtnText release];
+	[mp_retBtnImageFileName release];
+	
+    [m_pTweetWebView release];
+    [super dealloc];
 }
 
 /*
@@ -77,7 +112,7 @@ enum
 /*
 	@brief	TweetViewを開く
 */
-- (void)startTweetViewWithTweetText:(NSString*)tweetText:(NSString*)in_pSearchURL
+- (void)startTweetViewWithTweetText:(NSString*)tweetText :(NSString*)in_pSearchURL
 {
     NSString *tweetURL = [NSString stringWithFormat:@"https://twitter.com/intent/tweet?original_referer=%@&text=%@",in_pSearchURL,tweetText];
 
@@ -85,10 +120,10 @@ enum
     
     NSURL *url = [NSURL URLWithString:encodedTweetURL];
     NSURLRequest *req = [NSURLRequest requestWithURL:url];
-    [tweetWebView loadRequest:req];
+    [m_pTweetWebView loadRequest:req];
 	
 	[encodedTweetURL release];
-
+	
 	//	WebView開始
 	AppController*	pApp	= (AppController*)[UIApplication sharedApplication].delegate;
     [pApp.navController presentModalViewController:self animated:YES];
@@ -100,12 +135,12 @@ enum
 -(void)webViewDidStartLoad:(UIWebView*)webView
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [(UIView *)[tweetWebView viewWithTag:eTAG_GRAY_VIEW] removeFromSuperview];
+    [(UIView *)[m_pTweetWebView viewWithTag:eTAG_GRAY_VIEW] removeFromSuperview];
     
 	CGSize	winSize	= [CCDirector sharedDirector].winSize;
 	//	座標およびView大きさ設定
 	{
-		tweetWebView.frame	= CGRectMake(0, 0, winSize.width,winSize.height - 48);
+		m_pTweetWebView.frame	= CGRectMake(0, 0, winSize.width,winSize.height - 48);
 	
 		UIView*	pBtnView	= [self.view viewWithTag:eTAB_BTN_VIEW];
 		pBtnView.frame	= CGRectMake(0, winSize.height - 48, winSize.width, 48);
@@ -116,7 +151,7 @@ enum
     [grayView setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5]];
     grayView.tag = eTAG_GRAY_VIEW;
     
-    [tweetWebView addSubview:grayView];
+    [m_pTweetWebView addSubview:grayView];
     
     //インジケーターを載せる
     UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
@@ -136,22 +171,23 @@ enum
     //終わったらViewを外す
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     
-    [(UIView *)[tweetWebView viewWithTag:eTAG_GRAY_VIEW] removeFromSuperview];
+    [(UIView *)[m_pTweetWebView viewWithTag:eTAG_GRAY_VIEW] removeFromSuperview];
 }
 
+-(NSUInteger)supportedInterfaceOrientations
+{
+	return UIInterfaceOrientationMaskLandscape;
+}
 
-#pragma mark - View lifecycle
+-(NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+	return UIInterfaceOrientationMaskLandscape;
+}
 
+// Supported orientations: Landscape. Customize it for your own needs
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-- (void)dealloc
-{
-    [tweetWebView release];
-    [super dealloc];
+	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 
 @end
