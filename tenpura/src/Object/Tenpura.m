@@ -40,7 +40,6 @@ enum
 };
 
 //	プロパティ定義
-@synthesize state		= m_state;
 @synthesize bTouch		= mb_lock;
 @synthesize bRaise		= mb_raise;
 @synthesize posDataIdx	= m_posDataIdx;
@@ -65,8 +64,19 @@ enum
 		m_nowRaiseTime	= 0.f;
 
 		m_state			= eTENPURA_STATE_VERYBAD;
-	}
 	
+		AnimManager*	pAnimManager	= [AnimManager shared];
+	
+		CCNode*	pEff	= nil;
+		pEff	= [pAnimManager createNode:[NSString stringWithUTF8String:ga_AnimPlayName[eANIM_STAR]] :YES];
+		[pEff setVisible:NO];
+		[self addChild:pEff z:2.f tag:eCHILD_TAG_ANIM_STAR];
+		
+		pEff	= [pAnimManager createNode:[NSString stringWithUTF8String:ga_AnimPlayName[eANIM_CURSOR]] :YES];
+		[pEff setVisible:NO];
+		[self addChild:pEff z:1.f tag:eCHILD_TAG_ANIM_CURSOR];
+	}
+
 	return self;
 }
 
@@ -94,7 +104,7 @@ enum
 			m_nowRaiseTime	= 0.f;
 		}
 	}
-	
+
 	{
 		CCNode*	pAnimCursor	= [self getChildByTag:eCHILD_TAG_ANIM_CURSOR];
 		CCNode*	pAnimStar	= [self getChildByTag:eCHILD_TAG_ANIM_STAR];
@@ -178,14 +188,11 @@ enum
 	m_posDataIdx	= -1;
 	m_nowRaiseTime	= 0.f;
 
-	if( [self getChildByTag:eCHILD_TAG_ANIM_CURSOR] )
-	{
-		[self removeChildByTag:eCHILD_TAG_ANIM_CURSOR cleanup:YES];
-	}
-	if( [self getChildByTag:eCHILD_TAG_ANIM_STAR] )
-	{
-		[self removeChildByTag:eCHILD_TAG_ANIM_STAR cleanup:YES];
-	}
+	AnimActionSprite*	pEff	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_CURSOR];
+	[pEff end];
+
+	pEff	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_STAR];
+	[pEff end];
 
 	[self unscheduleAllSelectors];
 	[self setVisible:NO];
@@ -205,14 +212,13 @@ enum
 	[self unscheduleUpdate];
 	[self scheduleUpdate];
 
-	if( [self getChildByTag:eCHILD_TAG_ANIM_CURSOR] )
-	{
-		[self removeChildByTag:eCHILD_TAG_ANIM_CURSOR cleanup:YES];
-	}
-	if( [self getChildByTag:eCHILD_TAG_ANIM_STAR] )
-	{
-		[self removeChildByTag:eCHILD_TAG_ANIM_STAR cleanup:YES];
-	}
+	AnimActionSprite*	pEff	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_CURSOR];
+	[pEff end];
+	[pEff setVisible:NO];
+
+	pEff	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_STAR];
+	[pEff end];
+	[pEff setVisible:NO];
 
 	[mp_sp setTextureRect:[self _getTexRect:(SInt32)m_state]];
 }
@@ -379,22 +385,23 @@ enum
 	if( m_state < eTENPURA_STATE_MAX )
 	{
 		{
-			AnimManager*	pEffManager	= [AnimManager shared];
-			CCNode*	pEff	= nil;
+			AnimActionSprite*	pEff	= nil;
 			switch ((SInt32)m_state)
 			{
 				case eTENPURA_STATE_GOOD:		//　ちょうど良い
 				{
-					pEff	= [pEffManager playLoop:[NSString stringWithUTF8String:ga_AnimPlayName[eANIM_CURSOR]]];
-					[self addChild:pEff z:1.f tag:eCHILD_TAG_ANIM_CURSOR];
-					
+					pEff	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_CURSOR];
+					[pEff start];
+					[pEff setVisible:YES];
+
 					[[SoundManager shared] playSe:@"fried01"];
 					break;
 				}
 				case eTENPURA_STATE_VERYGOOD:	//	最高
 				{
-					pEff	= [pEffManager playLoop:[NSString stringWithUTF8String:ga_AnimPlayName[eANIM_STAR]]];
-					[self addChild:pEff z:2.f tag:eCHILD_TAG_ANIM_STAR];
+					pEff	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_STAR];
+					[pEff start];
+					[pEff setVisible:YES];
 
 					[[SoundManager shared] playSe:@"fried02"];
 					break;
@@ -413,14 +420,13 @@ enum
 			
 			if( pEff == nil )
 			{
-				if( [self getChildByTag:eCHILD_TAG_ANIM_CURSOR] )
-				{
-					[self removeChildByTag:eCHILD_TAG_ANIM_CURSOR cleanup:YES];
-				}
-				if( [self getChildByTag:eCHILD_TAG_ANIM_STAR] )
-				{
-					[self removeChildByTag:eCHILD_TAG_ANIM_STAR cleanup:YES];
-				}
+				AnimActionSprite*	pEff	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_CURSOR];
+				[pEff end];
+				[pEff setVisible:NO];
+
+				pEff	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_STAR];
+				[pEff end];
+				[pEff setVisible:NO];
 			}
 		}
 

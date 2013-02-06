@@ -18,6 +18,8 @@
 #import "./../Data/DataMissionList.h"
 
 #import "./../System/Sound/SoundManager.h"
+#import "./../System/Anim/AnimManager.h"
+
 #import "./SettingChildScene/UseSelectNetaScene.h"
 #import "./SettingChildScene/UseSelectItemScene.h"
 
@@ -38,6 +40,9 @@
 {
 	if( self = [super init] )
 	{
+		//	エフェクト管理をいったんすべて解放
+		[AnimManager end];
+
 		mp_useItemNoList	= [[CCArray alloc] init];
 		mp_missionSucceesAlertView	= nil;
 		
@@ -162,6 +167,23 @@
 	//	データがないと先へ進めない
 	if( 0 < [pDataSettingTenpura count] )
 	{
+		//	エフェクト登録
+		{
+			AnimManager*	pEffMng	= [AnimManager shared];
+		
+			UInt32	num	= sizeof(ga_animDataList) / sizeof(ga_animDataList[0]);
+			for( UInt32 i = 0; i < num; ++i )
+			{
+				AnimData*	pEffData	=
+				[[[AnimData alloc] initWithData
+				:ga_animDataList[i].pListFileName
+				:ga_animDataList[i].pImageFileName
+				:ga_animDataList[i].fps] autorelease];
+		
+				[pEffMng add:[NSString stringWithUTF8String:ga_AnimPlayName[i]]:pEffData];
+			}
+		}
+
 		GameData*	pGameData	= [[GameData alloc] autorelease];
 		pGameData->mp_netaList	= [pDataSettingTenpura retain];
 		pGameData->mp_itemNoList	= [pDataSettingItem retain];

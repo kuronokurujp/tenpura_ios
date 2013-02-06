@@ -34,11 +34,11 @@
 		NSDictionary*	pFrameList	= [pAnimList valueForKey:@"frames"];
 		if( pFrameList )
 		{
-			NSLog( @"FrameNum(%d)", [pFrameList count] );
+//			NSLog( @"FrameNum(%d)", [pFrameList count] );
 			NSArray*	pFrameNameList	= [[pFrameList allKeys] sortedArrayUsingSelector:@selector(compare:)];
 			for( SInt32 i = 0; i < [pFrameNameList count]; ++i )
 			{
-				NSLog( @"FrameName(%@)", [pFrameNameList objectAtIndex:i]);
+//				NSLog( @"FrameName(%@)", [pFrameNameList objectAtIndex:i]);
 			}
 			mp_frameNameList	= [pFrameNameList retain];
 		}
@@ -102,12 +102,7 @@
 */
 -(void)	dealloc
 {
-	if( mp_anim )
-	{
-		[mp_anim release];
-		mp_anim	= nil;
-	}
-
+	[mp_anim release];
 	[mp_data release];
 	[super dealloc];
 }
@@ -139,25 +134,42 @@
 		
 		Float32	delay	= 1.f / (Float32)in_data.fps;
 		CCAnimation*	pAnim	= [[[CCAnimation alloc] initWithSpriteFrames:pFrames delay:delay] autorelease];
-		
-		CCAnimate*	pAnimate	= [CCAnimate actionWithAnimation:pAnim];
-		mp_anim	= [pAnimate retain];
-
-		if( in_bLoop == false )
-		{
-			CCCallFunc*	pEndCall	= [CCCallFunc actionWithTarget:self selector:@selector(_endAnim)];
-			CCSequence*	pSeq	= [CCSequence actions:pAnimate, pEndCall, nil];
-			[mp_sp runAction:pSeq];
-		}
-		else
-		{
-			//	ループの設定をしているならループ用アニメを作成する
-			CCRepeatForever*	pRepeat	= [CCRepeatForever actionWithAction:mp_anim];
-			[mp_sp runAction:pRepeat];
-		}
+		mp_anim	= [pAnim retain];
 
 		[self addChild:mp_sp];
+		mb_pause	= YES;
 	}
+}
+
+/*
+	@brief
+*/
+-(void)	start
+{
+	CCAnimate*	pAnimate	= [CCAnimate actionWithAnimation:mp_anim];
+	if( mb_loop == false )
+	{
+		CCCallFunc*	pEndCall	= [CCCallFunc actionWithTarget:self selector:@selector(_endAnim)];
+		CCSequence*	pSeq	= [CCSequence actions:pAnimate, pEndCall, nil];
+		[mp_sp runAction:pSeq];
+	}
+	else
+	{
+		//	ループの設定をしているならループ用アニメを作成する
+		CCRepeatForever*	pRepeat	= [CCRepeatForever actionWithAction:pAnimate];
+		[mp_sp runAction:pRepeat];
+	}
+	
+	mb_pause	= NO;
+}
+
+/*
+	@brief
+*/
+-(void)	end
+{
+	[mp_sp stopAllActions];
+	mb_pause	= YES;
 }
 
 /*
@@ -173,6 +185,11 @@
 */
 -(void)	pauseSchedulerAndActions
 {
+	if( mb_pause == YES )
+	{
+		return;
+	}
+	
 	CCNode*	pNode	= nil;
 	CCARRAY_FOREACH(children_, pNode)
 	{
@@ -187,6 +204,11 @@
 */
 -(void)	resumeSchedulerAndActions
 {
+	if( mb_pause == YES )
+	{
+		return;
+	}
+	
 	CCNode*	pNode	= nil;
 	CCARRAY_FOREACH(children_, pNode)
 	{

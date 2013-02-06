@@ -270,7 +270,6 @@
 		CED247C0163997DD00506CA8 /* Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = CED247B9163997DD00506CA8 /* Customer.m */; };
 		CED247C1163997DD00506CA8 /* Nabe.m in Sources */ = {isa = PBXBuildFile; fileRef = CED247BB163997DD00506CA8 /* Nabe.m */; };
 		CED247C2163997DD00506CA8 /* Tenpura.m in Sources */ = {isa = PBXBuildFile; fileRef = CED247BD163997DD00506CA8 /* Tenpura.m */; };
-		CED247C3163997DD00506CA8 /* TenpuraIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = CED247BF163997DD00506CA8 /* TenpuraIcon.m */; };
 		CED247C8163997FD00506CA8 /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CED247C7163997FD00506CA8 /* GameScene.m */; };
 		CED247CE1639980600506CA8 /* TitleScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CED247CC1639980600506CA8 /* TitleScene.m */; };
 		CED247D51639981400506CA8 /* GameInScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CED247D01639981400506CA8 /* GameInScene.m */; };
@@ -304,6 +303,7 @@
 		CEEAEED416AAB8C00088B718 /* UseSelectNetaScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEAEED316AAB8C00088B718 /* UseSelectNetaScene.m */; };
 		CEEAEED716AAB9CC0088B718 /* UseSelectItemScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEAEED616AAB9CB0088B718 /* UseSelectItemScene.m */; };
 		CEEAEED916AAC1F90088B718 /* use_neta_select.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CEEAEED816AAC1F90088B718 /* use_neta_select.ccbi */; };
+		CEF24C3816C2468F00AE4B31 /* TenpuraIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF24C3716C2468F00AE4B31 /* TenpuraIcon.m */; };
 		CEF24D87163C131200ACE56F /* CCBAnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF24D7C163C131200ACE56F /* CCBAnimationManager.m */; };
 		CEF24D88163C131200ACE56F /* CCBKeyframe.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF24D7E163C131200ACE56F /* CCBKeyframe.m */; };
 		CEF24D89163C131200ACE56F /* CCBReader.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF24D80163C131200ACE56F /* CCBReader.m */; };
@@ -836,8 +836,6 @@
 		CED247BB163997DD00506CA8 /* Nabe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Nabe.m; path = src/Object/Nabe.m; sourceTree = "<group>"; };
 		CED247BC163997DD00506CA8 /* Tenpura.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tenpura.h; path = src/Object/Tenpura.h; sourceTree = "<group>"; };
 		CED247BD163997DD00506CA8 /* Tenpura.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tenpura.m; path = src/Object/Tenpura.m; sourceTree = "<group>"; };
-		CED247BE163997DD00506CA8 /* TenpuraIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TenpuraIcon.h; path = src/Object/TenpuraIcon.h; sourceTree = "<group>"; };
-		CED247BF163997DD00506CA8 /* TenpuraIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TenpuraIcon.m; path = src/Object/TenpuraIcon.m; sourceTree = "<group>"; };
 		CED247C6163997FD00506CA8 /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameScene.h; path = src/Scene/GameScene.h; sourceTree = "<group>"; };
 		CED247C7163997FD00506CA8 /* GameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameScene.m; path = src/Scene/GameScene.m; sourceTree = "<group>"; };
 		CED247CB1639980600506CA8 /* TitleScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TitleScene.h; path = src/Scene/TitleScene.h; sourceTree = "<group>"; };
@@ -899,6 +897,8 @@
 		CEEAEED516AAB9CB0088B718 /* UseSelectItemScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UseSelectItemScene.h; path = src/Scene/SettingChildScene/UseSelectItemScene.h; sourceTree = "<group>"; };
 		CEEAEED616AAB9CB0088B718 /* UseSelectItemScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UseSelectItemScene.m; path = src/Scene/SettingChildScene/UseSelectItemScene.m; sourceTree = "<group>"; };
 		CEEAEED816AAC1F90088B718 /* use_neta_select.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = use_neta_select.ccbi; path = Resources/ccbi/use_neta_select.ccbi; sourceTree = "<group>"; };
+		CEF24C3616C2468F00AE4B31 /* TenpuraIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TenpuraIcon.h; path = src/Object/TenpuraIcon.h; sourceTree = "<group>"; };
+		CEF24C3716C2468F00AE4B31 /* TenpuraIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TenpuraIcon.m; path = src/Object/TenpuraIcon.m; sourceTree = "<group>"; };
 		CEF24D7B163C131200ACE56F /* CCBAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBAnimationManager.h; sourceTree = "<group>"; };
 		CEF24D7C163C131200ACE56F /* CCBAnimationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBAnimationManager.m; sourceTree = "<group>"; };
 		CEF24D7D163C131200ACE56F /* CCBKeyframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBKeyframe.h; sourceTree = "<group>"; };
@@ -1827,8 +1827,8 @@
 				CED247BB163997DD00506CA8 /* Nabe.m */,
 				CED247BC163997DD00506CA8 /* Tenpura.h */,
 				CED247BD163997DD00506CA8 /* Tenpura.m */,
-				CED247BE163997DD00506CA8 /* TenpuraIcon.h */,
-				CED247BF163997DD00506CA8 /* TenpuraIcon.m */,
+				CEF24C3616C2468F00AE4B31 /* TenpuraIcon.h */,
+				CEF24C3716C2468F00AE4B31 /* TenpuraIcon.m */,
 				CEFBC2A91687182100C3C233 /* Ticker.h */,
 				CEFBC2AA1687182100C3C233 /* Ticker.m */,
 				CE0C82FC16B914F80086CEEA /* GameInFeverEvent.h */,
@@ -2694,7 +2694,6 @@
 				CED247C0163997DD00506CA8 /* Customer.m in Sources */,
 				CED247C1163997DD00506CA8 /* Nabe.m in Sources */,
 				CED247C2163997DD00506CA8 /* Tenpura.m in Sources */,
-				CED247C3163997DD00506CA8 /* TenpuraIcon.m in Sources */,
 				CED247C8163997FD00506CA8 /* GameScene.m in Sources */,
 				CED247CE1639980600506CA8 /* TitleScene.m in Sources */,
 				CED247D51639981400506CA8 /* GameInScene.m in Sources */,
@@ -2793,6 +2792,7 @@
 				CEF7FA2416BFF84000A69042 /* ARRollerView.m in Sources */,
 				CEF7FA2516BFF84000A69042 /* AWNetworkReachabilityWrapper.m in Sources */,
 				CEF7FA2616BFF84000A69042 /* UIColor+AdWhirlConfig.m in Sources */,
+				CEF24C3816C2468F00AE4B31 /* TenpuraIcon.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

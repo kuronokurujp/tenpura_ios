@@ -35,13 +35,17 @@
 @private
 	CCSprite*	mp_sp;
 	AnimData*	mp_data;
-	CCAnimate*	mp_anim;
+	CCAnimation*	mp_anim;
 	BOOL	mb_loop;
+	BOOL	mb_pause;
 }
 
 @property	(nonatomic)BOOL	bLoop;
 
 -(id)	initWithData:(AnimData*)in_data;
 -(id)	initWithDataAndLoop:(AnimData*)in_data;
+
+-(void)	start;
+-(void)	end;
 
 @end

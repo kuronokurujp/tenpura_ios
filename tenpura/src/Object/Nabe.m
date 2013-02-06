@@ -158,10 +158,11 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 -(void)	onExpTenpura:(CCNode *)in_pTenpura
 {
 	//	爆発エフェクト
-	AnimManager*	pEffManager	= [AnimManager shared];
-	CCNode*	pEff	= [pEffManager play:[NSString stringWithUTF8String:ga_AnimPlayName[eANIM_BOMG]]];
+	AnimManager*	pAnimManager	= [AnimManager shared];
+	AnimActionSprite*	pEff	= (AnimActionSprite*)[pAnimManager play:[NSString stringWithUTF8String:ga_AnimPlayName[eANIM_BOMG]]];
 	if( pEff != nil )
 	{
+		[pEff start];
 		[pEff setPosition:in_pTenpura.position];
 		[self addChild:pEff z:20];
 	}

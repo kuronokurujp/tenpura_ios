@@ -18,7 +18,6 @@
 #import "./../Data/DataSettingTenpura.h"
 #import "./../Data/DataTenpuraPosList.h"
 #import "./../Data/DataItemList.h"
-#import "./../System/Anim/AnimManager.h"
 #import "./../System/Sound/SoundManager.h"
 
 #import "./../CCBReader/CCBReader.h"
@@ -351,9 +350,6 @@ enum
 */
 -(void)	onExit
 {
-	//	エフェクト管理をいったんすべて解放
-	[AnimManager end];
-
 	[super onExit];
 }
 
@@ -362,23 +358,6 @@ enum
 */
 -(void)	onEnterTransitionDidFinish
 {
-	//	エフェクト登録
-	{
-		AnimManager*	pEffMng	= [AnimManager shared];
-		
-		UInt32	num	= sizeof(ga_animDataList) / sizeof(ga_animDataList[0]);
-		for( UInt32 i = 0; i < num; ++i )
-		{
-			AnimData*	pEffData	=
-			[[[AnimData alloc] initWithData
-			:ga_animDataList[i].pListFileName
-			:ga_animDataList[i].pImageFileName
-			:ga_animDataList[i].fps] autorelease];
-		
-			[pEffMng add:[NSString stringWithUTF8String:ga_AnimPlayName[i]]:pEffData];
-		}
-	}
-
 	//	ゲームスタート演出
 	[self addChild:[GameStartScene node] z:10 tag:eGAME_START_SCENE_TAG];
 	[self schedule:@selector(_updateGameStart:)];

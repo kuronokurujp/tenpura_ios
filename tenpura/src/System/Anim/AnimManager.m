@@ -103,6 +103,32 @@ static	AnimManager*	sp_inst	= nil;
 }
 
 /*
+	@brief	エフェクト作成
+*/
+-(CCNode*)	createNode:(const NSString*)in_pName :(BOOL)in_bLoop
+{
+	id	pEffData	= [mp_dicData objectForKey:in_pName];
+	if( pEffData != nil )
+	{
+		if( [pEffData isKindOfClass:[AnimData class]] )
+		{
+			if( in_bLoop == YES )
+			{
+				return [[[AnimActionSprite alloc] initWithDataAndLoop:(AnimData*)pEffData] autorelease];
+			}
+			else
+			{
+				return [[[AnimActionSprite alloc] initWithData:(AnimData*)pEffData] autorelease];
+			}
+		}
+	}
+	
+	NSAssert(nil, @"%s(%d):エフェクト名「%@」がない", __FILE__, __LINE__, in_pName);
+	
+	return nil;
+}
+
+/*
 	@brief	エフェクト再生
 */
 -(CCNode*)	play:(const NSString*)in_pName
@@ -112,7 +138,9 @@ static	AnimManager*	sp_inst	= nil;
 	{
 		if( [pEffData isKindOfClass:[AnimData class]] )
 		{
-			return [[[AnimActionSprite alloc] initWithData:(AnimData*)pEffData] autorelease];
+			AnimActionSprite*	pNode	= [[[AnimActionSprite alloc] initWithData:(AnimData*)pEffData] autorelease];
+			[pNode start];
+			return pNode;
 		}
 	}
 	
@@ -120,25 +148,5 @@ static	AnimManager*	sp_inst	= nil;
 
 	return nil;
 }
-
-/*
-	@brief
-*/
--(CCNode*)	playLoop:(const NSString*)in_pName
-{
-	id	pEffData	= [mp_dicData objectForKey:in_pName];
-	if( pEffData != nil )
-	{
-		if( [pEffData isKindOfClass:[AnimData class]] )
-		{
-			return [[[AnimActionSprite alloc] initWithDataAndLoop:(AnimData*)pEffData] autorelease];
-		}
-	}
-	
-	NSAssert(nil, @"%s(%d):エフェクト名「%@」がない", __FILE__, __LINE__, in_pName);
-
-	return nil;
-}
-
 
 @end

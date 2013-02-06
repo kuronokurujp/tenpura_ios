@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 #import "../Data/DataNetaList.h"
+#import "./TenpuraIcon.h"
 
 /*
 	@brief	天ぷらデリゲータ
@@ -22,28 +23,13 @@
 
 @end
 
-typedef enum
-{
-	eTENPURA_STATE_NOT	= 0,	//	揚げてない
-	eTENPURA_STATE_GOOD,		//　ちょうど良い
-	eTENPURA_STATE_VERYGOOD,	//	最高
-	eTENPURA_STATE_BAD,			//	焦げ
-	eTENPURA_STATE_VERYBAD,		//	丸焦げ
-	eTENPURA_STATE_EXP,			//	爆発
-	eTENPURA_STATE_RESTART,		//	再設定
-	
-	eTENPURA_STATE_MAX,
-} TENPURA_STATE_ET;
-
-@interface Tenpura : CCNode {
+@interface Tenpura : TenpuraBigIcon {
 
 @private
 	//	変数定義
 	NETA_DATA_ST		m_data;
-	CCSprite*			mp_sp;
 	id<TenpuraProtocol>	m_delegate;
 	
-	TENPURA_STATE_ET	m_state;
 	BOOL				mb_lock;
 	BOOL				mb_raise;	//	揚げる開始
 	
@@ -53,12 +39,10 @@ typedef enum
 
 	SInt32				m_posDataIdx;
 	SInt32				m_oldZOrder;
-	CGSize				m_texSize;
 	CGPoint				m_touchPrevPos;
 }
 
 //	プロパティ
-@property	(nonatomic, readonly)	TENPURA_STATE_ET state;
 @property	(nonatomic, readonly)	BOOL	bTouch;
 @property	(nonatomic, readonly)	BOOL	bRaise;
 @property	(nonatomic, readonly)	SInt32	posDataIdx;

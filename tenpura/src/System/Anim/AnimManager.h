@@ -26,8 +26,10 @@
 //	エフェクトバッチ作成
 -(CCNode*)	createBath:(const NSString*)in_pName;
 
+//	エフェクト作成
+-(CCNode*)	createNode:(const NSString*)in_pName :(BOOL)in_bLoop;
+
 //	エフェクト再生
 -(CCNode*)	play:(const NSString*)in_pName;
--(CCNode*)	playLoop:(const NSString*)in_pName;
 
 @end
