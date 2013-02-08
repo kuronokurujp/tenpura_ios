@@ -98,11 +98,6 @@ enum
 {
 	if( self = [super init] )
 	{
-		DataSaveGame*	pDataSaveInst	= [DataSaveGame shared];
-		NSAssert(pDataSaveInst, @"ゲームデータがない");
-		const SAVE_DATA_ST*	pSaveData	= [pDataSaveInst getData];
-		NSAssert(pSaveData, @"セーブデータの中身がない");
-
 		NSString*	pPath	= [[NSBundle mainBundle] pathForResource:@"missionListData" ofType:@"csv"];
 
 		NSString*	pText	= [NSString stringWithContentsOfFile:pPath encoding:NSUTF8StringEncoding error:nil];
@@ -401,9 +396,6 @@ enum
 	DataNetaList*	pNetaInst	= [DataNetaList shared];
 	NSAssert(pNetaInst, @"ネタデータがない");
 	
-	DataBaseText*	pBaseTextInst	= [DataBaseText shared];
-	NSAssert(pBaseTextInst, @"テキストデータがない");
-
 	NSString*	pCmpStr1	= [NSString stringWithUTF8String:in_pStr];
 
 	const NETA_DATA_ST*	pNetaData	= nil;

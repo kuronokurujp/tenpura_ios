@@ -9,17 +9,17 @@
 /* Begin PBXBuildFile section */
 		CE0C82FE16B914F80086CEEA /* GameInFeverEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0C82FD16B914F80086CEEA /* GameInFeverEvent.m */; };
 		CE0C830116B915890086CEEA /* GameInFliterColorBG.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0C830016B915890086CEEA /* GameInFliterColorBG.m */; };
+		CE1175FA16C511D600655404 /* bomb.pvrtc in Resources */ = {isa = PBXBuildFile; fileRef = CE1175F916C511D600655404 /* bomb.pvrtc */; };
+		CE1175FC16C5130700655404 /* cursor.pvrtc in Resources */ = {isa = PBXBuildFile; fileRef = CE1175FB16C5130700655404 /* cursor.pvrtc */; };
+		CE1175FE16C5135300655404 /* star.pvrtc in Resources */ = {isa = PBXBuildFile; fileRef = CE1175FD16C5135300655404 /* star.pvrtc */; };
 		CE1281161642974800D369CF /* SettingScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1281151642974800D369CF /* SettingScene.m */; };
 		CE12811916429D0200D369CF /* setting.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE12811816429D0200D369CF /* setting.ccbi */; };
 		CE18C49C1667ABA000ED1E85 /* DataMissionList.m in Sources */ = {isa = PBXBuildFile; fileRef = CE18C49B1667ABA000ED1E85 /* DataMissionList.m */; };
 		CE18C4A31667D84200ED1E85 /* missionListData.csv in Resources */ = {isa = PBXBuildFile; fileRef = CE18C4A21667D84200ED1E85 /* missionListData.csv */; };
 		CE1B74C91699D6BE00DD2C07 /* FileTexLoadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1B74C81699D6BE00DD2C07 /* FileTexLoadManager.m */; };
 		CE216D6516B37AD0000E0E29 /* star.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE216D6316B37AD0000E0E29 /* star.plist */; };
-		CE216D6616B37AD0000E0E29 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = CE216D6416B37AD0000E0E29 /* star.png */; };
 		CE216D6916B37AE0000E0E29 /* cursor.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE216D6716B37AE0000E0E29 /* cursor.plist */; };
-		CE216D6A16B37AE0000E0E29 /* cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = CE216D6816B37AE0000E0E29 /* cursor.png */; };
 		CE216D6D16B37AE9000E0E29 /* bomb.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE216D6B16B37AE9000E0E29 /* bomb.plist */; };
-		CE216D6E16B37AE9000E0E29 /* bomb.png in Resources */ = {isa = PBXBuildFile; fileRef = CE216D6C16B37AE9000E0E29 /* bomb.png */; };
 		CE216D7616B37B8C000E0E29 /* AnimManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE216D7516B37B8C000E0E29 /* AnimManager.m */; };
 		CE216D7A16B37B9A000E0E29 /* AnimActionSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = CE216D7916B37B9A000E0E29 /* AnimActionSprite.m */; };
 		CE2F301C16B8C7E40010610D /* GameInFeverMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2F301B16B8C7E40010610D /* GameInFeverMessage.m */; };
@@ -74,6 +74,8 @@
 		CE8360C41647FC7E00CC11E0 /* shina_cell.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8360C31647FC7E00CC11E0 /* shina_cell.png */; };
 		CE8360CB164815FE00CC11E0 /* mission.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE8360CA164815FE00CC11E0 /* mission.ccbi */; };
 		CE8360D11648172200CC11E0 /* MissionScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8360D01648172200CC11E0 /* MissionScene.m */; };
+		CE8EC3CF16C283AC00686FF1 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8EC3CD16C283AC00686FF1 /* Icon-72.png */; };
+		CE8EC3D016C283AC00686FF1 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8EC3CE16C283AC00686FF1 /* Icon-Small-50.png */; };
 		CE93630F16507F3A00C22286 /* gameIn.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE93630E16507F3A00C22286 /* gameIn.ccbi */; };
 		CE9AB754168816C700C7AF08 /* checkoff.png in Resources */ = {isa = PBXBuildFile; fileRef = CE9AB752168816C700C7AF08 /* checkoff.png */; };
 		CE9AB755168816C700C7AF08 /* checkon.png in Resources */ = {isa = PBXBuildFile; fileRef = CE9AB753168816C700C7AF08 /* checkon.png */; };
@@ -415,6 +417,9 @@
 		CE0C82FD16B914F80086CEEA /* GameInFeverEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameInFeverEvent.m; path = src/Object/GameInFeverEvent.m; sourceTree = "<group>"; };
 		CE0C82FF16B915890086CEEA /* GameInFliterColorBG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameInFliterColorBG.h; path = src/Object/GameInFliterColorBG.h; sourceTree = "<group>"; };
 		CE0C830016B915890086CEEA /* GameInFliterColorBG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameInFliterColorBG.m; path = src/Object/GameInFliterColorBG.m; sourceTree = "<group>"; };
+		CE1175F916C511D600655404 /* bomb.pvrtc */ = {isa = PBXFileReference; lastKnownFileType = file; name = bomb.pvrtc; path = Resources/anim/bomb/bomb.pvrtc; sourceTree = "<group>"; };
+		CE1175FB16C5130700655404 /* cursor.pvrtc */ = {isa = PBXFileReference; lastKnownFileType = file; name = cursor.pvrtc; path = Resources/anim/cursor/cursor.pvrtc; sourceTree = "<group>"; };
+		CE1175FD16C5135300655404 /* star.pvrtc */ = {isa = PBXFileReference; lastKnownFileType = file; name = star.pvrtc; path = Resources/anim/star/star.pvrtc; sourceTree = "<group>"; };
 		CE1281141642974800D369CF /* SettingScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingScene.h; path = src/Scene/SettingScene.h; sourceTree = "<group>"; };
 		CE1281151642974800D369CF /* SettingScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingScene.m; path = src/Scene/SettingScene.m; sourceTree = "<group>"; };
 		CE12811816429D0200D369CF /* setting.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = setting.ccbi; path = Resources/ccbi/setting.ccbi; sourceTree = "<group>"; };
@@ -424,11 +429,8 @@
 		CE1B74C71699D6BE00DD2C07 /* FileTexLoadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileTexLoadManager.h; path = src/System/FileLoad/FileTexLoadManager.h; sourceTree = "<group>"; };
 		CE1B74C81699D6BE00DD2C07 /* FileTexLoadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileTexLoadManager.m; path = src/System/FileLoad/FileTexLoadManager.m; sourceTree = "<group>"; };
 		CE216D6316B37AD0000E0E29 /* star.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = star.plist; path = Resources/anim/star/star.plist; sourceTree = "<group>"; };
-		CE216D6416B37AD0000E0E29 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = star.png; path = Resources/anim/star/star.png; sourceTree = "<group>"; };
 		CE216D6716B37AE0000E0E29 /* cursor.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = cursor.plist; path = Resources/anim/cursor/cursor.plist; sourceTree = "<group>"; };
-		CE216D6816B37AE0000E0E29 /* cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cursor.png; path = Resources/anim/cursor/cursor.png; sourceTree = "<group>"; };
 		CE216D6B16B37AE9000E0E29 /* bomb.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = bomb.plist; path = Resources/anim/bomb/bomb.plist; sourceTree = "<group>"; };
-		CE216D6C16B37AE9000E0E29 /* bomb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb.png; path = Resources/anim/bomb/bomb.png; sourceTree = "<group>"; };
 		CE216D7416B37B8C000E0E29 /* AnimManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimManager.h; path = src/System/Anim/AnimManager.h; sourceTree = "<group>"; };
 		CE216D7516B37B8C000E0E29 /* AnimManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimManager.m; path = src/System/Anim/AnimManager.m; sourceTree = "<group>"; };
 		CE216D7816B37B9A000E0E29 /* AnimActionSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimActionSprite.h; path = src/System/Anim/Action/AnimActionSprite.h; sourceTree = "<group>"; };
@@ -496,6 +498,8 @@
 		CE8360CA164815FE00CC11E0 /* mission.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = mission.ccbi; path = Resources/ccbi/mission.ccbi; sourceTree = "<group>"; };
 		CE8360CF1648172100CC11E0 /* MissionScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MissionScene.h; path = src/Scene/SettingChildScene/MissionScene.h; sourceTree = "<group>"; };
 		CE8360D01648172200CC11E0 /* MissionScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MissionScene.m; path = src/Scene/SettingChildScene/MissionScene.m; sourceTree = "<group>"; };
+		CE8EC3CD16C283AC00686FF1 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "Resources/icon/Icon-72.png"; sourceTree = "<group>"; };
+		CE8EC3CE16C283AC00686FF1 /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small-50.png"; path = "Resources/icon/Icon-Small-50.png"; sourceTree = "<group>"; };
 		CE93630E16507F3A00C22286 /* gameIn.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = gameIn.ccbi; path = Resources/ccbi/gameIn.ccbi; sourceTree = "<group>"; };
 		CE9AB752168816C700C7AF08 /* checkoff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = checkoff.png; path = Resources/checkBox/checkoff.png; sourceTree = "<group>"; };
 		CE9AB753168816C700C7AF08 /* checkon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = checkon.png; path = Resources/checkBox/checkon.png; sourceTree = "<group>"; };
@@ -1133,8 +1137,8 @@
 		CE216D5F16B37A6D000E0E29 /* star */ = {
 			isa = PBXGroup;
 			children = (
+				CE1175FD16C5135300655404 /* star.pvrtc */,
 				CE216D6316B37AD0000E0E29 /* star.plist */,
-				CE216D6416B37AD0000E0E29 /* star.png */,
 			);
 			name = star;
 			sourceTree = "<group>";
@@ -1143,7 +1147,7 @@
 			isa = PBXGroup;
 			children = (
 				CE216D6B16B37AE9000E0E29 /* bomb.plist */,
-				CE216D6C16B37AE9000E0E29 /* bomb.png */,
+				CE1175F916C511D600655404 /* bomb.pvrtc */,
 			);
 			name = bomb;
 			sourceTree = "<group>";
@@ -1152,7 +1156,7 @@
 			isa = PBXGroup;
 			children = (
 				CE216D6716B37AE0000E0E29 /* cursor.plist */,
-				CE216D6816B37AE0000E0E29 /* cursor.png */,
+				CE1175FB16C5130700655404 /* cursor.pvrtc */,
 			);
 			name = cursor;
 			sourceTree = "<group>";
@@ -2214,6 +2218,8 @@
 			children = (
 				CEF4CFB416793C9E00DCB74C /* Icon.png */,
 				CEF4CFB516793C9E00DCB74C /* Icon@2x.png */,
+				CE8EC3CD16C283AC00686FF1 /* Icon-72.png */,
+				CE8EC3CE16C283AC00686FF1 /* Icon-Small-50.png */,
 				CEF6B08316B5CB78006B620B /* Icon-Small.png */,
 				CEF6B08416B5CB78006B620B /* Icon-Small@2x.png */,
 			);
@@ -2553,11 +2559,8 @@
 				CE541E2F16B297E400CD07D8 /* slot_select.png in Resources */,
 				CE6446C816B3592600203455 /* title.mp3 in Resources */,
 				CE216D6516B37AD0000E0E29 /* star.plist in Resources */,
-				CE216D6616B37AD0000E0E29 /* star.png in Resources */,
 				CE216D6916B37AE0000E0E29 /* cursor.plist in Resources */,
-				CE216D6A16B37AE0000E0E29 /* cursor.png in Resources */,
 				CE216D6D16B37AE9000E0E29 /* bomb.plist in Resources */,
-				CE216D6E16B37AE9000E0E29 /* bomb.png in Resources */,
 				CEF6B07716B50BAC006B620B /* combo_num.fnt in Resources */,
 				CEF6B07816B50BAC006B620B /* combo_num.png in Resources */,
 				CEF6B07A16B50CFC006B620B /* combo_message.png in Resources */,
@@ -2575,6 +2578,11 @@
 				CE43777716B945B100BA2F96 /* bgm_main.mp3 in Resources */,
 				CEBB5D4916BB69920022776F /* black.png in Resources */,
 				CEF7FA2216BFF84000A69042 /* AdWhirlWebBrowser.xib in Resources */,
+				CE8EC3CF16C283AC00686FF1 /* Icon-72.png in Resources */,
+				CE8EC3D016C283AC00686FF1 /* Icon-Small-50.png in Resources */,
+				CE1175FA16C511D600655404 /* bomb.pvrtc in Resources */,
+				CE1175FC16C5130700655404 /* cursor.pvrtc in Resources */,
+				CE1175FE16C5135300655404 /* star.pvrtc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2883,6 +2891,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2906,6 +2915,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
@@ -2921,7 +2931,7 @@
 				CED247821639965100506CA8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		CED247831639965100506CA8 /* Build configuration list for PBXNativeTarget "tenpura" */ = {
 			isa = XCConfigurationList;
@@ -2930,7 +2940,7 @@
 				CED247851639965100506CA8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

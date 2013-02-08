@@ -89,11 +89,11 @@
 			<key>name</key>
 			<string>default</string>
 			<key>textureFileName</key>
-			<string>cursor</string>
+			<string>cursor_default</string>
 			<key>textureFileExtension</key>
-			<string>.png</string>
+			<string>.pvrtc</string>
 			<key>coordinatesFileName</key>
-			<string>cursor</string>
+			<string>cursor_default</string>
 			<key>coordinatesFileExtension</key>
 			<string>.plist</string>
 			<key>premultipliedAlpha</key>

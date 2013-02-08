@@ -540,7 +540,6 @@ enum
 
 		if( bcleanTenpura == YES )
 		{
-//			[pGameScene->mp_nabe cleanTenpura:mp_touchTenpura];
 		}
 		else if( bNewPostionTenpura == YES )
 		{

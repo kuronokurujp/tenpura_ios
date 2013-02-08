@@ -414,7 +414,11 @@ enum ACTION_LIST_ENUM
 	m_getMoeny	= in_money;
 
 	//	食べた天ぷらアイコン消滅
-	assert( [mp_customer removeEatIcon:in_pTenpura.data.no] == YES);	
+	BOOL	bIconDel	= [mp_customer removeEatIcon:in_pTenpura.data.no];
+	if( bIconDel == NO )
+	{
+		assert(0);
+	}
 }
 
 @end

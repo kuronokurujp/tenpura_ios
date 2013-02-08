@@ -22,28 +22,25 @@
 {
 	if( self = [super init] )
 	{
+		mp_fileName	= nil;
+		mp_frameNameList	= nil;
+		mp_fileImageName	= nil;
+		
 		mp_fileName	= [[NSString stringWithUTF8String:in_pFileName] retain];
 		mp_fileImageName	= [[NSString stringWithUTF8String:in_pFileImageName] retain];
 		m_fps	= in_fps;
-	}
-	
-	//	フレームリスト作成
-	{
+		
+		//	フレームリスト作成
 		NSString*	pPath	= [[NSBundle mainBundle] pathForResource:mp_fileName ofType:@""];
 		NSDictionary*	pAnimList	= [NSDictionary dictionaryWithContentsOfFile:pPath];
 		NSDictionary*	pFrameList	= [pAnimList valueForKey:@"frames"];
 		if( pFrameList )
 		{
-//			NSLog( @"FrameNum(%d)", [pFrameList count] );
 			NSArray*	pFrameNameList	= [[pFrameList allKeys] sortedArrayUsingSelector:@selector(compare:)];
-			for( SInt32 i = 0; i < [pFrameNameList count]; ++i )
-			{
-//				NSLog( @"FrameName(%@)", [pFrameNameList objectAtIndex:i]);
-			}
 			mp_frameNameList	= [pFrameNameList retain];
 		}
 	}
-
+	
 	return self;
 }
 
@@ -177,7 +174,8 @@
 */
 -(void)	_endAnim
 {
-	[self removeFromParentAndCleanup:YES];
+//	[self removeFromParentAndCleanup:YES];
+	[self setVisible:NO];
 }
 
 /*

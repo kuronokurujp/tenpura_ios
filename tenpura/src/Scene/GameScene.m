@@ -131,6 +131,9 @@ enum
 			[pDataTenpuraPosList clearFlg];
 		}
 
+//		CCSpriteBatchNode*	pBatchNode	= [CCSpriteBatchNode node];
+//		[self addChild:pBatchNode z:10.f];
+		
 		Float32	customerEatRate	= 1.f;
 		Float32	raiseTimeRate	= 1.f;
 		

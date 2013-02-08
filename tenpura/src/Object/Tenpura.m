@@ -66,7 +66,7 @@ enum
 		m_state			= eTENPURA_STATE_VERYBAD;
 	
 		AnimManager*	pAnimManager	= [AnimManager shared];
-	
+
 		CCNode*	pEff	= nil;
 		pEff	= [pAnimManager createNode:[NSString stringWithUTF8String:ga_AnimPlayName[eANIM_STAR]] :YES];
 		[pEff setVisible:NO];
@@ -532,6 +532,8 @@ enum
 	return time;
 }
 
+#if 0
+
 #ifdef DEBUG
 -(void)	draw
 {
@@ -557,7 +559,7 @@ enum
 	
 	ccDrawColor4B(255, 255, 255, 255);
 }
-
+#endif
 #endif
 
 @end

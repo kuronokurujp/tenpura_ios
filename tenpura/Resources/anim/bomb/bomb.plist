@@ -669,7 +669,7 @@
 	<key>metadata</key>
 	<dict>
 		<key>version</key>
-		<string>1.5.5</string>
+		<string>1.5.8</string>
 		<key>format</key>
 		<integer>3</integer>
 		<key>size</key>
@@ -685,7 +685,7 @@
 			<key>textureFileName</key>
 			<string>bomb_default</string>
 			<key>textureFileExtension</key>
-			<string>.png</string>
+			<string>.pvrtc</string>
 			<key>coordinatesFileName</key>
 			<string>bomb_default</string>
 			<key>coordinatesFileExtension</key>

@@ -36,22 +36,30 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 {
 	if( self = [super init] )
 	{
+		AnimManager*	pAnimManager	= [AnimManager shared];
+
 		mp_sp	= [CCSprite node];
 		[mp_sp initWithFile:@"nabe0.png"];
 		[mp_sp setAnchorPoint:ccp(0,0)];
 		
 		[self addChild:mp_sp];
-		
+
 		for( UInt32 i = 0; i < eTEPURA_MAX; ++i )
 		{
 			Tenpura*	pTenpura	= [Tenpura node];
 			pTenpura.delegate	= self;
 			[pTenpura setVisible:NO];
 			[self addChild:pTenpura z:s_startTenpuraZOrder];
+			
+			//	爆弾エフェクトバッファで保持
+			{
+				CCNode*	pEff	= [pAnimManager createNode:[NSString stringWithUTF8String:ga_AnimPlayName[eANIM_BOMG]] :NO];
+				[pEff setVisible:NO];
+				[self addChild:pEff];
+			}
 		}
-		
+
 		m_tenpuraZOrder	= s_startTenpuraZOrder;
-		
 		[self scheduleUpdate];
 	}
 	
@@ -158,13 +166,22 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 -(void)	onExpTenpura:(CCNode *)in_pTenpura
 {
 	//	爆発エフェクト
-	AnimManager*	pAnimManager	= [AnimManager shared];
-	AnimActionSprite*	pEff	= (AnimActionSprite*)[pAnimManager play:[NSString stringWithUTF8String:ga_AnimPlayName[eANIM_BOMG]]];
-	if( pEff != nil )
+	CCNode*	pNode	= nil;
+	CCARRAY_FOREACH(children_, pNode)
 	{
-		[pEff start];
-		[pEff setPosition:in_pTenpura.position];
-		[self addChild:pEff z:20];
+		if( ([pNode isKindOfClass:[AnimActionSprite class]] == YES) && (pNode.visible == NO) )
+		{
+			AnimActionSprite*	pEff	= (AnimActionSprite*)pNode;
+			if( pEff != nil )
+			{
+				[pEff setVisible:YES];
+				[pEff start];
+				[pEff setPosition:in_pTenpura.position];
+				[pEff setZOrder:20];
+				
+				return;
+			}
+		}
 	}
 }
 
@@ -266,6 +283,7 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 	}
 }
 
+#if 0
 #ifdef DEBUG
 -(void)	draw
 {
@@ -289,6 +307,7 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 	ccDrawColor4B(255, 255, 255, 255);
 }
 
+#endif
 #endif
 
 @end

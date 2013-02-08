@@ -65,9 +65,9 @@ static const char*	gp_GamePlayStartSpritFileName	= "play_start.png";
 
 ANIM_DATA_ST	ga_animDataList[eANIM_MAX]	=
 {
-		{ "bomb.png", "bomb.plist", 60.f },
-		{ "cursor.png", "cursor.plist", 110.f },
-		{ "star.png", "star.plist", 110.f },
+		{ "bomb.pvrtc", "bomb.plist", 60.f },
+		{ "cursor.pvrtc", "cursor.plist", 80.f },
+		{ "star.pvrtc", "star.plist", 80.f },
 };
 
 char*	gpa_spriteFileNameList[eSPRITE_FILE_MAX]	=

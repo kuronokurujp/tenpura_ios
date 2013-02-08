@@ -239,6 +239,8 @@ void uncaughtExceptionHandler( NSException* in_pException )
 // purge memory
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
 {
+	NSLog(@"warning free memory 1.5MB low¥n");
+
 	[[CCDirector sharedDirector] purgeCachedData];
 }
 

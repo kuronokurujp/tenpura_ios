@@ -10,7 +10,7 @@
 #import "cocos2d.h"
 
 #import "./Tenpura.h"
-#import "../Data/DataNetaList.h"
+#import "./../Data/DataNetaList.h"
 
 //	前方宣言
 @class ActionCustomer;

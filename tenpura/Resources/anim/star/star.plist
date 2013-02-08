@@ -81,7 +81,7 @@
 		<key>size</key>
 		<string>{128, 256}</string>
 		<key>name</key>
-		<string>start</string>
+		<string>star</string>
 		<key>premultipliedAlpha</key>
 		<false/>
 		<key>target</key>
@@ -89,11 +89,11 @@
 			<key>name</key>
 			<string>default</string>
 			<key>textureFileName</key>
-			<string>start_default</string>
+			<string>star_default</string>
 			<key>textureFileExtension</key>
-			<string>.png</string>
+			<string>.pvrtc</string>
 			<key>coordinatesFileName</key>
-			<string>start_default</string>
+			<string>star_default</string>
 			<key>coordinatesFileExtension</key>
 			<string>.plist</string>
 			<key>premultipliedAlpha</key>

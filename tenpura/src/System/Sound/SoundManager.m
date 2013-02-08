@@ -273,11 +273,11 @@ static	SoundManager*	sp_inst	= nil;
 		NSString*	pFormatName	= [NSString stringWithUTF8String:mp_dataList[in_idx].aFormatName];
 		if( [pFormatName isEqualToString:@"mp3"] )
 		{
-			NSLog(@"%s(%d):soundPlay=mp3 filename[%@]", __FILE__, __LINE__, pSoundName);
+		//	NSLog(@"%s(%d):soundPlay=mp3 filename[%@]", __FILE__, __LINE__, pSoundName);
 		}
 		else if( [pFormatName isEqualToString:@"caf"] )
 		{
-			NSLog(@"%s(%d):soundPlay=caf filename[%@]", __FILE__, __LINE__, pSoundName);
+		//	NSLog(@"%s(%d):soundPlay=caf filename[%@]", __FILE__, __LINE__, pSoundName);
 		}
 		else
 		{
