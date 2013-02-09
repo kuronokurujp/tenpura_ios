@@ -13,3 +13,8 @@
 #import <Foundation/Foundation.h>
 #import	<GameKit/GameKit.h>
 #endif
+
+#ifdef DEBUG
+#else
+	#define	NSLog(format, ...)
+#endif

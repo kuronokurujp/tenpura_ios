@@ -135,7 +135,11 @@ static GameKitHelper*	s_pGameKitHelperInst	= nil;
 		return;
 	}
 	
-	GKLocalPlayer*	pLocalPlayer	= [GKLocalPlayer localPlayer];
+	__block	GKLocalPlayer*	pLocalPlayer	= nil;;
+	dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+		pLocalPlayer	= [GKLocalPlayer localPlayer];
+	});
+	
 	if(IOS_OR_LATER(@"6.0"))
 	{
 		pLocalPlayer.authenticateHandler	= ^(UIViewController* viewController, NSError* error)
@@ -179,7 +183,11 @@ static GameKitHelper*	s_pGameKitHelperInst	= nil;
 */
 -(void)	submitScore:(int64_t)in_score category:(NSString*)in_pCategoryName
 {
-	GKLocalPlayer*	pLocalPlayer	= [GKLocalPlayer localPlayer];
+	__block	GKLocalPlayer*	pLocalPlayer	= nil;;
+	dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+		pLocalPlayer	= [GKLocalPlayer localPlayer];
+	});
+
 	if( ( mb_isGameCenterAvaliable == NO ) || ( pLocalPlayer.authenticated == NO ) )
 	{
 		CCLOG(@"error submitScore");
@@ -222,7 +230,11 @@ static GameKitHelper*	s_pGameKitHelperInst	= nil;
 								playerScope:(GKLeaderboardPlayerScope)playerScope
 								timeScope:(GKLeaderboardTimeScope)timeScope
 {
-	GKLocalPlayer*	pLocalPlayer	= [GKLocalPlayer localPlayer];
+	__block	GKLocalPlayer*	pLocalPlayer	= nil;;
+	dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+		pLocalPlayer	= [GKLocalPlayer localPlayer];
+	});
+
 	if( ( mb_isGameCenterAvaliable == NO ) || ( pLocalPlayer.authenticated == NO ) )
 	{
 		return;
@@ -262,7 +274,11 @@ static GameKitHelper*	s_pGameKitHelperInst	= nil;
 */
 -(void)	reportAchievmentWithID:(NSString*)identifier :(float)percent
 {
-	GKLocalPlayer*	pLocalPlayer	= [GKLocalPlayer localPlayer];
+	__block	GKLocalPlayer*	pLocalPlayer	= nil;;
+	dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+		pLocalPlayer	= [GKLocalPlayer localPlayer];
+	});
+
 	if( ( mb_isGameCenterAvaliable == NO ) || ( pLocalPlayer.authenticated == NO ) )
 	{
 		return;
@@ -290,7 +306,11 @@ static GameKitHelper*	s_pGameKitHelperInst	= nil;
 */
 -(void)	showLeaderboard
 {
-	GKLocalPlayer*	pLocalPlayer	= [GKLocalPlayer localPlayer];
+	__block	GKLocalPlayer*	pLocalPlayer	= nil;;
+	dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+		pLocalPlayer	= [GKLocalPlayer localPlayer];
+	});
+
 	if( ( mb_isGameCenterAvaliable == NO ) || ( pLocalPlayer.authenticated == NO ) )
 	{
 		return;
@@ -311,7 +331,11 @@ static GameKitHelper*	s_pGameKitHelperInst	= nil;
 */
 -(void)	showGameCenter
 {
-	GKLocalPlayer*	pLocalPlayer	= [GKLocalPlayer localPlayer];
+	__block	GKLocalPlayer*	pLocalPlayer	= nil;;
+	dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+		pLocalPlayer	= [GKLocalPlayer localPlayer];
+	});
+
 	if( ( mb_isGameCenterAvaliable == NO ) || ( pLocalPlayer.authenticated == NO ) )
 	{
 		return;
@@ -334,7 +358,11 @@ static GameKitHelper*	s_pGameKitHelperInst	= nil;
 */
 -(void)	resetAchievements
 {
-	GKLocalPlayer*	pLocalPlayer	= [GKLocalPlayer localPlayer];
+	__block	GKLocalPlayer*	pLocalPlayer	= nil;;
+	dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+		pLocalPlayer	= [GKLocalPlayer localPlayer];
+	});
+
 	if( ( mb_isGameCenterAvaliable == NO ) || ( pLocalPlayer.authenticated == NO ) )
 	{
 		return;
@@ -410,7 +438,11 @@ static GameKitHelper*	s_pGameKitHelperInst	= nil;
 */
 -(GKAchievement*)	getAhievementByID:(NSString*)identifier
 {
-	GKLocalPlayer*	pLocalPlayer	= [GKLocalPlayer localPlayer];
+	__block	GKLocalPlayer*	pLocalPlayer	= nil;;
+	dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+		pLocalPlayer	= [GKLocalPlayer localPlayer];
+	});
+
 	if( ( mb_isGameCenterAvaliable == NO ) || ( pLocalPlayer.authenticated == NO ) )
 	{
 		return nil;
@@ -431,8 +463,17 @@ static GameKitHelper*	s_pGameKitHelperInst	= nil;
 */
 -(void)	loadAchiveements
 {
-	GKLocalPlayer*	pLocalPlayer	= [GKLocalPlayer localPlayer];
+	__block	GKLocalPlayer*	pLocalPlayer	= nil;;
+	dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+		pLocalPlayer	= [GKLocalPlayer localPlayer];
+	});
+
 	if( ( mb_isGameCenterAvaliable == NO ) || ( pLocalPlayer.authenticated == NO ) )
+	{
+		return;
+	}
+	
+	if( pLocalPlayer.isAuthenticated == NO )
 	{
 		return;
 	}

@@ -24,15 +24,10 @@
 {
 @private
 	AdWhirlView*	mp_bannerView;
-	NSTimer*		mp_timer;
 	CGRect			m_rect;
 	NSString*		mp_keyId;
-	BOOL			mb_stopAnim;
-	float			m_requestTimeSecVal;
 }
 
-@property	(nonatomic, readonly)BOOL	bStopAnim;
-@property	(nonatomic, assign, setter = _setBannerRequestTimeSecVal: )float requestTime;
 @property	(nonatomic, retain)AdWhirlView*	pAwView;
 
 //	関数

@@ -127,7 +127,6 @@ void uncaughtExceptionHandler( NSException* in_pException )
 	{
 		mp_bannerViewCtrl	= [[BannerViewController alloc] initWithID:[DataBaseText getString:73]];
 		[mp_bannerViewCtrl setBannerPos:ccp(ga_bannerPos[0], ga_bannerPos[1])];
-		mp_bannerViewCtrl.requestTime	= g_bannerRequestTimeSecVal;
 	}
 
 	//	広告ビュー呼び出し
@@ -208,10 +207,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
 {
 	if( [navController_ visibleViewController] == director_ )
 	{
-		if( mp_bannerViewCtrl.bStopAnim == NO )
-		{
-			[director_ startAnimation];
-		}
+		[director_ startAnimation];
 	}
 }
 
