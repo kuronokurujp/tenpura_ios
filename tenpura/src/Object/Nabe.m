@@ -91,8 +91,7 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 			pTenpura	= (Tenpura*)pNode;
 			if( (pTenpura.bRaise == YES) && (pTenpura.state == eTENPURA_STATE_RESTART) )
 			{
-				[pTenpura reset];
-				[pTenpura setVisible:YES];
+				[pTenpura start];
 
 				//	再配置する
 				UInt32	posIdx	= [pDataTenpuraPosList getIdxNoUse];
