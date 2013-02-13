@@ -32,6 +32,8 @@
 
 @implementation Tenpura
 
+static const float	s_normalScaleVal	= 3.f / 4.f;
+
 enum
 {
 	eACTTAG_LOCK_SCALE	= 1,
@@ -164,7 +166,7 @@ enum
 		[mp_sp setOpacity:0];
 
 		Float32	time	= 0.1f;
-		CCScaleTo*	pScaleBy	= [CCScaleTo actionWithDuration:time scale:1.f];
+		CCScaleTo*	pScaleBy	= [CCScaleTo actionWithDuration:time scale:s_normalScaleVal];
 		CCFadeIn*	pFadeIn		= [CCFadeIn actionWithDuration:time];
 		CCCallFunc*	pEndCall	= [CCCallFunc actionWithTarget:self selector:@selector(_endPutAction)];
 		CCSequence*	pSeq		= [CCSequence actionOne:pScaleBy two:pEndCall];
@@ -182,7 +184,7 @@ enum
 */
 -(void)	end
 {
-	[mp_sp setScale:1.f];
+	[mp_sp setScale:s_normalScaleVal];
 	mb_raise		= NO;
 	mb_lock		= NO;
 	m_posDataIdx	= -1;
@@ -206,7 +208,7 @@ enum
 	mb_lock	= NO;
 	m_nowRaiseTime	= 0.f;
 	m_state		= eTENPURA_STATE_NOT;
-	[mp_sp setScale:1.f];
+	[mp_sp setScale:s_normalScaleVal];
 	
 	//	揚げる段階を設定
 	[self unscheduleUpdate];
@@ -272,7 +274,7 @@ enum
 	CCScaleBy*	pScaleBy	= [CCScaleBy actionWithDuration:0.1f scale:1.5f];
 	[pScaleBy setTag:eACTTAG_LOCK_SCALE];
 
-	[mp_sp setScale:1.f];
+	[mp_sp setScale:s_normalScaleVal];
 	[mp_sp runAction:pScaleBy];
 	
 	m_oldZOrder	= self.zOrder;
@@ -288,7 +290,7 @@ enum
 -(void)	unLockTouch
 {
 	[scheduler_ resumeTarget:self];
-	[mp_sp setScale:1.f];
+	[mp_sp setScale:s_normalScaleVal];
 	
 	//	ロック用のスケールが残っていたら削除する
 	if( [mp_sp getActionByTag:eACTTAG_LOCK_SCALE] )
