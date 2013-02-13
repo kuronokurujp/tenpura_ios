@@ -106,7 +106,7 @@ enum
 		const NETA_DATA_ST*	pNetaData	= [[DataNetaList shared] getDataSearchId:pItem->no];
 		[mp_settingItemBtn settingItem:eITEM_TYPE_NETA:pNetaData->textID:pNetaData->no];
 
-		[[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:2];
+		[[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:g_sceneChangeTime];
 		
 		[[SoundManager shared] playSe:@"btnClick"];
 	}
@@ -240,7 +240,7 @@ enum
 */
 -(void)	pressSinagakiBtn
 {
-	[[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:2];
+	[[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:g_sceneChangeTime];
 	
 	[[SoundManager shared] playSe:@"pressBtnClick"];
 }

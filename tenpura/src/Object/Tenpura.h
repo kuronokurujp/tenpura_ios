@@ -11,6 +11,9 @@
 #import "../Data/DataNetaList.h"
 #import "./TenpuraIcon.h"
 
+//	サイズ3/4にする。
+//	フェード0.2秒
+
 /*
 	@brief	天ぷらデリゲータ
 */

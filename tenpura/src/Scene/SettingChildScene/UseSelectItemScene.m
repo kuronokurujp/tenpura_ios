@@ -105,7 +105,7 @@ enum
 		const ITEM_DATA_ST*	pItemData	= [[DataItemList shared] getDataSearchId:pItem->no];
 		[mp_settingItemBtn settingItem:eITEM_TYPE_OPTION:pItemData->textID:pItemData->no];
 
-		[[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:2];
+		[[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:g_sceneChangeTime];
 		
 		[[SoundManager shared] playSe:@"btnClick"];
 	}
@@ -202,7 +202,7 @@ enum
 */
 -(void)	pressSinagakiBtn
 {
-	[[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:2];
+	[[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:g_sceneChangeTime];
 	
 	[[SoundManager shared] playSe:@"pressBtnClick"];
 }

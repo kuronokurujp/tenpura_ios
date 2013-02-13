@@ -44,8 +44,11 @@ enum
 	eANIM_MAX
 };
 
-//	エフェクト再生名一覧
+//	アニメスプライト名一覧
 extern const char*	ga_AnimPlayName[eANIM_MAX];
+
+//	シーン変移秒数
+extern const float	g_sceneChangeTime;
 
 extern const float	g_bannerRequestTimeSecVal;
 extern const float	ga_bannerPos[ 2 ];

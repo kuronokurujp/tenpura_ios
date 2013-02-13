@@ -17,6 +17,9 @@ const char*	ga_AnimPlayName[eANIM_MAX]	=
 //	"comb_num"
 };
 
+//	シーン変移秒数
+const float	g_sceneChangeTime	= 0.2f;
+
 //	バナー更新リクエスト時間（秒）
 const float	g_bannerRequestTimeSecVal	= 15.f;
 

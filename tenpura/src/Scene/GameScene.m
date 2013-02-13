@@ -417,7 +417,7 @@ enum
 			{
 				//	再スタート
 				CCTransitionFade*	pTransFade	=
-				[CCTransitionFade transitionWithDuration:2 scene:[GameScene scene:mp_gameData] withColor:ccBLACK];
+				[CCTransitionFade transitionWithDuration:g_sceneChangeTime scene:[GameScene scene:mp_gameData] withColor:ccBLACK];
 	
 				[[CCDirector sharedDirector] replaceScene:pTransFade];
 
@@ -429,7 +429,7 @@ enum
 				CCScene*	sinagakiScene	= [CCBReader sceneWithNodeGraphFromFile:@"setting.ccbi"];
 
 				CCTransitionFade*	pTransFade	=
-				[CCTransitionFade transitionWithDuration:2 scene:sinagakiScene withColor:ccBLACK];
+				[CCTransitionFade transitionWithDuration:g_sceneChangeTime scene:sinagakiScene withColor:ccBLACK];
 	
 				[[CCDirector sharedDirector] replaceScene:pTransFade];
 				break;

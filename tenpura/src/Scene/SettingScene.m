@@ -191,7 +191,7 @@
 		CCScene*	pGameScene	= [GameScene scene:pGameData];
 
 		CCTransitionFade*	pTransFade	=
-		[CCTransitionFade transitionWithDuration:2 scene:pGameScene withColor:ccBLACK];
+		[CCTransitionFade transitionWithDuration:g_sceneChangeTime scene:pGameScene withColor:ccBLACK];
 
 		[[CCDirector sharedDirector] replaceScene:pTransFade];
 	}
@@ -211,7 +211,7 @@
 	CCScene*	sinagakiScene	= [CCBReader sceneWithNodeGraphFromFile:@"siire.ccbi"];
 
 	CCTransitionFade*	pTransFade	=
-	[CCTransitionFade transitionWithDuration:2 scene:sinagakiScene withColor:ccBLACK];
+	[CCTransitionFade transitionWithDuration:g_sceneChangeTime scene:sinagakiScene withColor:ccBLACK];
 	
 	[[CCDirector sharedDirector] pushScene:pTransFade];
 	
@@ -228,7 +228,7 @@
 	CCScene*	sinagakiScene	= [CCBReader sceneWithNodeGraphFromFile:@"itemShop.ccbi"];
 
 	CCTransitionFade*	pTransFade	=
-	[CCTransitionFade transitionWithDuration:2 scene:sinagakiScene withColor:ccBLACK];
+	[CCTransitionFade transitionWithDuration:g_sceneChangeTime scene:sinagakiScene withColor:ccBLACK];
 	
 	[[CCDirector sharedDirector] pushScene:pTransFade];
 	
@@ -265,7 +265,7 @@
     [scene addChild:node];
 
 	CCTransitionFade*	pTransFade	=
-	[CCTransitionFade transitionWithDuration:2 scene:scene withColor:ccBLACK];
+	[CCTransitionFade transitionWithDuration:g_sceneChangeTime scene:scene withColor:ccBLACK];
 
 	[[CCDirector sharedDirector] pushScene:pTransFade];
 	
@@ -302,7 +302,7 @@
     [scene addChild:node];
 
 	CCTransitionFade*	pTransFade	=
-	[CCTransitionFade transitionWithDuration:2 scene:scene withColor:ccBLACK];
+	[CCTransitionFade transitionWithDuration:g_sceneChangeTime scene:scene withColor:ccBLACK];
 
 	[[CCDirector sharedDirector] pushScene:pTransFade];
 
@@ -319,7 +319,7 @@
 	CCScene*	sinagakiScene	= [CCBReader sceneWithNodeGraphFromFile:@"mission.ccbi"];
 
 	CCTransitionFade*	pTransFade	=
-	[CCTransitionFade transitionWithDuration:2 scene:sinagakiScene withColor:ccBLACK];
+	[CCTransitionFade transitionWithDuration:g_sceneChangeTime scene:sinagakiScene withColor:ccBLACK];
 	
 	[[CCDirector sharedDirector] pushScene:pTransFade];
 	
@@ -333,7 +333,7 @@
 {
 	CCScene*	pTitleScene	= [CCBReader sceneWithNodeGraphFromFile:@"title.ccbi"];
 	CCTransitionFade*	pTransFade	=
-	[CCTransitionFade transitionWithDuration:2 scene:pTitleScene withColor:ccBLACK];
+	[CCTransitionFade transitionWithDuration:g_sceneChangeTime scene:pTitleScene withColor:ccBLACK];
 	
 	[[CCDirector sharedDirector] replaceScene:pTransFade];
 	

@@ -80,7 +80,7 @@
 	CCScene*	sinagakiScene	= [CCBReader sceneWithNodeGraphFromFile:@"setting.ccbi"];
 
 	CCTransitionFade*	pTransFade	=
-	[CCTransitionFade transitionWithDuration:2 scene:sinagakiScene withColor:ccBLACK];
+	[CCTransitionFade transitionWithDuration:g_sceneChangeTime scene:sinagakiScene withColor:ccBLACK];
 	
 	[[CCDirector sharedDirector] replaceScene:pTransFade];
 	
@@ -105,7 +105,7 @@
 	CCScene*	helpScene	= [CCBReader sceneWithNodeGraphFromFile:@"help.ccbi"];
 
 	CCTransitionFade*	pTransFade	=
-	[CCTransitionFade transitionWithDuration:2 scene:helpScene withColor:ccBLACK];
+	[CCTransitionFade transitionWithDuration:g_sceneChangeTime scene:helpScene withColor:ccBLACK];
 	
 	[[CCDirector sharedDirector] replaceScene:pTransFade];
 	

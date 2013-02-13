@@ -136,7 +136,7 @@ static NSString*	sp_helpHtmlNameList[]	=
 	CCScene*	pTitleScene	= [CCBReader sceneWithNodeGraphFromFile:@"title.ccbi"];
 
 	CCTransitionFade*	pTransFade	=
-	[CCTransitionFade transitionWithDuration:2 scene:pTitleScene withColor:ccBLACK];
+	[CCTransitionFade transitionWithDuration:g_sceneChangeTime scene:pTitleScene withColor:ccBLACK];
 	
 	[[CCDirector sharedDirector] replaceScene:pTransFade];
 	

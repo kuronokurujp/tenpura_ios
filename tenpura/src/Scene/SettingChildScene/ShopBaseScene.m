@@ -132,7 +132,7 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 */
 -(void)	pressSinagakiBtn
 {
-	[[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:2];
+	[[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:g_sceneChangeTime];
 
 	[[SoundManager shared] playSe:@"pressBtnClick"];
 }
