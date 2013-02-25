@@ -17,14 +17,18 @@
 //	非公開関数
 @interface ActionCustomer (PrivateMedhot)
 
--(void)_initPut:(id)sender;
--(void)_endPut:(id)sender;
+//	食べる時のメッセージ
+-(void)	_putEatMessage:(NSString*)in_messageFileName;
 
--(void)_endExit:(id)sender;
+-(void)	_actPut;
+-(void)	_initPut:(id)sender;
+-(void)	_endPut:(id)sender;
 
--(void)_endEat;
+-(void)	_endExit:(id)sender;
 
--(void)_endPutNumber:(id)sender;
+-(void)	_endEat;
+
+-(void)	_endPutNumber:(id)sender;
 
 //	スコアアクション作成
 -(CCAction*)	_createPutScoreAction:(SInt32)in_num;
@@ -45,6 +49,12 @@ enum ACTION_LIST_ENUM
 {
 	eACT_TAG_FLAH	= 0,
 	eACT_TAG_EAT,
+};
+
+enum ACTION_SP_ENUM
+{
+	eACT_SP_TAG_EAT_MESSAGE	= 0,
+	eACT_SP_TAG_TENPURA,
 };
 
 /*
@@ -81,29 +91,36 @@ enum ACTION_LIST_ENUM
 }
 
 /*
-	@brief	出現アクション
+	@brief	出現アクション(食べる時)
 */
--(void)put:(BOOL)in_bSettingEat
+-(void)putEat
 {
-	[mp_customer stopAllActions];
+	mb_SettingEat	= YES;
+	[self _actPut];
+}
 
-	mb_SettingEat	= in_bSettingEat;
-
-	SInt32	idx	= mp_customer.idx;
-
-	CGPoint	endPos	= ccp( ga_initCustomerPos[idx][0], ga_initCustomerPos[idx][1] );
-
-	CCMoveTo*		pMove		= [CCMoveTo actionWithDuration:1.f position:endPos];
-	CCEaseInOut*	pEaseMove	= [CCEaseInOut actionWithAction:pMove rate:4];
+/*
+	@brief	出現アクション(リザルト時)
+*/
+-(void)	putResult
+{
+	mb_SettingEat	= NO;
+	[self _actPut];
 	
-	CCCallFuncN*	pEndFunc	= [CCCallFuncN actionWithTarget:self selector:@selector(_endPut:)];
-	CCSequence*		pSeq		= [CCSequence actions:pEaseMove, pEndFunc, nil];
+	//	食べた天ぷらがあれば後始末
+	CCNode*	pTenpuraNode	= [mp_customer getChildByTag:eACT_SP_TAG_TENPURA];
+	if( pTenpuraNode && [pTenpuraNode isKindOfClass:[Tenpura class]] )
+	{
+		Tenpura*	pTenpura	= (Tenpura*)pTenpuraNode;
+		[pTenpura end];
+	}
 	
-	[self _initPut:nil];
-	[mp_customer runAction:pSeq];
-	
-	[mp_customer setVisible:YES];
-	[mp_customer.charSprite setOpacity:255];
+	//	食べた時の表示削除
+	CCNode*	pEatMessageSp	= [self getChildByTag:eACT_SP_TAG_EAT_MESSAGE];
+	if( pEatMessageSp != nil )
+	{
+		[self removeChild:pEatMessageSp cleanup:YES];
+	}
 }
 
 /*
@@ -180,6 +197,8 @@ enum ACTION_LIST_ENUM
 {
 	[self _eat:in_pTenpura:in_score:in_money];
 	
+	[self _putEatMessage:@"moji00.png"];
+
 	[[SoundManager shared] playSe:@"eat"];
 }
 
@@ -190,6 +209,8 @@ enum ACTION_LIST_ENUM
 {
 	[self _eat:in_pTenpura:in_score:in_money];
 
+	[self _putEatMessage:@"moji01.png"];
+
 	[[SoundManager shared] playSe:@"eat"];
 }
 
@@ -199,7 +220,9 @@ enum ACTION_LIST_ENUM
 -(void)	eatBat:(Tenpura*)in_pTenpura :(SInt32)in_score :(SInt32)in_money
 {
 	[self _eat:in_pTenpura:in_score:in_money];
-	
+
+	[self _putEatMessage:@"moji02.png"];
+
 	[[SoundManager shared] playSe:@"eat"];
 }
 
@@ -233,6 +256,42 @@ enum ACTION_LIST_ENUM
 	}
 	
 	return NO;
+}
+
+/*
+	@brief	食べる時のメッセージ
+*/
+-(void)	_putEatMessage:(NSString*)in_messageFileName
+{
+	CCSprite*	pEatMesssageSp	= [CCSprite spriteWithFile:in_messageFileName];
+	CGRect	rect	= [mp_customer.charSprite textureRect];
+	[pEatMesssageSp setPosition:ccp(rect.size.width * 0.3f, rect.size.height * 0.6f)];
+	
+	[self addChild:pEatMesssageSp z:0 tag:eACT_SP_TAG_EAT_MESSAGE];
+}
+
+/*
+	@brief	出現アクション設定
+*/
+-(void)	_actPut
+{
+	[mp_customer stopAllActions];
+	
+	SInt32	idx	= mp_customer.idx;
+
+	CGPoint	endPos	= ccp( ga_initCustomerPos[idx][0], ga_initCustomerPos[idx][1] );
+
+	CCMoveTo*		pMove		= [CCMoveTo actionWithDuration:1.f position:endPos];
+	CCEaseInOut*	pEaseMove	= [CCEaseInOut actionWithAction:pMove rate:4];
+	
+	CCCallFuncN*	pEndFunc	= [CCCallFuncN actionWithTarget:self selector:@selector(_endPut:)];
+	CCSequence*		pSeq		= [CCSequence actions:pEaseMove, pEndFunc, nil];
+	
+	[self _initPut:nil];
+	[mp_customer runAction:pSeq];
+	
+	[mp_customer setVisible:YES];
+	[mp_customer.charSprite setOpacity:255];
 }
 
 /*
@@ -291,6 +350,13 @@ enum ACTION_LIST_ENUM
 		[self exit];
 	}
 	
+	//	食べた時の表示削除
+	CCNode*	pEatMessageSp	= [self getChildByTag:eACT_SP_TAG_EAT_MESSAGE];
+	if( pEatMessageSp != nil )
+	{
+		[self removeChild:pEatMessageSp cleanup:YES];
+	}
+
 	m_getScore	= 0;
 	m_getMoeny	= 0;
 }
@@ -405,9 +471,8 @@ enum ACTION_LIST_ENUM
 		CGPoint	pos	= ccp(rect.size.width * anthorPos.x, rect.size.height * anthorPos.y);
 		[in_pTenpura setPosition:pos];
 		[in_pTenpura eatAction:time];
-		//	天ぷらの要素を客につけ直す
 		[in_pTenpura removeFromParentAndCleanup:NO];
-		[mp_customer addChild:in_pTenpura z:2.f];
+		[mp_customer addChild:in_pTenpura z:2.f tag:eACT_SP_TAG_TENPURA];
 	}
 
 	m_getScore	= in_score;

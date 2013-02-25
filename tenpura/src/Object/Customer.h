@@ -11,6 +11,7 @@
 
 #import "./Tenpura.h"
 #import "./../Data/DataNetaList.h"
+#import "./../Data/DataCustomerList.h"
 
 //	前方宣言
 @class ActionCustomer;
@@ -22,6 +23,7 @@
 	ActionCustomer*	mp_act;
 	Nabe*			mp_nabe;
 	CCArray*		mp_settingTenpuraList;
+	const CUSTOMER_DATA_ST*	mp_customerData;
 	
 	BOOL	mb_put;
 	SInt32	m_idx;
@@ -40,18 +42,20 @@ typedef enum
 @property	BOOL bPut;
 @property	(nonatomic, readonly)ActionCustomer*	act;
 @property	(nonatomic, readonly)SInt32	idx;
-@property	(nonatomic, retain)NSString*	regeistTenpuraDelPermitName;
 @property	(nonatomic, assign, setter = _addMoney: )SInt32 addMoney;
 @property	(nonatomic, assign, setter = _addScore: )SInt32 addScore;
 @property	(nonatomic, readonly )SInt32 money;
 @property	(nonatomic, readonly )SInt32 score;
-@property	(nonatomic, assign)Float32	eatTimeRate;
+@property	(nonatomic, readonly)Float32	eatTimeRate;
 
 //	初期化
--(id)	initToType:(TYPE_ENUM)in_type :(SInt32)in_idx :(Nabe*)in_pNabe :(CCArray*)in_pSettingTenpuraList;
+-(id)	initToType:(TYPE_ENUM)in_type :(SInt32)in_idx :(Nabe*)in_pNabe :(CCArray*)in_pSettingTenpuraList :(Float32)in_eatTimeRate;
 
 //	食べた天ぷらリスト作成
 -(void)	createEatList;
+
+//	リザルトセッティング
+-(void)	settingResult;
 
 //	食べられる天ぷらかチェック
 -(BOOL)isEatTenpura:(SInt32)in_no;

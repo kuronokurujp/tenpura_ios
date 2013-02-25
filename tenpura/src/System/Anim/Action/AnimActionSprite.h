@@ -38,9 +38,11 @@
 	CCAnimation*	mp_anim;
 	BOOL	mb_loop;
 	BOOL	mb_pause;
+	BOOL	mb_autoRelease;
 }
 
 @property	(nonatomic)BOOL	bLoop;
+@property	(nonatomic, assign)BOOL	bAutoRelease;
 
 -(id)	initWithData:(AnimData*)in_data;
 -(id)	initWithDataAndLoop:(AnimData*)in_data;

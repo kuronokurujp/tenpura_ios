@@ -10,21 +10,7 @@
 #import "cocos2d.h"
 #import "../Data/DataNetaList.h"
 #import "./TenpuraIcon.h"
-
-//	サイズ3/4にする。
-//	フェード0.2秒
-
-/*
-	@brief	天ぷらデリゲータ
-*/
-@protocol TenpuraProtocol<NSObject>
-
-//	天ぷら爆発
--(void)	onExpTenpura:(CCNode*)in_pTenpura;
-//	天ぷらをつける
--(void)	onAddChildTenpura:(CCNode*)in_pTenpura;
-
-@end
+#import "./TenpuraProtocol.h"
 
 @interface Tenpura : TenpuraBigIcon {
 
@@ -53,8 +39,8 @@
 @property	(nonatomic, retain)		id<TenpuraProtocol>	delegate;
 
 //	セットアップ
--(void)	setupToPosIndex:(NETA_DATA_ST)in_data :(const SInt32)in_posDataIdx :(Float32)in_raiseSpeedRate;
--(void)	setupToPos:(NETA_DATA_ST)in_data :(const CGPoint)in_pos :(Float32)in_raiseSpeedRate;
+-(void)	setupToPosIndex:(const NETA_DATA_ST*)in_pData :(const SInt32)in_posDataIdx :(Float32)in_raiseSpeedRate;
+-(void)	setupToPos:(const NETA_DATA_ST*)in_pData :(const CGPoint)in_pos :(Float32)in_raiseSpeedRate;
 
 //	開始
 -(void)	start;

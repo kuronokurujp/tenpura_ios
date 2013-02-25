@@ -298,11 +298,10 @@ enum
 			mp_customerArray	= [[CCArray alloc] initWithCapacity:num];
 			for( SInt32 i = 0; i < num; ++i )
 			{
-				Customer*	pCustomer	= [[[Customer alloc] initToType:eTYPE_BASIC:i:mp_nabe:mp_settingItemList] autorelease];
+				Customer*	pCustomer	= [[[Customer alloc] initToType:eTYPE_BASIC:i:mp_nabe:mp_settingItemList:customerEatRate] autorelease];
 				[pCustomer setPosition:ccp(size.width, ga_initCustomerPos[i][1])];
 				[pCustomer setAnchorPoint:ccp(0,0)];
 				[pCustomer setVisible:NO];
-				pCustomer.eatTimeRate	= customerEatRate;
 
 				[self addChild:pCustomer];
 				[mp_customerArray addObject:pCustomer];
@@ -457,7 +456,14 @@ enum
 		if( ( pCustomer.visible == NO ) && ( pCustomer.bPut == NO ) )
 		{
 			//	表示処理をする
-			[pCustomer.act put:in_bCreateEat];
+			if( in_bCreateEat == YES )
+			{
+				[pCustomer.act putEat];
+			}
+			else
+			{
+				[pCustomer.act putResult];
+			}
 
 			break;
 		}

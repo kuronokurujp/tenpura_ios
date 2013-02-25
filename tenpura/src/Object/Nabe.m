@@ -9,6 +9,8 @@
 #import "Nabe.h"
 
 #import "./../Data/DataTenpuraPosList.h"
+#import "./../Data/DataOjamaNetaList.h"
+#import "./../Object/OjamaTenpura.h"
 #import "./../Data/DataGlobal.h"
 #import "./../System/Anim/AnimManager.h"
 
@@ -38,6 +40,7 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 	{
 		AnimManager*	pAnimManager	= [AnimManager shared];
 
+		m_flyTimeRate	= 1.f;
 		mp_sp	= [CCSprite node];
 		[mp_sp initWithFile:@"nabe0.png"];
 		[mp_sp setAnchorPoint:ccp(0,0)];
@@ -98,7 +101,6 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 				[pDataTenpuraPosList setUseFlg:YES :posIdx];
 
 				[pTenpura setPosOfIndex:posIdx];
-				
 			}
 		}
 	}
@@ -107,8 +109,10 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 /*
 	@brief	天ぷら追加
 */
--(Tenpura*)	addTenpura:(NETA_DATA_ST)in_data :(Float32)in_raiseSpeedRate
+-(Tenpura*)	addTenpura:(const NETA_DATA_ST*)in_pData :(Float32)in_raiseSpeedRate
 {
+	NSAssert(in_pData, @"");
+
 	DataTenpuraPosList*	pDataTenpuraPosList	= [DataTenpuraPosList shared];
 
 	Tenpura*	pTenpura	= nil;
@@ -125,8 +129,9 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 				UInt32	posIdx	= [pDataTenpuraPosList getIdxNoUse];
 				[pDataTenpuraPosList setUseFlg:YES :posIdx];
 
-				[pTenpura setupToPosIndex:in_data:posIdx:in_raiseSpeedRate];
+				[pTenpura setupToPosIndex:in_pData:posIdx:in_raiseSpeedRate];
 				[pTenpura start];
+				[pTenpura setRaiseTimeRate:m_flyTimeRate];
 				[pTenpura setZOrder:m_tenpuraZOrder];
 				m_tenpuraZOrder += 1;
 				
@@ -147,15 +152,26 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 {
 	m_tenpuraZOrder	= s_startTenpuraZOrder;
 
+	CCArray*	pRemoveTenpura	= [CCArray array];
+
 	Tenpura*	pTenpura	= nil;
 	CCNode*		pNode		= nil;
 	CCARRAY_FOREACH(children_, pNode)
 	{
-		if( [pNode isKindOfClass:[Tenpura class]] == YES )
+		if( [pNode isKindOfClass:[Tenpura class]] )
 		{
 			pTenpura	= (Tenpura*)pNode;
 			[self _cleanTenpura:pTenpura:YES];
 		}
+		else if( [pNode isKindOfClass:[OjamaTenpura class]] )
+		{
+			[pRemoveTenpura addObject:pNode];
+		}
+	}
+
+	CCARRAY_FOREACH(pRemoveTenpura, pNode)
+	{
+		[self removeChild:pNode cleanup:YES];
 	}
 }
 
@@ -165,22 +181,51 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 -(void)	onExpTenpura:(CCNode *)in_pTenpura
 {
 	//	爆発エフェクト
-	CCNode*	pNode	= nil;
-	CCARRAY_FOREACH(children_, pNode)
+	if( [in_pTenpura isKindOfClass:[Tenpura class]] )
 	{
-		if( ([pNode isKindOfClass:[AnimActionSprite class]] == YES) && (pNode.visible == NO) )
+		CCNode*	pNode	= nil;
+		CCARRAY_FOREACH(children_, pNode)
 		{
-			AnimActionSprite*	pEff	= (AnimActionSprite*)pNode;
-			if( pEff != nil )
+			if( ([pNode isKindOfClass:[AnimActionSprite class]] == YES) && (pNode.visible == NO) )
 			{
-				[pEff setVisible:YES];
-				[pEff start];
-				[pEff setPosition:in_pTenpura.position];
-				[pEff setZOrder:20];
+				AnimActionSprite*	pEff	= (AnimActionSprite*)pNode;
+				if( pEff != nil )
+				{
+					[pEff setVisible:YES];
+					[pEff start];
+					[pEff setPosition:in_pTenpura.position];
+					[pEff setZOrder:20];
 				
-				return;
+					return;
+				}
 			}
 		}
+	}
+	else if( [in_pTenpura isKindOfClass:[OjamaTenpura class]] )
+	{
+		//	大爆発
+		AnimManager*	pAnimManager	= [AnimManager shared];
+		AnimActionSprite*	pEff	= [pAnimManager play:[NSString stringWithUTF8String:ga_AnimPlayName[eANIM_BIGBOMG]]];
+		pEff.bAutoRelease	= YES;
+		[self addChild:pEff];
+
+		[pEff setVisible:YES];
+		[pEff setPosition:in_pTenpura.position];
+		[pEff setZOrder:20];
+		
+		//	おじゃま処理を送信
+		OjamaTenpura*	pOjamaTenpura	= (OjamaTenpura*)in_pTenpura;
+		OJAMA_NETA_DATA	data	= pOjamaTenpura.data;
+		NSValue*	val	= [NSValue value:&data withObjCType:@encode(OJAMA_NETA_DATA)];
+
+		NSString*	pDataName		= [NSString stringWithUTF8String:gp_startOjamaDataName];
+		NSDictionary*	pDlc	= [NSDictionary dictionaryWithObjectsAndKeys:val,	pDataName, nil];
+
+		NSString*	pOBName	= [NSString stringWithUTF8String:gp_startOjamaObserverName];
+		NSNotification*	pNotification	=
+		[NSNotification notificationWithName:pOBName object:self userInfo:pDlc];
+	
+		[[NSNotificationCenter defaultCenter] postNotification:pNotification];
 	}
 }
 
@@ -201,14 +246,39 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 */
 -(void)	setRaiseTimeRate:(Float32)in_rate
 {
-	CCNode*		pNode		= nil;
+	m_flyTimeRate	= in_rate;
+	CCNode*	pNode	= nil;
 	CCARRAY_FOREACH(children_, pNode)
 	{
-		if( [pNode isKindOfClass:[Tenpura class]] == YES )
+		if( [pNode isKindOfClass:[Tenpura class]] )
 		{
 			Tenpura*	pTenpura	= (Tenpura*)pNode;
 			[pTenpura setRaiseTimeRate:in_rate];
 		}
+	}
+}
+
+/*
+	@brief	おじゃまを出す
+*/
+-(void)	putOjamaTenpura
+{
+	DataOjamaNetaList*	pOjamaNetaList	= [DataOjamaNetaList shared];
+	
+	SInt32	cnt	= CCRANDOM_0_1() * pOjamaNetaList.dataNum;
+	if( cnt <= 0 )
+	{
+		cnt	= 1;
+	}
+
+	for( SInt32 i = 0; i < cnt; ++i )
+	{
+		OjamaTenpura*	pOjama	= [OjamaTenpura node];
+		[self addChild:pOjama z:15.f];
+
+		[pOjama setup:[pOjamaNetaList getData:i] :1.f];
+		pOjama.delegate	= self;
+		[pOjama start];
 	}
 }
 

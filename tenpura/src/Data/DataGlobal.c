@@ -7,6 +7,7 @@
 //
 
 #include "DataGlobal.h"
+#include <stdio.h>
 
 //	エフェクト再生名一覧
 const char*	ga_AnimPlayName[eANIM_MAX]	=
@@ -14,7 +15,7 @@ const char*	ga_AnimPlayName[eANIM_MAX]	=
 	"bomb",
 	"cursor",
 	"star",
-//	"comb_num"
+	"bigBomb",
 };
 
 //	シーン変移秒数
@@ -37,6 +38,11 @@ const char*	gp_bannerHideObserverName	= "OBBannerHide";
 const char*	gp_tweetShowObserverName	= "OBTweetShow";
 const char*	gp_tweetTextKeyName			= "TweetTextKey";
 const char*	gp_tweetSearchURLKeyName	= "TweetSearchURLKey";
+
+//	おじゃま処理用のオブサーバー通知名
+const char*	gp_startOjamaObserverName	= "InGameStartOjama";
+const char*	gp_startOjamaDataName	= "InGameStartOjamaData";
+
 
 //	お客の座標位置
 const float ga_initCustomerPos[ eCUSTOMER_MAX ][ 2 ]	=
@@ -65,12 +71,20 @@ static const char*	gp_CutomerCharFileName	= "customer0.png";
 static const char*	gp_GamePlayEndSpritFileName	= "play_end.png";
 static const char*	gp_GamePlayStartSpritFileName	= "play_start.png";
 */
+const char*	gp_preLoadImgFileName[]	=
+{
+	"moji00.png",
+	"moji01.png",
+	"moji02.png",
+	NULL
+};
 
 ANIM_DATA_ST	ga_animDataList[eANIM_MAX]	=
 {
-		{ "bomb.pvrtc", "bomb.plist", 60.f },
-		{ "cursor.pvrtc", "cursor.plist", 80.f },
-		{ "star.pvrtc", "star.plist", 80.f },
+	{ "bomb.png", "bomb.plist", 60.f },
+	{ "cursor.png", "cursor.plist", 60.f },
+	{ "star.png", "star.plist", 60.f },
+	{ "bigBomb.png", "bigBomb.plist", 60.f },
 };
 
 char*	gpa_spriteFileNameList[eSPRITE_FILE_MAX]	=

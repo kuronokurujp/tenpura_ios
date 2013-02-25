@@ -685,7 +685,7 @@
 			<key>textureFileName</key>
 			<string>bomb_default</string>
 			<key>textureFileExtension</key>
-			<string>.pvrtc</string>
+			<string>.png</string>
 			<key>coordinatesFileName</key>
 			<string>bomb_default</string>
 			<key>coordinatesFileExtension</key>

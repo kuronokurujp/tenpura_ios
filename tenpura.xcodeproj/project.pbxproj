@@ -9,9 +9,6 @@
 /* Begin PBXBuildFile section */
 		CE0C82FE16B914F80086CEEA /* GameInFeverEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0C82FD16B914F80086CEEA /* GameInFeverEvent.m */; };
 		CE0C830116B915890086CEEA /* GameInFliterColorBG.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0C830016B915890086CEEA /* GameInFliterColorBG.m */; };
-		CE1175FA16C511D600655404 /* bomb.pvrtc in Resources */ = {isa = PBXBuildFile; fileRef = CE1175F916C511D600655404 /* bomb.pvrtc */; };
-		CE1175FC16C5130700655404 /* cursor.pvrtc in Resources */ = {isa = PBXBuildFile; fileRef = CE1175FB16C5130700655404 /* cursor.pvrtc */; };
-		CE1175FE16C5135300655404 /* star.pvrtc in Resources */ = {isa = PBXBuildFile; fileRef = CE1175FD16C5135300655404 /* star.pvrtc */; };
 		CE1281161642974800D369CF /* SettingScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1281151642974800D369CF /* SettingScene.m */; };
 		CE12811916429D0200D369CF /* setting.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE12811816429D0200D369CF /* setting.ccbi */; };
 		CE18C49C1667ABA000ED1E85 /* DataMissionList.m in Sources */ = {isa = PBXBuildFile; fileRef = CE18C49B1667ABA000ED1E85 /* DataMissionList.m */; };
@@ -305,6 +302,16 @@
 		CEEAEED416AAB8C00088B718 /* UseSelectNetaScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEAEED316AAB8C00088B718 /* UseSelectNetaScene.m */; };
 		CEEAEED716AAB9CC0088B718 /* UseSelectItemScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEAEED616AAB9CB0088B718 /* UseSelectItemScene.m */; };
 		CEEAEED916AAC1F90088B718 /* use_neta_select.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CEEAEED816AAC1F90088B718 /* use_neta_select.ccbi */; };
+		CEEFB28716DAF78E00DFB1F5 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = CEEFB28616DAF78E00DFB1F5 /* star.png */; };
+		CEEFB28916DAF79A00DFB1F5 /* cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = CEEFB28816DAF79A00DFB1F5 /* cursor.png */; };
+		CEEFB28B16DAF86300DFB1F5 /* bomb.png in Resources */ = {isa = PBXBuildFile; fileRef = CEEFB28A16DAF86300DFB1F5 /* bomb.png */; };
+		CEEFB29016DAFBB400DFB1F5 /* DataCustomerList.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEFB28F16DAFBB400DFB1F5 /* DataCustomerList.m */; };
+		CEEFB29416DB01CC00DFB1F5 /* customerListData.csv in Resources */ = {isa = PBXBuildFile; fileRef = CEEFB29316DB01CC00DFB1F5 /* customerListData.csv */; };
+		CEEFB29C16DB281400DFB1F5 /* OjamaTenpura.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEFB29B16DB281400DFB1F5 /* OjamaTenpura.m */; };
+		CEEFB29F16DB2B8A00DFB1F5 /* DataOjamaNetaList.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEFB29E16DB2B8A00DFB1F5 /* DataOjamaNetaList.m */; };
+		CEEFB2A116DB2D6000DFB1F5 /* ojamaDataList.csv in Resources */ = {isa = PBXBuildFile; fileRef = CEEFB2A016DB2D6000DFB1F5 /* ojamaDataList.csv */; };
+		CEEFB2A916DB533D00DFB1F5 /* bigBomb.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEEFB2A716DB533D00DFB1F5 /* bigBomb.plist */; };
+		CEEFB2AA16DB533D00DFB1F5 /* bigBomb.png in Resources */ = {isa = PBXBuildFile; fileRef = CEEFB2A816DB533D00DFB1F5 /* bigBomb.png */; };
 		CEF24C3816C2468F00AE4B31 /* TenpuraIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF24C3716C2468F00AE4B31 /* TenpuraIcon.m */; };
 		CEF24D87163C131200ACE56F /* CCBAnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF24D7C163C131200ACE56F /* CCBAnimationManager.m */; };
 		CEF24D88163C131200ACE56F /* CCBKeyframe.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF24D7E163C131200ACE56F /* CCBKeyframe.m */; };
@@ -417,9 +424,6 @@
 		CE0C82FD16B914F80086CEEA /* GameInFeverEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameInFeverEvent.m; path = src/Object/GameInFeverEvent.m; sourceTree = "<group>"; };
 		CE0C82FF16B915890086CEEA /* GameInFliterColorBG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameInFliterColorBG.h; path = src/Object/GameInFliterColorBG.h; sourceTree = "<group>"; };
 		CE0C830016B915890086CEEA /* GameInFliterColorBG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameInFliterColorBG.m; path = src/Object/GameInFliterColorBG.m; sourceTree = "<group>"; };
-		CE1175F916C511D600655404 /* bomb.pvrtc */ = {isa = PBXFileReference; lastKnownFileType = file; name = bomb.pvrtc; path = Resources/anim/bomb/bomb.pvrtc; sourceTree = "<group>"; };
-		CE1175FB16C5130700655404 /* cursor.pvrtc */ = {isa = PBXFileReference; lastKnownFileType = file; name = cursor.pvrtc; path = Resources/anim/cursor/cursor.pvrtc; sourceTree = "<group>"; };
-		CE1175FD16C5135300655404 /* star.pvrtc */ = {isa = PBXFileReference; lastKnownFileType = file; name = star.pvrtc; path = Resources/anim/star/star.pvrtc; sourceTree = "<group>"; };
 		CE1281141642974800D369CF /* SettingScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingScene.h; path = src/Scene/SettingScene.h; sourceTree = "<group>"; };
 		CE1281151642974800D369CF /* SettingScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingScene.m; path = src/Scene/SettingScene.m; sourceTree = "<group>"; };
 		CE12811816429D0200D369CF /* setting.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = setting.ccbi; path = Resources/ccbi/setting.ccbi; sourceTree = "<group>"; };
@@ -901,6 +905,20 @@
 		CEEAEED516AAB9CB0088B718 /* UseSelectItemScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UseSelectItemScene.h; path = src/Scene/SettingChildScene/UseSelectItemScene.h; sourceTree = "<group>"; };
 		CEEAEED616AAB9CB0088B718 /* UseSelectItemScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UseSelectItemScene.m; path = src/Scene/SettingChildScene/UseSelectItemScene.m; sourceTree = "<group>"; };
 		CEEAEED816AAC1F90088B718 /* use_neta_select.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = use_neta_select.ccbi; path = Resources/ccbi/use_neta_select.ccbi; sourceTree = "<group>"; };
+		CEEFB28616DAF78E00DFB1F5 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = star.png; path = Resources/anim/star/star.png; sourceTree = "<group>"; };
+		CEEFB28816DAF79A00DFB1F5 /* cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cursor.png; path = Resources/anim/cursor/cursor.png; sourceTree = "<group>"; };
+		CEEFB28A16DAF86300DFB1F5 /* bomb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bomb.png; path = Resources/anim/bomb/bomb.png; sourceTree = "<group>"; };
+		CEEFB28E16DAFBB400DFB1F5 /* DataCustomerList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataCustomerList.h; path = src/Data/DataCustomerList.h; sourceTree = "<group>"; };
+		CEEFB28F16DAFBB400DFB1F5 /* DataCustomerList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataCustomerList.m; path = src/Data/DataCustomerList.m; sourceTree = "<group>"; };
+		CEEFB29316DB01CC00DFB1F5 /* customerListData.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = customerListData.csv; path = Resources/data/customerListData.csv; sourceTree = "<group>"; };
+		CEEFB29A16DB281400DFB1F5 /* OjamaTenpura.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OjamaTenpura.h; path = src/Object/OjamaTenpura.h; sourceTree = "<group>"; };
+		CEEFB29B16DB281400DFB1F5 /* OjamaTenpura.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OjamaTenpura.m; path = src/Object/OjamaTenpura.m; sourceTree = "<group>"; };
+		CEEFB29D16DB2B8A00DFB1F5 /* DataOjamaNetaList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataOjamaNetaList.h; path = src/Data/DataOjamaNetaList.h; sourceTree = "<group>"; };
+		CEEFB29E16DB2B8A00DFB1F5 /* DataOjamaNetaList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataOjamaNetaList.m; path = src/Data/DataOjamaNetaList.m; sourceTree = "<group>"; };
+		CEEFB2A016DB2D6000DFB1F5 /* ojamaDataList.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ojamaDataList.csv; path = Resources/data/ojamaDataList.csv; sourceTree = "<group>"; };
+		CEEFB2A616DB434700DFB1F5 /* TenpuraProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TenpuraProtocol.h; path = src/Object/TenpuraProtocol.h; sourceTree = "<group>"; };
+		CEEFB2A716DB533D00DFB1F5 /* bigBomb.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = bigBomb.plist; path = Resources/anim/bomb/bigBomb.plist; sourceTree = "<group>"; };
+		CEEFB2A816DB533D00DFB1F5 /* bigBomb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bigBomb.png; path = Resources/anim/bomb/bigBomb.png; sourceTree = "<group>"; };
 		CEF24C3616C2468F00AE4B31 /* TenpuraIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TenpuraIcon.h; path = src/Object/TenpuraIcon.h; sourceTree = "<group>"; };
 		CEF24C3716C2468F00AE4B31 /* TenpuraIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TenpuraIcon.m; path = src/Object/TenpuraIcon.m; sourceTree = "<group>"; };
 		CEF24D7B163C131200ACE56F /* CCBAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBAnimationManager.h; sourceTree = "<group>"; };
@@ -1137,7 +1155,7 @@
 		CE216D5F16B37A6D000E0E29 /* star */ = {
 			isa = PBXGroup;
 			children = (
-				CE1175FD16C5135300655404 /* star.pvrtc */,
+				CEEFB28616DAF78E00DFB1F5 /* star.png */,
 				CE216D6316B37AD0000E0E29 /* star.plist */,
 			);
 			name = star;
@@ -1146,8 +1164,10 @@
 		CE216D6116B37A81000E0E29 /* bomb */ = {
 			isa = PBXGroup;
 			children = (
+				CEEFB2A716DB533D00DFB1F5 /* bigBomb.plist */,
+				CEEFB2A816DB533D00DFB1F5 /* bigBomb.png */,
+				CEEFB28A16DAF86300DFB1F5 /* bomb.png */,
 				CE216D6B16B37AE9000E0E29 /* bomb.plist */,
-				CE1175F916C511D600655404 /* bomb.pvrtc */,
 			);
 			name = bomb;
 			sourceTree = "<group>";
@@ -1156,7 +1176,7 @@
 			isa = PBXGroup;
 			children = (
 				CE216D6716B37AE0000E0E29 /* cursor.plist */,
-				CE1175FB16C5130700655404 /* cursor.pvrtc */,
+				CEEFB28816DAF79A00DFB1F5 /* cursor.png */,
 			);
 			name = cursor;
 			sourceTree = "<group>";
@@ -1805,15 +1825,19 @@
 				CED247AF163997D300506CA8 /* DataGlobal.c */,
 				CED247B0163997D300506CA8 /* DataGlobal.h */,
 				CED247B1163997D300506CA8 /* DataNetaList.h */,
+				CED247B2163997D300506CA8 /* DataNetaList.m */,
 				CEEAEECA16AA945B0088B718 /* DataItemList.h */,
 				CEEAEECB16AA945B0088B718 /* DataItemList.m */,
-				CED247B2163997D300506CA8 /* DataNetaList.m */,
+				CEEFB28E16DAFBB400DFB1F5 /* DataCustomerList.h */,
+				CEEFB28F16DAFBB400DFB1F5 /* DataCustomerList.m */,
 				CED247B3163997D300506CA8 /* DataTenpuraPosList.h */,
 				CED247B4163997D300506CA8 /* DataTenpuraPosList.m */,
 				CEC4D99916414CD500157DDB /* DataSaveGame.h */,
 				CEC4D99A16414CD500157DDB /* DataSaveGame.m */,
 				CEC9CF6A16453C3300D446A3 /* DataSettingTenpura.h */,
 				CEC9CF6B16453C3300D446A3 /* DataSettingTenpura.m */,
+				CEEFB29D16DB2B8A00DFB1F5 /* DataOjamaNetaList.h */,
+				CEEFB29E16DB2B8A00DFB1F5 /* DataOjamaNetaList.m */,
 				CEE23B2D164676850033ADA0 /* DataBaseText.h */,
 				CEE23B2E164676850033ADA0 /* DataBaseText.m */,
 				CE18C49A1667ABA000ED1E85 /* DataMissionList.h */,
@@ -1833,6 +1857,8 @@
 				CED247BD163997DD00506CA8 /* Tenpura.m */,
 				CEF24C3616C2468F00AE4B31 /* TenpuraIcon.h */,
 				CEF24C3716C2468F00AE4B31 /* TenpuraIcon.m */,
+				CEEFB29A16DB281400DFB1F5 /* OjamaTenpura.h */,
+				CEEFB29B16DB281400DFB1F5 /* OjamaTenpura.m */,
 				CEFBC2A91687182100C3C233 /* Ticker.h */,
 				CEFBC2AA1687182100C3C233 /* Ticker.m */,
 				CE0C82FC16B914F80086CEEA /* GameInFeverEvent.h */,
@@ -1843,6 +1869,7 @@
 				CE2F301B16B8C7E40010610D /* GameInFeverMessage.m */,
 				CE0C82FF16B915890086CEEA /* GameInFliterColorBG.h */,
 				CE0C830016B915890086CEEA /* GameInFliterColorBG.m */,
+				CEEFB2A616DB434700DFB1F5 /* TenpuraProtocol.h */,
 			);
 			name = Object;
 			sourceTree = "<group>";
@@ -1978,6 +2005,8 @@
 			isa = PBXGroup;
 			children = (
 				CEEAEECD16AA958C0088B718 /* itemList.csv */,
+				CEEFB29316DB01CC00DFB1F5 /* customerListData.csv */,
+				CEEFB2A016DB2D6000DFB1F5 /* ojamaDataList.csv */,
 				CEE23B2A1646764B0033ADA0 /* textData.csv */,
 				CE18C4A21667D84200ED1E85 /* missionListData.csv */,
 				CE4197311695AAC200EAD614 /* soundListData.csv */,
@@ -2580,9 +2609,13 @@
 				CEF7FA2216BFF84000A69042 /* AdWhirlWebBrowser.xib in Resources */,
 				CE8EC3CF16C283AC00686FF1 /* Icon-72.png in Resources */,
 				CE8EC3D016C283AC00686FF1 /* Icon-Small-50.png in Resources */,
-				CE1175FA16C511D600655404 /* bomb.pvrtc in Resources */,
-				CE1175FC16C5130700655404 /* cursor.pvrtc in Resources */,
-				CE1175FE16C5135300655404 /* star.pvrtc in Resources */,
+				CEEFB28716DAF78E00DFB1F5 /* star.png in Resources */,
+				CEEFB28916DAF79A00DFB1F5 /* cursor.png in Resources */,
+				CEEFB28B16DAF86300DFB1F5 /* bomb.png in Resources */,
+				CEEFB29416DB01CC00DFB1F5 /* customerListData.csv in Resources */,
+				CEEFB2A116DB2D6000DFB1F5 /* ojamaDataList.csv in Resources */,
+				CEEFB2A916DB533D00DFB1F5 /* bigBomb.plist in Resources */,
+				CEEFB2AA16DB533D00DFB1F5 /* bigBomb.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2801,6 +2834,9 @@
 				CEF7FA2516BFF84000A69042 /* AWNetworkReachabilityWrapper.m in Sources */,
 				CEF7FA2616BFF84000A69042 /* UIColor+AdWhirlConfig.m in Sources */,
 				CEF24C3816C2468F00AE4B31 /* TenpuraIcon.m in Sources */,
+				CEEFB29016DAFBB400DFB1F5 /* DataCustomerList.m in Sources */,
+				CEEFB29C16DB281400DFB1F5 /* OjamaTenpura.m in Sources */,
+				CEEFB29F16DB2B8A00DFB1F5 /* DataOjamaNetaList.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

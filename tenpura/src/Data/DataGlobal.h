@@ -41,6 +41,7 @@ enum
 	eANIM_BOMG	= 0,
 	eANIM_CURSOR,
 	eANIM_STAR,
+	eANIM_BIGBOMG,
 	eANIM_MAX
 };
 
@@ -61,7 +62,15 @@ extern const char*	gp_bannerHideObserverName;
 extern const char*	gp_tweetShowObserverName;
 extern const char*	gp_tweetTextKeyName;
 extern const char*	gp_tweetSearchURLKeyName;
+
+//	おじゃま処理用のオブサーバー通知名
+extern	const char*	gp_startOjamaObserverName;
+extern	const char*	gp_startOjamaDataName;
+
 extern const char*	gp_soundDataListName;
+
+//	事前に読む込むテクスチャーファイル一覧
+extern const char*	gp_preLoadImgFileName[];
 
 //	アニメ
 typedef struct

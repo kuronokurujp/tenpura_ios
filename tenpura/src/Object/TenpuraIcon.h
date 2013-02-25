@@ -36,7 +36,8 @@ typedef enum
 @property	(nonatomic, readonly)TENPURA_STATE_ET	state;
 
 //	セットアップ
--(void)	setupToPos:(NETA_DATA_ST)in_data :(const CGPoint)in_pos :(Float32)in_raiseSpeedRate;
+-(void)	setupToPos:(const NETA_DATA_ST*)in_pData :(const CGPoint)in_pos :(Float32)in_raiseSpeedRate;
+-(void)	setup:(const NETA_DATA_ST*)in_pData;
 
 @end
 

@@ -56,15 +56,19 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 /*
 	@brief	初期化
 */
--(id)	initToType:(TYPE_ENUM)in_type :(SInt32)in_idx :(Nabe*)in_pNabe :(CCArray*)in_pSettingTenpuraList
+-(id)	initToType:(TYPE_ENUM)in_type :(SInt32)in_idx :(Nabe*)in_pNabe :(CCArray*)in_pSettingTenpuraList :(Float32)in_eatTimeRate
 {
 	if( self = [super init] )
 	{
+		DataCustomerList*	pDataCustomerList	= [DataCustomerList shared];
+		NSAssert(pDataCustomerList, @"客のデータがないです");
+		mp_customerData	= [pDataCustomerList getDataSearchId:in_idx];
+		
 		mp_act	= nil;
 		mp_sp	= nil;
 		m_money	= 0;
 		m_score	= 0;
-		m_eatTimeRate	= 1.f;
+		m_eatTimeRate	= in_eatTimeRate * mp_customerData->eatTime;
 
 		mp_nabe	= in_pNabe;
 		mp_settingTenpuraList	= in_pSettingTenpuraList;
@@ -122,7 +126,7 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 		NSAssert( pData, @"ゲーム中に使用する天ぷらデータがない" );
 
 		//	鍋に揚げる天ぷらを通知
-		Tenpura*	pTenpura	= [mp_nabe addTenpura:*pData:pSettingTenpura.raiseTimeRate];
+		Tenpura*	pTenpura	= [mp_nabe addTenpura:pData:pSettingTenpura.raiseTimeRate];
 		if( pTenpura != nil )
 		{
 			NSString*	pFileName	= [NSString stringWithFormat:@"cust_%s.png", pData->fileName];
@@ -140,6 +144,20 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 			[self addChild:pIcon z:1 tag:eTAG_EAT_ICON];
 		}
 	}
+}
+
+/*
+	@brief	リザルトセッティング
+*/
+-(void)	settingResult
+{
+	//	強制登場
+	[mp_act putResult];
+	
+	//	食べている天ぷらがあれば消す
+	
+	//	天ぷらアイコンを消す
+	[self removeAllEatIcon];
 }
 
 /*
@@ -308,7 +326,7 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 */
 -(void)	_addMoney:(SInt32)money
 {
-	m_money	+= money;
+	m_money	+= (money * mp_customerData->moneyRate);
 	if( m_money < 0 )
 	{
 		m_money	= 0;
@@ -320,7 +338,7 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 */
 -(void)	_addScore:(SInt32)score
 {
-	m_score	+= score;
+	m_score	+= (score * mp_customerData->scoreRate);
 	if( m_score < 0 )
 	{
 		m_score	= 0;

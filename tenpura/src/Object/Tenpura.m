@@ -15,7 +15,7 @@
 
 @interface Tenpura (PrivateMethod)
 
--(void)		_setup:(NETA_DATA_ST)in_data;
+-(void)		_setup:(const NETA_DATA_ST*)in_pData;
 -(CGRect)	_getTexRect:(SInt32)in_idx;
 
 //	登場演出終了
@@ -66,7 +66,6 @@ enum
 		m_nowRaiseTime	= 0.f;
 
 		m_state			= eTENPURA_STATE_VERYBAD;
-	
 		AnimManager*	pAnimManager	= [AnimManager shared];
 
 		CCNode*	pEff	= nil;
@@ -125,9 +124,9 @@ enum
 /*
 	@brief	セットアップ
 */
--(void)	setupToPosIndex:(NETA_DATA_ST)in_data :(const SInt32)in_posDataIdx :(Float32)in_raiseSpeedRate
+-(void)	setupToPosIndex:(const NETA_DATA_ST*)in_pData :(const SInt32)in_posDataIdx :(Float32)in_raiseSpeedRate
 {
-	[self _setup:in_data];
+	[self _setup:in_pData];
 	
 	//	座標設定
 	{
@@ -143,9 +142,9 @@ enum
 /*
 	@brief
 */
--(void)	setupToPos:(NETA_DATA_ST)in_data :(const CGPoint)in_pos :(Float32)in_raiseSpeedRate
+-(void)	setupToPos:(const NETA_DATA_ST*)in_pData :(const CGPoint)in_pos :(Float32)in_raiseSpeedRate
 {
-	[self _setup:in_data];
+	[self _setup:in_pData];
 
 	[self setPosition:in_pos];
 	
@@ -225,7 +224,9 @@ enum
 	[mp_sp setTextureRect:[self _getTexRect:(SInt32)m_state]];
 }
 
-//	食べるアクション
+/*
+	@brief	食べるアクション
+*/
 -(void)	eatAction:(Float32)in_time
 {
 	NSAssert(mb_raise == YES, @"天ぷらをあげていない");
@@ -383,7 +384,6 @@ enum
 -(void)	_doNextRaise:(ccTime)delta
 {
 	++m_state;
-	
 	if( m_state < eTENPURA_STATE_MAX )
 	{
 		{
@@ -474,32 +474,15 @@ enum
 /*
 	@brief
 */
--(void)		_setup:(NETA_DATA_ST)in_data
+-(void)		_setup:(const NETA_DATA_ST*)in_pData
 {
-	if( mp_sp != nil )
-	{
-		[self removeChild:mp_sp cleanup:YES];
-		mp_sp	= nil;
-	}
+	NSAssert(in_pData, @"");
+	[super setup:in_pData];
 	
 	mb_lock		= NO;
-	mb_raise		= NO;
+	mb_raise	= NO;
 
-	m_data	= in_data;
-
-	//	ファイル名作成
-	NSMutableString*	pFileName	= [NSMutableString stringWithUTF8String:in_data.fileName];
-	[pFileName appendString: @".png"];
-	mp_sp	= [CCSprite node];
-	[mp_sp initWithFile:pFileName];
-	NSAssert(mp_sp, @"");
-	[self addChild:mp_sp];
-
-	m_state		= eTENPURA_STATE_NOT;
-	m_texSize	= [mp_sp contentSize];
-	m_texSize.height	= m_texSize.height / (Float32)(eTENPURA_STATE_VERYBAD + 1);
-
-	[mp_sp setTextureRect:[self _getTexRect:(SInt32)m_state]];	
+	m_data	= *in_pData;
 }
 
 /*
@@ -534,7 +517,7 @@ enum
 	return time;
 }
 
-#if 0
+#if 1
 
 #ifdef DEBUG
 -(void)	draw

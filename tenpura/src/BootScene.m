@@ -53,7 +53,13 @@
 			{
 				[[FileTexLoadManager shared] LoadAsync:[NSString stringWithUTF8String:ga_animDataList[i].pImageFileName]];
 			}
+			
+			for( UInt32 i = 0; gp_preLoadImgFileName[i] != NULL; ++i )
+			{
+				[[FileTexLoadManager shared] LoadAsync:[NSString stringWithUTF8String:gp_preLoadImgFileName[i]]];
+			}
 		}
+
 		//	SE先読み
 		[[SoundManager shared] preLoad:@"caf"];
 	}

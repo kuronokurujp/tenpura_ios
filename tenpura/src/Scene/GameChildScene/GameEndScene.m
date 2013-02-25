@@ -68,12 +68,19 @@
 	//	天ぷらを消滅
 	[pGameScene->mp_nabe allCleanTenpura];
 	
+	//	客を一時停止
+	Customer*	pCustomer	= nil;
+	CCARRAY_FOREACH(pGameScene->mp_customerArray,pCustomer)
+	{
+		[pCustomer pauseSchedulerAndActions];
+	}
+	
 	//	ロゴ表示イベント
 	{
 		CGPoint	pos	= ccp(SCREEN_SIZE_WIDTH * 0.5f, SCREEN_SIZE_HEIGHT * 0.5f);
 		[mp_endLogoSp setVisible:YES];
 		[mp_endLogoSp setPosition:pos];
-	
+
 		CCFadeIn*	pFadeIn		= [CCFadeIn actionWithDuration:1.f];
 		CCCallFunc*	pEndFunc	= [CCCallFunc actionWithTarget:self selector:@selector(_endByLogoInAlphaEvent)];
 		CCSequence*	pSeq		= [CCSequence actions:pFadeIn, pEndFunc, nil];
@@ -112,11 +119,10 @@
 	{
 		CCARRAY_FOREACH( pGameScene->mp_customerArray, pCustomer )
 		{
-			//	強制登場
-			[pCustomer.act put:NO];
-
-			//	天ぷらアイコンを消す
-			[pCustomer removeAllEatIcon];
+			//	停止した客を再起動
+			[pCustomer resumeSchedulerAndActions];
+			
+			[pCustomer settingResult];
 		}
 	}
 	

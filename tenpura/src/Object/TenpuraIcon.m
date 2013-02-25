@@ -10,7 +10,6 @@
 
 @interface TenpuraBigIcon (PrivateMethod)
 
--(void)		_setup:(NETA_DATA_ST)in_data;
 -(CGRect)	_getTexRect:(SInt32)in_idx;
 
 @end
@@ -45,9 +44,9 @@
 /*
 	@brief
 */
--(void)	setupToPos:(NETA_DATA_ST)in_data :(const CGPoint)in_pos :(Float32)in_raiseSpeedRate
+-(void)	setupToPos:(const NETA_DATA_ST*)in_pData :(const CGPoint)in_pos :(Float32)in_raiseSpeedRate
 {
-	[self _setup:in_data];
+	[self setup:in_pData];
 
 	[self setPosition:in_pos];
 }
@@ -55,8 +54,10 @@
 /*
 	@brief
 */
--(void)		_setup:(NETA_DATA_ST)in_data
+-(void)		setup:(const NETA_DATA_ST*)in_pData
 {
+	NSAssert(in_pData, @"");
+
 	if( mp_sp != nil )
 	{
 		[self removeChild:mp_sp cleanup:YES];
@@ -64,7 +65,7 @@
 	}
 	
 	//	ファイル名作成
-	NSMutableString*	pFileName	= [NSMutableString stringWithUTF8String:in_data.fileName];
+	NSMutableString*	pFileName	= [NSMutableString stringWithUTF8String:in_pData->fileName];
 	[pFileName appendString: @".png"];
 	mp_sp	= [CCSprite node];
 	[mp_sp initWithFile:pFileName];

@@ -80,7 +80,7 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 			CGSize	texSize	= [pCellSprite textureRect].size;
 
 			TenpuraBigIcon*	pTenpuraObject	= [[[TenpuraBigIcon alloc] init] autorelease];
-			[pTenpuraObject setupToPos:*pData :ccp(70, texSize.height * 0.5f):1.f];
+			[pTenpuraObject setupToPos:pData :ccp(70, texSize.height * 0.5f):1.f];
 
 			[pCellSprite addChild:pTenpuraObject z:0 tag:eTAG_SHOP_TABLE_ITEM_ICON_OBJ];
 		}

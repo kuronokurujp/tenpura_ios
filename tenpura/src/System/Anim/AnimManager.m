@@ -87,7 +87,7 @@ static	AnimManager*	sp_inst	= nil;
 /*
 	@brief	エフェクトバッチ作成
 */
--(CCNode*)	createBath:(const NSString*)in_pName
+-(AnimActionSprite*)	createBath:(const NSString*)in_pName
 {
 	NSAssert(in_pName, @"%s(%d):エフェクト名がない", __FILE__, __LINE__);
 	id	pData	= [mp_dicData objectForKey:in_pName];
@@ -105,7 +105,7 @@ static	AnimManager*	sp_inst	= nil;
 /*
 	@brief	エフェクト作成
 */
--(CCNode*)	createNode:(const NSString*)in_pName :(BOOL)in_bLoop
+-(AnimActionSprite*)	createNode:(const NSString*)in_pName :(BOOL)in_bLoop
 {
 	id	pEffData	= [mp_dicData objectForKey:in_pName];
 	if( pEffData != nil )
@@ -131,7 +131,7 @@ static	AnimManager*	sp_inst	= nil;
 /*
 	@brief	エフェクト再生
 */
--(CCNode*)	play:(const NSString*)in_pName
+-(AnimActionSprite*)	play:(const NSString*)in_pName
 {
 	id	pEffData	= [mp_dicData objectForKey:in_pName];
 	if( pEffData != nil )

@@ -111,6 +111,7 @@
 {
 	NSAssert(in_data, @"アニメデータがない");
 	{
+		mb_autoRelease	= NO;
 		mb_loop	= in_bLoop;
 		mp_data	= [in_data retain];
 
@@ -174,7 +175,11 @@
 */
 -(void)	_endAnim
 {
-//	[self removeFromParentAndCleanup:YES];
+	if( mb_autoRelease == YES )
+	{
+		[self removeFromParentAndCleanup:YES];
+	}
+
 	[self setVisible:NO];
 }
 

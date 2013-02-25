@@ -33,8 +33,10 @@
 //	初期化
 -(id)	initWithCusomer:(Customer*)in_pCustomer;
 
-//	出現アクション
--(void)	put:(BOOL)in_bSettingEat;
+//	出現アクション(食べる時)
+-(void)	putEat;
+//	出現アクション(リザルト時)
+-(void)	putResult;
 
 //	退場アクション
 -(void)	exit;

@@ -11,6 +11,7 @@
 #import "./../GameScene.h"
 #import "./../../Object/Customer.h"
 #import "./../../Object/Tenpura.h"
+#import "./../../Object/OjamaTenpura.h"
 #import "./../../Object/Nabe.h"
 #import "./../../Object/ComboMessage.h"
 #import	"./../../Object/GameInFeverEvent.h"
@@ -31,6 +32,9 @@
 
 //	天ぷらを客に投げる
 -(BOOL)	_throwTenpuraToCutomer:(Customer*)in_pCustomer :(Tenpura*)in_pTenpura;
+
+//	おじゃま開始を投げる
+-(void)	_putOjamaTenpura;
 
 @end
 
@@ -259,6 +263,9 @@ enum
 
 @interface GameInNormalScene (PriveteMethod)
 
+//	おじゃま処理
+-(void)	onStartOjama:(NSNotification*)in_pCenter;
+
 //	タイムカウント
 -(void)	_timer:(ccTime)in_time;
 
@@ -267,11 +274,6 @@ enum
 //	ネタが客とヒットしているか
 -(Customer*)	_isHitCustomer:(CGRect)in_rect;
 -(void)	_endTouch;
-
-//	スコア設定
--(void)	_setScore:(Customer*)in_pCustomer :(SInt32)in_num;
-//	金額設定
--(void)	_setMoney:(Customer*)in_pCustomer :(SInt32)in_num;
 
 //	コンボ終了
 -(void)	_exitCombMessage;
@@ -312,9 +314,29 @@ enum
 		[self addChild:pComboMessage z:10 tag:eNORMAL_SCENE_CHILD_TAG_COMBO_MESSAGE];
 		
 		self.isTouchEnabled	= YES;
+		
+		//	おじゃま呼び出し
+		{
+			NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+			[nc addObserver:self selector:@selector(onStartOjama:) name:[NSString stringWithUTF8String:gp_startOjamaObserverName] object:nil];
+		}
 	}
 	
 	return self;
+}
+
+/*
+	@brief
+*/
+-(void)	dealloc
+{
+	[super dealloc];
+	
+	//	オブサーバーを消す
+	{
+		NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+		[nc removeObserver:self];
+	}
 }
 
 /*
@@ -323,6 +345,14 @@ enum
 -(void)	start:(GameScene*)in_pGameScene
 {
 	mp_gameScene	= in_pGameScene;
+
+	//	おじゃまを出すのをタイマー登録
+	Float32	ojamaTime	= m_time - 60.f;
+	if( ojamaTime <= 0.f )
+	{
+		ojamaTime	= 0.f;
+	}
+	[self scheduleOnce:@selector(_putOjamaTenpura) delay:ojamaTime];
 
 	[self scheduleUpdate];
 	[self schedule:@selector(_timer:) interval:1.f];
@@ -358,6 +388,33 @@ enum
 }
 
 /*
+	@brief	おじゃま処理
+*/
+-(void)	onStartOjama:(NSNotification*)in_pCenter
+{
+	if( in_pCenter == nil )
+	{
+		return;
+	}
+	
+	NSValue*	pData	= [[in_pCenter userInfo] objectForKey:[NSString stringWithUTF8String:gp_startOjamaDataName]];
+	if( pData != nil )
+	{
+		OJAMA_NETA_DATA	data;
+		[pData getValue:&data];
+		//	おじゃま処理をする
+		Customer*	pCustomer	= nil;
+		CCARRAY_FOREACH(mp_gameScene->mp_customerArray, pCustomer)
+		{
+			pCustomer.addMoney	= data.money;
+			pCustomer.addScore	= data.score;
+		}
+		
+		m_time	+= data.time;
+	}
+}
+
+/*
 	@brief	タイムカウント
 */
 -(void)	_timer:(ccTime)in_time
@@ -380,8 +437,29 @@ enum
 	CGPoint	touchPoint	= [[CCDirector sharedDirector] convertToGL:touchPointView];
 
 	GameScene*	pGameScene	= mp_gameScene;
+	
 	CCNode*	pNode	= nil;
-	if( mp_touchTenpura == nil )
+	CCNode*	pRemoveOjamaTenpura	= nil;
+	//	おじゃま天ぷらのヒッtを優先
+	CCARRAY_FOREACH(pGameScene->mp_nabe.children, pNode)
+	{
+		if( [pNode isKindOfClass:[OjamaTenpura class]] )
+		{
+			OjamaTenpura*	pOjamaTenpura	= (OjamaTenpura*)pNode;
+			if( (pOjamaTenpura.bRaise) && (CGRectContainsPoint([pOjamaTenpura boundingBox], touchPoint)) )
+			{
+				pRemoveOjamaTenpura	= pNode;
+				break;
+			}
+		}
+	}
+
+	if( pRemoveOjamaTenpura )
+	{
+		//	消滅方法は仮
+		[pGameScene->mp_nabe removeChild:pRemoveOjamaTenpura cleanup:YES];
+	}
+	else if( mp_touchTenpura == nil )
 	{
 		//	後の出した天ぷらを先にチェックする
 		SInt32	cnt	= [pGameScene->mp_nabe.children count];
@@ -677,12 +755,22 @@ enum
 	}
 
 	//	スコア反映
-	[self _setScore:in_pCustomer:addScoreNum];
-
+	in_pCustomer.addScore	= addScoreNum;
+	
 	//	取得金額反映
-	[self _setMoney:in_pCustomer:addMoneyNum];
+	in_pCustomer.addMoney	= addMoneyNum;
 	
 	return bEat;
+}
+
+/*
+	@brief	おじゃま開始を投げる
+*/
+-(void)	_putOjamaTenpura
+{
+	//	なべにおじゃまを出すように指示
+	GameScene*	pGameScene	= mp_gameScene;
+	[pGameScene->mp_nabe putOjamaTenpura];
 }
 
 /*
@@ -726,24 +814,6 @@ enum
 	{
 		[pCustomer.act endFlash];
 	}
-}
-
-/*
-	@brief	スコア設定
-	@note	設定した客とゲームに設定
-*/
--(void)	_setScore:(Customer*)in_pCustomer :(SInt32)in_num
-{
-	in_pCustomer.addScore		= in_num;
-}
-
-/*
-	@brief	金額設定
-	@note	設定した客とゲームに設定
-*/
--(void)	_setMoney:(Customer*)in_pCustomer :(SInt32)in_num
-{
-	in_pCustomer.addMoney	= in_num;
 }
 
 /*
