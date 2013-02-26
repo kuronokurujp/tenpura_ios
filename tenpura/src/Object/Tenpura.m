@@ -59,7 +59,7 @@ enum
 		mp_sp			= nil;
 		m_delegate		= nil;
 		mb_lock		= NO;
-		mb_raise		= NO;
+		mb_fly		= NO;
 		m_posDataIdx	= -1;
 		m_raiseTimeRate	= 1.f;
 		m_baseTimeRate	= 1.f;
@@ -177,7 +177,7 @@ enum
 	[self _settingEffect:m_state];
 	
 	[self setVisible:YES];
-	mb_raise	= YES;
+	mb_fly	= YES;
 }
 
 /*
@@ -186,8 +186,8 @@ enum
 -(void)	end
 {
 	[mp_sp setScale:s_normalScaleVal];
-	mb_raise		= NO;
-	mb_lock		= NO;
+	mb_fly		= NO;
+	mb_lock			= NO;
 	m_posDataIdx	= -1;
 	m_nowRaiseTime	= 0.f;
 
@@ -197,6 +197,7 @@ enum
 	pEff	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_STAR];
 	[pEff end];
 
+	[self stopAllActions];
 	[self unscheduleAllSelectors];
 	[self setVisible:NO];
 }
@@ -231,7 +232,7 @@ enum
 */
 -(BOOL)	isTouchOK
 {
-	return (mb_lock == NO) && (mb_raise == YES);
+	return (mb_lock == NO) && (mb_fly == YES);
 }
 
 /*
@@ -239,7 +240,7 @@ enum
 */
 -(BOOL)	isFly
 {
-	return (mb_raise && (mb_lock == NO));
+	return (mb_fly && (mb_lock == NO));
 }
 
 /*
@@ -247,7 +248,7 @@ enum
 */
 -(void)	eatAction:(Float32)in_time
 {
-	NSAssert(mb_raise == YES, @"天ぷらをあげていない");
+	NSAssert(mb_fly == YES, @"天ぷらをあげていない");
 
 	DataTenpuraPosList*	pDataTenpuraPosList	= [DataTenpuraPosList shared];
 	[pDataTenpuraPosList setUseFlg:NO :m_posDataIdx];
@@ -534,7 +535,7 @@ enum
 	[super setup:in_pData];
 	
 	mb_lock		= NO;
-	mb_raise	= NO;
+	mb_fly	= NO;
 
 	m_data	= *in_pData;
 }

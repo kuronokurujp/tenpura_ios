@@ -197,7 +197,7 @@ enum ACTION_SP_ENUM
 {
 	[self _eat:in_pTenpura:in_score:in_money];
 	
-	[self _putEatMessage:@"moji00.png"];
+	[self _putEatMessage:[NSString stringWithUTF8String:gpa_spriteFileNameList[eSPRITE_FILE_CUS_MOJI00]]];
 
 	[[SoundManager shared] playSe:@"eat"];
 }
@@ -209,7 +209,7 @@ enum ACTION_SP_ENUM
 {
 	[self _eat:in_pTenpura:in_score:in_money];
 
-	[self _putEatMessage:@"moji01.png"];
+	[self _putEatMessage:[NSString stringWithUTF8String:gpa_spriteFileNameList[eSPRITE_FILE_CUS_MOJI01]]];
 
 	[[SoundManager shared] playSe:@"eat"];
 }
@@ -221,7 +221,7 @@ enum ACTION_SP_ENUM
 {
 	[self _eat:in_pTenpura:in_score:in_money];
 
-	[self _putEatMessage:@"moji02.png"];
+	[self _putEatMessage:[NSString stringWithUTF8String:gpa_spriteFileNameList[eSPRITE_FILE_CUS_MOJI02]]];
 
 	[[SoundManager shared] playSe:@"eat"];
 }

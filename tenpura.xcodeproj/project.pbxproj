@@ -25,6 +25,7 @@
 		CE361D2A164353CF00339BB0 /* not_buy_cell.png in Resources */ = {isa = PBXBuildFile; fileRef = CE361D29164353CF00339BB0 /* not_buy_cell.png */; };
 		CE412EB916DC4C940034A4BA /* abura.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE412EB716DC4C940034A4BA /* abura.plist */; };
 		CE412EBA16DC4C940034A4BA /* abura.png in Resources */ = {isa = PBXBuildFile; fileRef = CE412EB816DC4C940034A4BA /* abura.png */; };
+		CE412EBD16DC90300034A4BA /* ItemShopTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE412EBC16DC90300034A4BA /* ItemShopTableCell.m */; };
 		CE4197301695A4E900EAD614 /* SoundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE41972F1695A4E900EAD614 /* SoundManager.m */; };
 		CE4197321695AAC200EAD614 /* soundListData.csv in Resources */ = {isa = PBXBuildFile; fileRef = CE4197311695AAC200EAD614 /* soundListData.csv */; };
 		CE4197341695B38A00EAD614 /* click01.caf in Resources */ = {isa = PBXBuildFile; fileRef = CE4197331695B38A00EAD614 /* click01.caf */; };
@@ -57,6 +58,17 @@
 		CE43777616B945B100BA2F96 /* bgm_fever.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CE43777416B945B100BA2F96 /* bgm_fever.mp3 */; };
 		CE43777716B945B100BA2F96 /* bgm_main.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CE43777516B945B100BA2F96 /* bgm_main.mp3 */; };
 		CE4D94D3166126BA003743D7 /* StoreAppPurchaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4D94D2166126BA003743D7 /* StoreAppPurchaseViewController.m */; };
+		CE4FE27F16DC95600094EA66 /* itemShopTableCell.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE4FE27E16DC95600094EA66 /* itemShopTableCell.ccbi */; };
+		CE4FE28916DCA52B0094EA66 /* SiireTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4FE28816DCA52B0094EA66 /* SiireTableCell.m */; };
+		CE4FE28B16DCA5870094EA66 /* siireTableCell.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE4FE28A16DCA5870094EA66 /* siireTableCell.ccbi */; };
+		CE4FE29116DCAB3B0094EA66 /* UseSelectItemTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4FE29016DCAB3B0094EA66 /* UseSelectItemTableCell.m */; };
+		CE4FE29316DCACE00094EA66 /* useSelectItemTableCell.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE4FE29216DCACE00094EA66 /* useSelectItemTableCell.ccbi */; };
+		CE4FE29616DCB2140094EA66 /* UseSelectNetaTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4FE29516DCB2130094EA66 /* UseSelectNetaTableCell.m */; };
+		CE4FE29816DCB43D0094EA66 /* useSelectNetaTableCell.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE4FE29716DCB43D0094EA66 /* useSelectNetaTableCell.ccbi */; };
+		CE4FE29B16DCBB220094EA66 /* MissionTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4FE29A16DCBB210094EA66 /* MissionTableCell.m */; };
+		CE4FE29E16DCBB380094EA66 /* StoreTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4FE29D16DCBB380094EA66 /* StoreTableCell.m */; };
+		CE4FE2A016DCBC430094EA66 /* storeTableCell.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE4FE29F16DCBC430094EA66 /* storeTableCell.ccbi */; };
+		CE4FE2A216DCBC4C0094EA66 /* missionTableCell.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE4FE2A116DCBC4C0094EA66 /* missionTableCell.ccbi */; };
 		CE51773816494022004DF4F6 /* GameKitHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = CE51773716494022004DF4F6 /* GameKitHelper.m */; };
 		CE51774316497376004DF4F6 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE51774216497376004DF4F6 /* GameKit.framework */; };
 		CE5177531649D921004DF4F6 /* UINavigationControllerExt.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5177521649D921004DF4F6 /* UINavigationControllerExt.m */; };
@@ -455,6 +467,8 @@
 		CE361D29164353CF00339BB0 /* not_buy_cell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = not_buy_cell.png; path = Resources/tableView/not_buy_cell.png; sourceTree = "<group>"; };
 		CE412EB716DC4C940034A4BA /* abura.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = abura.plist; path = Resources/anim/abura/abura.plist; sourceTree = "<group>"; };
 		CE412EB816DC4C940034A4BA /* abura.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = abura.png; path = Resources/anim/abura/abura.png; sourceTree = "<group>"; };
+		CE412EBB16DC90300034A4BA /* ItemShopTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ItemShopTableCell.h; path = src/TableCells/ItemShopTableCell.h; sourceTree = "<group>"; };
+		CE412EBC16DC90300034A4BA /* ItemShopTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ItemShopTableCell.m; path = src/TableCells/ItemShopTableCell.m; sourceTree = "<group>"; };
 		CE41972E1695A4E900EAD614 /* SoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundManager.h; path = src/System/Sound/SoundManager.h; sourceTree = "<group>"; };
 		CE41972F1695A4E900EAD614 /* SoundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SoundManager.m; path = src/System/Sound/SoundManager.m; sourceTree = "<group>"; };
 		CE4197311695AAC200EAD614 /* soundListData.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = soundListData.csv; path = Resources/data/soundListData.csv; sourceTree = "<group>"; };
@@ -489,6 +503,22 @@
 		CE43777516B945B100BA2F96 /* bgm_main.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bgm_main.mp3; path = Resources/sound/bgm/bgm_main.mp3; sourceTree = "<group>"; };
 		CE4D94D1166126BA003743D7 /* StoreAppPurchaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StoreAppPurchaseViewController.h; path = src/System/StoreView/StoreAppPurchaseViewController.h; sourceTree = "<group>"; };
 		CE4D94D2166126BA003743D7 /* StoreAppPurchaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StoreAppPurchaseViewController.m; path = src/System/StoreView/StoreAppPurchaseViewController.m; sourceTree = "<group>"; };
+		CE4FE27E16DC95600094EA66 /* itemShopTableCell.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = itemShopTableCell.ccbi; path = Resources/ccbi/itemShopTableCell.ccbi; sourceTree = "<group>"; };
+		CE4FE28716DCA52B0094EA66 /* SiireTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SiireTableCell.h; path = src/TableCells/SiireTableCell.h; sourceTree = "<group>"; };
+		CE4FE28816DCA52B0094EA66 /* SiireTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SiireTableCell.m; path = src/TableCells/SiireTableCell.m; sourceTree = "<group>"; };
+		CE4FE28A16DCA5870094EA66 /* siireTableCell.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = siireTableCell.ccbi; path = Resources/ccbi/siireTableCell.ccbi; sourceTree = "<group>"; };
+		CE4FE28F16DCAB3B0094EA66 /* UseSelectItemTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UseSelectItemTableCell.h; path = src/TableCells/UseSelectItemTableCell.h; sourceTree = "<group>"; };
+		CE4FE29016DCAB3B0094EA66 /* UseSelectItemTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UseSelectItemTableCell.m; path = src/TableCells/UseSelectItemTableCell.m; sourceTree = "<group>"; };
+		CE4FE29216DCACE00094EA66 /* useSelectItemTableCell.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = useSelectItemTableCell.ccbi; path = Resources/ccbi/useSelectItemTableCell.ccbi; sourceTree = "<group>"; };
+		CE4FE29416DCB2130094EA66 /* UseSelectNetaTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UseSelectNetaTableCell.h; path = src/TableCells/UseSelectNetaTableCell.h; sourceTree = "<group>"; };
+		CE4FE29516DCB2130094EA66 /* UseSelectNetaTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UseSelectNetaTableCell.m; path = src/TableCells/UseSelectNetaTableCell.m; sourceTree = "<group>"; };
+		CE4FE29716DCB43D0094EA66 /* useSelectNetaTableCell.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = useSelectNetaTableCell.ccbi; path = Resources/ccbi/useSelectNetaTableCell.ccbi; sourceTree = "<group>"; };
+		CE4FE29916DCBB210094EA66 /* MissionTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MissionTableCell.h; path = src/TableCells/MissionTableCell.h; sourceTree = "<group>"; };
+		CE4FE29A16DCBB210094EA66 /* MissionTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MissionTableCell.m; path = src/TableCells/MissionTableCell.m; sourceTree = "<group>"; };
+		CE4FE29C16DCBB370094EA66 /* StoreTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StoreTableCell.h; path = src/TableCells/StoreTableCell.h; sourceTree = "<group>"; };
+		CE4FE29D16DCBB380094EA66 /* StoreTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StoreTableCell.m; path = src/TableCells/StoreTableCell.m; sourceTree = "<group>"; };
+		CE4FE29F16DCBC430094EA66 /* storeTableCell.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = storeTableCell.ccbi; path = Resources/ccbi/storeTableCell.ccbi; sourceTree = "<group>"; };
+		CE4FE2A116DCBC4C0094EA66 /* missionTableCell.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = missionTableCell.ccbi; path = Resources/ccbi/missionTableCell.ccbi; sourceTree = "<group>"; };
 		CE51773616494022004DF4F6 /* GameKitHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameKitHelper.h; path = src/System/GameCenter/GameKitHelper.h; sourceTree = "<group>"; };
 		CE51773716494022004DF4F6 /* GameKitHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameKitHelper.m; path = src/System/GameCenter/GameKitHelper.m; sourceTree = "<group>"; };
 		CE51774216497376004DF4F6 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
@@ -1889,6 +1919,7 @@
 				CED247BD163997DD00506CA8 /* Tenpura.m */,
 				CEF24C3616C2468F00AE4B31 /* TenpuraIcon.h */,
 				CEF24C3716C2468F00AE4B31 /* TenpuraIcon.m */,
+				CEEFB2A616DB434700DFB1F5 /* TenpuraProtocol.h */,
 				CEEFB29A16DB281400DFB1F5 /* OjamaTenpura.h */,
 				CEEFB29B16DB281400DFB1F5 /* OjamaTenpura.m */,
 				CEFBC2A91687182100C3C233 /* Ticker.h */,
@@ -1901,7 +1932,6 @@
 				CE2F301B16B8C7E40010610D /* GameInFeverMessage.m */,
 				CE0C82FF16B915890086CEEA /* GameInFliterColorBG.h */,
 				CE0C830016B915890086CEEA /* GameInFliterColorBG.m */,
-				CEEFB2A616DB434700DFB1F5 /* TenpuraProtocol.h */,
 			);
 			name = Object;
 			sourceTree = "<group>";
@@ -1946,6 +1976,18 @@
 			children = (
 				CED247F51639985800506CA8 /* SampleCell.h */,
 				CED247F61639985800506CA8 /* SampleCell.m */,
+				CE412EBB16DC90300034A4BA /* ItemShopTableCell.h */,
+				CE412EBC16DC90300034A4BA /* ItemShopTableCell.m */,
+				CE4FE28F16DCAB3B0094EA66 /* UseSelectItemTableCell.h */,
+				CE4FE29016DCAB3B0094EA66 /* UseSelectItemTableCell.m */,
+				CE4FE28716DCA52B0094EA66 /* SiireTableCell.h */,
+				CE4FE28816DCA52B0094EA66 /* SiireTableCell.m */,
+				CE4FE29416DCB2130094EA66 /* UseSelectNetaTableCell.h */,
+				CE4FE29516DCB2130094EA66 /* UseSelectNetaTableCell.m */,
+				CE4FE29916DCBB210094EA66 /* MissionTableCell.h */,
+				CE4FE29A16DCBB210094EA66 /* MissionTableCell.m */,
+				CE4FE29C16DCBB370094EA66 /* StoreTableCell.h */,
+				CE4FE29D16DCBB380094EA66 /* StoreTableCell.m */,
 			);
 			name = TableCells;
 			sourceTree = "<group>";
@@ -2009,15 +2051,21 @@
 			children = (
 				CE54FC7616A98FF500717356 /* itemShop.ccbi */,
 				CE93630E16507F3A00C22286 /* gameIn.ccbi */,
+				CE4FE27E16DC95600094EA66 /* itemShopTableCell.ccbi */,
 				CEBFB69A16B5E9770008E08B /* fever_event.ccbi */,
 				CEFE1FF216B69EFB009F3406 /* game_result_hiscore.ccbi */,
 				CEFE1FF416B69F04009F3406 /* game_result.ccbi */,
 				CEF6B07B16B526AA006B620B /* comboMessage.ccbi */,
 				CEED71DF16DB6018001D4104 /* store.ccbi */,
 				CE8360CA164815FE00CC11E0 /* mission.ccbi */,
+				CE4FE2A116DCBC4C0094EA66 /* missionTableCell.ccbi */,
+				CE4FE29F16DCBC430094EA66 /* storeTableCell.ccbi */,
 				CE33C89416888852004782A4 /* help.ccbi */,
+				CE4FE29716DCB43D0094EA66 /* useSelectNetaTableCell.ccbi */,
 				CE12811816429D0200D369CF /* setting.ccbi */,
 				CEB815EA163C36F0002814DD /* siire.ccbi */,
+				CE4FE28A16DCA5870094EA66 /* siireTableCell.ccbi */,
+				CE4FE29216DCACE00094EA66 /* useSelectItemTableCell.ccbi */,
 				CEED71E116DB6C1C001D4104 /* storeDataList.csv */,
 				CEFBC2A316870B9400C3C233 /* base_menu.ccbi */,
 				CEEAEED816AAC1F90088B718 /* use_neta_select.ccbi */,
@@ -2658,6 +2706,12 @@
 				CE427D2E16DBBE930052277A /* sumapho.png in Resources */,
 				CE412EB916DC4C940034A4BA /* abura.plist in Resources */,
 				CE412EBA16DC4C940034A4BA /* abura.png in Resources */,
+				CE4FE27F16DC95600094EA66 /* itemShopTableCell.ccbi in Resources */,
+				CE4FE28B16DCA5870094EA66 /* siireTableCell.ccbi in Resources */,
+				CE4FE29316DCACE00094EA66 /* useSelectItemTableCell.ccbi in Resources */,
+				CE4FE29816DCB43D0094EA66 /* useSelectNetaTableCell.ccbi in Resources */,
+				CE4FE2A016DCBC430094EA66 /* storeTableCell.ccbi in Resources */,
+				CE4FE2A216DCBC4C0094EA66 /* missionTableCell.ccbi in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2881,6 +2935,12 @@
 				CEEFB29F16DB2B8A00DFB1F5 /* DataOjamaNetaList.m in Sources */,
 				CEED71DE16DB5F19001D4104 /* StoreScene.m in Sources */,
 				CEED71E816DB6D8E001D4104 /* DataStoreList.m in Sources */,
+				CE412EBD16DC90300034A4BA /* ItemShopTableCell.m in Sources */,
+				CE4FE28916DCA52B0094EA66 /* SiireTableCell.m in Sources */,
+				CE4FE29116DCAB3B0094EA66 /* UseSelectItemTableCell.m in Sources */,
+				CE4FE29616DCB2140094EA66 /* UseSelectNetaTableCell.m in Sources */,
+				CE4FE29B16DCBB220094EA66 /* MissionTableCell.m in Sources */,
+				CE4FE29E16DCBB380094EA66 /* StoreTableCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

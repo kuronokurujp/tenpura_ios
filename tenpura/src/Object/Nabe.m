@@ -29,7 +29,14 @@ enum
 	eTEPURA_MAX	= 32,	//	天ぷら最大確保個数
 };
 
-static const SInt32	s_startTenpuraZOrder	= 10;
+//	鍋内に表示するZオーダー一覧
+enum
+{
+	eZORDER_START_NORAMAL_TENPURA	= 4,
+	eZORDER_OJAMA_TENPURA	= eZORDER_START_NORAMAL_TENPURA + 20,
+	eZORDER_EXP,
+	eZORDER_BIG_EXP,
+};
 
 /*
 	@brief	初期化
@@ -52,7 +59,7 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 			Tenpura*	pTenpura	= [Tenpura node];
 			pTenpura.delegate	= self;
 			[pTenpura setVisible:NO];
-			[self addChild:pTenpura z:s_startTenpuraZOrder];
+			[self addChild:pTenpura z:eZORDER_START_NORAMAL_TENPURA];
 			
 			//	爆弾エフェクトバッファで保持
 			{
@@ -62,7 +69,7 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 			}
 		}
 
-		m_tenpuraZOrder	= s_startTenpuraZOrder;
+		m_tenpuraZOrder	= eZORDER_START_NORAMAL_TENPURA;
 		[self scheduleUpdate];
 	}
 	
@@ -150,7 +157,7 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 */
 -(void)	allCleanTenpura
 {
-	m_tenpuraZOrder	= s_startTenpuraZOrder;
+	m_tenpuraZOrder	= eZORDER_START_NORAMAL_TENPURA;
 
 	CCArray*	pRemoveTenpura	= [CCArray array];
 
@@ -194,7 +201,7 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 					[pEff setVisible:YES];
 					[pEff start];
 					[pEff setPosition:in_pTenpura.position];
-					[pEff setZOrder:20];
+					[pEff setZOrder:eZORDER_EXP];
 				
 					return;
 				}
@@ -215,7 +222,7 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 			CGPoint	pos	= ccp(position_.x + imgRect.size.width * 0.5f, position_.y + imgRect.size.height * 0.5f);
 			[pEff setPosition:pos];
 		}
-		[pEff setZOrder:20];
+		[pEff setZOrder:eZORDER_BIG_EXP];
 		
 		//	おじゃま処理を送信
 		OjamaTenpura*	pOjamaTenpura	= (OjamaTenpura*)in_pTenpura;
@@ -278,7 +285,7 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 	for( SInt32 i = 0; i < cnt; ++i )
 	{
 		OjamaTenpura*	pOjama	= [OjamaTenpura node];
-		[self addChild:pOjama z:15.f];
+		[self addChild:pOjama z:eZORDER_OJAMA_TENPURA];
 
 		[pOjama setup:[pOjamaNetaList getData:i] :1.f];
 		pOjama.delegate	= self;
@@ -347,7 +354,7 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 
 	if( in_bCleanUp == YES )
 	{
-		if( [in_pTenpura isFly] )
+		if(in_pTenpura.visible == YES)
 		{
 			m_tenpuraZOrder -= 1;
 		}

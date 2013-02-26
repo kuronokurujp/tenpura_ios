@@ -9,6 +9,8 @@
 #import "UseSelectItemScene.h"
 
 #import "./../../CCBReader/CCBReader.h"
+#import "./../../TableCells/SampleCell.h"
+#import "./../../TableCells/UseSelectItemTableCell.h"
 #import	"./../../Data/DataItemList.h"
 #import "./../../Data/DataSaveGame.h"
 #import "./../../Data/DataGlobal.h"
@@ -25,13 +27,7 @@
 
 @implementation UseSelectItemScene
 
-static const char*	s_pNetaCellFileName	= "sire_cell.png";
 static const SInt32	s_netaTableViewCellMax	= 6;
-
-enum
-{
-	eTAG_USE_SELECT_TABLE_USE_ITEM_CONTENT_TEXT	= eSW_TABLE_TAG_CELL_MAX + 1,
-};
 
 /*
 	@brief
@@ -44,13 +40,14 @@ enum
 	data.viewMax	= pData->itemNum > s_netaTableViewCellMax ? pData->itemNum : s_netaTableViewCellMax;
 	data.fontSize	= 30;
 
-	strcpy(data.aCellFileName, s_pNetaCellFileName);
+	CCNode*	pCellScene	= [CCBReader nodeGraphFromFile:@"useSelectItemTableCell.ccbi"];
+	NSAssert([pCellScene isKindOfClass:[CCSprite class]], @"");
 
-	CCSprite*	pTmpSp	= [CCSprite spriteWithFile:[NSString stringWithFormat:@"%s", data.aCellFileName]];
+	CCSprite*	pTmpSp	= (CCSprite*)pCellScene;
 	data.cellSize	= [pTmpSp contentSize];
-	data.viewPos	= ccp( 0, data.cellSize.height * 0.5f );
+	data.viewPos	= ccp( TABLE_POS_X, TABLE_POS_Y );
 	
-	data.viewSize	= CGSizeMake(data.cellSize.width, SCREEN_SIZE_HEIGHT - data.viewPos.y );
+	data.viewSize	= CGSizeMake(data.cellSize.width, TABLE_SIZE_HEIGHT );
 
 	if( self = [super initWithData:&data] )
 	{
@@ -116,20 +113,40 @@ enum
 */
 -(SWTableViewCell*)	table:(SWTableView *)table cellAtIndex:(NSUInteger)idx
 {
-	SWTableViewCell*	pCell	= [super table:table cellAtIndex:idx];
-	CCSprite *pCellSp = (CCSprite*)[pCell getChildByTag:eSW_TABLE_TAG_CELL_SPRITE];
-	CGSize	cellTexSize	= [pCellSp textureRect].size;
+	SWTableViewCell*	pCell	= [table dequeueCell];
+	if( pCell == nil )
+	{
+		pCell	= [[[SampleCell alloc] init] autorelease];
+	}
+	
+	CCNode*	pNode	= [pCell getChildByTag:10];
+	UseSelectItemTableCell*	pItemCell	= nil;
+	if( pNode == nil )
+	{
+		CCNode*	pCellScene	= [CCBReader nodeGraphFromFile:@"useSelectItemTableCell.ccbi"];
+		NSAssert([pCellScene isKindOfClass:[UseSelectItemTableCell class]], @"");
+		
+		[pCell addChild:pCellScene z:1 tag:10];
+				
+		pItemCell	= (UseSelectItemTableCell*)pCellScene;
+		[pItemCell setAnchorPoint:ccp(0, 0)];
+		[pItemCell setPosition:ccp(0, 0)];
+	}
+	else
+	{
+		pItemCell	= (UseSelectItemTableCell*)pNode;
+	}
 
 	//	すでに使用設定中か
 	const UInt32 NotUsenetaNum	= [self getNotUsenetaNum:idx];
 	if( NotUsenetaNum <= 0 )
 	{
 		//	使用中はセルの色を変える
-		[pCellSp setColor:ccGRAY];
+		[pItemCell setColor:ccGRAY];
 	}
 	else
 	{
-		[pCellSp setColor:ccWHITE];
+		[pItemCell setColor:ccWHITE];
 	}
 
 	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] getItemOfIndex:idx];
@@ -140,32 +157,17 @@ enum
 
 		//	アイテム名
 		{
-			CCLabelTTF*	pLabel	= (CCLabelTTF*)[pCellSp getChildByTag:eSW_TABLE_TAG_CELL_TEXT];
+			CCLabelTTF*	pLabel	= pItemCell.pNameLabel;
 			NSString*	pStr	= [NSString stringWithUTF8String:[[DataBaseText shared] getText:pItemData->textID]];
 			[pLabel setString:pStr];
-
-			CGPoint	anchorPos	= pLabel.anchorPoint;
-			[pLabel setAnchorPoint:ccp(0,anchorPos.y)];
-			[pLabel setPosition:ccp(129, cellTexSize.height * 0.7f)];
 		}
 		
 		//	効果内容
 		{
 			NSString*	pStr	= [NSString stringWithUTF8String:[[DataBaseText shared] getText:pItemData->contentTextID]];
 
-			CCLabelTTF*	pLabel	= (CCLabelTTF*)[pCellSp getChildByTag:eTAG_USE_SELECT_TABLE_USE_ITEM_CONTENT_TEXT];
-			if( pLabel == nil )
-			{
-				pLabel	= [CCLabelTTF labelWithString:pStr fontName:self.textFontName fontSize:self.data.fontSize];
-				[pCellSp addChild:pLabel z:1 tag:eTAG_USE_SELECT_TABLE_USE_ITEM_CONTENT_TEXT];
-			}
-			
-			[pLabel setColor:ccc3(0, 0, 0)];
-
-			CGPoint	anchorPos	= pLabel.anchorPoint;
-			[pLabel setAnchorPoint:ccp(0,anchorPos.y)];
-			[pLabel setPosition:ccp(129, cellTexSize.height * 0.4f)];
-			
+			CCLabelTTF*	pLabel	= pItemCell.pDataLabel;
+			[pLabel setString:pStr];
 		}
 	}
 

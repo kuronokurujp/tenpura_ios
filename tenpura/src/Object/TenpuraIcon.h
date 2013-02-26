@@ -51,6 +51,8 @@ typedef enum
 @property	(nonatomic, readonly)SInt32 no;
 
 //	関数
--(id)	initWithFile:(NSString*)in_pFileName :(SInt32)in_no;
+-(id)	initWithSetup:(const NETA_DATA_ST*)in_pData;
+
+-(void)	setup:(const NETA_DATA_ST*)in_pData;
 
 @end

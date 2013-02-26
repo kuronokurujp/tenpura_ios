@@ -10,19 +10,12 @@
 
 #import "./../../Data/DataGlobal.h"
 #import "./../../Data/DataMissionList.h"
+#import "./../../CCBReader/CCBReader.h"
+#import "./../../TableCells/SampleCell.h"
+#import "./../../TableCells/MissionTableCell.h"
 #import "./../../System/Sound/SoundManager.h"
 
 @implementation MissionScene
-
-static const char*	sp_MissionListCellSpriteName	= "neta_cell.png";
-static NSString*	sp_MissionChkBoxOffSpriteName	= @"checkoff.png";
-static NSString*	sp_MissionChkBoxOnSpriteName	= @"checkon.png";
-
-enum
-{
-	eTAG_MISSION_TABLE_CHK_BOX_ON	= eSW_TABLE_TAG_CELL_MAX + 1,
-	eTAG_MISSION_TABLE_CHK_BOX_OFF,
-};
 
 /*
 	@brief
@@ -36,13 +29,14 @@ enum
 	data.viewMax	= pMissionInst.dataNum < 6 ? 6 : pMissionInst.dataNum;
 	data.fontSize	= 24;
 
-	strcpy(data.aCellFileName, sp_MissionListCellSpriteName);
-	
-	CCSprite*	pTmpSp	= [CCSprite spriteWithFile:[NSString stringWithFormat:@"%s", data.aCellFileName]];
+	CCNode*	pCellScene	= [CCBReader nodeGraphFromFile:@"missionTableCell.ccbi"];
+	NSAssert([pCellScene isKindOfClass:[CCSprite class]], @"");
+
+	CCSprite*	pTmpSp	= (CCSprite*)pCellScene;
 	data.cellSize	= [pTmpSp contentSize];
-	data.viewPos	= ccp( 0, data.cellSize.height + 10.f );
+	data.viewPos	= ccp( TABLE_POS_X, TABLE_POS_Y );
 	
-	data.viewSize	= CGSizeMake(data.cellSize.width, SCREEN_SIZE_HEIGHT - data.viewPos.y );
+	data.viewSize	= CGSizeMake(TABLE_SIZE_WIDTH, TABLE_SIZE_HEIGHT );
 
 	if( self = [super initWithData:&data] )
 	{
@@ -76,56 +70,50 @@ enum
 */
 -(SWTableViewCell*)table:(SWTableView *)table cellAtIndex:(NSUInteger)idx
 {
-	SWTableViewCell*	pCell	= [super table:table cellAtIndex:idx];
-	
 	DataMissionList*	pMissionInst	= [DataMissionList shared];
 	NSAssert(pMissionInst, @"ミッションリストデータがない");
 
-	CCNode*	pNode	= [pCell getChildByTag:eSW_TABLE_TAG_CELL_SPRITE];
-	if( pNode != nil )
+	SWTableViewCell*	pCell	= [table dequeueCell];
+	if( pCell == nil )
 	{
-		//	ミッション名
-		CCNode*	pNode02	= [pNode getChildByTag:eSW_TABLE_TAG_CELL_TEXT];
-		if( ( pNode02 != nil ) && ( [pNode02 isKindOfClass:[CCLabelTTF class]] ) )
-		{
-			CCLabelTTF*	pCellTextLabel	= (CCLabelTTF*)pNode02;
-			[pCellTextLabel setString:[pMissionInst getMissonName:idx]];
-		}
-
-		//	チェックボックス
-		{
-			CGSize	cellSize	= self.data.cellSize;
-			CGPoint	pos	= ccp(20.f, cellSize.height * 0.5f);
-
-			CCSprite*	pChkBoxOn	= (CCSprite*)[pNode getChildByTag:eTAG_MISSION_TABLE_CHK_BOX_ON];
-			if( pChkBoxOn == nil )
-			{
-				pChkBoxOn	= [CCSprite spriteWithFile:sp_MissionChkBoxOnSpriteName];
-				[pChkBoxOn setPosition:pos];
-				[pCell addChild:pChkBoxOn];
-			}
-			[pChkBoxOn setVisible:NO];
-
-			CCSprite*	pChkBoxOff	= (CCSprite*)[pCell getChildByTag:eTAG_MISSION_TABLE_CHK_BOX_OFF];
-			if( pChkBoxOff == nil )
-			{
-				pChkBoxOff	= [CCSprite spriteWithFile:sp_MissionChkBoxOffSpriteName];
-				[pChkBoxOff setPosition:pos];
-				[pCell addChild:pChkBoxOff];
-			}
-			[pChkBoxOff setVisible:NO];
-
-			if( [pMissionInst isSuccess:idx] == YES )
-			{
-				[pChkBoxOn setVisible:YES];
-			}
-			else
-			{
-				[pChkBoxOff setVisible:YES];
-			}
-		}
+		pCell	= [[[SampleCell alloc] init] autorelease];
 	}
+	
+	CCNode*	pNode	= [pCell getChildByTag:10];
+	MissionTableCell*	pItemCell	= nil;
+	if( pNode == nil )
+	{
+		CCNode*	pCellScene	= [CCBReader nodeGraphFromFile:@"missionTableCell.ccbi"];
+		NSAssert([pCellScene isKindOfClass:[MissionTableCell class]], @"");
 		
+		[pCell addChild:pCellScene z:1 tag:10];
+				
+		pItemCell	= (MissionTableCell*)pCellScene;
+		[pItemCell setAnchorPoint:ccp(0, 0)];
+		[pItemCell setPosition:ccp(0, 0)];
+	}
+	else
+	{
+		pItemCell	= (MissionTableCell*)pNode;
+	}
+
+	//	ミッション名
+	CCLabelTTF*	pCellTextLabel	= pItemCell.pNameLabel;
+	[pCellTextLabel setString:[pMissionInst getMissonName:idx]];
+
+	//	ミッション達成のON/OFF
+	[pItemCell.pChkBoxOn setVisible:NO];
+	[pItemCell.pChkBoxOn setVisible:NO];
+	
+	if( [pMissionInst isSuccess:idx] == YES )
+	{
+		[pItemCell.pChkBoxOn setVisible:YES];
+	}
+	else
+	{
+		[pItemCell.pChkBoxOn setVisible:YES];
+	}
+
 	return pCell;
 }
 

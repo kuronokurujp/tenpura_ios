@@ -8,6 +8,7 @@
 
 #import "ItemShopScene.h"
 #import "./../../TableCells/SampleCell.h"
+#import	"./../../TableCells/ItemShopTableCell.h"
 #import "./../../CCBReader/CCBReader.h"
 #import "./../../Data/DataSaveGame.h"
 #import "./../../Data/DataItemList.h"
@@ -18,8 +19,6 @@
 enum
 {
 	eTAG_ITEM_SHOP_TABLE_NOT_BUY_CELL	= eSW_TABLE_TAG_CELL_MAX + 1,
-	eTAG_ITEM_SHOP_TABLE_MONEY_TEXT,
-	eTAG_ITEM_SHOP_TABLE_CONTENT_TEXT
 };
 
 static const char*	s_pNotBuyCellFileName	= "not_buy_cell.png";
@@ -29,7 +28,7 @@ static const char*	s_pNotBuyCellFileName	= "not_buy_cell.png";
 */
 -(id)	init
 {
-	if( self = [super init] )
+	if( self = [super initWithCellDataFileName:@"itemShopTableCell.ccbi"] )
 	{
 	}
 
@@ -46,14 +45,34 @@ static const char*	s_pNotBuyCellFileName	= "not_buy_cell.png";
 
 	DataBaseText*	pDataBaseTextShared	= [DataBaseText shared];
 
-	SWTableViewCell*	pCell	= [super table:table cellAtIndex:idx];	
-	CCSprite*	pCellSprite	= (CCSprite*)[pCell getChildByTag:eSW_TABLE_TAG_CELL_SPRITE];
-	NSAssert(pCellSprite, @"");
-
+	SWTableViewCell*	pCell	= [table dequeueCell];
+	if( pCell == nil )
+	{
+		pCell	= [[[SampleCell alloc] init] autorelease];
+	}
+	
+	CCNode*	pNode	= [pCell getChildByTag:10];
+	ItemShopTableCell*	pItemCell	= nil;
+	if( pNode == nil )
+	{
+		CCNode*	pCellScene	= [CCBReader nodeGraphFromFile:@"itemShopTableCell.ccbi"];
+		NSAssert([pCellScene isKindOfClass:[ItemShopTableCell class]], @"");
+		
+		[pCell addChild:pCellScene z:1 tag:10];
+				
+		pItemCell	= (ItemShopTableCell*)pCellScene;
+		[pItemCell setAnchorPoint:ccp(0, 0)];
+		[pItemCell setPosition:ccp(0, 0)];
+	}
+	else
+	{
+		pItemCell	= (ItemShopTableCell*)pNode;
+	}
+	
 	//	購入できない場合の対応
 	{
 		CCSprite*	pNotBuyCellSprite	= nil;
-		CCNode*	pChildNode	= [pCellSprite getChildByTag:eTAG_ITEM_SHOP_TABLE_NOT_BUY_CELL];
+		CCNode*	pChildNode	= [pItemCell getChildByTag:eTAG_ITEM_SHOP_TABLE_NOT_BUY_CELL];
 		if( ( pChildNode != nil ) && [pChildNode isKindOfClass:[CCSprite class]] )
 		{
 			pNotBuyCellSprite	= (CCSprite*)pChildNode;
@@ -61,7 +80,7 @@ static const char*	s_pNotBuyCellFileName	= "not_buy_cell.png";
 		else
 		{
 			pNotBuyCellSprite = [CCSprite spriteWithFile:[NSString stringWithFormat:@"%s", s_pNotBuyCellFileName]];
-			[pCellSprite addChild:pNotBuyCellSprite z:0 tag:eTAG_ITEM_SHOP_TABLE_NOT_BUY_CELL];
+			[pItemCell addChild:pNotBuyCellSprite z:0 tag:eTAG_ITEM_SHOP_TABLE_NOT_BUY_CELL];
 		}
 
 		[pNotBuyCellSprite setPosition:ccp(0, 0)];
@@ -69,68 +88,34 @@ static const char*	s_pNotBuyCellFileName	= "not_buy_cell.png";
 		[pNotBuyCellSprite setColor:ccc3(255,255,255)];
 		[pNotBuyCellSprite setVisible:NO];
 
-		[pCellSprite setColor:ccWHITE];
+		[pItemCell setColor:ccWHITE];
 		if( [self isBuy:idx] == false )
 		{
 			//	購入できない
-			[pCellSprite setColor:ccGRAY];
+			[pItemCell setColor:ccGRAY];
 			if( [[DataSaveGame shared] getItem:pData->no] == FALSE )
 			{
-				[pNotBuyCellSprite setVisible:YES];
+		//		[pNotBuyCellSprite setVisible:YES];
 			}
 		}		
 	}
 
 	//	アイテム名表示
 	{
-		CCLabelTTF*	pLabel	= (CCLabelTTF*)[pCellSprite getChildByTag:eSW_TABLE_TAG_CELL_TEXT];
-		if( pLabel != nil )
-		{
-			NSString*	pItemName	= [NSString stringWithUTF8String:[pDataBaseTextShared getText:pData->textID]];
-			[pLabel setAnchorPoint:ccp(0, 0)];
-			[pLabel setPosition:ccp(10.f, 50.f)];
-			[pLabel setString:pItemName];
-		}
+		NSString*	pItemName	= [NSString stringWithUTF8String:[pDataBaseTextShared getText:pData->textID]];
+		[pItemCell.pNameLabel setString:pItemName];
 	}
 	
 	//	効果内容表示
 	{
-		CCLabelTTF*	pLabel	= (CCLabelTTF*)[pCellSprite getChildByTag:	eTAG_ITEM_SHOP_TABLE_CONTENT_TEXT];
-		if( pLabel == nil )
-		{
-			pLabel	= [CCLabelTTF labelWithString:@"" fontName:self.textFontName fontSize:16];
-			[pLabel setAnchorPoint:ccp(0, 0)];
-			[pLabel setPosition:ccp(10.f, 10.f)];
-			[pLabel setColor:ccBLACK];
-
-			[pCellSprite addChild:pLabel z:0 tag:eTAG_ITEM_SHOP_TABLE_CONTENT_TEXT];
-		}
-
-		if( pLabel != nil )
-		{
-			[pLabel setString:[DataBaseText getString:pData->contentTextID]];
-		}
+		[pItemCell.pDataLabel setString:[DataBaseText getString:pData->contentTextID]];
 	}
 	
 	//	購入金額表示
 	{
-		CCLabelTTF*	pLabel	= (CCLabelTTF*)[pCellSprite getChildByTag:eTAG_ITEM_SHOP_TABLE_MONEY_TEXT];
-		if( pLabel == nil )
-		{
-			pLabel	= [CCLabelTTF labelWithString:@"" fontName:self.textFontName fontSize:24];
-			[pLabel setAnchorPoint:ccp(0, 0)];
-			[pLabel setPosition:ccp(240.f, 50.f)];
-			[pLabel setColor:ccBLACK];
-
-			[pCellSprite addChild:pLabel z:0 tag:eTAG_ITEM_SHOP_TABLE_MONEY_TEXT];
-		}
-
-		if( pLabel != nil )
-		{
-			NSString*	pTitleName		= [NSString stringWithUTF8String:[pDataBaseTextShared getText:58]];
-			NSString*	pStr	= [NSString stringWithFormat:@"%@:%ld", pTitleName, pData->sellMoney];
-			[pLabel setString:pStr];
-		}
+		NSString*	pTitleName		= [NSString stringWithUTF8String:[pDataBaseTextShared getText:58]];
+		NSString*	pStr	= [NSString stringWithFormat:@"%@:%ld", pTitleName, pData->sellMoney];
+		[pItemCell.pMoneyLabel setString:pStr];
 	}
 
 	return pCell;

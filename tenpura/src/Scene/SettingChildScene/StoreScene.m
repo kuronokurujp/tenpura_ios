@@ -13,11 +13,12 @@
 #import "./../../Data/DataGlobal.h"
 #import "./../../Data/DataMissionList.h"
 #import "./../../Data/DataStoreList.h"
+#import "./../../CCBReader/CCBReader.h"
+#import "./../../TableCells/SampleCell.h"
+#import "./../../TableCells/StoreTableCell.h"
 #import "./../../System/Sound/SoundManager.h"
 
 @implementation StoreScene
-
-static const char*	sp_MissionListCellSpriteName	= "neta_cell.png";
 
 /*
 	@brief
@@ -28,15 +29,11 @@ static const char*	sp_MissionListCellSpriteName	= "neta_cell.png";
 
 	SInt32		dataNum	= [[DataStoreList shared] dataNum];
 	data.viewMax	= dataNum < 6 ? 6 : dataNum;
-	data.fontSize	= 24;
 
-	strcpy(data.aCellFileName, sp_MissionListCellSpriteName);
-	
-	CCSprite*	pTmpSp	= [CCSprite spriteWithFile:[NSString stringWithFormat:@"%s", data.aCellFileName]];
-	data.cellSize	= [pTmpSp contentSize];
-	data.viewPos	= ccp( 0, data.cellSize.height + 10.f );
-	
-	data.viewSize	= CGSizeMake(data.cellSize.width, SCREEN_SIZE_HEIGHT - data.viewPos.y );
+	strcpy(data.aCellFileName, "storeTableCell.ccbi");
+
+	data.viewPos	= ccp( TABLE_POS_X, TABLE_POS_Y );
+	data.viewSize	= CGSizeMake(TABLE_SIZE_WIDTH, TABLE_SIZE_HEIGHT );
 
 	if( self = [super initWithData:&data] )
 	{
@@ -105,9 +102,7 @@ static const char*	sp_MissionListCellSpriteName	= "neta_cell.png";
 -(SWTableViewCell*)table:(SWTableView *)table cellAtIndex:(NSUInteger)idx
 {
 	SWTableViewCell*	pCell	= [super table:table cellAtIndex:idx];
-	
-	
-	
+
 	return pCell;
 }
 

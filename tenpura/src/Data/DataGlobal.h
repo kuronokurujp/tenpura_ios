@@ -15,6 +15,13 @@
 #define SCREEN_SIZE_WIDTH	(480.f)
 #define SCREEN_SIZE_HEIGHT	(320.f)
 
+//	テーブルビュー
+#define TABLE_POS_X	(0)
+#define TABLE_POS_Y	(50)
+
+#define TABLE_SIZE_WIDTH	(SCREEN_SIZE_WIDTH)
+#define TABLE_SIZE_HEIGHT	(270)
+
 enum
 {
 	eCUSTOMER_MAX	= 4,

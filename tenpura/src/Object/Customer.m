@@ -129,10 +129,8 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 		Tenpura*	pTenpura	= [mp_nabe addTenpura:pData:pSettingTenpura.raiseTimeRate];
 		if( pTenpura != nil )
 		{
-			NSString*	pFileName	= [NSString stringWithFormat:@"cust_%s.png", pData->fileName];
-
 			//	アイコン作成
-			TenpuraIcon*	pIcon	= [[[TenpuraIcon alloc] initWithFile:pFileName :(SInt32)pData->no] autorelease];
+			TenpuraIcon*	pIcon	= [[[TenpuraIcon alloc] initWithSetup:pData] autorelease];
 
 			//	相対位置を取得
 			assert( m_idx < eCUSTOMER_MAX );
@@ -153,8 +151,6 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 {
 	//	強制登場
 	[mp_act putResult];
-	
-	//	食べている天ぷらがあれば消す
 	
 	//	天ぷらアイコンを消す
 	[self removeAllEatIcon];

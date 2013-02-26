@@ -35,7 +35,7 @@ typedef struct
 	enum
 	{
 		eSW_TABLE_TAG_CELL_TEXT	= 100,
-		eSW_TABLE_TAG_CELL_SPRITE,
+		eSW_TABLE_TAG_CELL_LAYOUT,
 		eSW_TABLE_TAG_CELL_MAX,
 	};
 

@@ -9,9 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
-#import "./../../System/StoreView/StoreAppPurchaseViewController.h"
-#import "./../../System/TableView/SWTableViewHelper.h"
-
 #import "./ShopBaseScene.h"
 
 @interface SiireScene : ShopBaseScene

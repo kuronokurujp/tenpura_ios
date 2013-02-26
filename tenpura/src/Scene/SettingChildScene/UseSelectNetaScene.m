@@ -9,6 +9,8 @@
 #import "UseSelectNetaScene.h"
 
 #import "./../../CCBReader/CCBReader.h"
+#import	"./../../TableCells/SampleCell.h"
+#import	"./../../TableCells/UseSelectNetaTableCell.h"
 #import	"./../../Data/DataNetaList.h"
 #import "./../../Data/DataSaveGame.h"
 #import "./../../Data/DataGlobal.h"
@@ -25,14 +27,7 @@
 
 @implementation UseSelectNetaScene
 
-static const char*	s_pNetaCellFileName	= "neta_cell.png";
 static const SInt32	s_netaTableViewCellMax	= 6;
-
-enum
-{
-	eTAG_USE_SELECT_TABLE_USE_ITEM_NUM_TEXT	= eSW_TABLE_TAG_CELL_MAX + 1,
-	eTAG_USE_SELECT_TABLE_USE_ITEM_ICON_SPRITE,
-};
 
 /*
 	@brief
@@ -45,13 +40,14 @@ enum
 	data.viewMax	= pData->netaNum > s_netaTableViewCellMax ? pData->netaNum : s_netaTableViewCellMax;
 	data.fontSize	= 30;
 
-	strcpy(data.aCellFileName, s_pNetaCellFileName);
+	CCNode*	pCellScene	= [CCBReader nodeGraphFromFile:@"useSelectNetaTableCell.ccbi"];
+	NSAssert([pCellScene isKindOfClass:[CCSprite class]], @"");
 
-	CCSprite*	pTmpSp	= [CCSprite spriteWithFile:[NSString stringWithFormat:@"%s", data.aCellFileName]];
+	CCSprite*	pTmpSp	= (CCSprite*)pCellScene;
 	data.cellSize	= [pTmpSp contentSize];
-	data.viewPos	= ccp( 0, data.cellSize.height + 10.f );
+	data.viewPos	= ccp( TABLE_POS_X, TABLE_POS_Y );
 	
-	data.viewSize	= CGSizeMake(data.cellSize.width, SCREEN_SIZE_HEIGHT - data.viewPos.y );
+	data.viewSize	= CGSizeMake(data.cellSize.width, TABLE_SIZE_HEIGHT );
 
 	if( self = [super initWithData:&data] )
 	{
@@ -117,22 +113,42 @@ enum
 */
 -(SWTableViewCell*)	table:(SWTableView *)table cellAtIndex:(NSUInteger)idx
 {
-	SWTableViewCell*	pCell	= [super table:table cellAtIndex:idx];
-	CCSprite *pCellSp = (CCSprite*)[pCell getChildByTag:eSW_TABLE_TAG_CELL_SPRITE];
-	CGSize	cellTexSize	= [pCellSp textureRect].size;
-
 	DataBaseText*	pDataBaseText	= [DataBaseText shared];
 	
+	SWTableViewCell*	pCell	= [table dequeueCell];
+	if( pCell == nil )
+	{
+		pCell	= [[[SampleCell alloc] init] autorelease];
+	}
+	
+	CCNode*	pNode	= [pCell getChildByTag:10];
+	UseSelectNetaTableCell*	pItemCell	= nil;
+	if( pNode == nil )
+	{
+		CCNode*	pCellScene	= [CCBReader nodeGraphFromFile:@"useSelectNetaTableCell.ccbi"];
+		NSAssert([pCellScene isKindOfClass:[UseSelectNetaTableCell class]], @"");
+		
+		[pCell addChild:pCellScene z:1 tag:10];
+				
+		pItemCell	= (UseSelectNetaTableCell*)pCellScene;
+		[pItemCell setAnchorPoint:ccp(0, 0)];
+		[pItemCell setPosition:ccp(0, 0)];
+	}
+	else
+	{
+		pItemCell	= (UseSelectNetaTableCell*)pNode;
+	}
+
 	//	すでに使用設定中か
 	const UInt32 NotUsenetaNum	= [self getNotUsenetaNum:idx];
 	if( NotUsenetaNum <= 0 )
 	{
 		//	使用中はセルの色を変える
-		[pCellSp setColor:ccGRAY];
+		[pItemCell setColor:ccGRAY];
 	}
 	else
 	{
-		[pCellSp setColor:ccWHITE];
+		[pItemCell setColor:ccWHITE];
 	}
 
 	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] getNetaOfIndex:idx];
@@ -145,51 +161,22 @@ enum
 			NSString*	pUseNameStr	= [NSString stringWithUTF8String:[pDataBaseText getText:57]];
 			NSString*	pNetaNumStr	= [NSString stringWithFormat:@"%@ %02ld", pUseNameStr, NotUsenetaNum];
 
-			CCLabelTTF*	pNetaNumLabel	= (CCLabelTTF*)[pCellSp getChildByTag:eTAG_USE_SELECT_TABLE_USE_ITEM_NUM_TEXT];
-			if( pNetaNumLabel == nil )
-			{
-				pNetaNumLabel	= [CCLabelTTF labelWithString:pNetaNumStr fontName:self.textFontName fontSize:self.data.fontSize];
-				CGPoint	pos	= ccp( cellTexSize.width - 150.f, cellTexSize.height * 0.5f );
-				[pNetaNumLabel setPosition:pos];
-				CGPoint	anchorPoint	= pNetaNumLabel.anchorPoint;
-				[pNetaNumLabel setAnchorPoint:ccp(0.f, anchorPoint.y)];
-
-				[pCellSp addChild:pNetaNumLabel z:0 tag:eTAG_USE_SELECT_TABLE_USE_ITEM_NUM_TEXT];
-			}
-
-			if( pNetaNumLabel != nil )
-			{
-				[pNetaNumLabel setString:pNetaNumStr];
-				[pNetaNumLabel setColor:ccc3(0, 0, 0)];
-			}
+			CCLabelTTF*	pNetaNumLabel	= pItemCell.pPossessionLabel;
+			[pNetaNumLabel setString:pNetaNumStr];
+			[pNetaNumLabel setColor:ccc3(0, 0, 0)];
 		}
 
 		//	アイテム名
 		{
-			CCLabelTTF*	pLabel	= (CCLabelTTF*)[pCellSp getChildByTag:eSW_TABLE_TAG_CELL_TEXT];
+			CCLabelTTF*	pLabel	= pItemCell.pNameLabel;
 			NSString*	pStr	= [NSString stringWithUTF8String:[[DataBaseText shared] getText:pNetaData->textID]];
 			[pLabel setString:pStr];
-
-			CGPoint	anchorPos	= pLabel.anchorPoint;
-			[pLabel setAnchorPoint:ccp(0,anchorPos.y)];
-			[pLabel setPosition:ccp(129, cellTexSize.height * 0.5f)];
 		}
 		
 		//	アイコン
 		{
-			CCSprite*	pItemIconSp	= (CCSprite*)[pCellSp getChildByTag:eTAG_USE_SELECT_TABLE_USE_ITEM_ICON_SPRITE];
-			if( pItemIconSp )
-			{
-				[pItemIconSp removeChild:pItemIconSp cleanup:YES];
-			}
-
-			{
-				NSString*	pFileName	= [NSString stringWithFormat:@"cust_%s.png", pNetaData->fileName];
-				pItemIconSp	= [CCSprite spriteWithFile:pFileName];
-				
-				[pItemIconSp setPosition:ccp(64, cellTexSize.height * 0.5f)];
-				[pCellSp addChild:pItemIconSp z:0 tag:eTAG_USE_SELECT_TABLE_USE_ITEM_ICON_SPRITE];
-			}
+			TenpuraIcon*	pIcon	= pItemCell.pTenpuraIcon;
+			[pIcon setup:pNetaData];
 		}
 	}
 

@@ -23,7 +23,7 @@
 -(id)	init
 {
 	if( self = [super init] )
-	{		
+	{
 		[[GameKitHelper shared] authenticateLocalPlayer];
 
 #ifdef DEBUG

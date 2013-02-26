@@ -65,7 +65,7 @@ static const _OJAMA_STATE_DATA_ST	s_ojamaStateDataList[]	=
 		memset( &m_data, 0, sizeof(m_data) );
 		mp_sp			= nil;
 		m_delegate		= nil;
-		mb_raise		= NO;
+		mb_fly		= NO;
 		m_raiseTimeRate	= 1.f;
 		m_baseTimeRate	= 1.f;
 		m_nowRaiseTime	= 0.f;
@@ -140,7 +140,7 @@ static const _OJAMA_STATE_DATA_ST	s_ojamaStateDataList[]	=
 	}
 	
 	[self setVisible:YES];
-	mb_raise	= YES;
+	mb_fly	= YES;
 }
 
 /*
@@ -149,7 +149,7 @@ static const _OJAMA_STATE_DATA_ST	s_ojamaStateDataList[]	=
 -(void)	end
 {
 	[mp_sp setScale:1.f];
-	mb_raise		= NO;
+	mb_fly		= NO;
 	m_nowRaiseTime	= 0.f;
 
 	[self unscheduleAllSelectors];
@@ -175,7 +175,7 @@ static const _OJAMA_STATE_DATA_ST	s_ojamaStateDataList[]	=
 */
 -(BOOL)	isTouchOK
 {
-	BOOL	bFlg	= (mb_raise && ([self getActionByTag:eACT_TAG_TOUCH_DEL] == nil));
+	BOOL	bFlg	= (mb_fly && ([self getActionByTag:eACT_TAG_TOUCH_DEL] == nil));
 	return bFlg;
 }
 
@@ -304,7 +304,7 @@ static const _OJAMA_STATE_DATA_ST	s_ojamaStateDataList[]	=
 		mp_sp	= nil;
 	}
 	
-	mb_raise	= NO;
+	mb_fly	= NO;
 
 	m_data	= *in_pData;
 

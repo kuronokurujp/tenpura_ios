@@ -8,6 +8,7 @@
 
 #import "SWTableViewHelper.h"
 #import "./../../TableCells/SampleCell.h"
+#import "./../../CCBReader/CCBReader.h"
 
 @implementation SWTableViewHelper
 
@@ -26,6 +27,14 @@
 
 		//	セルファイル名はアドレスしかもっていないので注意
 		m_data	= *in_pData;
+		if( m_data.aCellFileName[ 0 ] != 0 )
+		{
+			CCNode*	pCellScene	= [CCBReader nodeGraphFromFile:[NSString stringWithUTF8String:m_data.aCellFileName]];
+			NSAssert([pCellScene isKindOfClass:[CCSprite class]], @"");
+			
+			CCSprite*	pTmpSp	= (CCSprite*)pCellScene;
+			m_data.cellSize	= [pTmpSp contentSize];
+		}
 
 		mp_table	= [SWTableView viewWithDataSource:self size:m_data.viewSize contentOffset:ccp(0,0)];
 		[mp_table setPosition:m_data.viewPos];
@@ -91,34 +100,18 @@
 		pCell	= [[[SampleCell alloc] init] autorelease];
 	}
 
-    CCSprite *pSprite = (CCSprite*)[pCell getChildByTag:eSW_TABLE_TAG_CELL_SPRITE];
-	if( pSprite != nil )
+	CCNode*	pNode	= [pCell getChildByTag:eSW_TABLE_TAG_CELL_LAYOUT];
+	if( pNode == nil )
 	{
+		CCNode*	pCellScene	= [CCBReader nodeGraphFromFile:[NSString stringWithUTF8String:m_data.aCellFileName]];
+		NSAssert([pCellScene isKindOfClass:[CCSprite class]], @"");
+		
+		[pCell addChild:pCellScene z:1 tag:eSW_TABLE_TAG_CELL_LAYOUT];
+		
+		CCSprite*	pSp	= (CCSprite*)pCellScene;
+		[pSp setAnchorPoint:ccp(0, 0)];
+		[pSp setPosition:ccp(0, 0)];
 	}
-	else
-	{
-		pSprite	= [CCSprite spriteWithFile:[NSString stringWithFormat:@"%s", m_data.aCellFileName]];
-	    [pCell addChild:pSprite z:0 tag:eSW_TABLE_TAG_CELL_SPRITE];
-	}
-
-	[pSprite setAnchorPoint:ccp(0, 0)];
-	[pSprite setPosition:ccp(0, 0)];
-
-	NSString*	pStr	= @"";
-	CCLabelTTF*	pLabel	= (CCLabelTTF*)[pSprite getChildByTag:eSW_TABLE_TAG_CELL_TEXT];
-	if( pLabel != nil )
-	{
-		[pLabel setString:pStr];
-	}
-	else
-	{
-		pLabel	= [CCLabelTTF labelWithString:pStr fontName:mp_textFontName fontSize:m_data.fontSize];
-		[pSprite addChild:pLabel z:0 tag:eSW_TABLE_TAG_CELL_TEXT];
-	}
-
-	CGSize	texSize	= [pSprite textureRect].size;
-	[pLabel setPosition:ccp(texSize.width * 0.5f, texSize.height * 0.5f)];
-	[pLabel setColor:ccc3( 0, 0, 0 )];
 
 	return pCell;
 }

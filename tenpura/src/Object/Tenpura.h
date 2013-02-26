@@ -20,7 +20,7 @@
 	id<TenpuraProtocol>	m_delegate;
 	
 	BOOL				mb_lock;
-	BOOL				mb_raise;	//	揚げる開始
+	BOOL				mb_fly;	//	揚げる開始
 	
 	Float32				m_baseTimeRate;	//	揚げる速度の基本レート
 	Float32				m_raiseTimeRate;	//	揚げる速度のレート

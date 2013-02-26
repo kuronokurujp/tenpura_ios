@@ -96,20 +96,36 @@
 /*
 	@brief	初期化
 */
--(id)	initWithFile:(NSString*)in_pFileName :(SInt32)in_no
+-(id)	initWithSetup:(const NETA_DATA_ST*)in_pData;
 {
 	if( self = [super init] )
 	{
-		mp_sp	= [CCSprite node];
-		[mp_sp initWithFile:in_pFileName];
-		
-		[mp_sp setAnchorPoint:ccp(0,0)];
-		[self addChild:mp_sp];
-		
-		m_no	= in_no;
+		[self setup:in_pData];
 	}
 	
 	return self;
+}
+
+/*
+	@brief
+*/
+-(void)	setup:(const NETA_DATA_ST*)in_pData
+{
+	NSAssert(in_pData, @"");
+
+	NSString*	pFileName	= [NSString stringWithFormat:@"cust_%s.png", in_pData->fileName];
+	if( mp_sp != nil )
+	{
+		[self removeChild:mp_sp cleanup:YES];
+	}
+
+	mp_sp	= [CCSprite node];
+	[mp_sp initWithFile:pFileName];
+		
+	[mp_sp setAnchorPoint:ccp(0,0)];
+	[self addChild:mp_sp];
+	
+	m_no	= in_pData->no;
 }
 
 @end

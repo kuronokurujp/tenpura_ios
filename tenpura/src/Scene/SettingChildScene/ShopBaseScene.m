@@ -25,26 +25,28 @@
 
 @implementation ShopBaseScene
 
-static const char*	s_pSireCellFileName		= "sire_cell.png";
 static const SInt32	s_sireTableViewCellMax	= 6;
 
 /*
 	@brief	初期化
 */
--(id)	init
+-(id)	initWithCellDataFileName:(NSString*)in_pFileName
 {
+	NSAssert(in_pFileName, @"");
+
 	SW_INIT_DATA_ST	data	= { 0 };
+
+	CCNode*	pCellScene	= [CCBReader nodeGraphFromFile:in_pFileName];
+	NSAssert([pCellScene isKindOfClass:[CCSprite class]], @"");
 
 	data.viewMax	= [self getCellMax] > s_sireTableViewCellMax ? [self getCellMax] : s_sireTableViewCellMax;
 	data.fontSize	= 32;
 
-	strcpy(data.aCellFileName, s_pSireCellFileName);
-	
-	CCSprite*	pTmpSp	= [CCSprite spriteWithFile:[NSString stringWithFormat:@"%s", data.aCellFileName]];
+	CCSprite*	pTmpSp	= (CCSprite*)pCellScene;
 	data.cellSize	= [pTmpSp contentSize];
-	data.viewPos	= ccp( 0, data.cellSize.height * 0.5f );
+	data.viewPos	= ccp( TABLE_POS_X, TABLE_POS_Y );
 	
-	data.viewSize	= CGSizeMake(data.cellSize.width, SCREEN_SIZE_HEIGHT - data.viewPos.y );
+	data.viewSize	= CGSizeMake(data.cellSize.width, TABLE_SIZE_HEIGHT );
 
 	if( self = [super initWithData:&data] )
 	{
@@ -68,6 +70,12 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 								
 	}
 
+	return self;
+}
+
+-(id)	init
+{
+	NSAssert(0, @"");
 	return self;
 }
 
@@ -161,13 +169,13 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 			DataSaveGame*	pDataSaveGameInst	= [DataSaveGame shared];
 			if( [self buy:[mp_buyItemCell objectID]] )
 			{
-				CCNode*	pChildNode	= [mp_buyItemCell getChildByTag:eSW_TABLE_TAG_CELL_SPRITE];
+				CCNode*	pChildNode	= [mp_buyItemCell getChildByTag:eSW_TABLE_TAG_CELL_LAYOUT];
 				if( [pChildNode isKindOfClass:[CCSprite class]] )
 				{
 					CCSprite*	pCellSprite	= (CCSprite*)pChildNode;
 					[pCellSprite setColor:ccGRAY];
 				}
-				
+			
 				[pDataSaveGameInst addSaveMoeny:-([self getSellMoney:[mp_buyItemCell objectID]])];
 				[self setMoneyString:[[DataSaveGame shared] getData]->money];
 

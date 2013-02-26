@@ -23,6 +23,9 @@
 	CCLabelTTF*	mp_moneyTextLable;
 }
 
+//	初期化
+-(id)	initWithCellDataFileName:(NSString*)in_pFileName;
+
 //	セル最大数
 -(SInt32)	getCellMax;
 //	購入金額

@@ -8,6 +8,7 @@
 
 #import "SiireScene.h"
 #import "./../../TableCells/SampleCell.h"
+#import "./../../TableCells/SiireTableCell.h"
 #import "./../../CCBReader/CCBReader.h"
 #import "./../../Data/DataSaveGame.h"
 #import "./../../Data/DataNetaList.h"
@@ -29,9 +30,6 @@
 enum
 {
 	eTAG_SHOP_TABLE_NOT_BUY_CELL	= eSW_TABLE_TAG_CELL_MAX + 1,
-	eTAG_SHOP_TABLE_ITEM_ICON_OBJ,
-	eTAG_SHOP_TABLE_ITEM_NUM_TEXT,
-	eTAG_SHOP_TABLE_MONEY_TEXT,
 };
 
 static const char*	s_pNotBuyCellFileName	= "not_buy_cell.png";
@@ -42,7 +40,7 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 */
 -(id)	init
 {
-	if( self = [super init] )
+	if( self = [super initWithCellDataFileName:@"siireTableCell.ccbi"] )
 	{
 	}
 
@@ -68,28 +66,43 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 
 	DataBaseText*	pDataBaseTextShared	= [DataBaseText shared];
 
-	SWTableViewCell*	pCell	= [super table:table cellAtIndex:idx];	
-	CCSprite*	pCellSprite	= (CCSprite*)[pCell getChildByTag:eSW_TABLE_TAG_CELL_SPRITE];
-	NSAssert(pCellSprite, @"");
+	SWTableViewCell*	pCell	= [table dequeueCell];
+	if( pCell == nil )
+	{
+		pCell	= [[[SampleCell alloc] init] autorelease];
+	}
+	
+	CCNode*	pNode	= [pCell getChildByTag:10];
+	SiireTableCell*	pItemCell	= nil;
+	if( pNode == nil )
+	{
+		CCNode*	pCellScene	= [CCBReader nodeGraphFromFile:@"siireTableCell.ccbi"];
+		NSAssert([pCellScene isKindOfClass:[SiireTableCell class]], @"");
+		
+		[pCell addChild:pCellScene z:1 tag:10];
+				
+		pItemCell	= (SiireTableCell*)pCellScene;
+		[pItemCell setAnchorPoint:ccp(0, 0)];
+		[pItemCell setPosition:ccp(0, 0)];
+	}
+	else
+	{
+		pItemCell	= (SiireTableCell*)pNode;
+	}
 
 	//	天ぷらアイコン
 	{
-		CCNode*	pChildNode	= [pCellSprite getChildByTag:eTAG_SHOP_TABLE_ITEM_ICON_OBJ];
-		if( pChildNode == nil )
+		TenpuraBigIcon*	pIcon	= pItemCell.pTenpuraIcon;
+		if( pIcon )
 		{
-			CGSize	texSize	= [pCellSprite textureRect].size;
-
-			TenpuraBigIcon*	pTenpuraObject	= [[[TenpuraBigIcon alloc] init] autorelease];
-			[pTenpuraObject setupToPos:pData :ccp(70, texSize.height * 0.5f):1.f];
-
-			[pCellSprite addChild:pTenpuraObject z:0 tag:eTAG_SHOP_TABLE_ITEM_ICON_OBJ];
+			[pIcon setup:pData];
 		}
 	}
-
+	
 	//	購入できない場合の対応
 	{
 		CCSprite*	pNotBuyCellSprite	= nil;
-		CCNode*	pChildNode	= [pCellSprite getChildByTag:eTAG_SHOP_TABLE_NOT_BUY_CELL];
+		CCNode*	pChildNode	= [pItemCell getChildByTag:eTAG_SHOP_TABLE_NOT_BUY_CELL];
 		if( ( pChildNode != nil ) && [pChildNode isKindOfClass:[CCSprite class]] )
 		{
 			pNotBuyCellSprite	= (CCSprite*)pChildNode;
@@ -97,7 +110,7 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 		else
 		{
 			pNotBuyCellSprite = [CCSprite spriteWithFile:[NSString stringWithFormat:@"%s", s_pNotBuyCellFileName]];
-			[pCellSprite addChild:pNotBuyCellSprite z:0 tag:eTAG_SHOP_TABLE_NOT_BUY_CELL];
+			[pItemCell addChild:pNotBuyCellSprite z:0 tag:eTAG_SHOP_TABLE_NOT_BUY_CELL];
 		}
 
 		[pNotBuyCellSprite setPosition:ccp(0, 0)];
@@ -105,80 +118,43 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 		[pNotBuyCellSprite setColor:ccc3(255,255,255)];
 		[pNotBuyCellSprite setVisible:NO];
 
-		[pCellSprite setColor:ccWHITE];
+		[pItemCell setColor:ccWHITE];
 		if( [self isBuy:idx] == false )
 		{
 			//	購入できない
-			[pCellSprite setColor:ccGRAY];
+			[pItemCell setColor:ccGRAY];
 			if( [[DataSaveGame shared] getNeta:pData->no] == FALSE )
 			{
-				[pNotBuyCellSprite setVisible:YES];
+		//		[pNotBuyCellSprite setVisible:YES];
 			}
 		}		
 	}
 
 	//	アイテム名表示
 	{
-		CCLabelTTF*	pLabel	= (CCLabelTTF*)[pCellSprite getChildByTag:eSW_TABLE_TAG_CELL_TEXT];
-		if( pLabel != nil )
-		{
-			NSString*	pTenpuraName	= [NSString stringWithUTF8String:[pDataBaseTextShared getText:pData->textID]];
-			[pLabel setAnchorPoint:ccp(0, 0)];
-			[pLabel setPosition:ccp(130.f, 50.f)];
-			[pLabel setString:pTenpuraName];
-		}
+		NSString*	pTenpuraName	= [NSString stringWithUTF8String:[pDataBaseTextShared getText:pData->textID]];
+		[pItemCell.pNameLabel setString:pTenpuraName];
 	}
 	
 	//	購入金額表示
 	{
-		CCLabelTTF*	pLabel	= (CCLabelTTF*)[pCellSprite getChildByTag:eTAG_SHOP_TABLE_MONEY_TEXT];
-		if( pLabel == nil )
-		{
-			pLabel	= [CCLabelTTF labelWithString:@"" fontName:self.textFontName fontSize:self.data.fontSize];
-			[pLabel setAnchorPoint:ccp(0, 0)];
-			[pLabel setPosition:ccp(130.f, 10.f)];
-			[pLabel setColor:ccBLACK];
-
-			[pCellSprite addChild:pLabel z:0 tag:eTAG_SHOP_TABLE_MONEY_TEXT];
-		}
-
-		if( pLabel != nil )
-		{
-			NSString*	pTitleName		= [NSString stringWithUTF8String:[pDataBaseTextShared getText:58]];
-			NSString*	pStr	= [NSString stringWithFormat:@"%@:%ld", pTitleName, pData->sellMoney];
-			[pLabel setString:pStr];
-		}
+		NSString*	pTitleName		= [NSString stringWithUTF8String:[pDataBaseTextShared getText:58]];
+		NSString*	pStr	= [NSString stringWithFormat:@"%@:%ld", pTitleName, pData->sellMoney];
+		[pItemCell.pMoneyLabel setString:pStr];
 	}
 
 	//	所持数表示
 	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] getNeta:pData->no];
 	{
-		CCLabelTTF*	pItemNumLabel	= (CCLabelTTF*)[pCellSprite getChildByTag:eTAG_SHOP_TABLE_ITEM_NUM_TEXT];
-		if( pItemNumLabel == nil )
-		{
-			CGSize	texSize	= [pCellSprite textureRect].size;
-
-			pItemNumLabel	= [CCLabelTTF labelWithString:@"" fontName:self.textFontName fontSize:self.data.fontSize];
-			CGPoint	pos	= ccp( texSize.width - 150.f, 10.f );
-			[pItemNumLabel setPosition:pos];
-			[pItemNumLabel setAnchorPoint:ccp(0.f, 0.f)];
-
-			[pCellSprite addChild:pItemNumLabel z:0 tag:eTAG_SHOP_TABLE_ITEM_NUM_TEXT];
-		}
-
 		UInt32	itemNum	= 0;
 		if( pItem != nil )
 		{
 			itemNum	= pItem->num;
 		}
 		
-		if( pItemNumLabel != nil )
-		{
-			NSString*	pUseNameStr	= [NSString stringWithUTF8String:[pDataBaseTextShared getText:57]];
-			NSString*	pItemNumStr	= [NSString stringWithFormat:@"%@ %02ld", pUseNameStr, itemNum];
-			[pItemNumLabel setString:pItemNumStr];
-			[pItemNumLabel setColor:ccBLACK];
-		}
+		NSString*	pUseNameStr	= [NSString stringWithUTF8String:[pDataBaseTextShared getText:57]];
+		NSString*	pItemNumStr	= [NSString stringWithFormat:@"%@ %02ld", pUseNameStr, itemNum];
+		[pItemCell.pPossessionLabel setString:pItemNumStr];
 	}
 
 	return pCell;

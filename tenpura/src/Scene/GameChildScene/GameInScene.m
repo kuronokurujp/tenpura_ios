@@ -396,7 +396,7 @@ enum
 	{
 		return;
 	}
-	
+
 	NSValue*	pData	= [[in_pCenter userInfo] objectForKey:[NSString stringWithUTF8String:gp_startOjamaDataName]];
 	if( pData != nil )
 	{
@@ -409,7 +409,7 @@ enum
 			pCustomer.addMoney	= data.money;
 			pCustomer.addScore	= data.score;
 		}
-		
+
 		m_time	+= data.time;
 	}
 }
@@ -440,7 +440,7 @@ enum
 	
 	CCNode*	pNode	= nil;
 	OjamaTenpura*	pRemoveOjamaTenpura	= nil;
-	//	おじゃま天ぷらのヒッtを優先
+	//	おじゃま天ぷらのヒットを優先
 	CCARRAY_FOREACH(pGameScene->mp_nabe.children, pNode)
 	{
 		if( [pNode isKindOfClass:[OjamaTenpura class]] )
@@ -557,7 +557,7 @@ enum
 									ComboMessage*	pCombo	= (ComboMessage*)pComboMessage;
 									[pCombo start:m_combCnt];
 								}
-						
+
 								[self unschedule:@selector(_updateCombo)];
 								[self schedule:@selector(_updateCombo)];
 	
@@ -566,7 +566,7 @@ enum
 							}
 
 							//	フィーバーを出すか
-							if( ( ( (m_feverCnt + 1) * 10 ) / m_combCnt ) == 0 )
+							if( ( m_combCnt % 10 ) == 0 )
 							{
 								++m_feverCnt;
 								mb_fever	= YES;
@@ -602,27 +602,14 @@ enum
 			[pCustomer.act endFlash];
 		}
 
-		BOOL	bcleanTenpura		= NO;
-		BOOL	bNewPostionTenpura	= NO;
 		CGPoint	nowTenpuraPos	= mp_touchTenpura.position;
 		if( ( bHitCustomer == YES ) && ( bEatTenpura == YES ) )
 		{
 			//	食べるのに成功
-			bcleanTenpura	= YES;
 		}
 		else if( CGRectContainsRect([pGameScene->mp_nabe boundingBox], [mp_touchTenpura boundingBox]) )
 		{
 			//	鍋内なら現在位置に配置
-			bNewPostionTenpura	= YES;
-		}
-
-		if( bcleanTenpura == YES )
-		{
-		}
-		else if( bNewPostionTenpura == YES )
-		{
-			//	タッチ前の位置に設定しているので注意！
-			//	鍋枠内であれば現在位置に変更
 			[mp_touchTenpura unLockTouch:nowTenpuraPos];
 		}
 		else

@@ -1,3 +1,5 @@
+abura.plist
+abura.png
 bigBomb.plist
 bigBomb.png
 bomb.plist
@@ -33,13 +35,19 @@ game_result_hiscore.ccbi
 gameIn.ccbi
 help.ccbi
 itemShop.ccbi
+itemShopTableCell.ccbi
 mission.ccbi
+missionTableCell.ccbi
 setting.ccbi
 siire.ccbi
+siireTableCell.ccbi
 store.ccbi
+storeTableCell.ccbi
 title.ccbi
 use_item_select.ccbi
 use_neta_select.ccbi
+useSelectItemTableCell.ccbi
+useSelectNetaTableCell.ccbi
 checkoff.png
 checkon.png
 customer0.png
