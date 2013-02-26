@@ -21,6 +21,7 @@
 #import "./Data/DataItemList.h"
 #import "./Data/DataCustomerList.h"
 #import "./Data/DataOjamaNetaList.h"
+#import "./Data/DataStoreList.h"
 #import "./System/Sound/SoundManager.h"
 #import "./System/GameCenter/GameKitHelper.h"
 #import "./System/BannerView/BannerViewController.h"
@@ -113,6 +114,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
 	[DataItemList shared];
 	[DataCustomerList shared];
 	[DataOjamaNetaList shared];
+	[DataStoreList shared];
 
 	/*
 		ミッションリストデータ読み込み順序が下記のより上だとハングするので注意
@@ -228,6 +230,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
 	CC_DIRECTOR_END();
 
 	[SoundManager end];
+	[DataStoreList end];
 	[DataOjamaNetaList end];
 	[DataMissionList end];
 	[DataItemList end];
@@ -242,8 +245,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
 // purge memory
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
 {
-	NSLog(@"warning free memory 1.5MB low¥n");
-
+	NSAssert(0, @"warning free memory 1.5MB low¥n");
 	[[CCDirector sharedDirector] purgeCachedData];
 }
 

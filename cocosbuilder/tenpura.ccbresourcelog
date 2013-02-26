@@ -1,3 +1,5 @@
+bigBomb.plist
+bigBomb.png
 bomb.plist
 bomb.png
 cursor.plist
@@ -34,6 +36,7 @@ itemShop.ccbi
 mission.ccbi
 setting.ccbi
 siire.ccbi
+store.ccbi
 title.ccbi
 use_item_select.ccbi
 use_neta_select.ccbi
@@ -51,6 +54,8 @@ fv.png
 play_end.png
 play_start.png
 Default.png
+Icon-72.png
+Icon-Small-50.png
 Icon-Small.png
 Icon-Small@2x.png
 Icon.png
@@ -111,6 +116,7 @@ shiitake0.png
 shimeji0.png
 shishito0.png
 shiso0.png
+sumapho.png
 tamanegi0.png
 taranome0.png
 toumorokoshi0.png

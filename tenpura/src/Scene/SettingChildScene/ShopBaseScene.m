@@ -48,6 +48,8 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 
 	if( self = [super initWithData:&data] )
 	{
+		[self reloadUpdate];
+
 		mp_moneyTextLable	= nil;
 		mp_buyItemCell	= nil;
 
@@ -64,12 +66,6 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 												cancelButtonTitle:[DataBaseText getString:46]
 												otherButtonTitles:nil];
 								
-		{
-			CGSize	winSize	= [CCDirector sharedDirector].winSize;
-			CGPoint	pos	= ccp(winSize.width * 0.5f, winSize.height * 0.5f);
-			mp_storeViewCtrl	= [[StoreAppPurchaseViewController alloc] initToData:pos:winSize];
-			mp_storeViewCtrl.delegate	= self;
-		}
 	}
 
 	return self;
@@ -80,12 +76,6 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 */
 -(void)dealloc
 {
-	if( mp_storeViewCtrl != nil )
-	{
-		[mp_storeViewCtrl release];
-		mp_storeViewCtrl	= nil;
-	}
-
 	if( mp_buyCheckAlertView != nil )
 	{
 		[mp_buyCheckAlertView release];
@@ -142,16 +132,13 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 */
 -(void)	pressBuyMoneyBtn
 {
-	//	テスト
-	UIView*	pView	= [CCDirector sharedDirector].view;
-	pView.userInteractionEnabled	= NO;
-	[[CCDirector sharedDirector] pause];
+	CCScene*	storeScene	= [CCBReader sceneWithNodeGraphFromFile:@"store.ccbi"];
 
-	NSString*	pIdName	= [NSString stringWithUTF8String:[[DataBaseText shared] getText:59]];
-	[mp_storeViewCtrl requestPurchase:pIdName];
-
-	[pView addSubview:mp_storeViewCtrl.view];
+	CCTransitionFade*	pTransFade	=
+	[CCTransitionFade transitionWithDuration:g_sceneChangeTime scene:storeScene withColor:ccBLACK];
 	
+	[[CCDirector sharedDirector] pushScene:pTransFade];
+
 	[[SoundManager shared] playSe:@"btnClick"];
 }
 
@@ -229,6 +216,15 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 }
 
 /*
+	@brief
+*/
+-(void)	onEnter
+{
+	[super onEnter];
+	[self reloadUpdate];
+}
+
+/*
 	@brief	変移演出終了
 */
 -(void)	onEnterTransitionDidFinish
@@ -258,43 +254,6 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 	}
 
 	[super onExitTransitionDidStart];
-}
-
-/*
-	@brief	購入決済終了
-*/
--(void)	onPaymentPurchased
-{
-}
-
-/*
-	@brief	決済途中キャンセル
-*/
--(void)	onPaymentFailed
-{
-}
-
-/*
-	@brief	ビュー終了
-*/
--(void)	onEndView
-{
-	[[CCDirector sharedDirector] resume];
-
-	UIView*	pView	= [CCDirector sharedDirector].view;
-	pView.userInteractionEnabled	= YES;
-
-	if( [mp_storeViewCtrl.view isDescendantOfView:pView] == YES )
-	{
-		[mp_storeViewCtrl.view removeFromSuperview];
-	}
-}
-
-/*
-	@brief	エラー
-*/
--(void)	onError:(STORE_ERROR_STATE_ENUM)in_state
-{
 }
 
 /*

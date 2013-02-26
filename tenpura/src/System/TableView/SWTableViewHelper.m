@@ -36,7 +36,6 @@
 		mp_table.verticalFillOrder	= SWTableViewFillTopDown;
 		
 		[self addChild:mp_table z:3.f];
-		[mp_table reloadData];
 	}
 
 	return self;

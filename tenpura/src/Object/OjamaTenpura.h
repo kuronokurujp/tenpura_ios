@@ -29,7 +29,6 @@
 }
 
 //	プロパティ
-@property	(nonatomic, readonly)	BOOL	bRaise;
 @property	(nonatomic, retain)		id<TenpuraProtocol>	delegate;
 @property	(nonatomic, readonly)	OJAMA_NETA_DATA	data;
 
@@ -43,6 +42,12 @@
 
 //	リセット
 -(void)	reset;
+
+//	タッチ可能か
+-(BOOL)	isTouchOK;
+
+//	タッチ消滅アクション
+-(void)	runTouchDelAction;
 
 - (CGRect) boundingBox;
 

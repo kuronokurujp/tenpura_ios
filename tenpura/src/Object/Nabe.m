@@ -56,7 +56,7 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 			
 			//	爆弾エフェクトバッファで保持
 			{
-				CCNode*	pEff	= [pAnimManager createNode:[NSString stringWithUTF8String:ga_AnimPlayName[eANIM_BOMG]] :NO];
+				CCNode*	pEff	= [pAnimManager createNode:[NSString stringWithUTF8String:ga_animDataList[eANIM_BOMG].pImageFileName] :NO];
 				[pEff setVisible:NO];
 				[self addChild:pEff];
 			}
@@ -92,7 +92,7 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 		if( [pNode isKindOfClass:[Tenpura class]] == YES )
 		{
 			pTenpura	= (Tenpura*)pNode;
-			if( (pTenpura.bRaise == YES) && (pTenpura.state == eTENPURA_STATE_RESTART) )
+			if( ([pTenpura isFly]) && (pTenpura.state == eTENPURA_STATE_RESTART) )
 			{
 				[pTenpura start];
 
@@ -124,7 +124,7 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 		if( [pNode isKindOfClass:[Tenpura class]] == YES )
 		{
 			pTenpura	= (Tenpura*)pNode;
-			if( pTenpura.bRaise == NO )
+			if( [pTenpura isFly] == NO )
 			{
 				UInt32	posIdx	= [pDataTenpuraPosList getIdxNoUse];
 				[pDataTenpuraPosList setUseFlg:YES :posIdx];
@@ -205,12 +205,16 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 	{
 		//	大爆発
 		AnimManager*	pAnimManager	= [AnimManager shared];
-		AnimActionSprite*	pEff	= [pAnimManager play:[NSString stringWithUTF8String:ga_AnimPlayName[eANIM_BIGBOMG]]];
+		AnimActionSprite*	pEff	= [pAnimManager play:[NSString stringWithUTF8String:ga_animDataList[eANIM_BIGBOMG].pImageFileName]];
 		pEff.bAutoRelease	= YES;
 		[self addChild:pEff];
 
 		[pEff setVisible:YES];
-		[pEff setPosition:in_pTenpura.position];
+		{
+			CGRect	imgRect	= [mp_sp textureRect];
+			CGPoint	pos	= ccp(position_.x + imgRect.size.width * 0.5f, position_.y + imgRect.size.height * 0.5f);
+			[pEff setPosition:pos];
+		}
 		[pEff setZOrder:20];
 		
 		//	おじゃま処理を送信
@@ -343,7 +347,7 @@ static const SInt32	s_startTenpuraZOrder	= 10;
 
 	if( in_bCleanUp == YES )
 	{
-		if( in_pTenpura.bRaise == YES )
+		if( [in_pTenpura isFly] )
 		{
 			m_tenpuraZOrder -= 1;
 		}

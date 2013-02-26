@@ -9,18 +9,15 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
-#import "./../../System/StoreView/StoreAppPurchaseViewController.h"
 #import "./../../System/TableView/SWTableViewHelper.h"
 
 @interface ShopBaseScene : SWTableViewHelper
 <
-	UIAlertViewDelegate,
-	StoreAppPurchaseViewControllerProtocol
+	UIAlertViewDelegate
 >
 {
 	UIAlertView*	mp_buyCheckAlertView;
 	UIAlertView*	mp_buyAlertView;
-	StoreAppPurchaseViewController*	mp_storeViewCtrl;
 	
 	SWTableViewCell*	mp_buyItemCell;
 	CCLabelTTF*	mp_moneyTextLable;

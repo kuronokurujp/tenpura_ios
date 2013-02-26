@@ -32,8 +32,6 @@
 }
 
 //	プロパティ
-@property	(nonatomic, readonly)	BOOL	bTouch;
-@property	(nonatomic, readonly)	BOOL	bRaise;
 @property	(nonatomic, readonly)	SInt32	posDataIdx;
 @property	(nonatomic, readonly)	NETA_DATA_ST data;
 @property	(nonatomic, retain)		id<TenpuraProtocol>	delegate;
@@ -50,6 +48,11 @@
 //	リセット
 -(void)	reset;
 
+//	タッチ可能か
+-(BOOL)	isTouchOK;
+//	揚げている途中か
+-(BOOL)	isFly;
+
 //	食べるアクション
 -(void)	eatAction:(Float32)in_time;
 
@@ -59,7 +62,8 @@
 
 //	タッチロック
 -(void)	lockTouch;
--(void)	unLockTouch;
+-(void)	unLockTouch:(const CGPoint)in_pos;
+-(void)	unLockTouchAct;
 
 -(CGRect)	boundingBox;
 -(void)	pauseSchedulerAndActions;

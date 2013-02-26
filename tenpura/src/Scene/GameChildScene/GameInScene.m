@@ -439,16 +439,16 @@ enum
 	GameScene*	pGameScene	= mp_gameScene;
 	
 	CCNode*	pNode	= nil;
-	CCNode*	pRemoveOjamaTenpura	= nil;
+	OjamaTenpura*	pRemoveOjamaTenpura	= nil;
 	//	おじゃま天ぷらのヒッtを優先
 	CCARRAY_FOREACH(pGameScene->mp_nabe.children, pNode)
 	{
 		if( [pNode isKindOfClass:[OjamaTenpura class]] )
 		{
 			OjamaTenpura*	pOjamaTenpura	= (OjamaTenpura*)pNode;
-			if( (pOjamaTenpura.bRaise) && (CGRectContainsPoint([pOjamaTenpura boundingBox], touchPoint)) )
+			if( ([pOjamaTenpura isTouchOK]) && (CGRectContainsPoint([pOjamaTenpura boundingBox], touchPoint)) )
 			{
-				pRemoveOjamaTenpura	= pNode;
+				pRemoveOjamaTenpura	= pOjamaTenpura;
 				break;
 			}
 		}
@@ -457,7 +457,7 @@ enum
 	if( pRemoveOjamaTenpura )
 	{
 		//	消滅方法は仮
-		[pGameScene->mp_nabe removeChild:pRemoveOjamaTenpura cleanup:YES];
+		[pRemoveOjamaTenpura runTouchDelAction];
 	}
 	else if( mp_touchTenpura == nil )
 	{
@@ -469,7 +469,7 @@ enum
 			if( ([pNode isKindOfClass:[Tenpura class]] == YES) && (pNode.visible == YES) )
 			{
 				Tenpura*	pTenpura	= (Tenpura*)pNode;
-				if( (pTenpura.bTouch == NO) && (pTenpura.bRaise == YES) )
+				if( [pTenpura isTouchOK] )
 				{
 					if( CGRectContainsPoint([pTenpura boundingBox], touchPoint) == YES )
 					{
@@ -622,15 +622,13 @@ enum
 		else if( bNewPostionTenpura == YES )
 		{
 			//	タッチ前の位置に設定しているので注意！
-			[mp_touchTenpura unLockTouch];
-
-			//	鍋枠内であれば現在を位置に変更
-			[mp_touchTenpura setPosition:nowTenpuraPos];
+			//	鍋枠内であれば現在位置に変更
+			[mp_touchTenpura unLockTouch:nowTenpuraPos];
 		}
 		else
 		{
 			//	タッチ前の位置に設定しているので注意！
-			[mp_touchTenpura unLockTouch];
+			[mp_touchTenpura unLockTouchAct];
 		}
 
 		mp_touchTenpura	= nil;
@@ -646,7 +644,17 @@ enum
 {
 	if( mp_touchTenpura != nil )
 	{
-		[mp_touchTenpura unLockTouch];
+		GameScene*	pGameScene	= mp_gameScene;
+		if( CGRectContainsRect([pGameScene->mp_nabe boundingBox], [mp_touchTenpura boundingBox]) )
+		{
+			//	鍋内なら現在位置に配置
+			[mp_touchTenpura unLockTouch:mp_touchTenpura.position];
+		}
+		else
+		{
+			[mp_touchTenpura unLockTouchAct];
+		}
+
 		mp_touchTenpura	= nil;
 	}
 	
@@ -785,6 +793,7 @@ enum
 	}
 
 	Customer*	pCustomer	= nil;
+	Customer*	pNewCutomer	= nil;
 	CCARRAY_FOREACH(pGameScene->mp_customerArray,pCustomer)
 	{
 		if( ( pCustomer.visible == NO ) || ( pCustomer.bPut == NO ) )
@@ -794,11 +803,24 @@ enum
 
 		if( CGRectIntersectsRect( in_rect, [pCustomer getBoxRect] ) == YES )
 		{
-			return pCustomer;
+			if( pNewCutomer != nil )
+			{
+				//	天ぷらとの距離が短い場合のを対象に
+				Float32	dis	= ccpDistanceSQ( in_rect.origin, pCustomer.position );
+				Float32	dis2	= ccpDistanceSQ( in_rect.origin, pNewCutomer.position );
+				if( dis < dis2 )
+				{
+					pNewCutomer	= pCustomer;
+				}
+			}
+			else
+			{
+				pNewCutomer	= pCustomer;
+			}
 		}
 	}
 	
-	return nil;
+	return pNewCutomer;
 }
 
 /*

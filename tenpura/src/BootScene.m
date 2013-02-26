@@ -53,10 +53,11 @@
 			{
 				[[FileTexLoadManager shared] LoadAsync:[NSString stringWithUTF8String:ga_animDataList[i].pImageFileName]];
 			}
-			
-			for( UInt32 i = 0; gp_preLoadImgFileName[i] != NULL; ++i )
+
+			num	= sizeof(gpa_spriteFileNameList) / sizeof(gpa_spriteFileNameList[0]);
+			for( UInt32 i = 0; i < num; ++i )
 			{
-				[[FileTexLoadManager shared] LoadAsync:[NSString stringWithUTF8String:gp_preLoadImgFileName[i]]];
+				[[FileTexLoadManager shared] LoadAsync:[NSString stringWithUTF8String:gpa_spriteFileNameList[i]]];
 			}
 		}
 

@@ -31,9 +31,13 @@
 @implementation OjamaTenpura
 
 //	プロパティ定義
-@synthesize bRaise		= mb_raise;
 @synthesize delegate	= m_delegate;
 @synthesize data		= m_data;
+
+enum
+{
+	eACT_TAG_TOUCH_DEL	= 0,
+};
 
 typedef struct
 {
@@ -164,6 +168,35 @@ static const _OJAMA_STATE_DATA_ST	s_ojamaStateDataList[]	=
 	//	揚げる段階を設定
 	[self unscheduleUpdate];
 	[self scheduleUpdate];
+}
+
+/*
+	@brief	タッチ可能か
+*/
+-(BOOL)	isTouchOK
+{
+	BOOL	bFlg	= (mb_raise && ([self getActionByTag:eACT_TAG_TOUCH_DEL] == nil));
+	return bFlg;
+}
+
+/*
+	@brief	タッチ消滅アクション
+*/
+-(void)	runTouchDelAction
+{
+	ccBezierConfig	bezier;
+	
+	bezier.controlPoint_1	= ccp(0, SCREEN_SIZE_HEIGHT * 0.5f);
+	bezier.controlPoint_2	= ccp(-SCREEN_SIZE_WIDTH * 0.5f, SCREEN_SIZE_HEIGHT);
+	bezier.endPosition	= ccp(-SCREEN_SIZE_WIDTH * 0.8f, SCREEN_SIZE_HEIGHT);
+	CCBezierBy*	pBezierAct	= [CCBezierBy actionWithDuration:1.f bezier:bezier];
+	CCCallBlock*	pEndAct	= [CCCallBlock actionWithBlock:^{
+		[self removeFromParentAndCleanup:YES];
+	}];
+
+	CCSequence*	pSeq	= [CCSequence actionOne:pBezierAct two:pEndAct];
+	pSeq.tag	= eACT_TAG_TOUCH_DEL;
+	[self runAction:pSeq];
 }
 
 /*
@@ -299,7 +332,7 @@ static const _OJAMA_STATE_DATA_ST	s_ojamaStateDataList[]	=
 	{
 		time	= (m_data.aChangeTime[m_state] * raiseSpeedRate);
 	}
-	
+
 	return time;
 }
 

@@ -180,7 +180,7 @@
 				:ga_animDataList[i].pImageFileName
 				:ga_animDataList[i].fps] autorelease];
 		
-				[pEffMng add:[NSString stringWithUTF8String:ga_AnimPlayName[i]]:pEffData];
+				[pEffMng add:[NSString stringWithUTF8String:ga_animDataList[i].pImageFileName]:pEffData];
 			}
 		}
 

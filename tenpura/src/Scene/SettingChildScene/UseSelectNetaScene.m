@@ -178,7 +178,11 @@ enum
 		//	アイコン
 		{
 			CCSprite*	pItemIconSp	= (CCSprite*)[pCellSp getChildByTag:eTAG_USE_SELECT_TABLE_USE_ITEM_ICON_SPRITE];
-			if( pItemIconSp == nil )
+			if( pItemIconSp )
+			{
+				[pItemIconSp removeChild:pItemIconSp cleanup:YES];
+			}
+
 			{
 				NSString*	pFileName	= [NSString stringWithFormat:@"cust_%s.png", pNetaData->fileName];
 				pItemIconSp	= [CCSprite spriteWithFile:pFileName];

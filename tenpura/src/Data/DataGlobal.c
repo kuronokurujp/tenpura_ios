@@ -9,15 +9,6 @@
 #include "DataGlobal.h"
 #include <stdio.h>
 
-//	エフェクト再生名一覧
-const char*	ga_AnimPlayName[eANIM_MAX]	=
-{
-	"bomb",
-	"cursor",
-	"star",
-	"bigBomb",
-};
-
 //	シーン変移秒数
 const float	g_sceneChangeTime	= 0.2f;
 
@@ -71,13 +62,6 @@ static const char*	gp_CutomerCharFileName	= "customer0.png";
 static const char*	gp_GamePlayEndSpritFileName	= "play_end.png";
 static const char*	gp_GamePlayStartSpritFileName	= "play_start.png";
 */
-const char*	gp_preLoadImgFileName[]	=
-{
-	"moji00.png",
-	"moji01.png",
-	"moji02.png",
-	NULL
-};
 
 ANIM_DATA_ST	ga_animDataList[eANIM_MAX]	=
 {
@@ -85,9 +69,13 @@ ANIM_DATA_ST	ga_animDataList[eANIM_MAX]	=
 	{ "cursor.png", "cursor.plist", 60.f },
 	{ "star.png", "star.plist", 60.f },
 	{ "bigBomb.png", "bigBomb.plist", 60.f },
+	{ "abura.png", "abura.plist", 60.f },
 };
 
 char*	gpa_spriteFileNameList[eSPRITE_FILE_MAX]	=
 {
 	"combo_message.png",
+	"moji00.png",
+	"moji01.png",
+	"moji02.png",
 };

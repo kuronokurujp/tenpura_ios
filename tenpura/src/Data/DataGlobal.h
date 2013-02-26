@@ -42,11 +42,9 @@ enum
 	eANIM_CURSOR,
 	eANIM_STAR,
 	eANIM_BIGBOMG,
+	eANIM_ABURA,
 	eANIM_MAX
 };
-
-//	アニメスプライト名一覧
-extern const char*	ga_AnimPlayName[eANIM_MAX];
 
 //	シーン変移秒数
 extern const float	g_sceneChangeTime;
@@ -69,9 +67,6 @@ extern	const char*	gp_startOjamaDataName;
 
 extern const char*	gp_soundDataListName;
 
-//	事前に読む込むテクスチャーファイル一覧
-extern const char*	gp_preLoadImgFileName[];
-
 //	アニメ
 typedef struct
 {
@@ -86,6 +81,9 @@ extern	ANIM_DATA_ST	ga_animDataList[eANIM_MAX];
 enum
 {
 	eSPRITE_FILE_COMBO_MESSAGE	= 0,
+	eSPRITE_FILE_CUS_MOJI00,
+	eSPRITE_FILE_CUS_MOJI01,
+	eSPRITE_FILE_CUS_MOJI02,
 	eSPRITE_FILE_MAX,
 };
 

@@ -18,6 +18,8 @@
 -(void)		_setup:(const NETA_DATA_ST*)in_pData;
 -(CGRect)	_getTexRect:(SInt32)in_idx;
 
+-(void)	_settingEffect:(TENPURA_STATE_ET)in_state;
+
 //	登場演出終了
 -(void)	_endPutAction;
 //	消滅演出終了
@@ -42,8 +44,6 @@ enum
 };
 
 //	プロパティ定義
-@synthesize bTouch		= mb_lock;
-@synthesize bRaise		= mb_raise;
 @synthesize posDataIdx	= m_posDataIdx;
 @synthesize data		= m_data;
 @synthesize delegate	= m_delegate;
@@ -69,11 +69,11 @@ enum
 		AnimManager*	pAnimManager	= [AnimManager shared];
 
 		CCNode*	pEff	= nil;
-		pEff	= [pAnimManager createNode:[NSString stringWithUTF8String:ga_AnimPlayName[eANIM_STAR]] :YES];
+		pEff	= [pAnimManager createNode:[NSString stringWithUTF8String:ga_animDataList[eANIM_STAR].pImageFileName] :YES];
 		[pEff setVisible:NO];
 		[self addChild:pEff z:2.f tag:eCHILD_TAG_ANIM_STAR];
 		
-		pEff	= [pAnimManager createNode:[NSString stringWithUTF8String:ga_AnimPlayName[eANIM_CURSOR]] :YES];
+		pEff	= [pAnimManager createNode:[NSString stringWithUTF8String:ga_animDataList[eANIM_CURSOR].pImageFileName] :YES];
 		[pEff setVisible:NO];
 		[self addChild:pEff z:1.f tag:eCHILD_TAG_ANIM_CURSOR];
 	}
@@ -95,7 +95,7 @@ enum
 */
 -(void)	update:(ccTime)delta
 {
-	if( mb_lock == NO )
+	if( [self isFly] )
 	{
 		m_nowRaiseTime	+= delta;
 		Float32	nextRaiseTime	= [self _getRaiseTime:m_state];
@@ -173,6 +173,8 @@ enum
 		[mp_sp runAction:pSeq];
 		[mp_sp runAction:pFadeIn];
 	}
+
+	[self _settingEffect:m_state];
 	
 	[self setVisible:YES];
 	mb_raise	= YES;
@@ -206,7 +208,7 @@ enum
 {
 	mb_lock	= NO;
 	m_nowRaiseTime	= 0.f;
-	m_state		= eTENPURA_STATE_NOT;
+	m_state		= eTENPURA_STATE_VERYGOOD;
 	[mp_sp setScale:s_normalScaleVal];
 	
 	//	揚げる段階を設定
@@ -222,6 +224,22 @@ enum
 	[pEff setVisible:NO];
 
 	[mp_sp setTextureRect:[self _getTexRect:(SInt32)m_state]];
+}
+
+/*
+	@brief	タッチ可能か
+*/
+-(BOOL)	isTouchOK
+{
+	return (mb_lock == NO) && (mb_raise == YES);
+}
+
+/*
+	@brief	揚げている途中か
+*/
+-(BOOL)	isFly
+{
+	return (mb_raise && (mb_lock == NO));
 }
 
 /*
@@ -269,9 +287,6 @@ enum
 */
 -(void)	lockTouch
 {
-	//	揚げる中止
-	[scheduler_ pauseTarget:self];
-
 	CCScaleBy*	pScaleBy	= [CCScaleBy actionWithDuration:0.1f scale:1.5f];
 	[pScaleBy setTag:eACTTAG_LOCK_SCALE];
 
@@ -288,9 +303,8 @@ enum
 /*
 	@brief
 */
--(void)	unLockTouch
+-(void)	unLockTouch:(const CGPoint)in_pos
 {
-	[scheduler_ resumeTarget:self];
 	[mp_sp setScale:s_normalScaleVal];
 	
 	//	ロック用のスケールが残っていたら削除する
@@ -302,7 +316,26 @@ enum
 	[self setZOrder:m_oldZOrder];
 	
 	mb_lock	= NO;
-	[self setPosition:m_touchPrevPos];
+	[self setPosition:in_pos];
+}
+
+/*
+	@brief	タッチのアンロック（アクション用）
+*/
+-(void)	unLockTouchAct
+{
+	[mp_sp setScale:s_normalScaleVal];
+	[self setZOrder:m_oldZOrder];	
+
+	CCMoveTo*	pMoveAct	= [CCMoveTo actionWithDuration:0.1f position:m_touchPrevPos];
+	CCEaseIn*	pEaseInMoveAct	= [CCEaseOut actionWithAction:pMoveAct rate:2.f];
+
+	CCCallBlock*	pEndAct	= [CCCallBlock actionWithBlock:^{
+		[self unLockTouch:m_touchPrevPos];
+	}];
+
+	CCSequence*	pSeq	= [CCSequence actionOne:pEaseInMoveAct two:pEndAct];
+	[self runAction:pSeq];
 }
 
 /*
@@ -356,6 +389,44 @@ enum
 }
 
 /*
+	@brief	エフェクト設定
+*/
+-(void)	_settingEffect:(TENPURA_STATE_ET)in_state
+{
+	AnimActionSprite*	pEff	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_CURSOR];
+	[pEff end];
+	[pEff setVisible:NO];
+		
+	pEff	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_STAR];
+	[pEff end];
+	[pEff setVisible:NO];
+
+	switch ((SInt32)in_state)
+	{
+		case eTENPURA_STATE_GOOD:		//　ちょうど良い
+		{
+			pEff	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_CURSOR];
+			[pEff start];
+			[pEff setVisible:YES];
+
+			break;
+		}
+		case eTENPURA_STATE_VERYGOOD:	//	最高
+		{
+			pEff	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_CURSOR];
+			[pEff start];
+			[pEff setVisible:YES];
+
+			pEff	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_STAR];
+			[pEff start];
+			[pEff setVisible:YES];
+
+			break;
+		}
+	}
+}
+
+/*
 	@brief	登場演出終了
 */
 -(void)	_endPutAction
@@ -387,24 +458,15 @@ enum
 	if( m_state < eTENPURA_STATE_MAX )
 	{
 		{
-			AnimActionSprite*	pEff	= nil;
 			switch ((SInt32)m_state)
 			{
 				case eTENPURA_STATE_GOOD:		//　ちょうど良い
 				{
-					pEff	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_CURSOR];
-					[pEff start];
-					[pEff setVisible:YES];
-
 					[[SoundManager shared] playSe:@"fried01"];
 					break;
 				}
 				case eTENPURA_STATE_VERYGOOD:	//	最高
 				{
-					pEff	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_STAR];
-					[pEff start];
-					[pEff setVisible:YES];
-
 					[[SoundManager shared] playSe:@"fried02"];
 					break;
 				}
@@ -420,16 +482,8 @@ enum
 				}
 			}
 			
-			if( pEff == nil )
-			{
-				AnimActionSprite*	pEff	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_CURSOR];
-				[pEff end];
-				[pEff setVisible:NO];
-
-				pEff	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_STAR];
-				[pEff end];
-				[pEff setVisible:NO];
-			}
+			//	エフェクト設定
+			[self _settingEffect:m_state];
 		}
 
 		switch ((SInt32)m_state)
