@@ -19,6 +19,7 @@
 #import "./../Data/DataTenpuraPosList.h"
 #import "./../Data/DataItemList.h"
 #import "./../System/Sound/SoundManager.h"
+#import "./../System/Anim/Action/AnimActionNumCounterLabelTTF.h"
 
 #import "./../CCBReader/CCBReader.h"
 
@@ -250,12 +251,13 @@ enum
 						mp_timerPut	= pLabel;
 						[mp_timerPut setString:[NSString stringWithFormat:@"%03ld", (SInt32)m_timeVal]];
 					}
-					else if( [pLabel.string isEqualToString:@"scoreNum"] )
+					else if( ([pLabel.string isEqualToString:@"scoreNum"]) && ([pLabel isKindOfClass:[AnimActionNumCounterLabelTTF class]]) )
 					{
-						mp_scorePut	= pLabel;
-						[mp_scorePut setString:[NSString stringWithFormat:@"%06d", 0]];
+						mp_scorePut	= (AnimActionNumCounterLabelTTF*)pLabel;
+						[mp_scorePut setStringFormat:@"%06ld"];
+						[mp_scorePut setNum:0];
 					}
-					
+
 					[pCCLabelTTFArray addObject:pLabel];
 				}
 				else if( [pChildNode isKindOfClass:[GameInFeverMessage class]] )

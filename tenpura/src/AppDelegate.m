@@ -132,7 +132,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
 	//	広告ビュー作成
 	{
 		mp_bannerViewCtrl	= [[BannerViewController alloc] initWithID:[DataBaseText getString:73]];
-		[mp_bannerViewCtrl setBannerPos:ccp(ga_bannerPos[0], ga_bannerPos[1])];
+		[mp_bannerViewCtrl setBannerPos:ccp(ga_bannerPos[0], ga_bannerPos[1])];		
 	}
 
 	//	広告ビュー呼び出し
@@ -149,7 +149,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
 	//	TweetView作成
 	{
 		NSString*	pRetBtnName	= [DataBaseText getString:106];
-        mp_tweetViewController = [[TweetViewController alloc] initToSetup:pRetBtnName :@"btn_back.png"];
+		mp_tweetViewController = [[TweetViewController alloc] initToSetup:pRetBtnName :@"btn_back.png"];
 	}
 	
 	//	TweetView呼び出し
@@ -323,6 +323,8 @@ void uncaughtExceptionHandler( NSException* in_pException )
 	{
 		[pView addSubview:mp_bannerViewCtrl.view];
 	}
+
+	[mp_bannerViewCtrl showHide:NO];
 }
 
 /*
@@ -330,11 +332,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
 */
 -(void)	onBannerHide
 {
-	UIView*	pView	= [CCDirector sharedDirector].view;
-	if( [mp_bannerViewCtrl.view isDescendantOfView:pView] == YES )
-	{
-		[mp_bannerViewCtrl.view removeFromSuperview];
-	}
+	[mp_bannerViewCtrl showHide:YES];
 }
 
 /*

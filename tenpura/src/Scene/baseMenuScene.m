@@ -8,6 +8,7 @@
 
 #import "BaseMenuScene.h"
 #import "./../Data/DataSaveGame.h"
+#import "./../System/Anim/Action/AnimActionNumCounterLabelTTF.h"
 
 @implementation BaseMenuScene
 
@@ -32,7 +33,13 @@
 */
 -(void)	onEnter
 {
-	[self update:0];
+	DataSaveGame*	pDataSaveGame	= [DataSaveGame shared];
+	NSAssert(pDataSaveGame, @"セーブデータがない");
+	const SAVE_DATA_ST*	pSaveData	= [pDataSaveGame getData];
+	NSAssert(pSaveData, @"セーブデータの中身がない");
+
+	//	金額反映
+	[mp_nowMoneyText setNum:pSaveData->money];
 
 	[super onEnter];
 }
@@ -48,18 +55,20 @@
 	CCNode*	pNode	= nil;
 	CCARRAY_FOREACH(children_, pNode)
 	{
-		if( [pNode isKindOfClass:[CCLabelTTF class]] )
+		if( [pNode isKindOfClass:[AnimActionNumCounterLabelTTF class]] )
 		{
-			CCLabelTTF*	pLabel	= (CCLabelTTF*)pNode;
+			AnimActionNumCounterLabelTTF*	pLabel	= (AnimActionNumCounterLabelTTF*)pNode;
 			if( [pLabel.string isEqualToString:@"moneyNum"] )
 			{
 				mp_nowMoneyText	= pLabel;
-				[mp_nowMoneyText setString:[NSString stringWithFormat:@"%06ld", pSaveData->money]];
+				[mp_nowMoneyText setStringFormat:@"%06ld"];
+				[mp_nowMoneyText setNum:pSaveData->money];
 			}
 			else if( [pLabel.string isEqualToString:@"scoreNum"] )
 			{
 				mp_nowHiScoreText	= pLabel;
-				[mp_nowHiScoreText setString:[NSString stringWithFormat:@"%06lld", pSaveData->score]];
+				[mp_nowHiScoreText setStringFormat:@"%06ld"];
+				[mp_nowHiScoreText setNum:pSaveData->score];
 			}
 		}
 	}
@@ -76,7 +85,10 @@
 	NSAssert(pSaveData, @"セーブデータの中身がない");
 
 	//	金額反映
-	[mp_nowMoneyText setString:[NSString stringWithFormat:@"%06ld", pSaveData->money]];
+	if( mp_nowMoneyText.countNum != pSaveData->money )
+	{
+		[mp_nowMoneyText setCountNum:pSaveData->money];
+	}
 }
 
 @end

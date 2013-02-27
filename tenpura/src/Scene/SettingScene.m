@@ -242,7 +242,7 @@
 {
 	CCLOG(@"SelectItem");
 	
-    CCNode* node = [CCBReader nodeGraphFromFile:@"use_neta_select.ccbi" owner:nil];
+	CCNode* node = [CCBReader nodeGraphFromFile:@"use_neta_select.ccbi" owner:nil];
 	
 	//	選択したセッティング項目を選択リストにアタッチ
 	//	選択したオブジェクトがセッティング項目用かチェックもする
@@ -261,8 +261,8 @@
 		[pUseSelectNetaScene setup:pSettingUseItemBtn:mp_useItemNoList];
 	}
 
-    CCScene* scene = [CCScene node];
-    [scene addChild:node];
+	CCScene* scene = [CCScene node];
+	[scene addChild:node];
 
 	CCTransitionFade*	pTransFade	=
 	[CCTransitionFade transitionWithDuration:g_sceneChangeTime scene:scene withColor:ccBLACK];
@@ -279,7 +279,7 @@
 {
 	CCLOG(@"settingItemBtn");
 	
-    CCNode* node = [CCBReader nodeGraphFromFile:@"use_item_select.ccbi" owner:nil];
+	CCNode* node = [CCBReader nodeGraphFromFile:@"use_item_select.ccbi" owner:nil];
 	
 	//	選択したセッティング項目を選択リストにアタッチ
 	//	選択したオブジェクトがセッティング項目用かチェックもする
@@ -298,8 +298,8 @@
 		[pUseSelectItemScene setup:pSettingUseItemBtn:mp_useItemNoList];
 	}
 
-    CCScene* scene = [CCScene node];
-    [scene addChild:node];
+	CCScene* scene = [CCScene node];
+	[scene addChild:node];
 
 	CCTransitionFade*	pTransFade	=
 	[CCTransitionFade transitionWithDuration:g_sceneChangeTime scene:scene withColor:ccBLACK];

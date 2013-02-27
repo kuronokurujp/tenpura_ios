@@ -26,7 +26,7 @@
 	CCDirectorIOS	*director_;							// weak ref
 
 	BannerViewController*	mp_bannerViewCtrl;
-    TweetViewController*	mp_tweetViewController;
+	TweetViewController*	mp_tweetViewController;
 }
 
 @property (nonatomic, retain) UIWindow *window;

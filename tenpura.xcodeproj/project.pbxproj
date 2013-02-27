@@ -71,6 +71,7 @@
 		CE51773816494022004DF4F6 /* GameKitHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = CE51773716494022004DF4F6 /* GameKitHelper.m */; };
 		CE51774316497376004DF4F6 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE51774216497376004DF4F6 /* GameKit.framework */; };
 		CE5177531649D921004DF4F6 /* UINavigationControllerExt.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5177521649D921004DF4F6 /* UINavigationControllerExt.m */; };
+		CE538F4416DDD54600A45E0B /* AnimActionNumCounterLabelTTF.m in Sources */ = {isa = PBXBuildFile; fileRef = CE538F4316DDD54600A45E0B /* AnimActionNumCounterLabelTTF.m */; };
 		CE541E2C16B297E400CD07D8 /* moji00.png in Resources */ = {isa = PBXBuildFile; fileRef = CE541E2816B297E400CD07D8 /* moji00.png */; };
 		CE541E2D16B297E400CD07D8 /* moji01.png in Resources */ = {isa = PBXBuildFile; fileRef = CE541E2916B297E400CD07D8 /* moji01.png */; };
 		CE541E2E16B297E400CD07D8 /* moji02.png in Resources */ = {isa = PBXBuildFile; fileRef = CE541E2A16B297E400CD07D8 /* moji02.png */; };
@@ -522,6 +523,8 @@
 		CE51774216497376004DF4F6 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		CE5177511649D921004DF4F6 /* UINavigationControllerExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UINavigationControllerExt.h; path = src/UINavigationControllerExt.h; sourceTree = "<group>"; };
 		CE5177521649D921004DF4F6 /* UINavigationControllerExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UINavigationControllerExt.m; path = src/UINavigationControllerExt.m; sourceTree = "<group>"; };
+		CE538F4216DDD54600A45E0B /* AnimActionNumCounterLabelTTF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimActionNumCounterLabelTTF.h; path = src/System/Anim/Action/AnimActionNumCounterLabelTTF.h; sourceTree = "<group>"; };
+		CE538F4316DDD54600A45E0B /* AnimActionNumCounterLabelTTF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimActionNumCounterLabelTTF.m; path = src/System/Anim/Action/AnimActionNumCounterLabelTTF.m; sourceTree = "<group>"; };
 		CE541E2816B297E400CD07D8 /* moji00.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = moji00.png; path = Resources/text/moji00.png; sourceTree = "<group>"; };
 		CE541E2916B297E400CD07D8 /* moji01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = moji01.png; path = Resources/text/moji01.png; sourceTree = "<group>"; };
 		CE541E2A16B297E400CD07D8 /* moji02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = moji02.png; path = Resources/text/moji02.png; sourceTree = "<group>"; };
@@ -1233,6 +1236,8 @@
 			children = (
 				CE216D7816B37B9A000E0E29 /* AnimActionSprite.h */,
 				CE216D7916B37B9A000E0E29 /* AnimActionSprite.m */,
+				CE538F4216DDD54600A45E0B /* AnimActionNumCounterLabelTTF.h */,
+				CE538F4316DDD54600A45E0B /* AnimActionNumCounterLabelTTF.m */,
 			);
 			name = Action;
 			sourceTree = "<group>";
@@ -2937,6 +2942,7 @@
 				CE4FE29616DCB2140094EA66 /* UseSelectNetaTableCell.m in Sources */,
 				CE4FE29B16DCBB220094EA66 /* MissionTableCell.m in Sources */,
 				CE4FE29E16DCBB380094EA66 /* StoreTableCell.m in Sources */,
+				CE538F4416DDD54600A45E0B /* AnimActionNumCounterLabelTTF.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3015,7 +3021,11 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = tenpura/Prefix.pch;
+				GCC_WARN_STRICT_SELECTOR_MATCH = NO;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = NO;
 				HEADER_SEARCH_PATHS = "\"tenpura/libs/kazmath/include\"";
 				INFOPLIST_FILE = tenpura/Resources/Info.plist;
 				LIBRARY_SEARCH_PATHS = (
@@ -3039,7 +3049,11 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = tenpura/Prefix.pch;
+				GCC_WARN_STRICT_SELECTOR_MATCH = NO;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = NO;
 				HEADER_SEARCH_PATHS = "\"tenpura/libs/kazmath/include\"";
 				INFOPLIST_FILE = tenpura/Resources/Info.plist;
 				LIBRARY_SEARCH_PATHS = (

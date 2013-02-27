@@ -10,12 +10,6 @@
 #import "cocos2d.h"
 #import "AppDelegate.h"
 
-@interface BannerViewController (PrivateMethod)
-
--(void)	_onBannerRequest;
-
-@end
-
 @implementation BannerViewController
 
 //	ゲーム内の動作停止させるかどうか
@@ -33,14 +27,14 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self)
+	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+	if (self)
 	{
 		mp_bannerView	= nil;
 		m_rect	= CGRectMake( 0, 0, 320, 50);
-    }
+	}
 
-    return self;
+	return self;
 }
 
 /*
@@ -66,8 +60,8 @@
 */
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-	 
+	[super viewDidLoad];
+
 	if( mp_bannerView != nil )
 	{
 		return;
@@ -104,7 +98,7 @@
 - (UIViewController *)viewControllerForPresentingModalView
 {
 	AppController*	pApp	= (AppController*)[UIApplication sharedApplication].delegate;
-    return pApp.navController;
+	return pApp.navController;
 }
 
 /*
@@ -117,11 +111,19 @@
 }
 
 /*
-	@brief	バナーの表示リクエスト
+	@brief
 */
--(void)	_onBannerRequest
+-(void)	showHide:(BOOL)in_bFlg
 {
-//	[mp_bannerView loadRequest:[GADRequest request]];
+	mp_bannerView.hidden	= in_bFlg;
+	if( in_bFlg == YES )
+	{
+		[mp_bannerView ignoreAutoRefreshTimer];
+	}
+	else if( in_bFlg == NO )
+	{
+		[mp_bannerView doNotIgnoreAutoRefreshTimer];
+	}
 }
 
 @end

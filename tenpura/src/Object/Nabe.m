@@ -157,8 +157,6 @@ enum
 */
 -(void)	allCleanTenpura
 {
-	m_tenpuraZOrder	= eZORDER_START_NORAMAL_TENPURA;
-
 	CCArray*	pRemoveTenpura	= [CCArray array];
 
 	Tenpura*	pTenpura	= nil;
@@ -180,6 +178,8 @@ enum
 	{
 		[self removeChild:pNode cleanup:YES];
 	}
+	
+	m_tenpuraZOrder	= eZORDER_START_NORAMAL_TENPURA;
 }
 
 /*

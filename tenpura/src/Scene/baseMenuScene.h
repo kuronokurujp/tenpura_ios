@@ -11,11 +11,13 @@
 
 #import "./../System/TableView/SWTableViewHelper.h"
 
+@class AnimActionNumCounterLabelTTF;
+
 @interface BaseMenuScene : CCLayer
 {
 @protected
-	CCLabelTTF*			mp_nowMoneyText;
-	CCLabelTTF*			mp_nowHiScoreText;
+	AnimActionNumCounterLabelTTF*			mp_nowMoneyText;
+	AnimActionNumCounterLabelTTF*			mp_nowHiScoreText;
 }
 
 @end

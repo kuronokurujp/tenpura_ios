@@ -17,6 +17,7 @@
 #import "./../Object/GameInFeverMessage.h"
 
 @class GameInFeverMessage;
+@class AnimActionNumCounterLabelTTF;
 @class GameInBG;
 
 /*
@@ -52,7 +53,7 @@
 	CCArray*	mp_customerArray;
 	
 	CCLabelTTF*	mp_timerPut;
-	CCLabelTTF*	mp_scorePut;
+	AnimActionNumCounterLabelTTF*	mp_scorePut;
 	Float32	m_timeVal;
 	Float32	m_combAddTime;
 	UInt32	m_scoreRate;

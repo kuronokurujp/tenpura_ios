@@ -18,8 +18,10 @@
 #import "./../../ActionCustomer/ActionCustomer.h"
 #import "./../../Data/DataNetaList.h"
 #import "./../../Data/DataGlobal.h"
+#import "./../../Data/DataSaveGame.h"
 #import "./../../System/Sound/SoundManager.h"
 #import "./../../System/Anim/AnimManager.h"
+#import "./../../System/Anim/Action/AnimActionNumCounterLabelTTF.h"
 #import "./../../CCBReader/CCBReader.h"
 
 //	非公開関数
@@ -29,12 +31,6 @@
 -(void)	_updateNormal:(ccTime)in_time;
 -(void)	_updateFever:(ccTime)in_time;
 -(void)	_end:(ccTime)in_time;
-
-//	天ぷらを客に投げる
--(BOOL)	_throwTenpuraToCutomer:(Customer*)in_pCustomer :(Tenpura*)in_pTenpura;
-
-//	おじゃま開始を投げる
--(void)	_putOjamaTenpura;
 
 @end
 
@@ -113,8 +109,12 @@ enum
 		[self unscheduleUpdate];
 		[self schedule:@selector(_end:)];
 	}
-
-	[pGameScene->mp_scorePut setString:[NSString stringWithFormat:@"%06lld", [pGameScene getScore]]];
+	
+	int64_t	nowScoreNum	= [pGameScene getScore];
+	if( pGameScene->mp_scorePut.countNum != nowScoreNum )
+	{
+		[pGameScene->mp_scorePut setCountNum:nowScoreNum];
+	}
 }
 
 /*
@@ -280,6 +280,9 @@ enum
 //	コンボ中の更新
 -(void)	_updateCombo;
 
+//	おじゃま開始を監視
+-(void)	_chkSwitchOnOjama;
+
 @end
 
 @implementation GameInNormalScene
@@ -346,13 +349,8 @@ enum
 {
 	mp_gameScene	= in_pGameScene;
 
-	//	おじゃまを出すのをタイマー登録
-	Float32	ojamaTime	= m_time - 60.f;
-	if( ojamaTime <= 0.f )
-	{
-		ojamaTime	= 0.f;
-	}
-	[self scheduleOnce:@selector(_putOjamaTenpura) delay:ojamaTime];
+	//	おじゃま発動チェック
+	[self schedule:@selector(_chkSwitchOnOjama)];
 
 	[self scheduleUpdate];
 	[self schedule:@selector(_timer:) interval:1.f];
@@ -363,6 +361,22 @@ enum
 */
 -(void)	update:(ccTime)delta
 {
+	GameScene*	pGameScene	= mp_gameScene;
+	Customer*	pCustomer	= nil;
+	SInt32	notVisibleCntCustomer	= 0;
+	CCARRAY_FOREACH(pGameScene->mp_customerArray, pCustomer)
+	{
+		if( pCustomer.visible == NO )
+		{
+			++notVisibleCntCustomer;
+		}
+	}
+	
+	if( pGameScene->mp_customerArray.count <= notVisibleCntCustomer )
+	{
+		//	一人も客がいない状態
+		[pGameScene putCustomer:YES];
+	}
 }
 
 /*
@@ -400,31 +414,37 @@ enum
 	NSValue*	pData	= [[in_pCenter userInfo] objectForKey:[NSString stringWithUTF8String:gp_startOjamaDataName]];
 	if( pData != nil )
 	{
+		GameScene*	pGameScene	= mp_gameScene;
+
 		OJAMA_NETA_DATA	data;
 		[pData getValue:&data];
 		//	おじゃま処理をする
 		Customer*	pCustomer	= nil;
-		CCARRAY_FOREACH(mp_gameScene->mp_customerArray, pCustomer)
+		BOOL	bRunPutActCustomer	= NO;
+		SInt32	cntPutCustomer	= 0;
+		CCARRAY_FOREACH(pGameScene->mp_customerArray, pCustomer)
 		{
-			pCustomer.addMoney	= data.money;
-			pCustomer.addScore	= data.score;
+			if( pCustomer.bPut )
+			{
+				[pCustomer removeAllEatIcon];
+				[pCustomer.act exit];
+				
+				++cntPutCustomer;
+			}
+			else if( [pCustomer.act isRunPutAct] )
+			{
+				bRunPutActCustomer	= YES;
+			}
 		}
-
-		m_time	+= data.time;
-	}
-}
-
-/*
-	@brief	タイムカウント
-*/
--(void)	_timer:(ccTime)in_time
-{
-	//	時間がなくなったらゲーム終了
-	m_time	-= 1.f;
-	if( m_time <= 0.f )
-	{
-		m_time	= 0.f;
-		[self unschedule:_cmd];
+		
+		if( (bRunPutActCustomer == NO) && (cntPutCustomer < pGameScene->mp_customerArray.count) )
+		{
+			//	客が一人もいない状態になるのをふせぐために客を一人出す
+			[pGameScene putCustomer:YES];
+		}
+		
+		//	配置した天ぷらをすべてクリア
+		[pGameScene->mp_nabe allCleanTenpura];
 	}
 }
 
@@ -648,6 +668,20 @@ enum
 }
 
 /*
+	@brief	タイムカウント
+*/
+-(void)	_timer:(ccTime)in_time
+{
+	//	時間がなくなったらゲーム終了
+	m_time	-= 1.f;
+	if( m_time <= 0.f )
+	{
+		m_time	= 0.f;
+		[self unschedule:_cmd];
+	}
+}
+
+/*
 	@brief	客が食べる
 	@return	食べたかどうか
 	@note	取得スコア/金額の反映させる
@@ -744,13 +778,21 @@ enum
 }
 
 /*
-	@brief	おじゃま開始を投げる
+	@brief	おじゃま発動の監視
 */
--(void)	_putOjamaTenpura
+-(void)	_chkSwitchOnOjama
 {
-	//	なべにおじゃまを出すように指示
+	//	指定したスコア数を超えたら開始（一度のみ）
 	GameScene*	pGameScene	= mp_gameScene;
-	[pGameScene->mp_nabe putOjamaTenpura];
+	const SAVE_DATA_ST*	pSaveData	= [[DataSaveGame shared] getData];
+	if( (pSaveData->score != 0) && (pSaveData->score <= [pGameScene getScore]) )
+	{
+		//	おじゃま開始
+		//	なべにおじゃまを出すように指示
+		[pGameScene->mp_nabe putOjamaTenpura];
+
+		[self unschedule:_cmd];
+	}
 }
 
 /*

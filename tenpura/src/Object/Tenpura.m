@@ -20,8 +20,6 @@
 
 -(void)	_settingEffect:(TENPURA_STATE_ET)in_state;
 
-//	登場演出終了
--(void)	_endPutAction;
 //	消滅演出終了
 -(void)	_endEatAction;
 
@@ -39,6 +37,7 @@ static const float	s_normalScaleVal	= 3.f / 4.f;
 enum
 {
 	eACTTAG_LOCK_SCALE	= 1,
+	eCHILD_TAG_ANIM_ABURA,
 	eCHILD_TAG_ANIM_CURSOR,
 	eCHILD_TAG_ANIM_STAR,
 };
@@ -69,6 +68,10 @@ enum
 		AnimManager*	pAnimManager	= [AnimManager shared];
 
 		CCNode*	pEff	= nil;
+		pEff	= [pAnimManager createNode:[NSString stringWithUTF8String:ga_animDataList[eANIM_ABURA].pImageFileName] :YES];
+		[pEff setVisible:NO];
+		[self addChild:pEff z:0 tag:eCHILD_TAG_ANIM_ABURA];
+		
 		pEff	= [pAnimManager createNode:[NSString stringWithUTF8String:ga_animDataList[eANIM_STAR].pImageFileName] :YES];
 		[pEff setVisible:NO];
 		[self addChild:pEff z:2.f tag:eCHILD_TAG_ANIM_STAR];
@@ -167,7 +170,15 @@ enum
 		Float32	time	= 0.1f;
 		CCScaleTo*	pScaleBy	= [CCScaleTo actionWithDuration:time scale:s_normalScaleVal];
 		CCFadeIn*	pFadeIn		= [CCFadeIn actionWithDuration:time];
-		CCCallFunc*	pEndCall	= [CCCallFunc actionWithTarget:self selector:@selector(_endPutAction)];
+		CCCallBlock*	pEndCall	= [CCCallBlock actionWithBlock:^(void){
+			mb_lock	= NO;
+			
+			//	油アニメ
+			AnimActionSprite*	pAburaAnim	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_ABURA];
+			[pAburaAnim start];
+			[pAburaAnim setVisible:YES];
+		}];
+	
 		CCSequence*	pSeq		= [CCSequence actionOne:pScaleBy two:pEndCall];
 		
 		[mp_sp runAction:pSeq];
@@ -197,6 +208,9 @@ enum
 	pEff	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_STAR];
 	[pEff end];
 
+	pEff	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_ABURA];
+	[pEff end];
+
 	[self stopAllActions];
 	[self unscheduleAllSelectors];
 	[self setVisible:NO];
@@ -221,6 +235,10 @@ enum
 	[pEff setVisible:NO];
 
 	pEff	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_STAR];
+	[pEff end];
+	[pEff setVisible:NO];
+
+	pEff	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_ABURA];
 	[pEff end];
 	[pEff setVisible:NO];
 
@@ -297,6 +315,11 @@ enum
 	m_oldZOrder	= self.zOrder;
 	[self setZOrder:30];
 	
+	//	油アニメをやめる
+	AnimActionSprite*	pAburaAnim	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_ABURA];
+	[pAburaAnim end];
+	[pAburaAnim setVisible:NO];
+
 	mb_lock	= YES;
 	m_touchPrevPos	= self.position;
 }
@@ -313,6 +336,11 @@ enum
 	{
 		[mp_sp stopActionByTag:eACTTAG_LOCK_SCALE];
 	}
+	
+	//	油アニメを再開
+	AnimActionSprite*	pAburaAnim	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_ABURA];
+	[pAburaAnim start];
+	[pAburaAnim setVisible:YES];
 	
 	[self setZOrder:m_oldZOrder];
 	
@@ -417,14 +445,6 @@ enum
 			break;
 		}
 	}
-}
-
-/*
-	@brief	登場演出終了
-*/
--(void)	_endPutAction
-{
-	mb_lock	= NO;
 }
 
 /*

@@ -49,6 +49,7 @@ enum ACTION_LIST_ENUM
 {
 	eACT_TAG_FLAH	= 0,
 	eACT_TAG_EAT,
+	eACT_TAG_PUT,
 };
 
 enum ACTION_SP_ENUM
@@ -124,11 +125,25 @@ enum ACTION_SP_ENUM
 }
 
 /*
+	@brief	出現アクション中
+*/
+-(BOOL)	isRunPutAct
+{
+	return ([mp_customer getActionByTag:eACT_TAG_PUT] != nil);
+}
+
+/*
 	@brief	退場
 */
 -(void)	exit
 {
 	[mp_customer stopAllActions];
+
+	CCNode*	pEatMessageSp	= [self getChildByTag:eACT_SP_TAG_EAT_MESSAGE];
+	if( pEatMessageSp != nil )
+	{
+		[self removeChild:pEatMessageSp cleanup:YES];
+	}
 
 	mp_customer.bPut	= NO;
 
@@ -140,7 +155,7 @@ enum ACTION_SP_ENUM
 	
 	CCCallFuncN*	pEndFunc	= [CCCallFuncN actionWithTarget:self selector:@selector(_endExit:)];
 	CCSequence*		pSeq		= [CCSequence actions:pEaseMove, pEndFunc, nil];
-	
+
 	[mp_customer runAction:pSeq];
 	[mp_customer.charSprite setOpacity:255];
 }
@@ -288,8 +303,9 @@ enum ACTION_SP_ENUM
 	CCSequence*		pSeq		= [CCSequence actions:pEaseMove, pEndFunc, nil];
 	
 	[self _initPut:nil];
+	pSeq.tag	= eACT_TAG_PUT;
 	[mp_customer runAction:pSeq];
-	
+
 	[mp_customer setVisible:YES];
 	[mp_customer.charSprite setOpacity:255];
 }

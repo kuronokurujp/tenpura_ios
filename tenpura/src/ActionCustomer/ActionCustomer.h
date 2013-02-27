@@ -37,6 +37,8 @@
 -(void)	putEat;
 //	出現アクション(リザルト時)
 -(void)	putResult;
+//	出現アクション中
+-(BOOL)	isRunPutAct;
 
 //	退場アクション
 -(void)	exit;

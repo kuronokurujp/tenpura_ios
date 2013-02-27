@@ -20,7 +20,6 @@
 	UIAlertView*	mp_buyAlertView;
 	
 	SWTableViewCell*	mp_buyItemCell;
-	CCLabelTTF*	mp_moneyTextLable;
 }
 
 //	初期化

@@ -47,7 +47,6 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 	{
 		[self reloadUpdate];
 
-		mp_moneyTextLable	= nil;
 		mp_buyItemCell	= nil;
 
 		//	アラートを出す
@@ -91,7 +90,6 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 		mp_buyAlertView	= nil;
 	}
 	
-	mp_moneyTextLable	= nil;
 	mp_buyItemCell		= nil;
 
 	[super dealloc];
@@ -172,7 +170,6 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 				}
 			
 				[pDataSaveGameInst addSaveMoeny:-([self getSellMoney:[mp_buyItemCell objectID]])];
-				[self setMoneyString:[[DataSaveGame shared] getData]->money];
 
 				//	スクロールビュー描画更新
 				[self reloadUpdate];
@@ -187,35 +184,6 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 	}
 
 	mp_buyItemCell	= nil;
-}
-
-/*
-	@brief	CCBI読み込み終了
-*/
-- (void) didLoadFromCCB
-{
-	CCNode*	pNode	= nil;
-	CCARRAY_FOREACH(children_, pNode)
-	{
-		if( ( [pNode isKindOfClass:[CCLabelTTF class]] ) )
-		{
-			CCLabelTTF*	pLabelTTF	= (CCLabelTTF*)pNode;
-			if( [[pLabelTTF string] isEqualToString:@"000000"] )
-			{
-				mp_moneyTextLable	= (CCLabelTTF*)pNode;
-
-				[self setMoneyString:[[DataSaveGame shared] getData]->money];
-			}
-		}
-	}
-}
-
-/*
-	@brief	金額設定
-*/
--(void)setMoneyString:(UInt32)in_num
-{
-	[mp_moneyTextLable setString:[NSString stringWithFormat:@"%06ld", in_num]];
 }
 
 /*

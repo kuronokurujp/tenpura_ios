@@ -17,6 +17,7 @@
 #import	"./../../Data/DataBaseText.h"
 #import "./../../Data/DataGlobal.h"
 #import "./../../System/Sound/SoundManager.h"
+#import "./../../System/Anim/Action/AnimActionNumCounterLabelTTF.h"
 
 //	非公開関数
 @interface GameEndScene (PrivateMethod)
@@ -175,6 +176,9 @@
 		//	スコア表示開始
 		[pCustomer.act putResultScore];
 	}
+	
+	int64_t	nowScoreNum	= [pGameScene getScore];
+	[pGameScene->mp_scorePut setNum:nowScoreNum];
 
 	[self _createMenu];
 
@@ -257,7 +261,7 @@
 	GameScene*	pGameScene	= (GameScene*)[self parent];
 	DataBaseText*	pDataText	= [DataBaseText shared];
 
-    NSString*	tweetText	= [NSString stringWithFormat:[NSString stringWithUTF8String:[pDataText getText:70]], [pGameScene getScore]];
+	NSString*	tweetText	= [NSString stringWithFormat:[NSString stringWithUTF8String:[pDataText getText:70]], [pGameScene getScore]];
 	NSString*	searchURL	= [NSString stringWithUTF8String:[pDataText getText:56]];
 
 	NSString*	pTextKeyName		= [NSString stringWithUTF8String:gp_tweetTextKeyName];

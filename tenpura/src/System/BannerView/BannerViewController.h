@@ -33,5 +33,6 @@
 //	関数
 -(id)	initWithID:(NSString*)in_pIdName;
 -(void)	setBannerPos:(CGPoint)in_pos;
+-(void)	showHide:(BOOL)in_bFlg;
 
 @end
