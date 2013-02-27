@@ -38,16 +38,11 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 
 	const SAVE_DATA_ST*	pData	= [[DataSaveGame shared] getData];
 	data.viewMax	= pData->itemNum > s_netaTableViewCellMax ? pData->itemNum : s_netaTableViewCellMax;
-	data.fontSize	= 30;
 
-	CCNode*	pCellScene	= [CCBReader nodeGraphFromFile:@"useSelectItemTableCell.ccbi"];
-	NSAssert([pCellScene isKindOfClass:[CCSprite class]], @"");
+	strcpy(data.aCellFileName, "useSelectItemTableCell.ccbi");
 
-	CCSprite*	pTmpSp	= (CCSprite*)pCellScene;
-	data.cellSize	= [pTmpSp contentSize];
 	data.viewPos	= ccp( TABLE_POS_X, TABLE_POS_Y );
-	
-	data.viewSize	= CGSizeMake(data.cellSize.width, TABLE_SIZE_HEIGHT );
+	data.viewSize	= CGSizeMake(TABLE_SIZE_WIDTH, TABLE_SIZE_HEIGHT );
 
 	if( self = [super initWithData:&data] )
 	{
@@ -113,29 +108,9 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 */
 -(SWTableViewCell*)	table:(SWTableView *)table cellAtIndex:(NSUInteger)idx
 {
-	SWTableViewCell*	pCell	= [table dequeueCell];
-	if( pCell == nil )
-	{
-		pCell	= [[[SampleCell alloc] init] autorelease];
-	}
-	
-	CCNode*	pNode	= [pCell getChildByTag:10];
-	UseSelectItemTableCell*	pItemCell	= nil;
-	if( pNode == nil )
-	{
-		CCNode*	pCellScene	= [CCBReader nodeGraphFromFile:@"useSelectItemTableCell.ccbi"];
-		NSAssert([pCellScene isKindOfClass:[UseSelectItemTableCell class]], @"");
-		
-		[pCell addChild:pCellScene z:1 tag:10];
-				
-		pItemCell	= (UseSelectItemTableCell*)pCellScene;
-		[pItemCell setAnchorPoint:ccp(0, 0)];
-		[pItemCell setPosition:ccp(0, 0)];
-	}
-	else
-	{
-		pItemCell	= (UseSelectItemTableCell*)pNode;
-	}
+	SWTableViewCell*	pCell	= [super table:table cellAtIndex:idx];
+	UseSelectItemTableCell*	pItemCell	= (UseSelectItemTableCell*)[pCell getChildByTag:eSW_TABLE_TAG_CELL_LAYOUT];
+	NSAssert(pItemCell, @"");
 
 	//	すでに使用設定中か
 	const UInt32 NotUsenetaNum	= [self getNotUsenetaNum:idx];

@@ -189,7 +189,7 @@ static const _OJAMA_STATE_DATA_ST	s_ojamaStateDataList[]	=
 	bezier.controlPoint_1	= ccp(0, SCREEN_SIZE_HEIGHT * 0.5f);
 	bezier.controlPoint_2	= ccp(-SCREEN_SIZE_WIDTH * 0.5f, SCREEN_SIZE_HEIGHT);
 	bezier.endPosition	= ccp(-SCREEN_SIZE_WIDTH * 0.8f, SCREEN_SIZE_HEIGHT);
-	CCBezierBy*	pBezierAct	= [CCBezierBy actionWithDuration:1.f bezier:bezier];
+	CCBezierBy*	pBezierAct	= [CCBezierBy actionWithDuration:0.5f bezier:bezier];
 	CCCallBlock*	pEndAct	= [CCCallBlock actionWithBlock:^{
 		[self removeFromParentAndCleanup:YES];
 	}];

@@ -36,17 +36,12 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 
 	SW_INIT_DATA_ST	data	= { 0 };
 
-	CCNode*	pCellScene	= [CCBReader nodeGraphFromFile:in_pFileName];
-	NSAssert([pCellScene isKindOfClass:[CCSprite class]], @"");
-
 	data.viewMax	= [self getCellMax] > s_sireTableViewCellMax ? [self getCellMax] : s_sireTableViewCellMax;
-	data.fontSize	= 32;
-
-	CCSprite*	pTmpSp	= (CCSprite*)pCellScene;
-	data.cellSize	= [pTmpSp contentSize];
-	data.viewPos	= ccp( TABLE_POS_X, TABLE_POS_Y );
 	
-	data.viewSize	= CGSizeMake(data.cellSize.width, TABLE_SIZE_HEIGHT );
+	strcpy(data.aCellFileName, [in_pFileName UTF8String]);
+	
+	data.viewPos	= ccp( TABLE_POS_X, TABLE_POS_Y );
+	data.viewSize	= CGSizeMake(TABLE_SIZE_WIDTH, TABLE_SIZE_HEIGHT );
 
 	if( self = [super initWithData:&data] )
 	{

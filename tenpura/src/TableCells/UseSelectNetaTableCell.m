@@ -11,7 +11,7 @@
 
 @implementation UseSelectNetaTableCell
 
-@synthesize pNameLabel	= mp_nameLabel;
+@synthesize pNameLabel	= mp_name;
 @synthesize pPossessionLabel	= mp_possession;
 @synthesize pTenpuraIcon	= mp_tenpuraIcon;
 

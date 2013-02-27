@@ -27,15 +27,10 @@
 	NSAssert(pMissionInst, @"ミッションリストデータがない");
 
 	data.viewMax	= pMissionInst.dataNum < 6 ? 6 : pMissionInst.dataNum;
-	data.fontSize	= 24;
 
-	CCNode*	pCellScene	= [CCBReader nodeGraphFromFile:@"missionTableCell.ccbi"];
-	NSAssert([pCellScene isKindOfClass:[CCSprite class]], @"");
+	strcpy(data.aCellFileName, "missionTableCell.ccbi");
 
-	CCSprite*	pTmpSp	= (CCSprite*)pCellScene;
-	data.cellSize	= [pTmpSp contentSize];
 	data.viewPos	= ccp( TABLE_POS_X, TABLE_POS_Y );
-	
 	data.viewSize	= CGSizeMake(TABLE_SIZE_WIDTH, TABLE_SIZE_HEIGHT );
 
 	if( self = [super initWithData:&data] )
@@ -73,29 +68,9 @@
 	DataMissionList*	pMissionInst	= [DataMissionList shared];
 	NSAssert(pMissionInst, @"ミッションリストデータがない");
 
-	SWTableViewCell*	pCell	= [table dequeueCell];
-	if( pCell == nil )
-	{
-		pCell	= [[[SampleCell alloc] init] autorelease];
-	}
-	
-	CCNode*	pNode	= [pCell getChildByTag:10];
-	MissionTableCell*	pItemCell	= nil;
-	if( pNode == nil )
-	{
-		CCNode*	pCellScene	= [CCBReader nodeGraphFromFile:@"missionTableCell.ccbi"];
-		NSAssert([pCellScene isKindOfClass:[MissionTableCell class]], @"");
-		
-		[pCell addChild:pCellScene z:1 tag:10];
-				
-		pItemCell	= (MissionTableCell*)pCellScene;
-		[pItemCell setAnchorPoint:ccp(0, 0)];
-		[pItemCell setPosition:ccp(0, 0)];
-	}
-	else
-	{
-		pItemCell	= (MissionTableCell*)pNode;
-	}
+	SWTableViewCell*	pCell	= [super table:table cellAtIndex:idx];
+	MissionTableCell*	pItemCell	= (MissionTableCell*)[pCell getChildByTag:eSW_TABLE_TAG_CELL_LAYOUT];
+	NSAssert(pItemCell, @"");
 
 	//	ミッション名
 	CCLabelTTF*	pCellTextLabel	= pItemCell.pNameLabel;

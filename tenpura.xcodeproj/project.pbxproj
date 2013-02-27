@@ -22,7 +22,6 @@
 		CE2F301C16B8C7E40010610D /* GameInFeverMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2F301B16B8C7E40010610D /* GameInFeverMessage.m */; };
 		CE33C89516888852004782A4 /* help.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE33C89416888852004782A4 /* help.ccbi */; };
 		CE33C899168888BD004782A4 /* HelpScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CE33C898168888BD004782A4 /* HelpScene.m */; };
-		CE361D2A164353CF00339BB0 /* not_buy_cell.png in Resources */ = {isa = PBXBuildFile; fileRef = CE361D29164353CF00339BB0 /* not_buy_cell.png */; };
 		CE412EB916DC4C940034A4BA /* abura.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE412EB716DC4C940034A4BA /* abura.plist */; };
 		CE412EBA16DC4C940034A4BA /* abura.png in Resources */ = {isa = PBXBuildFile; fileRef = CE412EB816DC4C940034A4BA /* abura.png */; };
 		CE412EBD16DC90300034A4BA /* ItemShopTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE412EBC16DC90300034A4BA /* ItemShopTableCell.m */; };
@@ -464,7 +463,6 @@
 		CE33C89416888852004782A4 /* help.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = help.ccbi; path = Resources/ccbi/help.ccbi; sourceTree = "<group>"; };
 		CE33C897168888BD004782A4 /* HelpScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelpScene.h; path = src/Scene/HelpScene.h; sourceTree = "<group>"; };
 		CE33C898168888BD004782A4 /* HelpScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HelpScene.m; path = src/Scene/HelpScene.m; sourceTree = "<group>"; };
-		CE361D29164353CF00339BB0 /* not_buy_cell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = not_buy_cell.png; path = Resources/tableView/not_buy_cell.png; sourceTree = "<group>"; };
 		CE412EB716DC4C940034A4BA /* abura.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = abura.plist; path = Resources/anim/abura/abura.plist; sourceTree = "<group>"; };
 		CE412EB816DC4C940034A4BA /* abura.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = abura.png; path = Resources/anim/abura/abura.png; sourceTree = "<group>"; };
 		CE412EBB16DC90300034A4BA /* ItemShopTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ItemShopTableCell.h; path = src/TableCells/ItemShopTableCell.h; sourceTree = "<group>"; };
@@ -2103,7 +2101,6 @@
 			children = (
 				CED2480A163998F200506CA8 /* neta_cell.png */,
 				CE8360C31647FC7E00CC11E0 /* shina_cell.png */,
-				CE361D29164353CF00339BB0 /* not_buy_cell.png */,
 				CED2480B163998F200506CA8 /* sire_cell.png */,
 			);
 			name = tableView;
@@ -2542,7 +2539,6 @@
 				CEF24DD4163C133B00ACE56F /* Readme.markdown in Resources */,
 				CEB815EB163C36F0002814DD /* siire.ccbi in Resources */,
 				CE12811916429D0200D369CF /* setting.ccbi in Resources */,
-				CE361D2A164353CF00339BB0 /* not_buy_cell.png in Resources */,
 				CEC9CF681644F8D700D446A3 /* use_item_select.ccbi in Resources */,
 				CEE23B2B1646764B0033ADA0 /* textData.csv in Resources */,
 				CEE23B3716468A070033ADA0 /* Localizable.strings in Resources */,
