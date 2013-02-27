@@ -19,7 +19,6 @@ typedef struct
 	CGSize	viewSize;
 	CGSize	cellSize;
 	CGPoint	viewPos;
-	Float32	fontSize;
 	char	aCellFileName[ 64 ];
 
 } SW_INIT_DATA_ST;

@@ -18,6 +18,11 @@
 
 @synthesize state		= m_state;
 
+//	仮
+static const Float32	s_tenpuraFlyStateMax	= 5;
+//	TODO	絵が３段階になったら上記のは削除して下記のを使う
+//static const Float32	s_tenpuraFlyStateMax	= eTENPURA_STATE_VERYBAD + 1;
+
 /*
 	@brief	初期化
 */
@@ -72,9 +77,9 @@
 	NSAssert(mp_sp, @"");
 	[self addChild:mp_sp];
 
-	m_state		= eTENPURA_STATE_NOT;
+	m_state		= eTENPURA_STATE_VERYGOOD;
 	m_texSize	= [mp_sp contentSize];
-	m_texSize.height	= m_texSize.height / (Float32)(eTENPURA_STATE_VERYBAD + 1);
+	m_texSize.height	= m_texSize.height / (s_tenpuraFlyStateMax);
 
 	[mp_sp setTextureRect:[self _getTexRect:(SInt32)m_state]];	
 }

@@ -540,7 +540,6 @@ enum
 			{
 				switch ((SInt32)mp_touchTenpura.state)
 				{
-					case eTENPURA_STATE_GOOD:
 					case eTENPURA_STATE_VERYGOOD:
 					{
 						++m_veryEatCnt;
@@ -713,20 +712,6 @@ enum
 				assert(0);
 				break;
 			}
-
-			//	揚げてない
-			case eTENPURA_STATE_NOT:
-			{
-				[in_pCustomer.act eatVeryBat:in_pTenpura:addScoreNum:addMoneyNum];
-				break;
-			}
-			//　ちょうど良い
-			case eTENPURA_STATE_GOOD:
-			{
-				[in_pCustomer.act eatGood:in_pTenpura:addScoreNum:addMoneyNum];
-				break;
-			}
-			//	最高
 			case eTENPURA_STATE_VERYGOOD:
 			{
 				[in_pCustomer.act eatVeryGood:in_pTenpura:addScoreNum:addMoneyNum];

@@ -21,7 +21,7 @@ typedef struct
 		Float32	changeTime;
 		SInt32	score;
 		SInt32	money;
-	}aStatusList[5];
+	}aStatusList[3];
 
 	SInt32	sellMoney;
 	char		fileName[128];

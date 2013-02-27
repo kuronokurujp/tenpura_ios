@@ -404,14 +404,6 @@ enum
 
 	switch ((SInt32)in_state)
 	{
-		case eTENPURA_STATE_GOOD:		//　ちょうど良い
-		{
-			pEff	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_CURSOR];
-			[pEff start];
-			[pEff setVisible:YES];
-
-			break;
-		}
 		case eTENPURA_STATE_VERYGOOD:	//	最高
 		{
 			pEff	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_CURSOR];
@@ -461,11 +453,6 @@ enum
 		{
 			switch ((SInt32)m_state)
 			{
-				case eTENPURA_STATE_GOOD:		//　ちょうど良い
-				{
-					[[SoundManager shared] playSe:@"fried01"];
-					break;
-				}
 				case eTENPURA_STATE_VERYGOOD:	//	最高
 				{
 					[[SoundManager shared] playSe:@"fried02"];
@@ -489,8 +476,6 @@ enum
 
 		switch ((SInt32)m_state)
 		{
-			case eTENPURA_STATE_NOT:		//	揚げてない
-			case eTENPURA_STATE_GOOD:		//　ちょうど良い
 			case eTENPURA_STATE_VERYGOOD:	//	最高
 			case eTENPURA_STATE_BAD:		//	焦げ
 			{
@@ -549,8 +534,6 @@ enum
 	Float32	time	= -1.f;
 	switch ((SInt32)m_state)
 	{
-		case eTENPURA_STATE_NOT:		//	揚げてない
-		case eTENPURA_STATE_GOOD:		//　ちょうど良い
 		case eTENPURA_STATE_VERYGOOD:	//	最高
 		case eTENPURA_STATE_BAD:		//	焦げ
 		{

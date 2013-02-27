@@ -126,7 +126,8 @@ static DataNetaList*	s_pInst	= nil;
 	++dataIdx;
 	
 	//	揚げる時間
-	for( SInt32 i = 0; i < 5; ++i )
+	SInt32	num	= sizeof(data.aStatusList) / sizeof(data.aStatusList[0]);
+	for( SInt32 i = 0; i < num; ++i )
 	{
 		data.aStatusList[i].changeTime	= [(NSNumber*)[in_dataArray objectAtIndex:dataIdx] floatValue];
 		++dataIdx;
