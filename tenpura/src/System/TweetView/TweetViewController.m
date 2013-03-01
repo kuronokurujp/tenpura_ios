@@ -168,12 +168,13 @@ enum
 */
 -(void)webViewDidFinishLoad:(UIWebView*)webView
 {
-    //終わったらViewを外す
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    
-    [(UIView *)[m_pTweetWebView viewWithTag:eTAG_GRAY_VIEW] removeFromSuperview];
+	//終わったらViewを外す
+	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+
+	[(UIView *)[m_pTweetWebView viewWithTag:eTAG_GRAY_VIEW] removeFromSuperview];
 }
 
+/*
 -(NSUInteger)supportedInterfaceOrientations
 {
 	return UIInterfaceOrientationMaskLandscape;
@@ -183,6 +184,7 @@ enum
 {
 	return UIInterfaceOrientationMaskLandscape;
 }
+*/
 
 // Supported orientations: Landscape. Customize it for your own needs
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

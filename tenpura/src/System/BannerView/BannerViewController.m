@@ -9,17 +9,17 @@
 #import "BannerViewController.h"
 #import "cocos2d.h"
 #import "AppDelegate.h"
+#import "./../../Admob/GADRequest.h"
+
+#import <AdSupport/ASIdentifierManager.h>
 
 @implementation BannerViewController
 
-//	ゲーム内の動作停止させるかどうか
-@synthesize pAwView	= mp_bannerView;
-
 -(id)	initWithID:(NSString*)in_pIdName
 {
+	mp_unitIDName	= [in_pIdName retain];
 	if( self = [super init] )
 	{
-		mp_keyId	= [in_pIdName retain];
 	}
 	
 	return self;
@@ -31,7 +31,13 @@
 	if (self)
 	{
 		mp_bannerView	= nil;
-		m_rect	= CGRectMake( 0, 0, 320, 50);
+		
+		CGRect	bannerRect	= CGRectMake(
+										0,
+										0,
+										GAD_SIZE_320x50.width,
+										GAD_SIZE_320x50.height);
+		mp_bannerView	= [[GADBannerView alloc] initWithFrame:bannerRect];
 	}
 
 	return self;
@@ -42,17 +48,36 @@
 */
 -(void)	dealloc
 {
-	[mp_keyId release];
-	mp_keyId	= nil;
-
 	if( [mp_bannerView isDescendantOfView:self.view] == YES )
 	{
 		[mp_bannerView removeFromSuperview];
 	}
+
+	mp_unitIDName	= nil;
 	[mp_bannerView release];
 	mp_bannerView	= nil;
 
 	[super dealloc];
+}
+
+/*
+	@brief
+*/
+- (BOOL)application:(UIApplication *)application
+	didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+	// Print IDFA (from AdSupport Framework) for iOS 6 and UDID for iOS < 6.
+	if (NSClassFromString(@"ASIdentifierManager"))
+	{
+		NSLog(@"GoogleAdMobAdsSDK ID for testing: %@",
+		[[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString]);
+	}
+	else
+	{
+		NSLog(@"GoogleAdMobAdsSDK ID for testing: %@", [[UIDevice currentDevice] uniqueIdentifier]);
+	}
+
+	return YES;
 }
 
 /*
@@ -61,17 +86,22 @@
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-
-	if( mp_bannerView != nil )
-	{
-		return;
-	}
-
-	mp_bannerView	= [AdWhirlView requestAdWhirlViewWithDelegate:self];
+	
+	//	親のビューを呼ばないとサイト以降しない
+	AppController*	pApp	= (AppController*)[UIApplication sharedApplication].delegate;
+	mp_bannerView.rootViewController	= pApp.navController;
+	
 	mp_bannerView.delegate	= self;
 	[self.view addSubview:mp_bannerView];
 	
-	mp_bannerView.frame	= m_rect;
+	GADRequest*	pRp	= [GADRequest request];
+#ifdef DEBUG
+	pRp.testing	= YES;
+	pRp.testDevices	= [NSArray arrayWithObjects:GAD_SIMULATOR_ID, nil];
+#endif
+	NSLog(@"BannerUnitId : %@", mp_unitIDName);
+	mp_bannerView.adUnitID	= mp_unitIDName;
+	[mp_bannerView loadRequest:pRp];
 }
 
 /*
@@ -87,18 +117,59 @@
 	[super viewDidUnload];
 }
 
-- (NSString *)adWhirlApplicationKey
+/*
+	@brief	広告の読み込み成功
+*/
+-(void)	adViewDidReceiveAd:(GADBannerView *)view
 {
-	return mp_keyId;
+	//	スライドアニメをする
+	[UIView beginAnimations:@"BannerSlide" context:nil];
+	[UIView commitAnimations];
+}
+
+/*
+	@brief	広告の読み込み失敗
+*/
+-(void)	adView:(GADBannerView *)view didFailToReceiveAdWithError:(GADRequestError *)error
+{
+	NSLog(@"adView:didFallError:%@", [error localizedDescription]);
+}
+
+/*
+	@brief	Admob広告をアプリ内で表示するケース
+*/
+- (void)adViewWillPresentScreen:(GADBannerView *)adView
+{
+	NSLog(@"広告を開く前");
+	[[CCDirector sharedDirector] stopAnimation];
+	[[CCDirector sharedDirector] pause];
+	[CCDirector sharedDirector].view.hidden	= YES;
+}
+
+/*
+	@brief	アプリ内で表示した広告を閉じる時
+*/
+- (void)adViewWillDismissScreen:(GADBannerView *)adView
+{
+	//	iAdはここは呼ばれない
+	NSLog(@"広告直前を終了");
 }
 
 /*
 	@brief
 */
-- (UIViewController *)viewControllerForPresentingModalView
+-(void)	adViewDidDismissScreen:(GADBannerView *)adView
 {
-	AppController*	pApp	= (AppController*)[UIApplication sharedApplication].delegate;
-	return pApp.navController;
+	NSLog(@"広告を終了");
+	[CCDirector sharedDirector].view.hidden	= NO;
+
+	[[CCDirector sharedDirector] resume];
+	[[CCDirector sharedDirector] startAnimation];
+
+	if( [mp_bannerView isDescendantOfView:self.view] == NO )
+	{
+		[self.view addSubview:mp_bannerView];
+	}
 }
 
 /*
@@ -106,8 +177,23 @@
 */
 -(void)	setBannerPos:(CGPoint)in_pos
 {
-	m_rect.origin	= in_pos;
-	[mp_bannerView setFrame:m_rect];
+	CGRect	rect	= mp_bannerView.frame;
+	rect.origin	= in_pos;
+	[mp_bannerView setFrame:rect];
+}
+
+/*
+	@brief	バナーのパブリッシュID
+*/
+-(void)	setBannerID:(const char*)in_pName
+{
+	if( in_pName == nil )
+	{
+		return;
+	}
+	
+	NSString*	pIDName	= [NSString stringWithUTF8String:in_pName];
+	[mp_bannerView setAdUnitID:pIDName];
 }
 
 /*
@@ -115,15 +201,7 @@
 */
 -(void)	showHide:(BOOL)in_bFlg
 {
-	mp_bannerView.hidden	= in_bFlg;
-	if( in_bFlg == YES )
-	{
-		[mp_bannerView ignoreAutoRefreshTimer];
-	}
-	else if( in_bFlg == NO )
-	{
-		[mp_bannerView doNotIgnoreAutoRefreshTimer];
-	}
+	[mp_bannerView setHidden:in_bFlg];
 }
 
 @end

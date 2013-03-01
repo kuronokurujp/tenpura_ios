@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@interface UIViewController (iOS4Compatible)
+
++(void)	iOS4compatibilize;
+
+@end
+
 @interface UINavigationControllerExt : UINavigationController
 
 @end

@@ -80,9 +80,6 @@
 //	客を一人退場
 -(void)	exitCustomer:(Customer*)in_pCustomer;
 
-//	登場している客の個数を取得
--(UInt32)	getPutCustomerNum;
-
 //	オブジェクトのポーズ
 -(void)	pauseObject:(BOOL)in_bFlg;
 

@@ -27,10 +27,6 @@
 
 static GameKitHelper*	s_pGameKitHelperInst	= nil;
 
-#define IOS_OR_LATER( ver ) \
-  (NSOrderedAscending != [[[UIDevice currentDevice] systemVersion] \
-    compare:ver options:NSNumericSearch])
-
 @synthesize delegate	= m_delegate;
 @synthesize isGameCenterAvaliable	= mb_isGameCenterAvaliable;
 @synthesize achievements	= mp_achievements;
@@ -140,7 +136,7 @@ static GameKitHelper*	s_pGameKitHelperInst	= nil;
 		pLocalPlayer	= [GKLocalPlayer localPlayer];
 	});
 	
-	if(IOS_OR_LATER(@"6.0"))
+	if( 6.0 <= [[[UIDevice currentDevice] systemVersion] floatValue])
 	{
 		pLocalPlayer.authenticateHandler	= ^(UIViewController* viewController, NSError* error)
 		{
@@ -341,13 +337,16 @@ static GameKitHelper*	s_pGameKitHelperInst	= nil;
 		return;
 	}
 	
-	GKGameCenterViewController*	pGameViewCtrl	= [[[GKGameCenterViewController alloc] init] autorelease];
-	if( pGameViewCtrl != nil )
+	if( 6.0 <= [[[UIDevice currentDevice] systemVersion] floatValue])
 	{
-		pGameViewCtrl.gameCenterDelegate	= self;
+		GKGameCenterViewController*	pGameViewCtrl	= [[[GKGameCenterViewController alloc] init] autorelease];
+		if( pGameViewCtrl != nil )
+		{
+			pGameViewCtrl.gameCenterDelegate	= self;
 
-		AppController*	pApp	= (AppController*)[UIApplication sharedApplication].delegate;
-		[pApp.navController presentModalViewController:pGameViewCtrl animated:YES];
+			AppController*	pApp	= (AppController*)[UIApplication sharedApplication].delegate;
+			[pApp.navController presentModalViewController:pGameViewCtrl animated:YES];
+		}
 	}
 }
 

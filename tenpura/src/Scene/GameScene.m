@@ -88,7 +88,6 @@
 
 @implementation GameScene
 
-static const Float32	s_basicFontSize	= 32.f;
 static const Float32	s_baseTimeVal	= 30.f;
 
 //	各ゲームシーン
@@ -132,9 +131,6 @@ enum
 			[pDataTenpuraPosList clearFlg];
 		}
 
-//		CCSpriteBatchNode*	pBatchNode	= [CCSpriteBatchNode node];
-//		[self addChild:pBatchNode z:10.f];
-		
 		Float32	customerEatRate	= 1.f;
 		Float32	raiseTimeRate	= 1.f;
 		
@@ -350,14 +346,6 @@ enum
 }
 
 /*
-	@brief
-*/
--(void)	onExit
-{
-	[super onExit];
-}
-
-/*
 	@brief	シーン変異演出終了
 */
 -(void)	onEnterTransitionDidFinish
@@ -487,24 +475,6 @@ enum
 	}
 	
 	[in_pCustomer.act exit];
-}
-
-/*
-	@brief	登場している客の個数を取得
-*/
--(UInt32)	getPutCustomerNum
-{
-	UInt32	cnt	= 0;
-	Customer*	pCustomer	= nil;
-	CCARRAY_FOREACH(mp_customerArray, pCustomer)
-	{
-		if( pCustomer.bPut == YES )
-		{
-			++cnt;
-		}
-	}
-	
-	return cnt;
 }
 
 /*

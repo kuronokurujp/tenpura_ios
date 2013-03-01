@@ -48,6 +48,9 @@ void uncaughtExceptionHandler( NSException* in_pException )
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+	//	iOS4のみしかない処理に対応
+	[UIViewController iOS4compatibilize];
+
 	//	クラッシュ時にコールスタック一覧を出力
 	NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
 
@@ -180,6 +183,11 @@ void uncaughtExceptionHandler( NSException* in_pException )
 
 -(NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
 {
+	if( [[[UIDevice currentDevice] systemVersion] floatValue] < 6.0 )
+	{
+		return UIInterfaceOrientationMaskLandscape;
+	}
+
 	return UIInterfaceOrientationMaskAllButUpsideDown;
 }
 
@@ -245,7 +253,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
 // purge memory
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
 {
-	NSAssert(0, @"warning free memory 1.5MB low¥n");
+	NSLog(@"warning free memory 1.5MB low¥n");
 	[[CCDirector sharedDirector] purgeCachedData];
 }
 
@@ -322,8 +330,8 @@ void uncaughtExceptionHandler( NSException* in_pException )
 	if( [mp_bannerViewCtrl.view isDescendantOfView:pView] == NO )
 	{
 		[pView addSubview:mp_bannerViewCtrl.view];
+		[pView bringSubviewToFront:mp_bannerViewCtrl.view];
 	}
-
 	[mp_bannerViewCtrl showHide:NO];
 }
 

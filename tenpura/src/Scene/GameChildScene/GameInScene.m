@@ -283,6 +283,9 @@ enum
 //	おじゃま開始を監視
 -(void)	_chkSwitchOnOjama;
 
+//	登場している客の個数を取得
+-(UInt32)	_getPutCustomerNum;
+
 @end
 
 @implementation GameInNormalScene
@@ -601,7 +604,7 @@ enum
 					}
 				}
 
-				if( ([pGameScene getPutCustomerNum] <= 1) && ( [pCustomer getEatCnt] <= 0 ) )
+				if( ([self _getPutCustomerNum] <= 1) && ( [pCustomer getEatCnt] <= 0 ) )
 				{
 					//	客が一人しかいない状態で退場する時客が新しく出す
 					[pGameScene putCustomer:YES];
@@ -883,6 +886,26 @@ enum
 		ComboMessage*	pCombo	= (ComboMessage*)pComboMessage;
 		[pCombo end];
 	}
+}
+
+/*
+	@brief	登場している客の個数を取得
+*/
+-(UInt32)	_getPutCustomerNum
+{
+	GameScene*	pGameScene	= mp_gameScene;
+
+	UInt32	cnt	= 0;
+	Customer*	pCustomer	= nil;
+	CCARRAY_FOREACH(pGameScene->mp_customerArray, pCustomer)
+	{
+		if( pCustomer.bPut == YES )
+		{
+			++cnt;
+		}
+	}
+	
+	return cnt;
 }
 
 @end

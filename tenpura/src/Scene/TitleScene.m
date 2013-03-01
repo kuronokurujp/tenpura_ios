@@ -53,7 +53,7 @@
 {
 	DataBaseText*	pDataText	= [DataBaseText shared];
 
-    NSString*	tweetText	= [NSString stringWithUTF8String:[pDataText getText:55]];
+	NSString*	tweetText	= [NSString stringWithUTF8String:[pDataText getText:55]];
 	NSString*	searchURL	= [NSString stringWithUTF8String:[pDataText getText:56]];
 
 	NSString*	pTextKeyName		= [NSString stringWithUTF8String:gp_tweetTextKeyName];
@@ -92,7 +92,7 @@
 */
 -(void)	pressGameCenterBtn
 {
-	[[GameKitHelper shared] showGameCenter];
+	[[GameKitHelper shared] showLeaderboard];
 	
 	[[SoundManager shared] playSe:@"btnClick"];
 }
@@ -120,7 +120,7 @@
 	[[SoundManager shared] playSe:@"btnClick"];
 	
 	DataBaseText*	pDataText	= [DataBaseText shared];
-    NSString*	pURLText	= [NSString stringWithUTF8String:[pDataText getText:72]];
+	NSString*	pURLText	= [NSString stringWithUTF8String:[pDataText getText:72]];
 	NSURL*	pUrl	= [NSURL URLWithString:pURLText];
 	[[UIApplication sharedApplication] openURL:pUrl];
 }
