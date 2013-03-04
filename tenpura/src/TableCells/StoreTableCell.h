@@ -9,8 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
-@interface StoreTableCell : CCSprite {
-    
+@interface StoreTableCell : CCSprite
+{
+@private
+	CCLabelTTF*	mp_name;
+	CCLabelTTF*	mp_money;
 }
+
+@property	(nonatomic, retain)CCLabelTTF*	pNameLabel;
+@property	(nonatomic, retain)CCLabelTTF*	pMoneyLabel;
 
 @end

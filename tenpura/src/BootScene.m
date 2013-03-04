@@ -17,6 +17,7 @@
 #import "./Data/DataGlobal.h"
 #import "./System/Sound/SoundManager.h"
 #import "./System/FileLoad/FileTexLoadManager.h"
+#import "./System/Store/StoreAppPurchaseManager.h"
 #import "./CCBReader/CCBReader.h"
 
 // BootScene implementation
@@ -63,6 +64,9 @@
 
 		//	SE先読み
 		[[SoundManager shared] preLoad:@"caf"];
+		
+		//	トランザクション中かチェック
+		[[StoreAppPurchaseManager share] checkTransaction];
 	}
 
 	return self;

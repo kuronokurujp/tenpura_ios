@@ -56,7 +56,6 @@
 		CE427D2E16DBBE930052277A /* sumapho.png in Resources */ = {isa = PBXBuildFile; fileRef = CE427D2D16DBBE930052277A /* sumapho.png */; };
 		CE43777616B945B100BA2F96 /* bgm_fever.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CE43777416B945B100BA2F96 /* bgm_fever.mp3 */; };
 		CE43777716B945B100BA2F96 /* bgm_main.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CE43777516B945B100BA2F96 /* bgm_main.mp3 */; };
-		CE4D94D3166126BA003743D7 /* StoreAppPurchaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4D94D2166126BA003743D7 /* StoreAppPurchaseViewController.m */; };
 		CE4FE27F16DC95600094EA66 /* itemShopTableCell.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE4FE27E16DC95600094EA66 /* itemShopTableCell.ccbi */; };
 		CE4FE28916DCA52B0094EA66 /* SiireTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4FE28816DCA52B0094EA66 /* SiireTableCell.m */; };
 		CE4FE28B16DCA5870094EA66 /* siireTableCell.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE4FE28A16DCA5870094EA66 /* siireTableCell.ccbi */; };
@@ -306,6 +305,7 @@
 		CED24809163998DD00506CA8 /* tenpuraPosList.csv in Resources */ = {isa = PBXBuildFile; fileRef = CED24807163998DD00506CA8 /* tenpuraPosList.csv */; };
 		CED2480C163998F200506CA8 /* neta_cell.png in Resources */ = {isa = PBXBuildFile; fileRef = CED2480A163998F200506CA8 /* neta_cell.png */; };
 		CED2480D163998F200506CA8 /* sire_cell.png in Resources */ = {isa = PBXBuildFile; fileRef = CED2480B163998F200506CA8 /* sire_cell.png */; };
+		CED37D7816E4358500191102 /* StoreAppPurchaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CED37D7716E4358500191102 /* StoreAppPurchaseManager.m */; };
 		CEDD4100165AA0540037F60B /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEDD40FF165AA0540037F60B /* libGoogleAdMobAds.a */; };
 		CEDD4102165AA0D90037F60B /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEDD4101165AA0D80037F60B /* StoreKit.framework */; };
 		CEDD4104165AA1070037F60B /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEDD4103165AA1070037F60B /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -470,8 +470,6 @@
 		CE427D2D16DBBE930052277A /* sumapho.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sumapho.png; path = Resources/tenpura/sumapho.png; sourceTree = "<group>"; };
 		CE43777416B945B100BA2F96 /* bgm_fever.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bgm_fever.mp3; path = Resources/sound/bgm/bgm_fever.mp3; sourceTree = "<group>"; };
 		CE43777516B945B100BA2F96 /* bgm_main.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bgm_main.mp3; path = Resources/sound/bgm/bgm_main.mp3; sourceTree = "<group>"; };
-		CE4D94D1166126BA003743D7 /* StoreAppPurchaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StoreAppPurchaseViewController.h; path = src/System/StoreView/StoreAppPurchaseViewController.h; sourceTree = "<group>"; };
-		CE4D94D2166126BA003743D7 /* StoreAppPurchaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StoreAppPurchaseViewController.m; path = src/System/StoreView/StoreAppPurchaseViewController.m; sourceTree = "<group>"; };
 		CE4FE27E16DC95600094EA66 /* itemShopTableCell.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = itemShopTableCell.ccbi; path = Resources/ccbi/itemShopTableCell.ccbi; sourceTree = "<group>"; };
 		CE4FE28716DCA52B0094EA66 /* SiireTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SiireTableCell.h; path = src/TableCells/SiireTableCell.h; sourceTree = "<group>"; };
 		CE4FE28816DCA52B0094EA66 /* SiireTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SiireTableCell.m; path = src/TableCells/SiireTableCell.m; sourceTree = "<group>"; };
@@ -890,6 +888,8 @@
 		CED24807163998DD00506CA8 /* tenpuraPosList.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tenpuraPosList.csv; path = Resources/data/tenpuraPosList.csv; sourceTree = "<group>"; };
 		CED2480A163998F200506CA8 /* neta_cell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = neta_cell.png; path = Resources/tableView/neta_cell.png; sourceTree = "<group>"; };
 		CED2480B163998F200506CA8 /* sire_cell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sire_cell.png; path = Resources/tableView/sire_cell.png; sourceTree = "<group>"; };
+		CED37D7616E4358500191102 /* StoreAppPurchaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StoreAppPurchaseManager.h; path = src/System/Store/StoreAppPurchaseManager.h; sourceTree = "<group>"; };
+		CED37D7716E4358500191102 /* StoreAppPurchaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StoreAppPurchaseManager.m; path = src/System/Store/StoreAppPurchaseManager.m; sourceTree = "<group>"; };
 		CEDD40F6165AA0540037F60B /* GADAdMobExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADAdMobExtras.h; path = src/Admob/GADAdMobExtras.h; sourceTree = "<group>"; };
 		CEDD40F7165AA0540037F60B /* GADAdNetworkExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADAdNetworkExtras.h; path = src/Admob/GADAdNetworkExtras.h; sourceTree = "<group>"; };
 		CEDD40F8165AA0540037F60B /* GADAdSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADAdSize.h; path = src/Admob/GADAdSize.h; sourceTree = "<group>"; };
@@ -1165,15 +1165,6 @@
 				CE41972F1695A4E900EAD614 /* SoundManager.m */,
 			);
 			name = Sound;
-			sourceTree = "<group>";
-		};
-		CE4D94D01661268B003743D7 /* StoreView */ = {
-			isa = PBXGroup;
-			children = (
-				CE4D94D1166126BA003743D7 /* StoreAppPurchaseViewController.h */,
-				CE4D94D2166126BA003743D7 /* StoreAppPurchaseViewController.m */,
-			);
-			name = StoreView;
 			sourceTree = "<group>";
 		};
 		CE517734164935F5004DF4F6 /* GameCenter */ = {
@@ -1866,10 +1857,10 @@
 		CED24798163997A700506CA8 /* System */ = {
 			isa = PBXGroup;
 			children = (
+				CED37D7516E4357400191102 /* Store */,
 				CE216D5D16B37A3B000E0E29 /* Anim */,
 				CE1B74C61699D68D00DD2C07 /* FileLoad */,
 				CE41972C1695A4BA00EAD614 /* Sound */,
-				CE4D94D01661268B003743D7 /* StoreView */,
 				CEDD4105165AA1650037F60B /* BannerView */,
 				CE517734164935F5004DF4F6 /* GameCenter */,
 				CEF39112163DEB8900EC8B75 /* TweetView */,
@@ -2077,6 +2068,15 @@
 				CEABDF4F1663DA6D00043570 /* toumorokoshi0.png */,
 			);
 			name = tenpura;
+			sourceTree = "<group>";
+		};
+		CED37D7516E4357400191102 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				CED37D7616E4358500191102 /* StoreAppPurchaseManager.h */,
+				CED37D7716E4358500191102 /* StoreAppPurchaseManager.m */,
+			);
+			name = Store;
 			sourceTree = "<group>";
 		};
 		CEDD40F5165AA0450037F60B /* Admob */ = {
@@ -2664,7 +2664,6 @@
 				CE5177531649D921004DF4F6 /* UINavigationControllerExt.m in Sources */,
 				CE69CD5C1651155D00BFDBD2 /* SWTableViewHelper.m in Sources */,
 				CEDD4108165AA1760037F60B /* BannerViewController.m in Sources */,
-				CE4D94D3166126BA003743D7 /* StoreAppPurchaseViewController.m in Sources */,
 				CE18C49C1667ABA000ED1E85 /* DataMissionList.m in Sources */,
 				CE5BAA471669776500BD3606 /* ActionCustomer.m in Sources */,
 				CEF4CFC1167947C600DCB74C /* BaseMenuScene.m in Sources */,
@@ -2697,6 +2696,7 @@
 				CE4FE29B16DCBB220094EA66 /* MissionTableCell.m in Sources */,
 				CE4FE29E16DCBB380094EA66 /* StoreTableCell.m in Sources */,
 				CE538F4416DDD54600A45E0B /* AnimActionNumCounterLabelTTF.m in Sources */,
+				CED37D7816E4358500191102 /* StoreAppPurchaseManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

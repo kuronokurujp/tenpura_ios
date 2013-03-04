@@ -22,11 +22,6 @@
 
 -(void)	_actPut;
 -(void)	_initPut:(id)sender;
--(void)	_endPut:(id)sender;
-
--(void)	_endExit:(id)sender;
-
--(void)	_endEat;
 
 -(void)	_endPutNumber:(id)sender;
 
@@ -138,6 +133,7 @@ enum ACTION_SP_ENUM
 -(void)	exit
 {
 	[mp_customer stopAllActions];
+	[mp_customer setScale:1.f];
 
 	CCNode*	pEatMessageSp	= [self getChildByTag:eACT_SP_TAG_EAT_MESSAGE];
 	if( pEatMessageSp != nil )
@@ -153,7 +149,10 @@ enum ACTION_SP_ENUM
 	CCMoveTo*		pMove		= [CCMoveTo actionWithDuration:1.f position:pos];
 	CCEaseInOut*	pEaseMove	= [CCEaseInOut actionWithAction:pMove rate:4];
 	
-	CCCallFuncN*	pEndFunc	= [CCCallFuncN actionWithTarget:self selector:@selector(_endExit:)];
+	CCCallBlockN*	pEndFunc	= [CCCallBlockN actionWithBlock:^(CCNode* node){
+		Customer*	pCustomer	= mp_customer;
+		[pCustomer setVisible:NO];
+	}];
 	CCSequence*		pSeq		= [CCSequence actions:pEaseMove, pEndFunc, nil];
 
 	[mp_customer runAction:pSeq];
@@ -291,15 +290,26 @@ enum ACTION_SP_ENUM
 -(void)	_actPut
 {
 	[mp_customer stopAllActions];
-	
+	[mp_customer setScale:1.f];
+
 	SInt32	idx	= mp_customer.idx;
 
 	CGPoint	endPos	= ccp( ga_initCustomerPos[idx][0], ga_initCustomerPos[idx][1] );
 
 	CCMoveTo*		pMove		= [CCMoveTo actionWithDuration:1.f position:endPos];
 	CCEaseInOut*	pEaseMove	= [CCEaseInOut actionWithAction:pMove rate:4];
+	CCCallBlockN*	pEndFunc	= [CCCallBlockN actionWithBlock:^(CCNode* node){
+		Customer*	pCustomer	= mp_customer;
+		pCustomer.bPut	= YES;
+
+		if( mb_SettingEat == YES )
+		{
+			//	客が食べたいものを作成
+			[pCustomer createEatList];
+		}
 	
-	CCCallFuncN*	pEndFunc	= [CCCallFuncN actionWithTarget:self selector:@selector(_endPut:)];
+		mb_SettingEat	= NO;
+	}];
 	CCSequence*		pSeq		= [CCSequence actions:pEaseMove, pEndFunc, nil];
 	
 	[self _initPut:nil];
@@ -319,62 +329,11 @@ enum ACTION_SP_ENUM
 }
 
 /*
-	@brief	出現アクション終了
-*/
--(void)	_endPut:(id)sender
-{
-	Customer*	pCustomer	= mp_customer;
-	pCustomer.bPut	= YES;
-
-	if( mb_SettingEat == YES )
-	{
-		//	客が食べたいものを作成
-		[pCustomer createEatList];
-	}
-	
-	mb_SettingEat	= NO;
-}
-
-/*
-	@brief
-*/
--(void)	_endExit:(id)sender
-{
-	Customer*	pCustomer	= mp_customer;
-	[pCustomer setVisible:NO];
-}
-
-/*
 	@brief
 */
 -(void)	_endPutNumber:(id)sender
 {
 	[sender setVisible:NO];
-}
-
-/*
-	@brief	食べるの終了
-*/
--(void)	_endEat
-{
-	[self _createPutScoreAction:m_getScore];
-	[self _createPutMoneyAction:m_getMoeny];
-
-	//	食べる天ぷらがないと退場
-	if([mp_customer getEatTenpura] <= 0)
-	{
-		[self exit];
-	}
-	
-	//	食べた時の表示削除
-	CCNode*	pEatMessageSp	= [self getChildByTag:eACT_SP_TAG_EAT_MESSAGE];
-	if( pEatMessageSp != nil )
-	{
-		[self removeChild:pEatMessageSp cleanup:YES];
-	}
-
-	m_getScore	= 0;
-	m_getMoeny	= 0;
 }
 
 /*
@@ -461,9 +420,28 @@ enum ACTION_SP_ENUM
 		Float32	repeatCnt	= 3.f;
 		CCRepeat*	pRepeat	= [CCRepeat actionWithAction:pScaleSeq times:repeatCnt];
 
-		CCCallFunc*	pEndCall	= [CCCallFunc actionWithTarget:self selector:@selector(_endEat)];
-		CCSequence*	pSeq	= [CCSequence actions:pRepeat, pEndCall, nil];
+		CCCallBlock*	pEndCall	= [CCCallBlock actionWithBlock:^(void){
+			[self _createPutScoreAction:m_getScore];
+			[self _createPutMoneyAction:m_getMoeny];
+
+			//	食べる天ぷらがないと退場
+			if([mp_customer getEatTenpura] <= 0)
+			{
+				[self exit];
+			}
 	
+			//	食べた時の表示削除
+			CCNode*	pEatMessageSp	= [self getChildByTag:eACT_SP_TAG_EAT_MESSAGE];
+			if( pEatMessageSp != nil )
+			{
+				[self removeChild:pEatMessageSp cleanup:YES];
+			}
+
+			m_getScore	= 0;
+			m_getMoeny	= 0;
+		}];
+		CCSequence*	pSeq	= [CCSequence actions:pRepeat, pEndCall, nil];
+
 		pSeq.tag	= eACT_TAG_EAT;
 		[mp_customer runAction:pSeq];
 		

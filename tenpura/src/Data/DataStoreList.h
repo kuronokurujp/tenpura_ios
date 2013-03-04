@@ -13,16 +13,14 @@
 typedef struct
 {
 	SInt32		no;
-	SInt32		textId;
-	SInt32		money;
 	char		aStoreIdName[128];
 	
-} STORE_DATA;
+} STORE_DATA_ST;
 
 @interface DataStoreList : NSObject
 {
 @private
-	STORE_DATA*	mp_dataList;
+	STORE_DATA_ST*	mp_dataList;
 	UInt32	m_dataNum;
 }
 
@@ -34,8 +32,8 @@ typedef struct
 @property	(nonatomic, readonly) UInt32 dataNum;
 
 //	データ取得
--(const STORE_DATA*)	getData:(UInt32)in_idx;
+-(const STORE_DATA_ST*)	getData:(UInt32)in_idx;
 //	データ取得(id検索)
--(const STORE_DATA*)	getDataSearchId:(UInt32)in_no;
+-(const STORE_DATA_ST*)	getDataSearchId:(UInt32)in_no;
 
 @end

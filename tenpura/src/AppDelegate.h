@@ -10,15 +10,18 @@
 #import "cocos2d.h"
 #import "System/GameCenter/GameKitHelper.h"
 #import "System/TweetView/TweetViewController.h"
+#import "System/Store/StoreAppPurchaseManager.h"
 
 //	前方宣言
 @class TweetViewController;
 @class BannerViewController;
+@class StoreAppPurchaseManager;
 
 @interface AppController : NSObject <
 	UIApplicationDelegate,
 	CCDirectorDelegate,
-	GameKitHelperProtocol>
+	GameKitHelperProtocol,
+	StoreAppPurchaseManagerProtocol>
 {
 	UIWindow *window_;
 	UINavigationController *navController_;
@@ -27,6 +30,7 @@
 
 	BannerViewController*	mp_bannerViewCtrl;
 	TweetViewController*	mp_tweetViewController;
+	UIAlertView*	mp_storeBuyCheckAlerView;
 }
 
 @property (nonatomic, retain) UIWindow *window;

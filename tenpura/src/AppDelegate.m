@@ -118,6 +118,24 @@ void uncaughtExceptionHandler( NSException* in_pException )
 	[DataCustomerList shared];
 	[DataOjamaNetaList shared];
 	[DataStoreList shared];
+	[StoreAppPurchaseManager share].delegate	= self;
+
+	//	ストアのプロダクトを取得
+	{
+		DataStoreList*	pStoreList	= [DataStoreList shared];
+		StoreAppPurchaseManager*	pStoreApp	= [StoreAppPurchaseManager share];
+		for( SInt32 i = 0; i < [pStoreList dataNum]; ++i )
+		{
+			const	STORE_DATA_ST*	pData	= [pStoreList getData:i];
+			if( [pStoreApp requestProduct:[NSString stringWithUTF8String:pData->aStoreIdName]] == NO )
+			{
+				
+			}
+		}
+
+		//	ストア処理中のアラート
+		mp_storeBuyCheckAlerView	= [[UIAlertView alloc] initWithTitle:@"" message:@"" delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
+	}
 
 	/*
 		ミッションリストデータ読み込み順序が下記のより上だとハングするので注意
@@ -148,7 +166,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
 		NSString*	pBannerHideName	= [NSString stringWithUTF8String:gp_bannerHideObserverName];
 		[nc addObserver:self selector:@selector(onBannerHide) name:pBannerHideName object:nil];
 	}
-	
+
 	//	TweetView作成
 	{
 		NSString*	pRetBtnName	= [DataBaseText getString:106];
@@ -233,11 +251,12 @@ void uncaughtExceptionHandler( NSException* in_pException )
 	{
 		[mp_bannerViewCtrl.view removeFromSuperview];
 	}
-
+	
 	[SimpleAudioEngine end];
 	CC_DIRECTOR_END();
 
 	[SoundManager end];
+	[StoreAppPurchaseManager end];
 	[DataStoreList end];
 	[DataOjamaNetaList end];
 	[DataMissionList end];
@@ -375,6 +394,148 @@ void uncaughtExceptionHandler( NSException* in_pException )
 	}
 }
 
+/*
+	@brief	トランザクションの開始
+*/
+-(void)	onStartTransaction:(const STORE_REQUEST_TYPE_ENUM)in_type
+{
+	[[CCDirector sharedDirector] stopAnimation];
+	[[CCDirector sharedDirector] pause];
+	
+	UIView*	pView	= [CCDirector sharedDirector].view;
+
+	CGSize	winSize	= [CCDirector sharedDirector].winSize;
+	//	通信状態を表示
+	[UIApplication sharedApplication].networkActivityIndicatorVisible	= YES;
+
+	UIView*	pGrayView	= [[UIView alloc] initWithFrame:CGRectMake(0,0,winSize.width,winSize.height)];
+	[pGrayView setBackgroundColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.5f]];
+	pGrayView.tag	= 21;
+	[pView addSubview:pGrayView];
+
+	UIActivityIndicatorView*	pIndicator	= [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+	[pIndicator setCenter:ccp(winSize.width * 0.5f, winSize.height * 0.5f)];
+	[pGrayView addSubview:pIndicator];
+	[pIndicator startAnimating];
+
+	[pIndicator release];
+	[pGrayView release];
+
+	NSString*	pAlerTitleStr	= nil;
+	if( in_type == eSTORE_REQUEST_TYPE_PAY )
+	{
+		pAlerTitleStr	= [DataBaseText getString:118];
+	}
+	else if( in_type == eSTORE_REQUEST_TYPE_RESTORE )
+	{
+		pAlerTitleStr	= [DataBaseText getString:119];
+	}
+	else if( in_type == eSTORE_REQUEST_TYPE_RESTART )
+	{
+		pAlerTitleStr	= [DataBaseText getString:120];
+	}
+
+	[mp_storeBuyCheckAlerView setTitle:pAlerTitleStr];
+	[mp_storeBuyCheckAlerView setMessage:[DataBaseText getString:121]];
+	[mp_storeBuyCheckAlerView show];
+}
+
+/*
+	@brief	トランザクションの終了
+*/
+-(void)	onEndTransaction
+{
+	[mp_storeBuyCheckAlerView dismissWithClickedButtonIndex:0 animated:YES];
+
+	[[CCDirector sharedDirector] resume];
+	[[CCDirector sharedDirector] startAnimation];
+
+	UIView*	pView	= [CCDirector sharedDirector].view;
+	UIView*	pGrayview	= [pView.window viewWithTag:21];
+	if( pGrayview )
+	{
+		[pGrayview removeFromSuperview];
+	}
+
+	[UIApplication sharedApplication].networkActivityIndicatorVisible	= NO;
+}
+
+/*
+	@brief	購入決済終了
+*/
+-(void)	onPaymentPurchased:(NSString*)in_pProducts
+{
+	UIAlertView*	pAlert	= [[[UIAlertView alloc]
+								initWithTitle:@"" message:[DataBaseText getString:114]
+								delegate:nil
+								cancelButtonTitle:[DataBaseText getString:46]
+								otherButtonTitles:nil, nil] autorelease];
+	[pAlert show];
+}
+
+/*
+	@brief	リストア完了
+*/
+-(void)	onPaymentRestore:(NSString*)in_pProducts
+{
+	
+}
+
+/*
+	@brief	決済途中キャンセル
+*/
+-(void)	onPaymentFailed:(SInt32)in_errorType
+{
+	NSString*	pMessageStr	= [DataBaseText getString:117];
+
+	//	購入失敗通知
+	switch( in_errorType )
+	{
+		case SKErrorClientInvalid:
+		{
+			//	不正なクライアント
+			break;
+		}
+		case SKErrorPaymentCancelled:
+		{
+			//	購入がキャンセル
+			pMessageStr	= [DataBaseText getString:115];
+			break;
+		}
+		case SKErrorPaymentInvalid:
+		{
+			//	不正な購入
+			break;
+		}
+		case SKErrorPaymentNotAllowed:
+		{
+			//	購入が許可されていない
+			pMessageStr	= [DataBaseText getString:116];
+			break;
+		}
+		case SKErrorStoreProductNotAvailable:
+		{
+			//	プロダクトが使えない
+			break;
+		}
+		case SKErrorUnknown:
+		{
+			//	未知のエラー
+		}
+		default:
+		{
+			break;
+		}
+	}
+	
+	UIAlertView*	pAlert	= [[[UIAlertView alloc]
+								initWithTitle:@"" message:pMessageStr
+								delegate:nil
+								cancelButtonTitle:[DataBaseText getString:46]
+								otherButtonTitles:nil, nil] autorelease];
+	[pAlert show];
+}
+
 #ifdef DEBUG
 /*
 	@brief	アチーブメントリストリセット
@@ -389,6 +550,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 
+	[mp_storeBuyCheckAlerView release];
 	[mp_tweetViewController release];
 	[mp_bannerViewCtrl release];
 	[window_ release];

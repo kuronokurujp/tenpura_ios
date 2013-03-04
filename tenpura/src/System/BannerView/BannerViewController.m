@@ -143,7 +143,6 @@
 	NSLog(@"広告を開く前");
 	[[CCDirector sharedDirector] stopAnimation];
 	[[CCDirector sharedDirector] pause];
-	[CCDirector sharedDirector].view.hidden	= YES;
 }
 
 /*
@@ -161,15 +160,8 @@
 -(void)	adViewDidDismissScreen:(GADBannerView *)adView
 {
 	NSLog(@"広告を終了");
-	[CCDirector sharedDirector].view.hidden	= NO;
-
 	[[CCDirector sharedDirector] resume];
 	[[CCDirector sharedDirector] startAnimation];
-
-	if( [mp_bannerView isDescendantOfView:self.view] == NO )
-	{
-		[self.view addSubview:mp_bannerView];
-	}
 }
 
 /*
