@@ -409,6 +409,13 @@ enum ACTION_SP_ENUM
 	//	食べる演出を入れる
 	[mp_customer setScale:1.f];
 	
+	//	すでに食べた時の文字表示しているなら削除
+	CCNode*	pEatMessageSp	= [self getChildByTag:eACT_SP_TAG_EAT_MESSAGE];
+	if( pEatMessageSp != nil )
+	{
+		[self removeChild:pEatMessageSp cleanup:YES];
+	}
+
 	Float32	time	= 0.f;
 	{
 		Float32	scaleTime	= 0.1f * mp_customer.eatTimeRate;

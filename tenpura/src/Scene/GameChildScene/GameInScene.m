@@ -701,8 +701,8 @@ enum
 	{
 		return NO;
 	}
-	
-	if( [in_pCustomer.act isEatting] == YES )
+
+	if( [in_pCustomer getEatCnt] <= 0 )
 	{
 		return NO;
 	}
