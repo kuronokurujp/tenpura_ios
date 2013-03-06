@@ -976,7 +976,7 @@ enum
 		
 		//	ボーナス設定
 		{
-			[mp_gameScene->mp_nabe setRaiseTimeRate:0.5f];
+			[mp_gameScene->mp_nabe setEnableFever:YES];
 		}
 		
 		//	フィーバーメッセージを出す
@@ -1007,7 +1007,7 @@ enum
 		[mp_gameScene->mp_fliterColorBG stopAllActions];
 
 		//	ボーナスを消す
-		[mp_gameScene->mp_nabe setRaiseTimeRate:1.f];
+		[mp_gameScene->mp_nabe setEnableFever:NO];
 		mp_gameInNormalScene.bFever	= NO;
 
 		//	フィーバーの後処理

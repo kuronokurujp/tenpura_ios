@@ -25,6 +25,9 @@
 
 //	揚げる処理
 -(void)	_doNextRaise:(ccTime)delta;
+//	状態設定
+-(void)	_setState:(const TENPURA_STATE_ET)in_eState;
+
 //	揚げる時間を取得
 -(Float32)	_getRaiseTime:(TENPURA_STATE_ET)in_state;
 
@@ -59,6 +62,7 @@ enum
 		m_delegate		= nil;
 		mb_lock		= NO;
 		mb_fly		= NO;
+		mb_fever	= NO;
 		m_posDataIdx	= -1;
 		m_raiseTimeRate	= 1.f;
 		m_baseTimeRate	= 1.f;
@@ -98,14 +102,13 @@ enum
 */
 -(void)	update:(ccTime)delta
 {
-	if( [self isFly] )
+	if( [self isFly] && (mb_fever == NO) )
 	{
 		m_nowRaiseTime	+= delta;
 		Float32	nextRaiseTime	= [self _getRaiseTime:m_state];
 		if( (0.f <= nextRaiseTime) && ( nextRaiseTime <= m_nowRaiseTime ) )
 		{
 			[self _doNextRaise:0.f];
-			m_nowRaiseTime	= 0.f;
 		}
 	}
 
@@ -302,6 +305,20 @@ enum
 }
 
 /*
+	@brief	フィーバー設定
+*/
+-(void)	setEnableFever:(const BOOL)in_bFlg
+{
+	if( in_bFlg == YES )
+	{
+		m_state	= eTENPURA_STATE_VERYGOOD;
+		[self _setState:m_state];
+	}
+	
+	mb_fever	= in_bFlg;
+}
+
+/*
 	@brief	タッチロック
 */
 -(void)	lockTouch
@@ -468,10 +485,19 @@ enum
 -(void)	_doNextRaise:(ccTime)delta
 {
 	++m_state;
-	if( m_state < eTENPURA_STATE_MAX )
+	[self _setState:m_state];
+}
+
+/*
+	@brief	状態設定
+*/
+-(void)	_setState:(const TENPURA_STATE_ET)in_eState
+{
+	if( in_eState < eTENPURA_STATE_MAX )
 	{
+		m_nowRaiseTime	= 0.f;
 		{
-			switch ((SInt32)m_state)
+			switch ((SInt32)in_eState)
 			{
 				case eTENPURA_STATE_VERYGOOD:	//	最高
 				{
@@ -491,20 +517,20 @@ enum
 			}
 			
 			//	エフェクト設定
-			[self _settingEffect:m_state];
+			[self _settingEffect:in_eState];
 		}
 
-		switch ((SInt32)m_state)
+		switch ((SInt32)in_eState)
 		{
 			case eTENPURA_STATE_VERYGOOD:	//	最高
 			case eTENPURA_STATE_BAD:		//	焦げ
 			{
-				[mp_sp setTextureRect:[self _getTexRect:(SInt32)m_state]];
+				[mp_sp setTextureRect:[self _getTexRect:(SInt32)in_eState]];
 				break;
 			}
 			case eTENPURA_STATE_VERYBAD:		//	丸焦げ
 			{
-				[mp_sp setTextureRect:[self _getTexRect:(SInt32)m_state]];
+				[mp_sp setTextureRect:[self _getTexRect:(SInt32)in_eState]];
 
 				break;
 			}
@@ -528,7 +554,7 @@ enum
 				break;
 			}
 		}
-	}
+	}	
 }
 
 /*

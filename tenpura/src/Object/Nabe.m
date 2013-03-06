@@ -47,6 +47,7 @@ enum
 	{
 		AnimManager*	pAnimManager	= [AnimManager shared];
 
+		mb_fever	= NO;
 		m_flyTimeRate	= 1.f;
 		mp_sp	= [CCSprite node];
 		[mp_sp initWithFile:@"nabe0.png"];
@@ -102,6 +103,7 @@ enum
 			if( ([pTenpura isFly]) && (pTenpura.state == eTENPURA_STATE_RESTART) )
 			{
 				[pTenpura start];
+				[pTenpura setEnableFever:mb_fever];
 
 				//	再配置する
 				UInt32	posIdx	= [pDataTenpuraPosList getIdxNoUse];
@@ -252,21 +254,23 @@ enum
 }
 
 /*
-	@brief	揚げる天ぷらの揚げる時間レートを変更
-	@note	すくない値を渡すほど早くなる
+	@brief	フィーバー設定
 */
--(void)	setRaiseTimeRate:(Float32)in_rate
+-(void)	setEnableFever:(const BOOL)in_bFlg
 {
-	m_flyTimeRate	= in_rate;
 	CCNode*	pNode	= nil;
 	CCARRAY_FOREACH(children_, pNode)
 	{
+		Tenpura*	pTenpura	= nil;
 		if( [pNode isKindOfClass:[Tenpura class]] )
 		{
-			Tenpura*	pTenpura	= (Tenpura*)pNode;
-			[pTenpura setRaiseTimeRate:in_rate];
+			pTenpura	= (Tenpura*)pNode;
+			//	フィーバー設定をする
+			[pTenpura setEnableFever:in_bFlg];
 		}
 	}
+	
+	mb_fever	= in_bFlg;
 }
 
 /*

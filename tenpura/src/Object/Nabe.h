@@ -20,6 +20,7 @@
 @private
 	//	変数定義
 	CCSprite*		mp_sp;
+	BOOL			mb_fever;
 	Float32			m_flyTimeRate;
 	SInt32			m_tenpuraZOrder;
 }
@@ -34,8 +35,8 @@
 -(void)	onExpTenpura:(CCNode *)in_pTenpura;
 //	天ぷらをつける
 -(void)	onAddChildTenpura:(CCNode*)in_pTenpura;
-//	揚げる天ぷらの揚げる時間レートを変更(すくない値を渡すほど早くなる)
--(void)	setRaiseTimeRate:(Float32)in_rate;
+//	フィーバー設定
+-(void)	setEnableFever:(const BOOL)in_bFlg;
 //	おじゃまを出す
 -(void)	putOjamaTenpura;
 

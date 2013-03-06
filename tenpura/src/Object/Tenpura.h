@@ -21,6 +21,7 @@
 	
 	BOOL				mb_lock;
 	BOOL				mb_fly;	//	揚げる開始
+	BOOL				mb_fever;
 	
 	Float32				m_baseTimeRate;	//	揚げる速度の基本レート
 	Float32				m_raiseTimeRate;	//	揚げる速度のレート
@@ -59,6 +60,8 @@
 -(void)	setPosOfIndex:(const UInt32)in_posDataIdx;
 //	揚げる速度変更
 -(void)	setRaiseTimeRate:(Float32)in_rate;
+//	フィーバー設定
+-(void)	setEnableFever:(const BOOL)in_bFlg;
 
 //	タッチロック
 -(void)	lockTouch;
