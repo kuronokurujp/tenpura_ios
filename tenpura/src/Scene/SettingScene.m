@@ -167,7 +167,7 @@
 	//	データがないと先へ進めない
 	if( 0 < [pDataSettingTenpura count] )
 	{
-		//	エフェクト登録
+		//	アニメ登録
 		{
 			AnimManager*	pEffMng	= [AnimManager shared];
 		

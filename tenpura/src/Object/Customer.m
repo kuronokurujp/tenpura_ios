@@ -10,6 +10,7 @@
 #import "Nabe.h"
 #import "TenpuraIcon.h"
 
+#import	"./../System/Anim/AnimManager.h"
 #import "./../ActionCustomer/ActionCustomer.h"
 #import "./../Data/DataNetaList.h"
 #import "./../Data/DataGlobal.h"
@@ -35,6 +36,28 @@ enum
 enum
 {
 	eTAG_EAT_ICON	= 1,
+	eTAG_SP_ICON	= eTAG_EAT_ICON + 5,
+};
+
+static const SInt32	s_animDataIdx[3][eCUSTOMER_ANIM_MAX]	=
+{
+	{
+		eANIM_CHAR_NORMAL01,
+		eANIM_CHAR_HAPPY01,
+		eANIM_CHAR_BAD01,
+	},
+	
+	{
+		eANIM_CHAR_NORMAL02,
+		eANIM_CHAR_HAPPY02,
+		eANIM_CHAR_BAD02,
+	},
+
+	{
+		eANIM_CHAR_NORMAL03,
+		eANIM_CHAR_HAPPY03,
+		eANIM_CHAR_BAD03,
+	},
 };
 
 //	天ぷらアイコン位置
@@ -76,16 +99,24 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 		mb_put	= NO;
 		m_idx	= in_idx;
 
-		NSString*	pFileName	= @"";
-		if( in_type == eTYPE_BASIC )
+		m_type	= eTYPE_MAN;
 		{
-			pFileName	= @"customer0.png";
+			AnimManager*	pAnimManager	= [AnimManager shared];
+			for( SInt32 i = 0; i < eTYPE_MAX; ++i )
+			{
+				for( SInt32 j = 0; j < eCUSTOMER_ANIM_MAX; ++j )
+				{
+					mp_charAnim[i][j]	= [pAnimManager createNode:[NSString stringWithUTF8String:ga_animDataList[s_animDataIdx[i][j]].pImageFileName] :YES];
+					[mp_charAnim[i][j] retain];
+					
+					AnimActionSprite*	pAnimAction	= (AnimActionSprite*)mp_charAnim[i][j];
+					[pAnimAction setAnchorPoint:ccp(0,0)];
+					[pAnimAction.sp setAnchorPoint:ccp(0,0)];
+				}
+			}
 		}
-
-		mp_sp	= [CCSprite	node];
-		[mp_sp initWithFile:pFileName];
-		[mp_sp setAnchorPoint:ccp(0,0)];
-		[self addChild:mp_sp z:0];
+		
+		[self setAnim:eCUSTOMER_ANIM_NORMAL :false];
 
 		mp_act	= [[[ActionCustomer alloc] initWithCusomer:self] autorelease];
 		[mp_act setVisible:YES];
@@ -100,6 +131,14 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 */
 -(void)	dealloc
 {
+	for( SInt32 i = 0; i < eTYPE_MAX; ++i )
+	{
+		for( SInt32 j = 0; j < eCUSTOMER_ANIM_MAX; ++j )
+		{
+			[mp_charAnim[i][j] release];
+		}
+	}
+
 	mp_sp	= nil;
 	mp_act	= nil;
 	mp_nabe	= nil;
@@ -277,6 +316,29 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 	}
 	
 	return cnt;
+}
+
+/*
+*/
+-(void)	setAnim:(const CUSTOMER_ANIM_ENUM)in_anim :(const bool)in_bAnim
+{
+	CCNode*	pAnim	= mp_charAnim[m_type][in_anim];
+	if( [pAnim isKindOfClass:[AnimActionSprite class]] )
+	{
+		AnimActionSprite*	pAnimAction	= (AnimActionSprite*)pAnim;
+		if( in_bAnim == false )
+		{
+			[pAnimAction frame:0];
+		}
+		else
+		{
+			[pAnimAction start];
+		}
+		
+		[self removeChildByTag:eTAG_SP_ICON cleanup:NO];
+		[self addChild:pAnimAction z:0 tag:eTAG_SP_ICON];		
+		mp_sp	= pAnimAction.sp;
+	}
 }
 
 /*

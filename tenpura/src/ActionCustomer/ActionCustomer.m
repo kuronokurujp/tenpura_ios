@@ -132,6 +132,8 @@ enum ACTION_SP_ENUM
 */
 -(void)	exit
 {
+	[mp_customer setAnim:eCUSTOMER_ANIM_NORMAL :false];
+
 	[mp_customer stopAllActions];
 	[mp_customer setScale:1.f];
 
@@ -209,6 +211,8 @@ enum ACTION_SP_ENUM
 */
 -(void)	eatGood:(Tenpura*)in_pTenpura :(SInt32)in_score :(SInt32)in_money
 {
+	[mp_customer stopAllActions];
+	[mp_customer setAnim:eCUSTOMER_ANIM_HAPPY :false];
 	[self _eat:in_pTenpura:in_score:in_money];
 	
 	[self _putEatMessage:[NSString stringWithUTF8String:gpa_spriteFileNameList[eSPRITE_FILE_CUS_MOJI00]]];
@@ -221,6 +225,8 @@ enum ACTION_SP_ENUM
 */
 -(void)	eatVeryGood:(Tenpura*)in_pTenpura :(SInt32)in_score :(SInt32)in_money
 {
+	[mp_customer stopAllActions];
+	[mp_customer setAnim:eCUSTOMER_ANIM_HAPPY :false];
 	[self _eat:in_pTenpura:in_score:in_money];
 
 	[self _putEatMessage:[NSString stringWithUTF8String:gpa_spriteFileNameList[eSPRITE_FILE_CUS_MOJI01]]];
@@ -233,6 +239,8 @@ enum ACTION_SP_ENUM
 */
 -(void)	eatBat:(Tenpura*)in_pTenpura :(SInt32)in_score :(SInt32)in_money
 {
+	[mp_customer stopAllActions];
+	[mp_customer setAnim:eCUSTOMER_ANIM_BAD :false];
 	[self _eat:in_pTenpura:in_score:in_money];
 
 	[self _putEatMessage:[NSString stringWithUTF8String:gpa_spriteFileNameList[eSPRITE_FILE_CUS_MOJI02]]];
@@ -245,6 +253,8 @@ enum ACTION_SP_ENUM
 */
 -(void)	eatVeryBat:(Tenpura*)in_pTenpura :(SInt32)in_score :(SInt32)in_money;
 {
+	[mp_customer stopAllActions];
+	[mp_customer setAnim:eCUSTOMER_ANIM_BAD :false];
 	[self _eat:in_pTenpura:in_score:in_money];
 	
 	[[SoundManager shared] playSe:@"seki"];
@@ -289,6 +299,8 @@ enum ACTION_SP_ENUM
 */
 -(void)	_actPut
 {
+	[mp_customer setAnim:eCUSTOMER_ANIM_NORMAL :false];
+
 	[mp_customer stopAllActions];
 	[mp_customer setScale:1.f];
 
@@ -404,7 +416,6 @@ enum ACTION_SP_ENUM
 -(void)	_eat:(Tenpura*)in_pTenpura :(SInt32)in_score :(SInt32)in_money
 {
 	NSAssert(in_pTenpura, @"客が食べる天ぷらがない");	
-	[mp_customer stopAllActions];
 
 	//	食べる演出を入れる
 	[mp_customer setScale:1.f];
@@ -430,6 +441,8 @@ enum ACTION_SP_ENUM
 		CCCallBlock*	pEndCall	= [CCCallBlock actionWithBlock:^(void){
 			[self _createPutScoreAction:m_getScore];
 			[self _createPutMoneyAction:m_getMoeny];
+
+			[mp_customer setAnim:eCUSTOMER_ANIM_NORMAL :false];
 
 			//	食べる天ぷらがないと退場
 			if([mp_customer getEatTenpura] <= 0)

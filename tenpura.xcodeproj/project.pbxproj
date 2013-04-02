@@ -400,6 +400,24 @@
 		CEF7FA2E16BFF8DF00A69042 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF7FA2D16BFF8DF00A69042 /* libz.dylib */; };
 		CEF7FA3016BFF8E800A69042 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF7FA2F16BFF8E800A69042 /* MapKit.framework */; };
 		CEF7FA3216BFF8F600A69042 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF7FA3116BFF8F600A69042 /* iAd.framework */; };
+		CEFA50EC1700817A000EF4A5 /* charBad01.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEFA50D11700817A000EF4A5 /* charBad01.plist */; };
+		CEFA50ED1700817A000EF4A5 /* charBad01.png in Resources */ = {isa = PBXBuildFile; fileRef = CEFA50D21700817A000EF4A5 /* charBad01.png */; };
+		CEFA50EF1700817A000EF4A5 /* charBad02.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEFA50D41700817A000EF4A5 /* charBad02.plist */; };
+		CEFA50F01700817A000EF4A5 /* charBad02.png in Resources */ = {isa = PBXBuildFile; fileRef = CEFA50D51700817A000EF4A5 /* charBad02.png */; };
+		CEFA50F21700817A000EF4A5 /* charBad03.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEFA50D71700817A000EF4A5 /* charBad03.plist */; };
+		CEFA50F31700817A000EF4A5 /* charBad03.png in Resources */ = {isa = PBXBuildFile; fileRef = CEFA50D81700817A000EF4A5 /* charBad03.png */; };
+		CEFA50F51700817A000EF4A5 /* charHappy01.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEFA50DA1700817A000EF4A5 /* charHappy01.plist */; };
+		CEFA50F61700817A000EF4A5 /* charHappy01.png in Resources */ = {isa = PBXBuildFile; fileRef = CEFA50DB1700817A000EF4A5 /* charHappy01.png */; };
+		CEFA50F81700817A000EF4A5 /* charHappy02.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEFA50DD1700817A000EF4A5 /* charHappy02.plist */; };
+		CEFA50F91700817A000EF4A5 /* charHappy02.png in Resources */ = {isa = PBXBuildFile; fileRef = CEFA50DE1700817A000EF4A5 /* charHappy02.png */; };
+		CEFA50FB1700817A000EF4A5 /* charHappy03.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEFA50E01700817A000EF4A5 /* charHappy03.plist */; };
+		CEFA50FC1700817A000EF4A5 /* charHappy03.png in Resources */ = {isa = PBXBuildFile; fileRef = CEFA50E11700817A000EF4A5 /* charHappy03.png */; };
+		CEFA50FE1700817A000EF4A5 /* charNormal01.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEFA50E31700817A000EF4A5 /* charNormal01.plist */; };
+		CEFA50FF1700817A000EF4A5 /* charNormal01.png in Resources */ = {isa = PBXBuildFile; fileRef = CEFA50E41700817A000EF4A5 /* charNormal01.png */; };
+		CEFA51011700817A000EF4A5 /* charNormal02.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEFA50E61700817A000EF4A5 /* charNormal02.plist */; };
+		CEFA51021700817A000EF4A5 /* charNormal02.png in Resources */ = {isa = PBXBuildFile; fileRef = CEFA50E71700817A000EF4A5 /* charNormal02.png */; };
+		CEFA51041700817A000EF4A5 /* charNormal03.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEFA50E91700817A000EF4A5 /* charNormal03.plist */; };
+		CEFA51051700817A000EF4A5 /* charNormal03.png in Resources */ = {isa = PBXBuildFile; fileRef = CEFA50EA1700817A000EF4A5 /* charNormal03.png */; };
 		CEFBC2A416870B9400C3C233 /* base_menu.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CEFBC2A316870B9400C3C233 /* base_menu.ccbi */; };
 		CEFBC2AB1687182100C3C233 /* Ticker.m in Sources */ = {isa = PBXBuildFile; fileRef = CEFBC2AA1687182100C3C233 /* Ticker.m */; };
 		CEFBC2B316876DC100C3C233 /* play_end.png in Resources */ = {isa = PBXBuildFile; fileRef = CEFBC2B116876DC100C3C233 /* play_end.png */; };
@@ -1035,6 +1053,24 @@
 		CEF7FA2D16BFF8DF00A69042 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		CEF7FA2F16BFF8E800A69042 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		CEF7FA3116BFF8F600A69042 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		CEFA50D11700817A000EF4A5 /* charBad01.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = charBad01.plist; path = Resources/anim/char/charBad01.plist; sourceTree = "<group>"; };
+		CEFA50D21700817A000EF4A5 /* charBad01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = charBad01.png; path = Resources/anim/char/charBad01.png; sourceTree = "<group>"; };
+		CEFA50D41700817A000EF4A5 /* charBad02.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = charBad02.plist; path = Resources/anim/char/charBad02.plist; sourceTree = "<group>"; };
+		CEFA50D51700817A000EF4A5 /* charBad02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = charBad02.png; path = Resources/anim/char/charBad02.png; sourceTree = "<group>"; };
+		CEFA50D71700817A000EF4A5 /* charBad03.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = charBad03.plist; path = Resources/anim/char/charBad03.plist; sourceTree = "<group>"; };
+		CEFA50D81700817A000EF4A5 /* charBad03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = charBad03.png; path = Resources/anim/char/charBad03.png; sourceTree = "<group>"; };
+		CEFA50DA1700817A000EF4A5 /* charHappy01.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = charHappy01.plist; path = Resources/anim/char/charHappy01.plist; sourceTree = "<group>"; };
+		CEFA50DB1700817A000EF4A5 /* charHappy01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = charHappy01.png; path = Resources/anim/char/charHappy01.png; sourceTree = "<group>"; };
+		CEFA50DD1700817A000EF4A5 /* charHappy02.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = charHappy02.plist; path = Resources/anim/char/charHappy02.plist; sourceTree = "<group>"; };
+		CEFA50DE1700817A000EF4A5 /* charHappy02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = charHappy02.png; path = Resources/anim/char/charHappy02.png; sourceTree = "<group>"; };
+		CEFA50E01700817A000EF4A5 /* charHappy03.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = charHappy03.plist; path = Resources/anim/char/charHappy03.plist; sourceTree = "<group>"; };
+		CEFA50E11700817A000EF4A5 /* charHappy03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = charHappy03.png; path = Resources/anim/char/charHappy03.png; sourceTree = "<group>"; };
+		CEFA50E31700817A000EF4A5 /* charNormal01.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = charNormal01.plist; path = Resources/anim/char/charNormal01.plist; sourceTree = "<group>"; };
+		CEFA50E41700817A000EF4A5 /* charNormal01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = charNormal01.png; path = Resources/anim/char/charNormal01.png; sourceTree = "<group>"; };
+		CEFA50E61700817A000EF4A5 /* charNormal02.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = charNormal02.plist; path = Resources/anim/char/charNormal02.plist; sourceTree = "<group>"; };
+		CEFA50E71700817A000EF4A5 /* charNormal02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = charNormal02.png; path = Resources/anim/char/charNormal02.png; sourceTree = "<group>"; };
+		CEFA50E91700817A000EF4A5 /* charNormal03.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = charNormal03.plist; path = Resources/anim/char/charNormal03.plist; sourceTree = "<group>"; };
+		CEFA50EA1700817A000EF4A5 /* charNormal03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = charNormal03.png; path = Resources/anim/char/charNormal03.png; sourceTree = "<group>"; };
 		CEFBC2A316870B9400C3C233 /* base_menu.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = base_menu.ccbi; path = Resources/ccbi/base_menu.ccbi; sourceTree = "<group>"; };
 		CEFBC2A91687182100C3C233 /* Ticker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Ticker.h; path = src/Object/Ticker.h; sourceTree = "<group>"; };
 		CEFBC2AA1687182100C3C233 /* Ticker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Ticker.m; path = src/Object/Ticker.m; sourceTree = "<group>"; };
@@ -1101,6 +1137,7 @@
 		CE216D5E16B37A68000E0E29 /* anim */ = {
 			isa = PBXGroup;
 			children = (
+				CEFA50CF1700816B000EF4A5 /* char */,
 				CE412EB616DC4C860034A4BA /* abura */,
 				CE216D6216B37A87000E0E29 /* cursor */,
 				CE216D6116B37A81000E0E29 /* bomb */,
@@ -2247,6 +2284,31 @@
 			name = icon;
 			sourceTree = "<group>";
 		};
+		CEFA50CF1700816B000EF4A5 /* char */ = {
+			isa = PBXGroup;
+			children = (
+				CEFA50D11700817A000EF4A5 /* charBad01.plist */,
+				CEFA50D21700817A000EF4A5 /* charBad01.png */,
+				CEFA50D41700817A000EF4A5 /* charBad02.plist */,
+				CEFA50D51700817A000EF4A5 /* charBad02.png */,
+				CEFA50D71700817A000EF4A5 /* charBad03.plist */,
+				CEFA50D81700817A000EF4A5 /* charBad03.png */,
+				CEFA50DA1700817A000EF4A5 /* charHappy01.plist */,
+				CEFA50DB1700817A000EF4A5 /* charHappy01.png */,
+				CEFA50DD1700817A000EF4A5 /* charHappy02.plist */,
+				CEFA50DE1700817A000EF4A5 /* charHappy02.png */,
+				CEFA50E01700817A000EF4A5 /* charHappy03.plist */,
+				CEFA50E11700817A000EF4A5 /* charHappy03.png */,
+				CEFA50E31700817A000EF4A5 /* charNormal01.plist */,
+				CEFA50E41700817A000EF4A5 /* charNormal01.png */,
+				CEFA50E61700817A000EF4A5 /* charNormal02.plist */,
+				CEFA50E71700817A000EF4A5 /* charNormal02.png */,
+				CEFA50E91700817A000EF4A5 /* charNormal03.plist */,
+				CEFA50EA1700817A000EF4A5 /* charNormal03.png */,
+			);
+			name = char;
+			sourceTree = "<group>";
+		};
 		CEFBC2B016876D9E00C3C233 /* game */ = {
 			isa = PBXGroup;
 			children = (
@@ -2497,6 +2559,24 @@
 				CE4FE29816DCB43D0094EA66 /* useSelectNetaTableCell.ccbi in Resources */,
 				CE4FE2A016DCBC430094EA66 /* storeTableCell.ccbi in Resources */,
 				CE4FE2A216DCBC4C0094EA66 /* missionTableCell.ccbi in Resources */,
+				CEFA50EC1700817A000EF4A5 /* charBad01.plist in Resources */,
+				CEFA50ED1700817A000EF4A5 /* charBad01.png in Resources */,
+				CEFA50EF1700817A000EF4A5 /* charBad02.plist in Resources */,
+				CEFA50F01700817A000EF4A5 /* charBad02.png in Resources */,
+				CEFA50F21700817A000EF4A5 /* charBad03.plist in Resources */,
+				CEFA50F31700817A000EF4A5 /* charBad03.png in Resources */,
+				CEFA50F51700817A000EF4A5 /* charHappy01.plist in Resources */,
+				CEFA50F61700817A000EF4A5 /* charHappy01.png in Resources */,
+				CEFA50F81700817A000EF4A5 /* charHappy02.plist in Resources */,
+				CEFA50F91700817A000EF4A5 /* charHappy02.png in Resources */,
+				CEFA50FB1700817A000EF4A5 /* charHappy03.plist in Resources */,
+				CEFA50FC1700817A000EF4A5 /* charHappy03.png in Resources */,
+				CEFA50FE1700817A000EF4A5 /* charNormal01.plist in Resources */,
+				CEFA50FF1700817A000EF4A5 /* charNormal01.png in Resources */,
+				CEFA51011700817A000EF4A5 /* charNormal02.plist in Resources */,
+				CEFA51021700817A000EF4A5 /* charNormal02.png in Resources */,
+				CEFA51041700817A000EF4A5 /* charNormal03.plist in Resources */,
+				CEFA51051700817A000EF4A5 /* charNormal03.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

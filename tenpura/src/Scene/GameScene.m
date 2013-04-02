@@ -15,6 +15,7 @@
 #import "./../ActionCustomer/ActionCustomer.h"
 #import "./../Data/DataNetaList.h"
 #import "./../Data/DataGlobal.h"
+#import "./../Data/DataSaveGame.h"
 #import "./../Data/DataSettingTenpura.h"
 #import "./../Data/DataTenpuraPosList.h"
 #import "./../Data/DataItemList.h"
@@ -203,6 +204,7 @@ enum
 
 		//	なべに配置できるてんぷらリスト作成
 		{
+			DataSaveGame*	pSaveGameInst	= [DataSaveGame shared];
 			mp_settingItemList	= [[CCArray alloc] init];
 
 			CCNode*	pNode	= nil;
@@ -217,6 +219,9 @@ enum
 					[pAddData CopyData:pDataSettingTenpura];
 
 					[mp_settingItemList addObject:pAddData];
+					
+					//	天ぷら消耗
+					[pSaveGameInst subNeta:pDataSettingTenpura.no];
 				}
 			}
 			
@@ -296,7 +301,7 @@ enum
 			mp_customerArray	= [[CCArray alloc] initWithCapacity:num];
 			for( SInt32 i = 0; i < num; ++i )
 			{
-				Customer*	pCustomer	= [[[Customer alloc] initToType:eTYPE_BASIC:i:mp_nabe:mp_settingItemList:customerEatRate] autorelease];
+				Customer*	pCustomer	= [[[Customer alloc] initToType:eTYPE_MAN:i:mp_nabe:mp_settingItemList:customerEatRate] autorelease];
 				[pCustomer setPosition:ccp(size.width, ga_initCustomerPos[i][1])];
 				[pCustomer setAnchorPoint:ccp(0,0)];
 				[pCustomer setVisible:NO];

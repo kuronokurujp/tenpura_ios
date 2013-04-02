@@ -36,11 +36,13 @@
 	CCSprite*	mp_sp;
 	AnimData*	mp_data;
 	CCAnimation*	mp_anim;
+	NSArray*	mp_frameList;
 	BOOL	mb_loop;
 	BOOL	mb_pause;
 	BOOL	mb_autoRelease;
 }
 
+@property	(nonatomic, retain)CCSprite*	sp;
 @property	(nonatomic)BOOL	bLoop;
 @property	(nonatomic, assign)BOOL	bAutoRelease;
 
@@ -49,5 +51,6 @@
 
 -(void)	start;
 -(void)	end;
+-(void)	frame:(const UInt32)idx;
 
 @end

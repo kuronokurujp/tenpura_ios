@@ -66,6 +66,7 @@
 @end
 @implementation AnimActionSprite
 
+@synthesize sp	= mp_sp;
 @synthesize bLoop	= mb_loop;
 
 /*
@@ -99,6 +100,7 @@
 */
 -(void)	dealloc
 {
+	[mp_frameList release];
 	[mp_anim release];
 	[mp_data release];
 	[super dealloc];
@@ -122,13 +124,15 @@
 
 		mp_sp	= [CCSprite spriteWithSpriteFrameName:[in_data.frameNameList objectAtIndex:0]];
 		NSMutableArray*	pFrames	= [NSMutableArray arrayWithCapacity:frameNum];
-		for( UInt32 i = 1; i < frameNum; ++i )
+		for( UInt32 i = 0; i < frameNum; ++i )
 		{
 			NSString*	pFileName	= [in_data.frameNameList objectAtIndex:i];
 			CCSpriteFrame*	pFrame	= [pFrameCache spriteFrameByName:pFileName];
 			
 			[pFrames addObject:pFrame];
 		}
+		
+		mp_frameList	= [pFrames retain];
 		
 		Float32	delay	= 1.f / (Float32)in_data.fps;
 		CCAnimation*	pAnim	= [[[CCAnimation alloc] initWithSpriteFrames:pFrames delay:delay] autorelease];
@@ -168,6 +172,18 @@
 {
 	[mp_sp stopAllActions];
 	mb_pause	= YES;
+}
+
+/*
+	@brief
+*/
+-(void)	frame:(const UInt32)idx
+{
+	if( idx < mp_frameList.count )
+	{
+		CCSpriteFrame*	pFrame	= (CCSpriteFrame*)[mp_frameList objectAtIndex:idx];
+		[mp_sp setDisplayFrame:pFrame];
+	}
 }
 
 /*

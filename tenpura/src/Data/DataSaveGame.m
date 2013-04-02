@@ -214,6 +214,39 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 }
 
 /*
+	@brief	ネタ減らす
+	@param	in_no	: 減らすするネタno(1つ減らす)
+	@return	成功 = YES / 失敗 = NO
+*/
+-(BOOL)subNeta:(UInt32)in_no
+{
+	SAVE_DATA_ITEM_ST*	pItem	= [self _getNeta:in_no];
+
+	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
+	if( pData != nil )
+	{
+		if( ( pData->netaNum < ( eITEMS_MAX - 1 ) ) && ( pItem == nil ) )
+		{
+			return NO;
+		}
+		else if( ( pItem != nil ) && ( pItem->num < eNETA_USE_MAX ) )
+		{
+			pItem->num -= 1;
+			if( pItem->num <= 0 )
+			{
+				--pData->netaNum;
+			}
+
+			[mp_SaveData save];
+
+			return YES;
+		}
+	}
+	
+	return NO;
+}
+
+/*
 	@brief	アイテム追加
 	@param	in_no	: 追加するアイテムno(1つ追加)
 	@return	追加成功 = YES / 追加失敗 = NO

@@ -80,6 +80,8 @@ typedef struct
 
 //	ネタ追加
 -(BOOL)addNeta:(UInt32)in_no;
+//	ネタ減らす
+-(BOOL)subNeta:(UInt32)in_no;
 //	アイテム追加
 -(BOOL)addItem:(UInt32)in_no;
 //	金額加算

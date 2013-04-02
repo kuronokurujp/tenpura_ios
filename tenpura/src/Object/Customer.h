@@ -17,13 +17,33 @@
 @class ActionCustomer;
 @class Nabe;
 
-@interface Customer : CCNode {
+typedef	enum
+{
+	eCUSTOMER_ANIM_NORMAL	= 0,
+	eCUSTOMER_ANIM_HAPPY,
+	eCUSTOMER_ANIM_BAD,
+	eCUSTOMER_ANIM_MAX,
+} CUSTOMER_ANIM_ENUM;
+
+typedef enum
+{
+	eTYPE_MONEY	= 0,
+	eTYPE_MAN,
+	eTYPE_WOMAN,
+	eTYPE_MAX,
+} TYPE_ENUM;
+
+@interface Customer : CCNode
+{
 	//	変数定義
+	TYPE_ENUM		m_type;
 	CCSprite*		mp_sp;
 	ActionCustomer*	mp_act;
 	Nabe*			mp_nabe;
 	CCArray*		mp_settingTenpuraList;
 	const CUSTOMER_DATA_ST*	mp_customerData;
+	
+	CCNode*			mp_charAnim[eTYPE_MAX][eCUSTOMER_ANIM_MAX];
 	
 	BOOL	mb_put;
 	SInt32	m_idx;
@@ -31,11 +51,6 @@
 	SInt32	m_score;
 	Float32	m_eatTimeRate;
 }
-
-typedef enum
-{
-	eTYPE_BASIC	= 0,
-} TYPE_ENUM;
 
 //	プロパティ
 @property	(nonatomic,	retain)CCSprite*	charSprite;
@@ -74,6 +89,8 @@ typedef enum
 
 //	天ぷら食べる個数
 -(const SInt32)	getEatCnt;
+
+-(void)	setAnim:(const CUSTOMER_ANIM_ENUM)in_anim :(const bool)in_bAnim;
 
 -(void) stopAllActions;
 -(void)	pauseSchedulerAndActions;
