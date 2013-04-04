@@ -74,6 +74,7 @@
 	{
 		if( ( pCustomer.visible == YES ) && ( pCustomer.bPut == YES ) )
 		{
+			[pCustomer setAnim:eCUSTOMER_ANIM_NORMAL :YES];
 			[self unschedule:_cmd];
 			[self schedule:@selector(_endByCustomerPut:)];
 			break;

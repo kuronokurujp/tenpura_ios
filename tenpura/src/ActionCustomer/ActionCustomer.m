@@ -318,6 +318,7 @@ enum ACTION_SP_ENUM
 		{
 			//	客が食べたいものを作成
 			[pCustomer createEatList];
+			[mp_customer setAnim:eCUSTOMER_ANIM_NORMAL :YES];
 		}
 	
 		mb_SettingEat	= NO;

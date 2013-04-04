@@ -5,7 +5,29 @@
 	<key>frames</key>
 	<dict>
 		
-		<key>okyaku03-03.png</key>
+		<key>okyaku03_03_01.png</key>
+		<dict>
+			<key>aliases</key>
+			<array>
+			
+			</array>
+			<key>spriteColorRect</key>
+			<string>{{0, 0}, {160, 80}}</string>
+			<key>spriteOffset</key>
+			<string>{0, -0}</string>
+			<key>spriteSize</key>
+			<string>{160, 80}</string>
+			<key>spriteSourceSize</key>
+			<string>{160, 80}</string>
+			<key>spriteTrimmed</key>
+			<true/>
+			<key>textureRect</key>
+			<string>{{0, 164}, {160, 80}}</string>
+			<key>textureRotated</key>
+			<false/>
+		</dict>
+		
+		<key>okyaku03_03_02.png</key>
 		<dict>
 			<key>aliases</key>
 			<array>
@@ -27,6 +49,28 @@
 			<false/>
 		</dict>
 		
+		<key>okyaku03_03_03.png</key>
+		<dict>
+			<key>aliases</key>
+			<array>
+			
+			</array>
+			<key>spriteColorRect</key>
+			<string>{{0, 0}, {160, 80}}</string>
+			<key>spriteOffset</key>
+			<string>{0, -0}</string>
+			<key>spriteSize</key>
+			<string>{160, 80}</string>
+			<key>spriteSourceSize</key>
+			<string>{160, 80}</string>
+			<key>spriteTrimmed</key>
+			<true/>
+			<key>textureRect</key>
+			<string>{{0, 82}, {160, 80}}</string>
+			<key>textureRotated</key>
+			<false/>
+		</dict>
+		
 	</dict>
 	<key>metadata</key>
 	<dict>
@@ -35,7 +79,7 @@
 		<key>format</key>
 		<integer>3</integer>
 		<key>size</key>
-		<string>{256, 128}</string>
+		<string>{256, 256}</string>
 		<key>name</key>
 		<string>charBad03</string>
 		<key>premultipliedAlpha</key>

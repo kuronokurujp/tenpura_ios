@@ -71,17 +71,17 @@ ANIM_DATA_ST	ga_animDataList[eANIM_MAX]	=
 	{ "bigBomb.png", "bigBomb.plist", 60.f },
 	{ "abura.png", "abura.plist", 60.f },
 	
-	{ "charBad01.png", "charBad01.plist", 60.f },
-	{ "charBad02.png", "charBad02.plist", 60.f },
-	{ "charBad03.png", "charBad03.plist", 60.f },
+	{ "charBad01.png", "charBad01.plist", 4.f },
+	{ "charBad02.png", "charBad02.plist", 4.f },
+	{ "charBad03.png", "charBad03.plist", 4.f },
 
-	{ "charNormal01.png", "charNormal01.plist", 60.f },
-	{ "charNormal02.png", "charNormal02.plist", 60.f },
-	{ "charNormal03.png", "charNormal03.plist", 60.f },
+	{ "charNormal01.png", "charNormal01.plist", 4.f },
+	{ "charNormal02.png", "charNormal02.plist", 4.f },
+	{ "charNormal03.png", "charNormal03.plist", 4.f },
 
-	{ "charHappy01.png", "charHappy01.plist", 60.f },
-	{ "charHappy02.png", "charHappy02.plist", 60.f },
-	{ "charHappy03.png", "charHappy03.plist", 60.f },
+	{ "charHappy01.png", "charHappy01.plist", 4.f },
+	{ "charHappy02.png", "charHappy02.plist", 4.f },
+	{ "charHappy03.png", "charHappy03.plist", 4.f },
 };
 
 char*	gpa_spriteFileNameList[eSPRITE_FILE_MAX]	=
