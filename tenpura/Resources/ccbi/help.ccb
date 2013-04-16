@@ -457,7 +457,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn/btn_back.png</string>
+							<string>btn/btn_left.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -519,8 +519,6 @@
 						</array>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
@@ -680,7 +678,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn/btn_back.png</string>
+							<string>btn/btn_left.png</string>
 						</array>
 					</dict>
 					<dict>

@@ -42,8 +42,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>241</real>
-							<real>25</real>
+							<real>229</real>
+							<real>17</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -94,7 +94,7 @@
 						<string>FloatScale</string>
 						<key>value</key>
 						<array>
-							<real>12</real>
+							<real>16</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -170,8 +170,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>132</real>
-							<real>27</real>
+							<real>172</real>
+							<real>56</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -222,7 +222,7 @@
 						<string>FloatScale</string>
 						<key>value</key>
 						<array>
-							<real>12</real>
+							<real>22</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -330,9 +330,18 @@
 					<string>tableView/sire_cell.png</string>
 				</array>
 			</dict>
+			<dict>
+				<key>name</key>
+				<string>blendFunc</string>
+				<key>type</key>
+				<string>Blendmode</string>
+				<key>value</key>
+				<array>
+					<integer>770</integer>
+					<integer>771</integer>
+				</array>
+			</dict>
 		</array>
-		<key>selected</key>
-		<true/>
 	</dict>
 	<key>notes</key>
 	<array/>

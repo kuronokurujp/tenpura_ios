@@ -911,6 +911,26 @@
 				<key>value</key>
 				<string>3.000000</string>
 			</dict>
+			<dict>
+				<key>name</key>
+				<string>customerMoneyPutTime</string>
+				<key>optimized</key>
+				<false/>
+				<key>type</key>
+				<integer>1</integer>
+				<key>value</key>
+				<string>20.000000</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>combMessageTime</string>
+				<key>optimized</key>
+				<false/>
+				<key>type</key>
+				<integer>1</integer>
+				<key>value</key>
+				<string>3.000000</string>
+			</dict>
 		</array>
 		<key>displayName</key>
 		<string>CCLayer</string>
@@ -1005,6 +1025,8 @@
 				<false/>
 			</dict>
 		</array>
+		<key>selected</key>
+		<true/>
 	</dict>
 	<key>notes</key>
 	<array/>
