@@ -1,35 +1,35 @@
 //
-//  DataStoreList.m
+//  DataNetaPackList.m
 //  tenpura
 //
 //  Created by y.uchida on 12/09/17.
 //
 //
 
-#import "DataStoreList.h"
+#import "DataNetaPackList.h"
 
 //	非公開関数
-@interface DataStoreList (PrivateMethod)
+@interface DataNetaPackList (PrivateMethod)
 
--(STORE_DATA_ST)	parse:(NSArray*)in_dataArray;
+-(NETA_PACK_DATA_ST)	parse:(NSArray*)in_dataArray;
 
 @end
 
-@implementation DataStoreList
+@implementation DataNetaPackList
 
 //	プロパティ
 @synthesize dataNum	= m_dataNum;
 
-static DataStoreList*	s_pInst	= nil;
+static DataNetaPackList*	s_pInst	= nil;
 
 /*
 	@brief
 */
-+(DataStoreList*)shared
++(DataNetaPackList*)shared
 {
 	if( s_pInst == nil )
 	{
-		s_pInst	= [[DataStoreList alloc] init];
+		s_pInst	= [[DataNetaPackList alloc] init];
 	}
 	
 	return s_pInst;
@@ -60,8 +60,7 @@ static DataStoreList*	s_pInst	= nil;
 {
 	if( self = [super init] )
 	{
-		NSString*	pPath	= [[NSBundle mainBundle] pathForResource:@"storeDataList" ofType:@"csv"];
-		NSAssert(pPath, @"storeDataList.csvファイルがない");
+		NSString*	pPath	= [[NSBundle mainBundle] pathForResource:@"netaPackList" ofType:@"csv"];
 
 		NSString*	pText	= [NSString stringWithContentsOfFile:pPath encoding:NSUTF8StringEncoding error:nil];
 		NSString*	pDelmita	= @"\n";
@@ -72,19 +71,19 @@ static DataStoreList*	s_pInst	= nil;
 		[pLines removeLastObject];
 		
 		NSString*	pObj	= nil;
-		NSArray*	pDatas	= nil;
+		NSArray*	pItems	= nil;
 
 		m_dataNum	= [pLines count];
-		NSAssert(0 < m_dataNum, @"データが一つもない。");
-		mp_dataList	= (STORE_DATA_ST*)malloc(m_dataNum * sizeof(STORE_DATA_ST));
+		NSAssert(0 < m_dataNum, @"ネタパックデータが一つもない。");
+		mp_dataList	= (NETA_PACK_DATA_ST*)malloc(m_dataNum * sizeof(NETA_PACK_DATA_ST));
 			
 		for( SInt32 i = 0; i < m_dataNum; ++i )
 		{
 			pObj	= [pLines objectAtIndex:i];
 		
-			pDatas	= [pObj componentsSeparatedByString:@","];
+			pItems	= [pObj componentsSeparatedByString:@","];
 			//	解析
-			mp_dataList[ i ]	= [self parse:pDatas];
+			mp_dataList[ i ]	= [self parse:pItems];
 		}
 		
 		[pLines release];
@@ -107,9 +106,9 @@ static DataStoreList*	s_pInst	= nil;
 /*
 	@brief	データ解析
 */
--(STORE_DATA_ST)	parse:(NSArray*)in_dataArray
+-(NETA_PACK_DATA_ST)	parse:(NSArray*)in_dataArray
 {
-	STORE_DATA_ST	data	= { 0 };
+	NETA_PACK_DATA_ST	data	= { 0 };
 	memset( &data, 0, sizeof(data) );
 
 	SInt32	dataIdx	= 0;
@@ -117,14 +116,20 @@ static DataStoreList*	s_pInst	= nil;
 	//	no
 	data.no	= [(NSNumber*)[in_dataArray objectAtIndex:dataIdx] integerValue];
 	++dataIdx;
-
-	//	textid
-	data.textId	= [(NSNumber*)[in_dataArray objectAtIndex:dataIdx] integerValue];
-	++dataIdx;
 	
-	//	ストアID名
-	const char*	pStr	= [[in_dataArray objectAtIndex:dataIdx] UTF8String];
-	memcpy( data.aStoreIdName, pStr, [[in_dataArray objectAtIndex:dataIdx] length]);
+	//	名称
+	data.textID	= [(NSNumber*)[in_dataArray objectAtIndex:dataIdx] integerValue];
+	++dataIdx;
+
+	SInt32	netaDataNum	= sizeof(data.aNetaId) / sizeof(data.aNetaId[0]);
+	for( SInt32 i = 0; i < netaDataNum; ++i )
+	{
+		data.aNetaId[i]	= [(NSNumber*)[in_dataArray objectAtIndex:dataIdx] integerValue];
+		++dataIdx;
+	}
+
+	//	ショップ販売金額
+	data.money	= [(NSNumber*)[in_dataArray objectAtIndex:dataIdx] integerValue];
 	++dataIdx;
 
 	return data;
@@ -133,17 +138,20 @@ static DataStoreList*	s_pInst	= nil;
 /*
 	@brief	データ取得
 */
--(const STORE_DATA_ST*)	getData:(UInt32)in_idx
+-(const NETA_PACK_DATA_ST*)	getData:(UInt32)in_idx
 {
-	NSAssert( in_idx < m_dataNum, @"データベースリスト指定が間違っています" );
+	if( in_idx < m_dataNum )
+	{
+		return &mp_dataList[ in_idx ];
+	}
 	
-	return &mp_dataList[ in_idx ];
+	return NULL;
 }
 
 /*
 	@brief	データ取得(id検索)
 */
--(const STORE_DATA_ST*)	getDataSearchId:(UInt32)in_no
+-(const NETA_PACK_DATA_ST*)	getDataSearchId:(UInt32)in_no
 {
 	for( SInt32 i = 0; i < m_dataNum; ++i )
 	{

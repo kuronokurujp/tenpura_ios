@@ -10,8 +10,8 @@
 
 #import "./../../CCBReader/CCBReader.h"
 #import	"./../../TableCells/SampleCell.h"
-#import	"./../../TableCells/UseSelectNetaTableCell.h"
-#import	"./../../Data/DataNetaList.h"
+#import	"./../../TableCells/SiireTableCell.h"
+#import "./../../Data/DataNetaPackList.h"
 #import "./../../Data/DataSaveGame.h"
 #import "./../../Data/DataGlobal.h"
 #import "./../../Data/DataBaseText.h"
@@ -39,7 +39,7 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 	const SAVE_DATA_ST*	pData	= [[DataSaveGame shared] getData];
 	data.viewMax	= pData->netaNum > s_netaTableViewCellMax ? pData->netaNum : s_netaTableViewCellMax;
 
-	strcpy(data.aCellFileName, "useSelectNetaTableCell.ccbi");
+	strcpy(data.aCellFileName, "siireTableCell.ccbi");
 	
 	data.viewPos	= ccp( TABLE_POS_X, TABLE_POS_Y );
 	data.viewSize	= CGSizeMake(TABLE_SIZE_WIDTH, TABLE_SIZE_HEIGHT );
@@ -89,13 +89,13 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 	
 	UInt32	idx	= [cell objectID];
 	const UInt32 NotUsenetaNum	= [self getNotUsenetaNum:idx];
-	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] getNetaOfIndex:idx];
+	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] getNetaPackOfIndex:idx];
 	if( (pItem != nil) && (0 < NotUsenetaNum) )
 	{
 		[self actionCellTouch:cell];
 
-		const NETA_DATA_ST*	pNetaData	= [[DataNetaList shared] getDataSearchId:pItem->no];
-		[mp_settingItemBtn settingItem:eITEM_TYPE_NETA:pNetaData->textID:pNetaData->no];
+		const NETA_PACK_DATA_ST*	pNetaPackData	= [[DataNetaPackList shared] getDataSearchId:pItem->no];
+		[mp_settingItemBtn settingItem:eITEM_TYPE_NETA:pNetaPackData->textID:pNetaPackData->no];
 
 		[[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:g_sceneChangeTime];
 		
@@ -108,12 +108,18 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 */
 -(SWTableViewCell*)	table:(SWTableView *)table cellAtIndex:(NSUInteger)idx
 {
-	DataBaseText*	pDataBaseText	= [DataBaseText shared];
-	
+	const NETA_PACK_DATA_ST*	pData	= [[DataNetaPackList shared] getData:idx];
 	SWTableViewCell*	pCell	= [super table:table cellAtIndex:idx];
-	UseSelectNetaTableCell*	pItemCell	= (UseSelectNetaTableCell*)[pCell getChildByTag:eSW_TABLE_TAG_CELL_LAYOUT];
+	SiireTableCell*	pItemCell	= (SiireTableCell*)[pCell getChildByTag:eSW_TABLE_TAG_CELL_LAYOUT];
 	NSAssert(pItemCell, @"");
 
+	if( pData == NULL )
+	{
+		return pCell;
+	}
+	
+	DataBaseText*	pDataBaseTextShared	= [DataBaseText shared];
+	
 	//	すでに使用設定中か
 	const UInt32 NotUsenetaNum	= [self getNotUsenetaNum:idx];
 	if( NotUsenetaNum <= 0 )
@@ -126,33 +132,48 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 		[pItemCell setColor:ccWHITE];
 	}
 
-	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] getNetaOfIndex:idx];
+	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] getNetaPackOfIndex:idx];
 	if( pItem != nil )
+	
+	//	天ぷらアイコン/ネタ名表示
 	{
-		const NETA_DATA_ST*	pNetaData	= [[DataNetaList shared] getDataSearchId:pItem->no];
-		NSAssert(pNetaData, @"");
-		//	所持数表示
+		int	num	= sizeof(pData->aNetaId) / sizeof(pData->aNetaId[0]);
+		for( int i = 0; i < num; ++i )
 		{
-			NSString*	pUseNameStr	= [NSString stringWithUTF8String:[pDataBaseText getText:57]];
-			NSString*	pNetaNumStr	= [NSString stringWithFormat:@"%@ %02ld", pUseNameStr, NotUsenetaNum];
+			const	NETA_DATA_ST*	pNetaData	= [[DataNetaList shared] getDataSearchId:pData->aNetaId[i]];
+			TenpuraIcon*	pIcon	= [pItemCell getNetaIconObj:i];
+			CCLabelTTF*		pName	= [pItemCell getNetaNameLabel:i];
+			
+			[pName setString:@""];
+			if( pNetaData != nil )
+			{
+				[pName setString:[DataBaseText getString:pNetaData->textID]];
+				[pIcon setup:pNetaData];
+				
+				[pName setVisible:YES];
+				[pIcon setVisible:YES];
+			}
+			else
+			{
+				[pIcon setVisible:NO];
+				[pName setVisible:NO];
+			}
+		}
+	}
 
-			CCLabelTTF*	pNetaNumLabel	= pItemCell.pPossessionLabel;
-			[pNetaNumLabel setString:pNetaNumStr];
-			[pNetaNumLabel setColor:ccc3(0, 0, 0)];
-		}
-
-		//	アイテム名
-		{
-			CCLabelTTF*	pLabel	= pItemCell.pNameLabel;
-			NSString*	pStr	= [NSString stringWithUTF8String:[[DataBaseText shared] getText:pNetaData->textID]];
-			[pLabel setString:pStr];
-		}
-		
-		//	アイコン
-		{
-			TenpuraIcon*	pIcon	= pItemCell.pTenpuraIcon;
-			[pIcon setup:pNetaData];
-		}
+	{
+	//	アイテム名表示
+	{
+		NSString*	pTenpuraName	= [NSString stringWithUTF8String:[pDataBaseTextShared getText:pData->textID]];
+		[pItemCell.pNameLabel setString:pTenpuraName];
+	}
+	
+	//	購入金額表示
+	{
+		NSString*	pTitleName		= [NSString stringWithUTF8String:[pDataBaseTextShared getText:58]];
+		NSString*	pStr	= [NSString stringWithFormat:@"%@:%ld", pTitleName, pData->money];
+		[pItemCell.pMoneyLabel setString:pStr];
+	}
 	}
 
 	return pCell;
@@ -168,14 +189,14 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 		return NO;
 	}
 	
-	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] getNetaOfIndex:in_idx];
+	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] getNetaPackOfIndex:in_idx];
 	if( pItem == nil )
 	{
 		return 0;
 	}
 
 	UInt32	useNum	= 0;
-	const NETA_DATA_ST*	pNetaData	= [[DataNetaList shared] getDataSearchId:pItem->no];
+	const NETA_PACK_DATA_ST*	pNetaData	= [[DataNetaPackList shared] getDataSearchId:pItem->no];
 
 	SettingItemBtn*	pItemBtn	= nil;
 	CCARRAY_FOREACH(mp_useItemNoList, pItemBtn)

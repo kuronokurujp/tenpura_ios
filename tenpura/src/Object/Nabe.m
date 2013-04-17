@@ -38,6 +38,8 @@ enum
 	eZORDER_BIG_EXP,
 };
 
+@synthesize setFlyTimeRate	= m_setFlyTimeRate;
+
 /*
 	@brief	初期化
 */
@@ -49,6 +51,7 @@ enum
 
 		mb_fever	= NO;
 		m_flyTimeRate	= 1.f;
+		m_setFlyTimeRate	= 1.f;
 		mp_sp	= [CCSprite node];
 		[mp_sp initWithFile:@"nabe0.png"];
 		[mp_sp setAnchorPoint:ccp(0,0)];
@@ -118,7 +121,7 @@ enum
 /*
 	@brief	天ぷら追加
 */
--(Tenpura*)	addTenpura:(const NETA_DATA_ST*)in_pData :(Float32)in_raiseSpeedRate
+-(Tenpura*)	addTenpura:(const NETA_DATA_ST*)in_pData
 {
 	NSAssert(in_pData, @"");
 
@@ -138,7 +141,7 @@ enum
 				UInt32	posIdx	= [pDataTenpuraPosList getIdxNoUse];
 				[pDataTenpuraPosList setUseFlg:YES :posIdx];
 
-				[pTenpura setupToPosIndex:in_pData:posIdx:in_raiseSpeedRate];
+				[pTenpura setupToPosIndex:in_pData:posIdx:m_setFlyTimeRate];
 				[pTenpura start];
 				[pTenpura setRaiseTimeRate:m_flyTimeRate];
 				[pTenpura setZOrder:m_tenpuraZOrder];

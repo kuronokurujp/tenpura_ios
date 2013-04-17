@@ -11,10 +11,9 @@
 #import "StoreScene.h"
 
 #import "./../../Data/DataGlobal.h"
-#import "./../../Data/DataMissionList.h"
 #import "./../../Data/DataBaseText.h"
+#import "./../../Data/DataStoreList.h"
 #import "./../../CCBReader/CCBReader.h"
-#import "./../../TableCells/SampleCell.h"
 #import "./../../TableCells/StoreTableCell.h"
 #import "./../../System/Sound/SoundManager.h"
 #import "./../../System/Store/StoreAppPurchaseManager.h"
@@ -28,7 +27,7 @@
 {
 	SW_INIT_DATA_ST	data	= { 0 };
 
-	SInt32		dataNum	= [[StoreAppPurchaseManager share].pProductDic count];
+	SInt32		dataNum	= [[DataStoreList shared] dataNum];
 	data.viewMax	= dataNum < 6 ? 6 : dataNum;
 
 	strcpy(data.aCellFileName, "storeTableCell.ccbi");
@@ -75,13 +74,12 @@
 	
 	SInt32	idx	= [cell objectID];
 	StoreAppPurchaseManager*	pStoreApp	= [StoreAppPurchaseManager share];
-	NSArray*	pProductList	= [pStoreApp.pProductDic allValues];
-	if( idx < [pProductList count] )
+	
+	DataStoreList*	pDataStoreInst	= [DataStoreList shared];
+	const STORE_DATA_ST*	pData	= [pDataStoreInst getData:idx];
+	if( pData != nil )
 	{
-		if( [pStoreApp requestPayment:[pProductList objectAtIndex:idx]] == NO )
-		{
-			//	購入失敗
-		}
+		[pStoreApp requestProduct:[NSString stringWithUTF8String:pData->aStoreIdName]];
 	}
 }
 
@@ -95,6 +93,7 @@
 	StoreTableCell*	pCellLayout	= (StoreTableCell*)[pCell getChildByTag:eSW_TABLE_TAG_CELL_LAYOUT];
 	NSAssert(pCellLayout, @"");
 
+/*
 	StoreAppPurchaseManager*	pStoreApp	= [StoreAppPurchaseManager share];
 	NSArray*	pProductList	= [pStoreApp.pProductDic allValues];
 	if( idx < [pProductList count] )
@@ -112,6 +111,26 @@
 		//	題名
 		[pCellLayout.pNameLabel setString:@""];
 	
+		//	金額
+		[pCellLayout.pMoneyLabel setString:@""];
+	}
+*/
+	DataStoreList*	pDataStoreInst	= [DataStoreList shared];
+	const STORE_DATA_ST*	pData	= [pDataStoreInst getData:idx];
+	
+	if( pData != nil )
+	{
+		//	題名
+		[pCellLayout.pNameLabel setString:[DataBaseText getString:pData->textId]];
+
+		//	金額
+		[pCellLayout.pMoneyLabel setString:@""];
+	}
+	else
+	{
+		//	題名
+		[pCellLayout.pNameLabel setString:@""];
+
 		//	金額
 		[pCellLayout.pMoneyLabel setString:@""];
 	}

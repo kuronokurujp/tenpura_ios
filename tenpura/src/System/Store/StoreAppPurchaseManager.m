@@ -203,11 +203,14 @@ static	const char*	sp_transactionFlgName	= "storeTransactionFlg";
 	for( SKProduct*	pProduct in response.products )
 	{
 		NSLog(@"volid product identifier: %@", pProduct.productIdentifier);
+		/*
 		//	プロダクトを保管
 		if( [mp_productDic objectForKey:pProduct.productIdentifier] == nil )
 		{
 			[mp_productDic setObject:pProduct forKey:pProduct.productIdentifier];
 		}
+		*/
+		[self requestPayment:pProduct];
 	}
 }
 

@@ -28,6 +28,8 @@
 
 -(id)	init:(Float32)in_time :(GameSceneData*)in_pGameSceneData;
 
+-(BOOL)	isFever;
+
 @end
 
 /*

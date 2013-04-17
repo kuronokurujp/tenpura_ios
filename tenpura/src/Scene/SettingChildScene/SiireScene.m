@@ -11,6 +11,7 @@
 #import "./../../TableCells/SiireTableCell.h"
 #import "./../../CCBReader/CCBReader.h"
 #import "./../../Data/DataSaveGame.h"
+#import "./../../Data/DataNetaPackList.h"
 #import "./../../Data/DataNetaList.h"
 #import "./../../Data/DataBaseText.h"
 #import "./../../Data/DataGlobal.h"
@@ -55,21 +56,41 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 */
 -(SWTableViewCell*)table:(SWTableView *)table cellAtIndex:(NSUInteger)idx
 {
-	const NETA_DATA_ST*	pData	= [[DataNetaList shared] getData:idx];
-	NSAssert(pData, @"ネタデータがない");
-
-	DataBaseText*	pDataBaseTextShared	= [DataBaseText shared];
-
+	const NETA_PACK_DATA_ST*	pData	= [[DataNetaPackList shared] getData:idx];
 	SWTableViewCell*	pCell	= [super table:table cellAtIndex:idx];
 	SiireTableCell*	pItemCell	= (SiireTableCell*)[pCell getChildByTag:eSW_TABLE_TAG_CELL_LAYOUT];
 	NSAssert(pItemCell, @"");
 
-	//	天ぷらアイコン
+	if( pData == NULL )
 	{
-		TenpuraBigIcon*	pIcon	= pItemCell.pTenpuraIcon;
-		if( pIcon )
+		return pCell;
+	}
+	
+	DataBaseText*	pDataBaseTextShared	= [DataBaseText shared];
+
+	//	天ぷらアイコン/ネタ名表示
+	{
+		int	num	= sizeof(pData->aNetaId) / sizeof(pData->aNetaId[0]);
+		for( int i = 0; i < num; ++i )
 		{
-			[pIcon setup:pData];
+			const	NETA_DATA_ST*	pNetaData	= [[DataNetaList shared] getDataSearchId:pData->aNetaId[i]];
+			TenpuraIcon*	pIcon	= [pItemCell getNetaIconObj:i];
+			CCLabelTTF*		pName	= [pItemCell getNetaNameLabel:i];
+			
+			[pName setString:@""];
+			if( pNetaData != nil )
+			{
+				[pName setString:[DataBaseText getString:pNetaData->textID]];
+				[pIcon setup:pNetaData];
+				
+				[pName setVisible:YES];
+				[pIcon setVisible:YES];
+			}
+			else
+			{
+				[pIcon setVisible:NO];
+				[pName setVisible:NO];
+			}
 		}
 	}
 	
@@ -92,22 +113,8 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 	//	購入金額表示
 	{
 		NSString*	pTitleName		= [NSString stringWithUTF8String:[pDataBaseTextShared getText:58]];
-		NSString*	pStr	= [NSString stringWithFormat:@"%@:%ld", pTitleName, pData->sellMoney];
+		NSString*	pStr	= [NSString stringWithFormat:@"%@:%ld", pTitleName, pData->money];
 		[pItemCell.pMoneyLabel setString:pStr];
-	}
-
-	//	所持数表示
-	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] getNeta:pData->no];
-	{
-		UInt32	itemNum	= 0;
-		if( pItem != nil )
-		{
-			itemNum	= pItem->num;
-		}
-		
-		NSString*	pUseNameStr	= [NSString stringWithUTF8String:[pDataBaseTextShared getText:57]];
-		NSString*	pItemNumStr	= [NSString stringWithFormat:@"%@ %02ld", pUseNameStr, itemNum];
-		[pItemCell.pPossessionLabel setString:pItemNumStr];
 	}
 
 	return pCell;
@@ -118,7 +125,7 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 */
 -(SInt32)	getCellMax
 {
-	DataNetaList*	pData	= [DataNetaList shared];
+	DataNetaPackList*	pData	= [DataNetaPackList shared];
 	return pData.dataNum;
 }
 
@@ -127,10 +134,10 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 */
 -(SInt32)	getSellMoney:(SInt32)in_idx
 {
-	const NETA_DATA_ST*	pData	= [[DataNetaList shared] getData:in_idx];
+	const NETA_PACK_DATA_ST*	pData	= [[DataNetaPackList shared] getData:in_idx];
 	if( pData != nil )
 	{
-		return	pData->sellMoney;
+		return	pData->money;
 	}
 	
 	return 0;
@@ -143,9 +150,9 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 {
 	DataSaveGame*	pDataSaveGameInst	= [DataSaveGame shared];
 	
-	const NETA_DATA_ST*	pData	= [[DataNetaList shared] getData:in_idx];
+	const NETA_PACK_DATA_ST*	pData	= [[DataNetaPackList shared] getData:in_idx];
 	
-	return [pDataSaveGameInst addNeta:pData->no];
+	return [pDataSaveGameInst addNetaPack:pData->no];
 }
 
 /*
@@ -156,9 +163,9 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 	SInt32	sellMoney	= [self getSellMoney:in_idx];
 	UInt32	nowMoney	= [[DataSaveGame shared] getData]->money;
 	
-	const NETA_DATA_ST*	pData	= [[DataNetaList shared] getData:in_idx];
-	const SAVE_DATA_ITEM_ST*	pNetaData	= [[DataSaveGame shared] getNeta:pData->no];
-	if( ( pNetaData == NULL ) || ( pNetaData->num < eNETA_USE_MAX ) )
+	const NETA_PACK_DATA_ST*	pData	= [[DataNetaPackList shared] getData:in_idx];
+	const SAVE_DATA_ITEM_ST*	pNetaPackData	= [[DataSaveGame shared] getNetaPack:pData->no];
+	if( ( pNetaPackData == NULL ) || ( pNetaPackData->num == 0 ) )
 	{
 		return ( sellMoney <= nowMoney );
 	}

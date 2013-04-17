@@ -13,7 +13,7 @@
 //	非公開関数
 @interface DataSaveGame (PriveteMethod)
 
--(SAVE_DATA_ITEM_ST*)	_getNeta:(UInt32)in_no;
+-(SAVE_DATA_ITEM_ST*)	_getNetaPack:(UInt32)in_no;
 -(SAVE_DATA_ITEM_ST*)	_getItem:(UInt32)in_no;
 
 @end
@@ -120,9 +120,9 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 	@param	in_no	: アイテムno
 	@return	アイテムnoのデータアドレス
 */
--(const SAVE_DATA_ITEM_ST*)getNeta:(UInt32)in_no
+-(const SAVE_DATA_ITEM_ST*)getNetaPack:(UInt32)in_no
 {
-	return [self _getNeta:in_no];
+	return [self _getNetaPack:in_no];
 }
 
 /*
@@ -130,14 +130,14 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 	@parma	in_idx	: アイテムリストidx
 	@return	指定したアイテムリストidxのデータアドレス
 */
--(const SAVE_DATA_ITEM_ST*)getNetaOfIndex:(UInt32)in_idx
+-(const SAVE_DATA_ITEM_ST*)getNetaPackOfIndex:(UInt32)in_idx
 {
 	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
 	if( pData != nil )
 	{
-		if( 0 < pData->aNetas[in_idx].num )
+		if( 0 < pData->aNetaPacks[in_idx].num )
 		{
-			return &pData->aNetas[in_idx];
+			return &pData->aNetaPacks[in_idx];
 		}
 	}
 	
@@ -178,27 +178,19 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 	@param	in_no	: 追加するネタno(1つ追加)
 	@return	追加成功 = YES / 追加失敗 = NO
 */
--(BOOL)addNeta:(UInt32)in_no
+-(BOOL)addNetaPack:(UInt32)in_no
 {
-	SAVE_DATA_ITEM_ST*	pItem	= [self _getNeta:in_no];
+	SAVE_DATA_ITEM_ST*	pItem	= [self _getNetaPack:in_no];
 
 	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
 	if( pData != nil )
 	{
-		if( ( pData->netaNum < ( eITEMS_MAX - 1 ) ) && ( pItem == nil ) )
+		if( ( pData->netaNum < ( eSAVE_DATA_ITEMS_MAX - 1 ) ) && ( pItem == nil ) )
 		{
 			//	追加可能
-			pData->aNetas[ pData->netaNum ].no	= in_no;
-			++pData->aNetas[ pData->netaNum ].num;
+			pData->aNetaPacks[ pData->netaNum ].no	= in_no;
+			++pData->aNetaPacks[ pData->netaNum ].num;
 			++pData->netaNum;
-			
-			[mp_SaveData save];
-
-			return YES;
-		}
-		else if( ( pItem != nil ) && ( pItem->num < eNETA_USE_MAX ) )
-		{
-			pItem->num += 1;
 			
 			[mp_SaveData save];
 
@@ -207,39 +199,6 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 		else
 		{
 			NSAssert(0, @"これ以上セーブデータに所持ネタ追加ができません");
-		}
-	}
-	
-	return NO;
-}
-
-/*
-	@brief	ネタ減らす
-	@param	in_no	: 減らすするネタno(1つ減らす)
-	@return	成功 = YES / 失敗 = NO
-*/
--(BOOL)subNeta:(UInt32)in_no
-{
-	SAVE_DATA_ITEM_ST*	pItem	= [self _getNeta:in_no];
-
-	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
-	if( pData != nil )
-	{
-		if( ( pData->netaNum < ( eITEMS_MAX - 1 ) ) && ( pItem == nil ) )
-		{
-			return NO;
-		}
-		else if( ( pItem != nil ) && ( pItem->num < eNETA_USE_MAX ) )
-		{
-			pItem->num -= 1;
-			if( pItem->num <= 0 )
-			{
-				--pData->netaNum;
-			}
-
-			[mp_SaveData save];
-
-			return YES;
 		}
 	}
 	
@@ -258,7 +217,7 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
 	if( pData != nil )
 	{
-		if( ( pData->itemNum < ( eITEMS_MAX - 1 ) ) && ( pItem == nil ) )
+		if( ( pData->itemNum < ( eSAVE_DATA_ITEMS_MAX - 1 ) ) && ( pItem == nil ) )
 		{
 			//	追加可能
 			pData->aItems[ pData->itemNum ].no	= in_no;
@@ -351,7 +310,7 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 -(void)	saveMissionFlg:(BOOL)in_flg :(UInt32)in_idx;
 {
 	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
-	if( (pData != nil) && (in_idx < eMISSION_MAX) )
+	if( (pData != nil) && (in_idx < eSAVE_DATA_MISSION_MAX) )
 	{
 		pData->aMissionFlg[in_idx]	= in_flg;
 		
@@ -402,8 +361,8 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 	
 	memset( out_pData, 0, sizeof( SAVE_DATA_ST ) );
 	out_pData->money	= 1000;
-	out_pData->aNetas[ 0 ].no	= 1;
-	out_pData->aNetas[ 0 ].num	= 1;
+	out_pData->aNetaPacks[ 0 ].no	= 1;
+	out_pData->aNetaPacks[ 0 ].num	= 1;
 	out_pData->netaNum	= 1;
 }
 
@@ -412,16 +371,16 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 	@param	in_no : ネタno
 	@return	noネタデータ / nil = ネタデータがない or アイテム数が０
 */
--(SAVE_DATA_ITEM_ST*)	_getNeta:(UInt32)in_no
+-(SAVE_DATA_ITEM_ST*)	_getNetaPack:(UInt32)in_no
 {
 	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
 	if( pData != nil )
 	{
 		for( SInt32 i = 0; i < pData->netaNum; ++i )
 		{
-			if( ( pData->aNetas[ i ].no == in_no ) && ( 0 < pData->aNetas[ i ].num ) )
+			if( ( pData->aNetaPacks[ i ].no == in_no ) && ( 0 < pData->aNetaPacks[ i ].num ) )
 			{
-				return &pData->aNetas[ i ];
+				return &pData->aNetaPacks[ i ];
 			}
 		}
 	}

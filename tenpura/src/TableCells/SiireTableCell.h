@@ -9,19 +9,21 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 #import "./../Object/TenpuraIcon.h"
+#import "./../Data/DataNetaPackList.h"
 
 @interface SiireTableCell : CCSprite {
 
 @private
 	CCLabelTTF*	mp_nameLabel;
 	CCLabelTTF*	mp_moneyLabel;
-	CCLabelTTF*	mp_possession;
-	TenpuraBigIcon*	mp_tenpuraIcon;
+	CCLabelTTF*	mpa_netaNameList[eNETA_PACK_MAX];
+	TenpuraIcon*	mpa_tenpuraIcon[eNETA_PACK_MAX];
 }
 
 @property	(nonatomic, retain)CCLabelTTF*	pNameLabel;
 @property	(nonatomic, retain)CCLabelTTF*	pMoneyLabel;
-@property	(nonatomic, retain)CCLabelTTF*	pPossessionLabel;
-@property	(nonatomic, retain)TenpuraBigIcon*	pTenpuraIcon;
+
+-(CCLabelTTF*)	getNetaNameLabel:(SInt32)in_idx;
+-(TenpuraIcon*)	getNetaIconObj:(SInt32)in_idx;
 
 @end

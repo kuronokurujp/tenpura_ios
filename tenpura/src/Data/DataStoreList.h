@@ -13,6 +13,7 @@
 typedef struct
 {
 	SInt32		no;
+	UInt32		textId;
 	char		aStoreIdName[128];
 	
 } STORE_DATA_ST;

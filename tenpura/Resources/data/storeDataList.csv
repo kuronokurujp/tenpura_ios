@@ -1,3 +1,7 @@
-no,ストアID(iTunes Connectに登録したID),コメント
-0,jp.co.tenpura.buymoney,
-1,jp.co.tenpura.testtest,広告を外す
+no,項目表示テキストID,ストアID(iTunes Connectに登録したID),コメント
+0,145,com.n2ij.tenpura.cutads,広告を外す
+1,146,com.n2ij.tenpura.money3000,金額取得
+2,147,com.n2ij.tenpura.money9000,金額取得
+3,148,com.n2ij.tenpura.money80000,金額取得
+4,149,com.n2ij.tenpura.money400000,金額取得
+5,150,com.n2ij.tenpura.money900000,金額取得

@@ -41,7 +41,9 @@
 @private
 }
 
-@property	(nonatomic, readonly)Float32 combDelTime;
+@property	(nonatomic, readonly)Float32	combDelTime;
+@property	(nonatomic, readonly)Float32	customerMoneyPutTime;
+@property	(nonatomic, readonly)Float32	combMessageTime;
 
 @end
 

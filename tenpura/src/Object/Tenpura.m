@@ -178,7 +178,7 @@ enum
 			
 			//	油アニメ
 			AnimActionSprite*	pAburaAnim	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_ABURA];
-			[pAburaAnim start];
+			[pAburaAnim startLoop:NO];
 			[pAburaAnim setVisible:YES];
 		}];
 	
@@ -356,7 +356,7 @@ enum
 	
 	//	油アニメを再開
 	AnimActionSprite*	pAburaAnim	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_ABURA];
-	[pAburaAnim start];
+	[pAburaAnim startLoop:NO];
 	[pAburaAnim setVisible:YES];
 	
 	[self setZOrder:m_oldZOrder];
@@ -452,11 +452,11 @@ enum
 		case eTENPURA_STATE_VERYGOOD:	//	最高
 		{
 			pEff	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_CURSOR];
-			[pEff start];
+			[pEff startLoop:NO];
 			[pEff setVisible:YES];
 
 			pEff	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_STAR];
-			[pEff start];
+			[pEff startLoop:NO];
 			[pEff setVisible:YES];
 
 			break;

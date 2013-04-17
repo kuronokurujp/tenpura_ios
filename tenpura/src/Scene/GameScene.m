@@ -14,9 +14,10 @@
 
 #import "./../ActionCustomer/ActionCustomer.h"
 #import "./../Data/DataNetaList.h"
+#import "./../Data/DataNetaPackList.h"
 #import "./../Data/DataGlobal.h"
 #import "./../Data/DataSaveGame.h"
-#import "./../Data/DataSettingTenpura.h"
+#import "./../Data/DataSettingNetaPack.h"
 #import "./../Data/DataTenpuraPosList.h"
 #import "./../Data/DataItemList.h"
 #import "./../System/Sound/SoundManager.h"
@@ -204,24 +205,24 @@ enum
 
 		//	なべに配置できるてんぷらリスト作成
 		{
-			DataSaveGame*	pSaveGameInst	= [DataSaveGame shared];
 			mp_settingItemList	= [[CCArray alloc] init];
 
+			DataNetaPackList*	pDataNetaPackListInst	= [DataNetaPackList shared];
 			CCNode*	pNode	= nil;
 			CCARRAY_FOREACH(in_pData->mp_netaList, pNode)
 			{
-				if( [pNode isKindOfClass:[DataSettingTenpura class]] )
+				if( [pNode isKindOfClass:[DataSettingNetaPack class]] )
 				{
-					DataSettingTenpura*	pDataSettingTenpura	= (DataSettingTenpura*)pNode;
-					pDataSettingTenpura.raiseTimeRate	= raiseTimeRate;
-				
-					DataSettingTenpura*	pAddData	= [[[DataSettingTenpura alloc] init] autorelease];
-					[pAddData CopyData:pDataSettingTenpura];
-
-					[mp_settingItemList addObject:pAddData];
-					
-					//	天ぷら消耗
-					[pSaveGameInst subNeta:pDataSettingTenpura.no];
+					DataSettingNetaPack*	pDataSettingNetaPack	= (DataSettingNetaPack*)pNode;
+					const NETA_PACK_DATA_ST*	pNetaPackData	= [pDataNetaPackListInst getDataSearchId:pDataSettingNetaPack.no];
+					for( SInt32 i = 0; i < eNETA_PACK_MAX; ++i )
+					{
+						if( 0 < pNetaPackData->aNetaId[i] )
+						{
+							NSNumber*	num	= [NSNumber numberWithInt:pNetaPackData->aNetaId[i]];
+							[mp_settingItemList addObject:num];
+						}
+					}
 				}
 			}
 			
@@ -281,6 +282,7 @@ enum
 			//	オブジェクトの描画プライオリティ修正
 			{
 				[mp_nabe setZOrder:2.f];
+				mp_nabe.setFlyTimeRate	= raiseTimeRate;
 				
 				CCLabelTTF*	pLabel	= nil;
 				CCARRAY_FOREACH(pCCLabelTTFArray, pLabel)
@@ -301,7 +303,7 @@ enum
 			mp_customerArray	= [[CCArray alloc] initWithCapacity:num];
 			for( SInt32 i = 0; i < num; ++i )
 			{
-				Customer*	pCustomer	= [[[Customer alloc] initToType:eTYPE_MAN:i:mp_nabe:mp_settingItemList:customerEatRate] autorelease];
+				Customer*	pCustomer	= [[[Customer alloc] initToType: i:mp_nabe:mp_settingItemList:customerEatRate] autorelease];
 				[pCustomer setPosition:ccp(size.width, ga_initCustomerPos[i][1])];
 				[pCustomer setAnchorPoint:ccp(0,0)];
 				[pCustomer setVisible:NO];
@@ -453,7 +455,52 @@ enum
 			//	表示処理をする
 			if( in_bCreateEat == YES )
 			{
-				[pCustomer.act putEat];
+				TYPE_ENUM	type	= eTYPE_MAN;
+				GameInScene*	pGameInScene	= (GameInScene*)[self getChildByTag:eGAME_IN_SCENE_TAG];
+				if( pGameInScene != NULL )
+				{
+					if( [pGameInScene isFever] == YES )
+					{
+						if( m_timeVal <= mp_gameSceneData.customerMoneyPutTime )
+						{
+							int		num = rand() % 10;
+							if( num <= 7 )
+							{
+								type	= eTYPE_MONEY;
+							}
+							else
+							{
+								type	= rand() % 2;
+							}
+						}
+						else
+						{
+							type	= rand() % eTYPE_MAX;
+						}
+					}
+					else
+					{
+						if( m_timeVal <= mp_gameSceneData.customerMoneyPutTime )
+						{
+							type	= rand() % eTYPE_MAX;
+						}
+						else
+						{
+							int	randNum	= rand() % 2;
+							if( randNum == 0 )
+							{
+								type	= eTYPE_MAN;
+							}
+							else
+							{
+								type	= eTYPE_WOMAN;
+							}
+						}
+					}
+
+					[pCustomer setType:type];
+					[pCustomer.act putEat];
+				}
 			}
 			else
 			{

@@ -14,7 +14,7 @@
 #import "./../ActionCustomer/ActionCustomer.h"
 #import "./../Data/DataNetaList.h"
 #import "./../Data/DataGlobal.h"
-#import "./../Data/DataSettingTenpura.h"
+#import "./../Data/DataSettingNetaPack.h"
 
 @implementation Customer
 
@@ -36,7 +36,7 @@ enum
 enum
 {
 	eTAG_EAT_ICON	= 1,
-	eTAG_SP_ICON	= eTAG_EAT_ICON + 5,
+	eTAG_ANIM	= eTAG_EAT_ICON + 5,
 };
 
 static const SInt32	s_animDataIdx[3][eCUSTOMER_ANIM_MAX]	=
@@ -79,19 +79,20 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 /*
 	@brief	初期化
 */
--(id)	initToType:(TYPE_ENUM)in_type :(SInt32)in_idx :(Nabe*)in_pNabe :(CCArray*)in_pSettingTenpuraList :(Float32)in_eatTimeRate
+-(id)	initToType:(SInt32)in_idx :(Nabe*)in_pNabe :(CCArray*)in_pSettingTenpuraList :(Float32)in_eatTimeRate
 {
 	if( self = [super init] )
 	{
 		DataCustomerList*	pDataCustomerList	= [DataCustomerList shared];
 		NSAssert(pDataCustomerList, @"客のデータがないです");
-		mp_customerData	= [pDataCustomerList getDataSearchId:in_idx];
+		mp_customerData	= [pDataCustomerList getDataSearchId:0];
 		
 		mp_act	= nil;
 		mp_sp	= nil;
 		m_money	= 0;
 		m_score	= 0;
-		m_eatTimeRate	= in_eatTimeRate * mp_customerData->eatTime;
+		m_orgEatTimeRate	= in_eatTimeRate;
+		m_eatTimeRate	= m_orgEatTimeRate * mp_customerData->eatTime;
 
 		mp_nabe	= in_pNabe;
 		mp_settingTenpuraList	= in_pSettingTenpuraList;
@@ -148,6 +149,20 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 }
 
 /*
+	@brief	タイプ設定
+*/
+//	タイプ設定
+-(void)	setType:(TYPE_ENUM)in_type
+{
+	m_type	= in_type;
+	DataCustomerList*	pDataCustomerList	= [DataCustomerList shared];
+	NSAssert(pDataCustomerList, @"客のデータがないです");
+
+	mp_customerData	= [pDataCustomerList getDataSearchId:m_type];
+	m_eatTimeRate	= m_orgEatTimeRate * mp_customerData->eatTime;
+}
+
+/*
 	@brief	食べる天ぷら追加
 */
 -(void)	createEatList
@@ -158,14 +173,15 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 	for( SInt32 i = 0; i < putNum; ++i )
 	{
 		SInt32	idx	= rand() % [mp_settingTenpuraList count];
-		DataSettingTenpura*	pSettingTenpura	= [mp_settingTenpuraList objectAtIndex:idx];
-		NSAssert(pSettingTenpura, @"");
+
+		NSNumber*	pNumber	= [mp_settingTenpuraList objectAtIndex:idx];
+		NSAssert(pNumber, @"");
 		
-		const NETA_DATA_ST*	pData	= [pDataNetaList getDataSearchId:pSettingTenpura.no];
+		const NETA_DATA_ST*	pData	= [pDataNetaList getDataSearchId:[pNumber integerValue]];
 		NSAssert( pData, @"ゲーム中に使用する天ぷらデータがない" );
 
 		//	鍋に揚げる天ぷらを通知
-		Tenpura*	pTenpura	= [mp_nabe addTenpura:pData:pSettingTenpura.raiseTimeRate];
+		Tenpura*	pTenpura	= [mp_nabe addTenpura:pData];
 		if( pTenpura != nil )
 		{
 			//	アイコン作成
@@ -245,6 +261,22 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 	CGRect	boxRect	= CGRectMake(self.position.x, self.position.y, texSize.width, texSize.height);
 	
 	return boxRect;
+}
+
+/*
+	@brief	天ぷらアイコンの表示／非表示
+*/
+-(void)	setVisibleTenpuraIcon:(BOOL)in_flg
+{
+	CCNode*	pNode	= nil;
+
+	CCARRAY_FOREACH(children_, pNode)
+	{
+		if( [pNode isKindOfClass:[TenpuraIcon class]] )
+		{
+			pNode.visible	= in_flg;
+		}
+	}
 }
 
 /*
@@ -328,15 +360,15 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 		AnimActionSprite*	pAnimAction	= (AnimActionSprite*)pAnim;
 		if( in_bAnim == false )
 		{
-			[pAnimAction frame:0];
+			[pAnimAction frame:1];
 		}
 		else
 		{
-			[pAnimAction start];
+			[pAnimAction startLoop:YES];
 		}
 		
-		[self removeChildByTag:eTAG_SP_ICON cleanup:NO];
-		[self addChild:pAnimAction z:0 tag:eTAG_SP_ICON];		
+		[self removeChildByTag:eTAG_ANIM cleanup:NO];
+		[self addChild:pAnimAction z:0 tag:eTAG_ANIM];
 		mp_sp	= pAnimAction.sp;
 	}
 }
@@ -346,6 +378,7 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 */
 -(void) stopAllActions
 {
+	[mp_sp stopAllActions];
 	[mp_act endFlash];
 	[super stopAllActions];
 	

@@ -9,6 +9,7 @@
 #import "DataMissionList.h"
 #import "DataBaseText.h"
 #import "DataNetaList.h"
+#import "DataNetaPackList.h"
 #import "DataSaveGame.h"
 
 struct	MISSION_DATA_ST
@@ -222,8 +223,29 @@ enum
 		{
 			case eMISSION_TYPE_ID_GET_ITEM:
 			{
-				const SAVE_DATA_ITEM_ST*	pItem	= [pSaveDataInst getNeta:pData->customData.itemuGet.no];
-				if( (pItem != nil) && (pData->customData.itemuGet.num <= pItem->num) )
+				UInt32	netaGetCnt	= 0;
+
+				DataNetaPackList*	pDataNetaPackInst	= [DataNetaPackList shared];
+				for( SInt32 i = 0; i < eSAVE_DATA_NETA_PACKS_MAX; ++i )
+				{
+					const	SAVE_DATA_ITEM_ST*	pItem	= [pSaveDataInst getNetaPackOfIndex:i];
+					if( pItem != NULL )
+					{
+						const NETA_PACK_DATA_ST*	pNetaPackData	= [pDataNetaPackInst getDataSearchId:pItem->no];
+						if( pNetaPackData != NULL )
+						{
+							for( SInt32 j = 0; j < eNETA_PACK_MAX; ++j )
+							{
+								if( pNetaPackData->aNetaId[j] == pData->customData.itemuGet.no )
+								{
+									++netaGetCnt;
+								}
+							}
+						}
+					}
+				}
+
+				if( (pData->customData.itemuGet.num <= netaGetCnt) )
 				{
 					//	成功
 					[pSaveDataInst addSaveMoeny:pData->customData.itemuGet.bonusMoney];
@@ -422,7 +444,7 @@ enum
 {
 	SInt32	missionIdx	= in_no - 1;
 	NSAssert(0 <= missionIdx, @"セーブデータに格納するミッションidx値が不正(%ld)", missionIdx);
-	NSAssert((UInt32)missionIdx < eMISSION_MAX, @"ミッションnoがこれ以上割り振れない(上限は1~%dまで)", eMISSION_MAX);
+	NSAssert((UInt32)missionIdx < eSAVE_DATA_MISSION_MAX, @"ミッションnoがこれ以上割り振れない(上限は1~%dまで)", eSAVE_DATA_MISSION_MAX);
 
 	return (UInt32)missionIdx;
 }

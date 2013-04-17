@@ -22,6 +22,7 @@
 #import "./Data/DataCustomerList.h"
 #import "./Data/DataOjamaNetaList.h"
 #import "./Data/DataStoreList.h"
+#import "./Data/DataNetaPackList.h"
 #import "./System/Sound/SoundManager.h"
 #import "./System/GameCenter/GameKitHelper.h"
 #import "./System/BannerView/BannerViewController.h"
@@ -118,21 +119,11 @@ void uncaughtExceptionHandler( NSException* in_pException )
 	[DataCustomerList shared];
 	[DataOjamaNetaList shared];
 	[DataStoreList shared];
+	[DataNetaPackList shared];
 	[StoreAppPurchaseManager share].delegate	= self;
 
-	//	ストアのプロダクトを取得
 	{
-		DataStoreList*	pStoreList	= [DataStoreList shared];
-		StoreAppPurchaseManager*	pStoreApp	= [StoreAppPurchaseManager share];
-		for( SInt32 i = 0; i < [pStoreList dataNum]; ++i )
-		{
-			const	STORE_DATA_ST*	pData	= [pStoreList getData:i];
-			if( [pStoreApp requestProduct:[NSString stringWithUTF8String:pData->aStoreIdName]] == NO )
-			{
-				
-			}
-		}
-
+		[DataStoreList shared];
 		//	ストア処理中のアラート
 		mp_storeBuyCheckAlerView	= [[UIAlertView alloc] initWithTitle:@"" message:@"" delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
 	}
@@ -255,6 +246,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
 	[SimpleAudioEngine end];
 	CC_DIRECTOR_END();
 
+	[DataNetaPackList end];
 	[SoundManager end];
 	[StoreAppPurchaseManager end];
 	[DataStoreList end];
@@ -470,6 +462,29 @@ void uncaughtExceptionHandler( NSException* in_pException )
 								delegate:nil
 								cancelButtonTitle:[DataBaseText getString:46]
 								otherButtonTitles:nil, nil] autorelease];
+	//	購入内容によって設定する
+	DataStoreList*	pStoreInst	= [DataStoreList shared];
+	if( pStoreInst != nil )
+	{
+		for( int i = 0; i < pStoreInst.dataNum; ++i )
+		{
+			const STORE_DATA_ST*	pData	= [pStoreInst getData:i];
+			if( pData != nil )
+			{
+				NSString*	pStr	= [NSString stringWithUTF8String:pData->aStoreIdName];
+				if([pStr isEqualToString:in_pProducts])
+				{
+					if( pData->no == 1 )
+					{
+						//	広告除去
+					}
+					
+					break;
+				}
+			}
+		}
+	}
+	
 	[pAlert show];
 }
 

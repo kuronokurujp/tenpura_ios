@@ -11,7 +11,7 @@
 
 #import "./../../libs/CCControlExtension/CCControlExtension.h"
 #import "./../CCBReader/CCBReader.h"
-#import "./../Data/DataSettingTenpura.h"
+#import "./../Data/DataSettingNetaPack.h"
 #import "./../Data/DataBaseText.h"
 #import "./../Data/DataGlobal.h"
 #import "./../Data/DataSaveGame.h"
@@ -144,7 +144,7 @@
 		{
 			if( ( 0 < pSettingItemBtn.itemNo ) && ( pSettingItemBtn.type == eITEM_TYPE_NETA ) )
 			{
-				DataSettingTenpura*	pSettingData	= [[[DataSettingTenpura alloc] init] autorelease];
+				DataSettingNetaPack*	pSettingData	= [[[DataSettingNetaPack alloc] init] autorelease];
 				pSettingData.no	= pSettingItemBtn.itemNo;
 				[pDataSettingTenpura addObject:pSettingData];
 			}

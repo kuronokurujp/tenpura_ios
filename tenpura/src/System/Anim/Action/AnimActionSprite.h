@@ -50,6 +50,7 @@
 -(id)	initWithDataAndLoop:(AnimData*)in_data;
 
 -(void)	start;
+-(void)	startLoop:(BOOL)in_bReverse;
 -(void)	end;
 -(void)	frame:(const UInt32)idx;
 

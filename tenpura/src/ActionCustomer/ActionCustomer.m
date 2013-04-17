@@ -212,7 +212,7 @@ enum ACTION_SP_ENUM
 -(void)	eatGood:(Tenpura*)in_pTenpura :(SInt32)in_score :(SInt32)in_money
 {
 	[mp_customer stopAllActions];
-	[mp_customer setAnim:eCUSTOMER_ANIM_HAPPY :false];
+	[mp_customer setAnim:eCUSTOMER_ANIM_HAPPY :true];
 	[self _eat:in_pTenpura:in_score:in_money];
 	
 	[self _putEatMessage:[NSString stringWithUTF8String:gpa_spriteFileNameList[eSPRITE_FILE_CUS_MOJI00]]];
@@ -226,7 +226,7 @@ enum ACTION_SP_ENUM
 -(void)	eatVeryGood:(Tenpura*)in_pTenpura :(SInt32)in_score :(SInt32)in_money
 {
 	[mp_customer stopAllActions];
-	[mp_customer setAnim:eCUSTOMER_ANIM_HAPPY :false];
+	[mp_customer setAnim:eCUSTOMER_ANIM_HAPPY :true];
 	[self _eat:in_pTenpura:in_score:in_money];
 
 	[self _putEatMessage:[NSString stringWithUTF8String:gpa_spriteFileNameList[eSPRITE_FILE_CUS_MOJI01]]];
@@ -240,7 +240,7 @@ enum ACTION_SP_ENUM
 -(void)	eatBat:(Tenpura*)in_pTenpura :(SInt32)in_score :(SInt32)in_money
 {
 	[mp_customer stopAllActions];
-	[mp_customer setAnim:eCUSTOMER_ANIM_BAD :false];
+	[mp_customer setAnim:eCUSTOMER_ANIM_BAD :true];
 	[self _eat:in_pTenpura:in_score:in_money];
 
 	[self _putEatMessage:[NSString stringWithUTF8String:gpa_spriteFileNameList[eSPRITE_FILE_CUS_MOJI02]]];
@@ -254,7 +254,7 @@ enum ACTION_SP_ENUM
 -(void)	eatVeryBat:(Tenpura*)in_pTenpura :(SInt32)in_score :(SInt32)in_money;
 {
 	[mp_customer stopAllActions];
-	[mp_customer setAnim:eCUSTOMER_ANIM_BAD :false];
+	[mp_customer setAnim:eCUSTOMER_ANIM_BAD :true];
 	[self _eat:in_pTenpura:in_score:in_money];
 	
 	[[SoundManager shared] playSe:@"seki"];
@@ -299,10 +299,10 @@ enum ACTION_SP_ENUM
 */
 -(void)	_actPut
 {
-	[mp_customer setAnim:eCUSTOMER_ANIM_NORMAL :false];
-
 	[mp_customer stopAllActions];
 	[mp_customer setScale:1.f];
+
+	[mp_customer setAnim:eCUSTOMER_ANIM_NORMAL :NO];
 
 	SInt32	idx	= mp_customer.idx;
 
@@ -420,6 +420,7 @@ enum ACTION_SP_ENUM
 
 	//	食べる演出を入れる
 	[mp_customer setScale:1.f];
+	[mp_customer setVisibleTenpuraIcon:NO];
 	
 	//	すでに食べた時の文字表示しているなら削除
 	CCNode*	pEatMessageSp	= [self getChildByTag:eACT_SP_TAG_EAT_MESSAGE];
@@ -443,13 +444,15 @@ enum ACTION_SP_ENUM
 			[self _createPutScoreAction:m_getScore];
 			[self _createPutMoneyAction:m_getMoeny];
 
-			[mp_customer setAnim:eCUSTOMER_ANIM_NORMAL :false];
+			[mp_customer setAnim:eCUSTOMER_ANIM_NORMAL :YES];
 
 			//	食べる天ぷらがないと退場
 			if([mp_customer getEatTenpura] <= 0)
 			{
 				[self exit];
 			}
+
+			[mp_customer setVisibleTenpuraIcon:YES];
 	
 			//	食べた時の表示削除
 			CCNode*	pEatMessageSp	= [self getChildByTag:eACT_SP_TAG_EAT_MESSAGE];

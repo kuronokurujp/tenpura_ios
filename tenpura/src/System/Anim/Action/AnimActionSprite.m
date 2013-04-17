@@ -149,21 +149,33 @@
 -(void)	start
 {
 	CCAnimate*	pAnimate	= [CCAnimate actionWithAnimation:mp_anim];
-	if( mb_loop == false )
-	{
-		CCCallFunc*	pEndCall	= [CCCallFunc actionWithTarget:self selector:@selector(_endAnim)];
-		CCSequence*	pSeq	= [CCSequence actions:pAnimate, pEndCall, nil];
-		[mp_sp runAction:pSeq];
-	}
-	else
-	{
-		//	ループの設定をしているならループ用アニメを作成する
-		CCRepeatForever*	pRepeat	= [CCRepeatForever actionWithAction:pAnimate];
-		[mp_sp runAction:pRepeat];
-	}
+	CCCallFunc*	pEndCall	= [CCCallFunc actionWithTarget:self selector:@selector(_endAnim)];
+	CCSequence*	pSeq	= [CCSequence actions:pAnimate, pEndCall, nil];
+	[mp_sp runAction:pSeq];
 	
 	mb_pause	= NO;
 }
+
+-(void)	startLoop:(BOOL)in_bReverse
+{
+	CCAnimate*	pAnimate	= [CCAnimate actionWithAnimation:mp_anim];
+
+	//	ループの設定をしているならループ用アニメを作成する
+	if( in_bReverse == YES )
+	{
+		CCSequence*	pSeq	= [CCSequence actionOne:pAnimate two:[pAnimate reverse]];
+		CCRepeatForever*	pRepeat	= [CCRepeatForever actionWithAction:pSeq];
+		[mp_sp runAction:pRepeat];
+	}
+	else
+	{
+		CCRepeatForever*	pRepeat	= [CCRepeatForever actionWithAction:pAnimate];
+		[mp_sp runAction:pRepeat];
+	}
+
+	mb_pause	= NO;
+}
+
 
 /*
 	@brief
@@ -181,6 +193,7 @@
 {
 	if( idx < mp_frameList.count )
 	{
+		[self end];
 		CCSpriteFrame*	pFrame	= (CCSpriteFrame*)[mp_frameList objectAtIndex:idx];
 		[mp_sp setDisplayFrame:pFrame];
 	}

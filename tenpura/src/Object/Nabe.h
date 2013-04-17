@@ -22,13 +22,16 @@
 	CCSprite*		mp_sp;
 	BOOL			mb_fever;
 	Float32			m_flyTimeRate;
+	Float32			m_setFlyTimeRate;
 	SInt32			m_tenpuraZOrder;
 }
+
+@property	(nonatomic, readwrite)Float32	setFlyTimeRate;
 
 //	関数定義
 
 //	天ぷら追加
--(Tenpura*)	addTenpura:(const NETA_DATA_ST*)in_pData :(Float32)in_raiseSpeedRate;
+-(Tenpura*)	addTenpura:(const NETA_DATA_ST*)in_pData;
 //	追加天ぷらすべて削除
 -(void)	allCleanTenpura;
 //	配置した天ぷらが爆発

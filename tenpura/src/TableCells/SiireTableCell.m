@@ -13,8 +13,6 @@
 
 @synthesize pNameLabel	= mp_nameLabel;
 @synthesize pMoneyLabel	= mp_moneyLabel;
-@synthesize pPossessionLabel	= mp_possession;
-@synthesize pTenpuraIcon	= mp_tenpuraIcon;
 
 /*
 	@brief	初期化
@@ -23,10 +21,18 @@
 {
 	if( self = [super init] )
 	{
-		mp_tenpuraIcon	= nil;
+		mp_nameLabel	= nil;
 		mp_moneyLabel	= nil;
-		mp_possession	= nil;
-		mp_tenpuraIcon	= nil;
+		
+		for( SInt32 i = 0; i < sizeof(mpa_netaNameList) / sizeof(mpa_netaNameList[0]); ++i )
+		{
+			mpa_netaNameList[i]	= nil;
+		}
+		
+		for( SInt32 i = 0; i < sizeof(mpa_tenpuraIcon) / sizeof(mpa_tenpuraIcon[0]); ++i )
+		{
+			mpa_tenpuraIcon[i]	= nil;
+		}
 	}
 	
 	return self;
@@ -37,6 +43,7 @@
 */
 -(void)	didLoadFromCCB
 {
+	SInt32	cnt	= 0;
 	CCNode*	pNode	= nil;
 	CCARRAY_FOREACH(children_, pNode)
 	{
@@ -48,10 +55,14 @@
 				mp_nameLabel	= pLabel;
 				[mp_nameLabel setString:@""];
 			}
-			else if( [pLabel.string isEqualToString:@"possession"] )
+			else if( [pLabel.string rangeOfString:@"netaName"].location != NSNotFound )
 			{
-				mp_possession	= pLabel;
-				[mp_possession setString:@""];
+				NSMutableString*	text	= [NSMutableString stringWithString:pLabel.string];
+				NSRange	range	= NSMakeRange(0, text.length);
+				[text replaceOccurrencesOfString:@"netaName" withString:@"" options:0 range:range];
+				SInt32	idx	= text.intValue;
+				mpa_netaNameList[idx]	= pLabel;
+				[mpa_netaNameList[idx] setString:@""];
 			}
 			else if( [pLabel.string isEqualToString:@"money"] )
 			{
@@ -59,11 +70,38 @@
 				[mp_moneyLabel setString:@""];
 			}
 		}
-		else if( [pNode isKindOfClass:[TenpuraBigIcon class]] )
+		else if( [pNode isKindOfClass:[TenpuraIcon class]] )
 		{
-			mp_tenpuraIcon	= (TenpuraBigIcon*)pNode;
+			mpa_tenpuraIcon[cnt]	= (TenpuraIcon*)pNode;
+			++cnt;
 		}
 	}
+}
+
+/*
+	@brief
+*/
+-(CCLabelTTF*)	getNetaNameLabel:(SInt32)in_idx
+{
+	if( in_idx < sizeof(mpa_netaNameList) / sizeof(mpa_netaNameList[0]) )
+	{
+		return mpa_netaNameList[in_idx];
+	}
+	
+	return	nil;
+}
+
+/*
+	@brief
+*/
+-(TenpuraIcon*)	getNetaIconObj:(SInt32)in_idx
+{
+	if( in_idx < sizeof(mpa_tenpuraIcon) / sizeof(mpa_tenpuraIcon[0]))
+	{
+		return mpa_tenpuraIcon[in_idx];
+	}
+	
+	return nil;
 }
 
 @end

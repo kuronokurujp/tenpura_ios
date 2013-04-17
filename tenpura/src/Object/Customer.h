@@ -50,6 +50,7 @@ typedef enum
 	SInt32	m_money;
 	SInt32	m_score;
 	Float32	m_eatTimeRate;
+	Float32	m_orgEatTimeRate;
 }
 
 //	プロパティ
@@ -64,7 +65,10 @@ typedef enum
 @property	(nonatomic, readonly)Float32	eatTimeRate;
 
 //	初期化
--(id)	initToType:(TYPE_ENUM)in_type :(SInt32)in_idx :(Nabe*)in_pNabe :(CCArray*)in_pSettingTenpuraList :(Float32)in_eatTimeRate;
+-(id)	initToType:(SInt32)in_idx :(Nabe*)in_pNabe :(CCArray*)in_pSettingTenpuraList :(Float32)in_eatTimeRate;
+
+//	タイプ設定
+-(void)	setType:(TYPE_ENUM)in_type;
 
 //	食べた天ぷらリスト作成
 -(void)	createEatList;
@@ -80,6 +84,9 @@ typedef enum
 
 //	オブジェクト矩形取得
 -(CGRect)	getBoxRect;
+
+//	天ぷらアイコンを表示／非表示設定
+-(void)	setVisibleTenpuraIcon:(BOOL)in_flg;
 
 //	天ぷらアイコンすべて削除
 -(void)	removeAllEatIcon;

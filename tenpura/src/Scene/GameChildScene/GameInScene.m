@@ -72,6 +72,19 @@ enum
 }
 
 /*
+	@brief
+*/
+-(BOOL)	isFever
+{
+	if( mp_normalScene != NULL )
+	{
+		return	mp_normalScene.bFever;
+	}
+	
+	return NO;
+}
+
+/*
 	@brief	開始
 */
 -(void)	_begin:(ccTime)in_time
@@ -265,6 +278,9 @@ enum
 
 //	おじゃま処理
 -(void)	onStartOjama:(NSNotification*)in_pCenter;
+
+//	コンボタイムカウント
+-(void)	_timerComb:(ccTime)in_time;
 
 //	タイムカウント
 -(void)	_timer:(ccTime)in_time;
@@ -584,7 +600,10 @@ enum
 								[self schedule:@selector(_updateCombo)];
 	
 								[self unschedule:@selector(_exitCombMessage)];
-								[self scheduleOnce:@selector(_exitCombMessage) delay:pGameScene->mp_gameSceneData.combDelTime + pGameScene->m_combAddTime];
+								[self unschedule:@selector(_timerComb:)];
+								
+								[self scheduleOnce:@selector(_exitCombMessage) delay:pGameScene->mp_gameSceneData.combMessageTime];
+								[self scheduleOnce:@selector(_timerComb:) delay:pGameScene->mp_gameSceneData.combDelTime + pGameScene->m_combAddTime];
 							}
 
 							//	フィーバーを出すか
@@ -668,6 +687,14 @@ enum
 	}
 	
 	[self _endTouch];
+}
+
+/*
+	@brief	コンボタイムカウント
+*/
+-(void)	_timerComb:(ccTime)in_time
+{
+	m_combCnt	= 0;
 }
 
 /*
