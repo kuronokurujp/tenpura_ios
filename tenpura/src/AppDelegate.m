@@ -337,6 +337,12 @@ void uncaughtExceptionHandler( NSException* in_pException )
 */
 -(void)	onBannerShow
 {
+	const	SAVE_DATA_ST*	pSaveData	= [[DataSaveGame shared] getData];
+	if( pSaveData->adsDel == 1 )
+	{
+		return;
+	}
+	
 	UIView*	pView	= [CCDirector sharedDirector].view;
 	if( [mp_bannerViewCtrl.view isDescendantOfView:pView] == NO )
 	{
@@ -387,9 +393,9 @@ void uncaughtExceptionHandler( NSException* in_pException )
 }
 
 /*
-	@brief	トランザクションの開始
+	@brief	リクエスト開始
 */
--(void)	onStartTransaction:(const STORE_REQUEST_TYPE_ENUM)in_type
+-(void)	onRequest
 {
 	[[CCDirector sharedDirector] stopAnimation];
 	[[CCDirector sharedDirector] pause];
@@ -399,7 +405,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
 	CGSize	winSize	= [CCDirector sharedDirector].winSize;
 	//	通信状態を表示
 	[UIApplication sharedApplication].networkActivityIndicatorVisible	= YES;
-
+	
 	UIView*	pGrayView	= [[UIView alloc] initWithFrame:CGRectMake(0,0,winSize.width,winSize.height)];
 	[pGrayView setBackgroundColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.5f]];
 	pGrayView.tag	= 21;
@@ -412,7 +418,13 @@ void uncaughtExceptionHandler( NSException* in_pException )
 
 	[pIndicator release];
 	[pGrayView release];
+}
 
+/*
+	@brief	トランザクションの開始
+*/
+-(void)	onStartTransaction:(const STORE_REQUEST_TYPE_ENUM)in_type
+{
 	NSString*	pAlerTitleStr	= nil;
 	if( in_type == eSTORE_REQUEST_TYPE_PAY )
 	{
@@ -474,12 +486,20 @@ void uncaughtExceptionHandler( NSException* in_pException )
 				NSString*	pStr	= [NSString stringWithUTF8String:pData->aStoreIdName];
 				if([pStr isEqualToString:in_pProducts])
 				{
-					if( pData->no == 1 )
+					switch( pData->no )
 					{
-						//	広告除去
+					case eSTORE_ID_CUTABS:
+					{
+						[[DataSaveGame shared] saveCutAdsFlg];
+						[self onBannerHide];
+						break;
 					}
-					
-					break;
+					case eSTORE_ID_MONEY_3000:		{ [[DataSaveGame shared] addSaveMoeny:3000]; break; }
+					case eSTORE_ID_MONEY_9000:		{ [[DataSaveGame shared] addSaveMoeny:9000]; break; }
+					case eSTORE_ID_MONEY_80000:		{ [[DataSaveGame shared] addSaveMoeny:80000]; break; }
+					case eSTORE_ID_MONEY_400000:	{ [[DataSaveGame shared] addSaveMoeny:400000]; break; }
+					case eSTORE_ID_MONEY_900000:	{ [[DataSaveGame shared] addSaveMoeny:900000]; break; }
+					}
 				}
 			}
 		}

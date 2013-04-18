@@ -99,6 +99,9 @@ typedef struct
 //	ランク設定
 -(void)	saveRank:(char)in_rank;
 
+//	広告削除
+-(void)	saveCutAdsFlg;
+
 //	データ丸ごと取得
 -(const SAVE_DATA_ST*)getData;
 

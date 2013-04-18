@@ -19,6 +19,7 @@
 
 @synthesize delegate	= m_delegate;
 @synthesize pProductDic	= mp_productDic;
+@synthesize bLoad	= mb_loading;
 
 static	StoreAppPurchaseManager*	sp_storeAppManagerInst	= nil;
 static	const char*	sp_transactionFlgName	= "storeTransactionFlg";
@@ -100,6 +101,7 @@ static	const char*	sp_transactionFlgName	= "storeTransactionFlg";
 	//	課金設定リクエスト可能
 	[self _requestProductData:in_pIdName];
 
+	mb_loading	= true;
 	return YES;
 }
 
@@ -118,7 +120,7 @@ static	const char*	sp_transactionFlgName	= "storeTransactionFlg";
 
 	if( (m_delegate != nil ) && ([m_delegate respondsToSelector:@selector(onStartTransaction:)]) )
 	{
-		[m_delegate onStartTransaction:eSTORE_REQUEST_TYPE_PAY];
+	//	[m_delegate onStartTransaction:eSTORE_REQUEST_TYPE_PAY];
 	}
 
 	return YES;
@@ -133,7 +135,7 @@ static	const char*	sp_transactionFlgName	= "storeTransactionFlg";
 	
 	if( (m_delegate != nil ) && ([m_delegate respondsToSelector:@selector(onStartTransaction:)]) )
 	{
-		[m_delegate onStartTransaction:eSTORE_REQUEST_TYPE_RESTORE];
+	//	[m_delegate onStartTransaction:eSTORE_REQUEST_TYPE_RESTORE];
 	}
 
 	return YES;
@@ -149,7 +151,7 @@ static	const char*	sp_transactionFlgName	= "storeTransactionFlg";
 		//	リスタート
 		if( m_delegate && ([m_delegate respondsToSelector:@selector(onStartTransaction:)]) )
 		{
-			[m_delegate onStartTransaction:eSTORE_REQUEST_TYPE_RESTART];
+	//		[m_delegate onStartTransaction:eSTORE_REQUEST_TYPE_RESTART];
 
 			if( [m_delegate respondsToSelector:@selector(onEndTransaction)] )
 			{
@@ -292,6 +294,7 @@ static	const char*	sp_transactionFlgName	= "storeTransactionFlg";
 		[[NSUserDefaults standardUserDefaults] synchronize];
 	}
 
+	mb_loading	= false;
 	if( (m_delegate != nil ) && ([m_delegate respondsToSelector:@selector(onEndTransaction)]) )
 	{
 		[m_delegate onEndTransaction];
@@ -332,6 +335,11 @@ static	const char*	sp_transactionFlgName	= "storeTransactionFlg";
 */
 -(void)	_requestProductData:(NSString*)in_pIdName
 {
+	if( (m_delegate != nil ) && ([m_delegate respondsToSelector:@selector(onRequest)]) )
+	{
+		[m_delegate onRequest];
+	}
+
 	[[SKPaymentQueue defaultQueue] addTransactionObserver:self];
 
 	mp_skProductsRequest	= [[SKProductsRequest alloc] initWithProductIdentifiers:

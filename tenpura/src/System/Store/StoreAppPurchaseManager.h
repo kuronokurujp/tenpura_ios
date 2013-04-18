@@ -21,6 +21,9 @@ typedef enum
 */
 @protocol  StoreAppPurchaseManagerProtocol<NSObject>
 
+//	リクエスト開始
+-(void)	onRequest;
+
 //	トランザクションの開始／終了
 -(void)	onStartTransaction:(const STORE_REQUEST_TYPE_ENUM)in_type;
 -(void)	onEndTransaction;
@@ -53,6 +56,7 @@ typedef enum
 
 @property	(nonatomic, retain)	id<StoreAppPurchaseManagerProtocol>	delegate;
 @property	(nonatomic, retain)	NSMutableDictionary*	pProductDic;
+@property	(nonatomic, readonly)	BOOL	bLoad;
 
 //	関数定義
 +(StoreAppPurchaseManager*)	share;

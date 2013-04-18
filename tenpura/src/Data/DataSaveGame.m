@@ -367,6 +367,20 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 }
 
 /*
+	@brief	広告カットフラグをたてる
+*/
+-(void)	saveCutAdsFlg
+{
+	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
+	if( pData != nil )
+	{
+		pData->adsDel	= 1;
+		[mp_SaveData save];
+	}
+}
+
+
+/*
 	@brief	指定したnoから特定のネタデータを取得
 	@param	in_no : ネタno
 	@return	noネタデータ / nil = ネタデータがない or アイテム数が０

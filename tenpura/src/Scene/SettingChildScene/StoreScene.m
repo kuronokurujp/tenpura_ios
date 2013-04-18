@@ -77,9 +77,12 @@
 	
 	DataStoreList*	pDataStoreInst	= [DataStoreList shared];
 	const STORE_DATA_ST*	pData	= [pDataStoreInst getData:idx];
-	if( pData != nil )
+	if( (pData != nil) && ([pStoreApp isPayment]) )
 	{
-		[pStoreApp requestProduct:[NSString stringWithUTF8String:pData->aStoreIdName]];
+		if( pStoreApp.bLoad == false )
+		{
+			[pStoreApp requestProduct:[NSString stringWithUTF8String:pData->aStoreIdName]];
+		}
 	}
 }
 
@@ -93,28 +96,6 @@
 	StoreTableCell*	pCellLayout	= (StoreTableCell*)[pCell getChildByTag:eSW_TABLE_TAG_CELL_LAYOUT];
 	NSAssert(pCellLayout, @"");
 
-/*
-	StoreAppPurchaseManager*	pStoreApp	= [StoreAppPurchaseManager share];
-	NSArray*	pProductList	= [pStoreApp.pProductDic allValues];
-	if( idx < [pProductList count] )
-	{
-		SKProduct*	pProdcut	= [pProductList objectAtIndex:idx];
-		
-		//	題名
-		[pCellLayout.pNameLabel setString:[pProdcut localizedTitle]];
-	
-		//	金額
-		[pCellLayout.pMoneyLabel setString:[NSString stringWithFormat:@"%d", [[pProdcut price] integerValue]]];
-	}
-	else
-	{
-		//	題名
-		[pCellLayout.pNameLabel setString:@""];
-	
-		//	金額
-		[pCellLayout.pMoneyLabel setString:@""];
-	}
-*/
 	DataStoreList*	pDataStoreInst	= [DataStoreList shared];
 	const STORE_DATA_ST*	pData	= [pDataStoreInst getData:idx];
 	

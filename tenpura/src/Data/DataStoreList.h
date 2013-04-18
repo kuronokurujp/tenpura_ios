@@ -9,6 +9,17 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
+//	購入種類
+enum
+{
+	eSTORE_ID_CUTABS		= 0,
+	eSTORE_ID_MONEY_3000	= 1,
+	eSTORE_ID_MONEY_9000	= 2,
+	eSTORE_ID_MONEY_80000	= 3,
+	eSTORE_ID_MONEY_400000	= 4,
+	eSTORE_ID_MONEY_900000	= 5,
+};
+
 //	データ
 typedef struct
 {
