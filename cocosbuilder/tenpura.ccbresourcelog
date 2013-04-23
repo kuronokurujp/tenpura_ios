@@ -42,6 +42,7 @@ btn_more_app.png
 btn_retry.png
 btn_rigth.png
 btn_shop.png
+btn_shop_adon.png
 btn_shop_item.png
 btn_shop_tane.png
 btn_twitter.png
@@ -49,6 +50,7 @@ base_menu.ccbi
 comboMessage.ccbi
 fever_event.ccbi
 game_result.ccbi
+game_result_data.ccbi
 game_result_hiscore.ccbi
 gameIn.ccbi
 help.ccbi
@@ -65,7 +67,6 @@ title.ccbi
 use_item_select.ccbi
 use_neta_select.ccbi
 useSelectItemTableCell.ccbi
-useSelectNetaTableCell.ccbi
 checkoff.png
 checkon.png
 customer0.png
@@ -78,6 +79,7 @@ fps_images.png
 fever.png
 fv.png
 play_end.png
+play_result.png
 play_start.png
 Default.png
 Icon-72.png
@@ -92,13 +94,18 @@ shina_cell.png
 sire_cell.png
 anago0.png
 asupara0.png
+awabi0.png
 chikuwa0.png
 cust_anago0.png
 cust_asupara0.png
+cust_awabi0.png
 cust_chikuwa0.png
 cust_ebi0.png
+cust_fuji0.png
 cust_fukinoto0.png
+cust_garigari0.png
 cust_geso0.png
+cust_glay0.png
 cust_gobou0.png
 cust_ingen0.png
 cust_kabotya0.png
@@ -119,10 +126,16 @@ cust_shishito0.png
 cust_shiso0.png
 cust_tamanegi0.png
 cust_taranome0.png
+cust_tikyu0.png
 cust_toumorokoshi0.png
+cust_whinna0.png
+cust_zombie0.png
 ebi0.png
+fuji0.png
 fukinoto0.png
+garigari0.png
 geso0.png
+glay0.png
 gobou0.png
 ingen0.png
 kabotya0.png
@@ -144,7 +157,9 @@ shiso0.png
 sumapho.png
 tamanegi0.png
 taranome0.png
+tikyu0.png
 toumorokoshi0.png
+whinna0.png
 combo_message.png
 combo_num.fnt
 combo_num.png

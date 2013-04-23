@@ -310,6 +310,21 @@
 }
 
 /*
+	@brief	アドオン購入画面へ移行
+*/
+-(void)	pressAdonBtn
+{
+	CCScene*	storeScene	= [CCBReader sceneWithNodeGraphFromFile:@"store.ccbi"];
+
+	CCTransitionFade*	pTransFade	=
+	[CCTransitionFade transitionWithDuration:g_sceneChangeTime scene:storeScene withColor:ccBLACK];
+	
+	[[CCDirector sharedDirector] pushScene:pTransFade];
+
+	[[SoundManager shared] playSe:@"btnClick"];
+}
+
+/*
 	@brief	ミッション画面へ移行
 */
 -(void)	pressMissionBtn

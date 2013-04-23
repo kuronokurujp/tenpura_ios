@@ -22,6 +22,56 @@
 		<array>
 			<dict>
 				<key>baseClass</key>
+				<string>CCBFile</string>
+				<key>children</key>
+				<array/>
+				<key>customClass</key>
+				<string></string>
+				<key>displayName</key>
+				<string>CCBFile</string>
+				<key>memberVarAssignmentName</key>
+				<string></string>
+				<key>memberVarAssignmentType</key>
+				<integer>0</integer>
+				<key>properties</key>
+				<array>
+					<dict>
+						<key>name</key>
+						<string>position</string>
+						<key>type</key>
+						<string>Position</string>
+						<key>value</key>
+						<array>
+							<real>235</real>
+							<real>157</real>
+							<integer>0</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>scale</string>
+						<key>type</key>
+						<string>ScaleLock</string>
+						<key>value</key>
+						<array>
+							<real>1</real>
+							<real>1</real>
+							<false/>
+							<integer>0</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>ccbFile</string>
+						<key>type</key>
+						<string>CCBFile</string>
+						<key>value</key>
+						<string>ccbi/game_result_data.ccb</string>
+					</dict>
+				</array>
+			</dict>
+			<dict>
+				<key>baseClass</key>
 				<string>CCControlButton</string>
 				<key>children</key>
 				<array/>
@@ -42,8 +92,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>210</real>
-							<real>217</real>
+							<real>342</real>
+							<real>100</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -250,8 +300,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>209</real>
-							<real>108</real>
+							<real>124</real>
+							<real>103</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -458,8 +508,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>209</real>
-							<real>162</real>
+							<real>223</real>
+							<real>49</real>
 							<integer>0</integer>
 						</array>
 					</dict>

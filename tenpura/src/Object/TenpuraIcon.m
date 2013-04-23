@@ -19,9 +19,7 @@
 @synthesize state		= m_state;
 
 //	仮
-static const Float32	s_tenpuraFlyStateMax	= 5;
-//	TODO	絵が３段階になったら上記のは削除して下記のを使う
-//static const Float32	s_tenpuraFlyStateMax	= eTENPURA_STATE_VERYBAD + 1;
+static const Float32	s_tenpuraFlyStateMax	= 3;
 
 /*
 	@brief	初期化

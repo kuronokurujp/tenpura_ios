@@ -32,7 +32,8 @@ struct	MISSION_DATA_ST
 		struct
 		{
 			int64_t	score;
-			char	rank;
+		//	char	rank;
+			SInt32	bounusMoney;
 		} hiscore;
 		
 	} customData;
@@ -259,7 +260,9 @@ enum
 				if( pData->customData.hiscore.score < pSaveData->score )
 				{
 					//	成功
-					[pSaveDataInst saveRank:pData->customData.hiscore.rank];
+				//	[pSaveDataInst saveRank:pData->customData.hiscore.rank];
+					[pSaveDataInst addSaveMoeny:pData->customData.hiscore.bounusMoney];
+
 					return YES;
 				}
 				
@@ -395,7 +398,7 @@ enum
 				strcpy( out_pData->aGetTextField, [pText UTF8String]);
 
 				out_pData->customData.hiscore.score	= nameTextFieldParamNum;
-				out_pData->customData.hiscore.rank	= (char)getTextFieldParamNum;
+				out_pData->customData.hiscore.bounusMoney	= (SInt32)getTextFieldParamNum;
 
 				break;
 			}

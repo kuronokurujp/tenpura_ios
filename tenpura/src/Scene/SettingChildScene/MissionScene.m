@@ -26,7 +26,7 @@
 	DataMissionList*	pMissionInst	= [DataMissionList shared];
 	NSAssert(pMissionInst, @"ミッションリストデータがない");
 
-	data.viewMax	= pMissionInst.dataNum < 6 ? 6 : pMissionInst.dataNum;
+	data.viewMax	= pMissionInst.dataNum;
 
 	strcpy(data.aCellFileName, "missionTableCell.ccbi");
 

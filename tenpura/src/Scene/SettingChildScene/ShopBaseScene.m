@@ -129,21 +129,6 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 }
 
 /*
-	@brief	ゲーム内の金額購入画面
-*/
--(void)	pressBuyMoneyBtn
-{
-	CCScene*	storeScene	= [CCBReader sceneWithNodeGraphFromFile:@"store.ccbi"];
-
-	CCTransitionFade*	pTransFade	=
-	[CCTransitionFade transitionWithDuration:g_sceneChangeTime scene:storeScene withColor:ccBLACK];
-	
-	[[CCDirector sharedDirector] pushScene:pTransFade];
-
-	[[SoundManager shared] playSe:@"btnClick"];
-}
-
-/*
 	@brief	購入するか決定
 */
 -(void)	alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

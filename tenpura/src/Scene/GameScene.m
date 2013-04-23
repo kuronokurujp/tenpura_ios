@@ -225,8 +225,6 @@ enum
 					}
 				}
 			}
-			
-			m_timeVal	= [mp_settingItemList count] * s_baseTimeVal;
 		}
 		
 		CGSize size = [[CCDirector sharedDirector] winSize];
@@ -279,6 +277,9 @@ enum
 			[self addChild:pCCBReader];
 			mp_gameSceneData	= (GameSceneData*)pCCBReader;
 			
+			m_timeVal	= mp_gameSceneData.gameTime;
+			[mp_timerPut setString:[NSString stringWithFormat:@"%03ld", (SInt32)m_timeVal]];
+
 			//	オブジェクトの描画プライオリティ修正
 			{
 				[mp_nabe setZOrder:2.f];
