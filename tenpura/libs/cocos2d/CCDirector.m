@@ -418,6 +418,30 @@ static CCDirector *_sharedDirector = nil;
 	}
 }
 
+-(void) popSceneWithTransition:(Class)transitionClass duration:(ccTime)t
+{
+	NSAssert( _runningScene != nil, @"A running Scene is needed" );
+	
+	[_scenesStack removeLastObject];
+	NSUInteger	c	= [_scenesStack count];
+	
+	if( c == 0 )
+	{
+		[self end];
+	}
+	else
+	{
+		CCScene*	scene	= [transitionClass transitionWithDuration:t scene:
+		[_scenesStack objectAtIndex:c-1]];
+		
+		[_scenesStack replaceObjectAtIndex:c-1 withObject:scene];
+		_nextScene	= scene;
+		_sendCleanupToScene = YES;
+		_nextScene = [_scenesStack objectAtIndex:c-1];
+	}
+}
+
+
 -(void) popToRootScene
 {
 	NSAssert(_runningScene != nil, @"A running Scene is needed");

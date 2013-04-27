@@ -89,6 +89,10 @@
 		CE216D6D16B37AE9000E0E29 /* bomb.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE216D6B16B37AE9000E0E29 /* bomb.plist */; };
 		CE216D7616B37B8C000E0E29 /* AnimManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE216D7516B37B8C000E0E29 /* AnimManager.m */; };
 		CE216D7A16B37B9A000E0E29 /* AnimActionSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = CE216D7916B37B9A000E0E29 /* AnimActionSprite.m */; };
+		CE2DB178172B72B600E97D84 /* libNendAd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2DB175172B72B600E97D84 /* libNendAd.a */; settings = {ATTRIBUTES = (Weak, ); }; };
+		CE2DB179172B72B700E97D84 /* NADView_readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE2DB177172B72B600E97D84 /* NADView_readme.txt */; };
+		CE2DB17B172B731400E97D84 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2DB17A172B731400E97D84 /* Security.framework */; };
+		CE2DB185172B78CA00E97D84 /* AppBankEventBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2DB184172B78CA00E97D84 /* AppBankEventBanner.m */; };
 		CE2F301C16B8C7E40010610D /* GameInFeverMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2F301B16B8C7E40010610D /* GameInFeverMessage.m */; };
 		CE33C89516888852004782A4 /* help.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE33C89416888852004782A4 /* help.ccbi */; };
 		CE33C899168888BD004782A4 /* HelpScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CE33C898168888BD004782A4 /* HelpScene.m */; };
@@ -535,6 +539,18 @@
 		CE216D7516B37B8C000E0E29 /* AnimManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimManager.m; path = src/System/Anim/AnimManager.m; sourceTree = "<group>"; };
 		CE216D7816B37B9A000E0E29 /* AnimActionSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimActionSprite.h; path = src/System/Anim/Action/AnimActionSprite.h; sourceTree = "<group>"; };
 		CE216D7916B37B9A000E0E29 /* AnimActionSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimActionSprite.m; path = src/System/Anim/Action/AnimActionSprite.m; sourceTree = "<group>"; };
+		CE2DB175172B72B600E97D84 /* libNendAd.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libNendAd.a; sourceTree = "<group>"; };
+		CE2DB176172B72B600E97D84 /* NADView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NADView.h; sourceTree = "<group>"; };
+		CE2DB177172B72B600E97D84 /* NADView_readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NADView_readme.txt; sourceTree = "<group>"; };
+		CE2DB17A172B731400E97D84 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		CE2DB183172B78CA00E97D84 /* AppBankEventBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppBankEventBanner.h; sourceTree = "<group>"; };
+		CE2DB184172B78CA00E97D84 /* AppBankEventBanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppBankEventBanner.m; sourceTree = "<group>"; };
+		CE2DB1D8172B79CD00E97D84 /* GADCustomEventBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADCustomEventBanner.h; sourceTree = "<group>"; };
+		CE2DB1D9172B79CD00E97D84 /* GADCustomEventBannerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADCustomEventBannerDelegate.h; sourceTree = "<group>"; };
+		CE2DB1DA172B79CD00E97D84 /* GADCustomEventExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADCustomEventExtras.h; sourceTree = "<group>"; };
+		CE2DB1DB172B79CD00E97D84 /* GADCustomEventInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADCustomEventInterstitial.h; sourceTree = "<group>"; };
+		CE2DB1DC172B79CD00E97D84 /* GADCustomEventInterstitialDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADCustomEventInterstitialDelegate.h; sourceTree = "<group>"; };
+		CE2DB1DD172B79CD00E97D84 /* GADCustomEventRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADCustomEventRequest.h; sourceTree = "<group>"; };
 		CE2F301A16B8C7E30010610D /* GameInFeverMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameInFeverMessage.h; path = src/Object/GameInFeverMessage.h; sourceTree = "<group>"; };
 		CE2F301B16B8C7E40010610D /* GameInFeverMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameInFeverMessage.m; path = src/Object/GameInFeverMessage.m; sourceTree = "<group>"; };
 		CE33C89416888852004782A4 /* help.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = help.ccbi; path = Resources/ccbi/help.ccbi; sourceTree = "<group>"; };
@@ -1131,6 +1147,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE2DB17B172B731400E97D84 /* Security.framework in Frameworks */,
 				CEF39137163DEFD100EC8B75 /* SystemConfiguration.framework in Frameworks */,
 				CED245EF1639964D00506CA8 /* QuartzCore.framework in Frameworks */,
 				CEF7FA3216BFF8F600A69042 /* iAd.framework in Frameworks */,
@@ -1153,6 +1170,7 @@
 				CED245FD1639964D00506CA8 /* CoreGraphics.framework in Frameworks */,
 				CEDD4100165AA0540037F60B /* libGoogleAdMobAds.a in Frameworks */,
 				CE5183D616E04B61002E18AB /* libAdapterIAd.a in Frameworks */,
+				CE2DB178172B72B600E97D84 /* libNendAd.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1228,6 +1246,49 @@
 				CE538F4316DDD54600A45E0B /* AnimActionNumCounterLabelTTF.m */,
 			);
 			name = Action;
+			sourceTree = "<group>";
+		};
+		CE2DB174172B72B600E97D84 /* NendAd */ = {
+			isa = PBXGroup;
+			children = (
+				CE2DB175172B72B600E97D84 /* libNendAd.a */,
+				CE2DB176172B72B600E97D84 /* NADView.h */,
+				CE2DB177172B72B600E97D84 /* NADView_readme.txt */,
+			);
+			name = NendAd;
+			path = libs/NendAd;
+			sourceTree = "<group>";
+		};
+		CE2DB182172B78CA00E97D84 /* EventBanner */ = {
+			isa = PBXGroup;
+			children = (
+				CE2DB183172B78CA00E97D84 /* AppBankEventBanner.h */,
+				CE2DB184172B78CA00E97D84 /* AppBankEventBanner.m */,
+			);
+			name = EventBanner;
+			path = src/System/BannerView/EventBanner;
+			sourceTree = "<group>";
+		};
+		CE2DB186172B79CD00E97D84 /* Add-ons */ = {
+			isa = PBXGroup;
+			children = (
+				CE2DB1D7172B79CD00E97D84 /* Mediation */,
+			);
+			name = "Add-ons";
+			path = "src/Admob/Add-ons";
+			sourceTree = "<group>";
+		};
+		CE2DB1D7172B79CD00E97D84 /* Mediation */ = {
+			isa = PBXGroup;
+			children = (
+				CE2DB1D8172B79CD00E97D84 /* GADCustomEventBanner.h */,
+				CE2DB1D9172B79CD00E97D84 /* GADCustomEventBannerDelegate.h */,
+				CE2DB1DA172B79CD00E97D84 /* GADCustomEventExtras.h */,
+				CE2DB1DB172B79CD00E97D84 /* GADCustomEventInterstitial.h */,
+				CE2DB1DC172B79CD00E97D84 /* GADCustomEventInterstitialDelegate.h */,
+				CE2DB1DD172B79CD00E97D84 /* GADCustomEventRequest.h */,
+			);
+			path = Mediation;
 			sourceTree = "<group>";
 		};
 		CE412EB616DC4C860034A4BA /* abura */ = {
@@ -1410,6 +1471,7 @@
 		CED245DF1639964D00506CA8 = {
 			isa = PBXGroup;
 			children = (
+				CE2DB17A172B731400E97D84 /* Security.framework */,
 				CED246001639964D00506CA8 /* tenpura */,
 				CED245ED1639964D00506CA8 /* Frameworks */,
 				CED245EB1639964D00506CA8 /* Products */,
@@ -1492,6 +1554,7 @@
 		CED2461B1639964D00506CA8 /* libs */ = {
 			isa = PBXGroup;
 			children = (
+				CE2DB174172B72B600E97D84 /* NendAd */,
 				CEF24D8D163C132700ACE56F /* CCControlExtension */,
 				CEF24DAC163C132700ACE56F /* CCScrollView */,
 				CED247321639965100506CA8 /* LICENSE_cocos2d.txt */,
@@ -2188,6 +2251,7 @@
 		CEDD40F5165AA0450037F60B /* Admob */ = {
 			isa = PBXGroup;
 			children = (
+				CE2DB186172B79CD00E97D84 /* Add-ons */,
 				CEDD40F6165AA0540037F60B /* GADAdMobExtras.h */,
 				CEDD40F7165AA0540037F60B /* GADAdNetworkExtras.h */,
 				CEDD40F8165AA0540037F60B /* GADAdSize.h */,
@@ -2206,6 +2270,7 @@
 		CEDD4105165AA1650037F60B /* BannerView */ = {
 			isa = PBXGroup;
 			children = (
+				CE2DB182172B78CA00E97D84 /* EventBanner */,
 				CEDD4106165AA1760037F60B /* BannerViewController.h */,
 				CEDD4107165AA1760037F60B /* BannerViewController.m */,
 			);
@@ -2659,6 +2724,7 @@
 				CE152F981725810500D980A7 /* play_result.png in Resources */,
 				CE17B9121726E0090079409E /* btn_shop_adon.png in Resources */,
 				CE45C6601726E41F0020C976 /* game_result_data.ccbi in Resources */,
+				CE2DB179172B72B700E97D84 /* NADView_readme.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2865,6 +2931,7 @@
 				CEEB9BD71729945400A3E149 /* CCTransitionPageTurn.m in Sources */,
 				CEEB9BD81729945400A3E149 /* CCTransitionProgress.m in Sources */,
 				CEEB9BD91729945400A3E149 /* cocos2d.m in Sources */,
+				CE2DB185172B78CA00E97D84 /* AppBankEventBanner.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2955,6 +3022,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/tenpura/src/Admob\"",
+					"\"$(SRCROOT)/tenpura/libs/NendAd\"",
+					"\"$(SRCROOT)/tenpura/src/Admob/Add-ons/GoogleAnalyticsiOS_2.0beta4/Library\"",
 				);
 				OTHER_LDFLAGS = (
 					"-lz",
@@ -2983,6 +3052,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/tenpura/src/Admob\"",
+					"\"$(SRCROOT)/tenpura/libs/NendAd\"",
+					"\"$(SRCROOT)/tenpura/src/Admob/Add-ons/GoogleAnalyticsiOS_2.0beta4/Library\"",
 				);
 				OTHER_LDFLAGS = (
 					"-lz",
