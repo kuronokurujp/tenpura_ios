@@ -65,7 +65,7 @@ enum
 		[self addChild:mp_normalScene z:1 tag:eCHILD_TAG_SCENE_NORMAL];
 		[self addChild:mp_feverScene z:2 tag:eCHILD_TAG_SCENE_FEVER];
 		
-		self.isTouchEnabled	= false;
+		[self setTouchEnabled:false];
 	}
 	
 	return self;
@@ -202,11 +202,11 @@ enum
 -(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
 	CCNode*	pNode	= nil;
-	CCARRAY_FOREACH(children_, pNode)
+	CCARRAY_FOREACH(_children, pNode)
 	{
 		if( [pNode isKindOfClass:[CCLayer class]] )
 		{
-			if( mp_normalScene.isTouchEnabled == YES )
+			if( [mp_normalScene isTouchEnabled]== YES )
 			{
 				if( [mp_normalScene ccTouchBegan:touch withEvent:event] == YES )
 				{
@@ -224,11 +224,11 @@ enum
 -(void) ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
 {
 	CCNode*	pNode	= nil;
-	CCARRAY_FOREACH(children_, pNode)
+	CCARRAY_FOREACH(_children, pNode)
 	{
 		if( [pNode isKindOfClass:[CCLayer class]] )
 		{
-			if( mp_normalScene.isTouchEnabled == YES )
+			if( [mp_normalScene isTouchEnabled] == YES )
 			{
 				[mp_normalScene ccTouchMoved:touch withEvent:event];
 			}
@@ -242,11 +242,11 @@ enum
 -(void) ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
 {
 	CCNode*	pNode	= nil;
-	CCARRAY_FOREACH(children_, pNode)
+	CCARRAY_FOREACH(_children, pNode)
 	{
 		if( [pNode isKindOfClass:[CCLayer class]] )
 		{
-			if( mp_normalScene.isTouchEnabled == YES )
+			if( [mp_normalScene isTouchEnabled] == YES )
 			{
 				[mp_normalScene ccTouchEnded:touch withEvent:event];
 			}
@@ -260,11 +260,11 @@ enum
 -(void) ccTouchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
 {
 	CCNode*	pNode	= nil;
-	CCARRAY_FOREACH(children_, pNode)
+	CCARRAY_FOREACH(_children, pNode)
 	{
 		if( [pNode isKindOfClass:[CCLayer class]] )
 		{
-			if( mp_normalScene.isTouchEnabled == YES )
+			if( [mp_normalScene isTouchEnabled] == YES )
 			{
 				[mp_normalScene ccTouchCancelled:touch withEvent:event];
 			}
@@ -335,7 +335,7 @@ enum
 
 		[self addChild:pComboMessage z:10 tag:eNORMAL_SCENE_CHILD_TAG_COMBO_MESSAGE];
 		
-		self.isTouchEnabled	= YES;
+		[self setTouchEnabled:YES];
 		
 		//	おじゃま呼び出し
 		{
@@ -404,7 +404,7 @@ enum
 -(void)	pauseSchedulerAndActions
 {
 	[super pauseSchedulerAndActions];
-	self.isTouchEnabled	= NO;
+	[self setTouchEnabled:NO];
 	
 	[mp_gameScene pauseObject:YES];
 }
@@ -415,7 +415,7 @@ enum
 -(void)	resumeSchedulerAndActions
 {
 	[super resumeSchedulerAndActions];
-	self.isTouchEnabled	= YES;
+	[self setTouchEnabled:YES];
 	
 	[mp_gameScene pauseObject:NO];
 }
@@ -956,7 +956,7 @@ enum
 {
 	if( self = [super init] )
 	{
-		self.isTouchEnabled	= NO;
+		[self setTouchEnabled:NO];
 	}
 	
 	return self;

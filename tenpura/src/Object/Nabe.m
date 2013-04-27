@@ -98,7 +98,7 @@ enum
 
 	Tenpura*	pTenpura	= nil;
 	CCNode*		pNode		= nil;
-	CCARRAY_FOREACH(children_, pNode)
+	CCARRAY_FOREACH(_children, pNode)
 	{
 		if( [pNode isKindOfClass:[Tenpura class]] == YES )
 		{
@@ -131,7 +131,7 @@ enum
 	CCNode*		pNode		= nil;
 	SInt32		idx			= 0;
 	
-	CCARRAY_FOREACH(children_, pNode)
+	CCARRAY_FOREACH(_children, pNode)
 	{
 		if( [pNode isKindOfClass:[Tenpura class]] == YES )
 		{
@@ -166,7 +166,7 @@ enum
 
 	Tenpura*	pTenpura	= nil;
 	CCNode*		pNode		= nil;
-	CCARRAY_FOREACH(children_, pNode)
+	CCARRAY_FOREACH(_children, pNode)
 	{
 		if( [pNode isKindOfClass:[Tenpura class]] )
 		{
@@ -196,7 +196,7 @@ enum
 	if( [in_pTenpura isKindOfClass:[Tenpura class]] )
 	{
 		CCNode*	pNode	= nil;
-		CCARRAY_FOREACH(children_, pNode)
+		CCARRAY_FOREACH(_children, pNode)
 		{
 			if( ([pNode isKindOfClass:[AnimActionSprite class]] == YES) && (pNode.visible == NO) )
 			{
@@ -224,7 +224,7 @@ enum
 		[pEff setVisible:YES];
 		{
 			CGRect	imgRect	= [mp_sp textureRect];
-			CGPoint	pos	= ccp(position_.x + imgRect.size.width * 0.5f, position_.y + imgRect.size.height * 0.5f);
+			CGPoint	pos	= ccp(_position.x + imgRect.size.width * 0.5f, _position.y + imgRect.size.height * 0.5f);
 			[pEff setPosition:pos];
 		}
 		[pEff setZOrder:eZORDER_BIG_EXP];
@@ -262,7 +262,7 @@ enum
 -(void)	setEnableFever:(const BOOL)in_bFlg
 {
 	CCNode*	pNode	= nil;
-	CCARRAY_FOREACH(children_, pNode)
+	CCARRAY_FOREACH(_children, pNode)
 	{
 		Tenpura*	pTenpura	= nil;
 		if( [pNode isKindOfClass:[Tenpura class]] )
@@ -306,7 +306,7 @@ enum
 -(void)	pauseSchedulerAndActions
 {
 	CCNode*		pNode		= nil;
-	CCARRAY_FOREACH(children_, pNode)
+	CCARRAY_FOREACH(_children, pNode)
 	{
 		if( [pNode isKindOfClass:[Tenpura class]] == YES )
 		{
@@ -323,7 +323,7 @@ enum
 -(void)	resumeSchedulerAndActions
 {
 	CCNode*	pNode	= nil;
-	CCARRAY_FOREACH(children_, pNode)
+	CCARRAY_FOREACH(_children, pNode)
 	{
 		if( [pNode isKindOfClass:[Tenpura class]] == YES )
 		{

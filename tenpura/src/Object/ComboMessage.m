@@ -116,7 +116,7 @@ enum
 	[mp_number setPosition:ccp(numPosX, numPosY)];
 	
 	CCNode*	pNode	= nil;
-	CCARRAY_FOREACH(children_, pNode)
+	CCARRAY_FOREACH(_children, pNode)
 	{
 		if( [pNode isKindOfClass:[CCSprite class]] )
 		{

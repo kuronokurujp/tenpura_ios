@@ -20,7 +20,7 @@
 -(void)	didLoadFromCCB
 {
 	CCNode*	pNode	= nil;
-	CCARRAY_FOREACH(children_, pNode)
+	CCARRAY_FOREACH(_children, pNode)
 	{
 		if( [pNode isKindOfClass:[CCLabelTTF class]] )
 		{

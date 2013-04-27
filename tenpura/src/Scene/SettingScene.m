@@ -361,7 +361,7 @@
 - (void) didLoadFromCCB
 {
 	CCNode*	pNode	= nil;
-	CCARRAY_FOREACH(children_, pNode)
+	CCARRAY_FOREACH(_children, pNode)
 	{
 		//	セッティング項目をあらかじめ取得する
 		if( [pNode isKindOfClass:[CCMenu class]] )

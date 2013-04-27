@@ -1223,7 +1223,7 @@
     }
     
     // Use default lookup
-    return [bundle_ pathForResource:resource ofType:ext inDirectory:subpath];
+    return [_bundle pathForResource:resource ofType:ext inDirectory:subpath];
 }
 
 @end

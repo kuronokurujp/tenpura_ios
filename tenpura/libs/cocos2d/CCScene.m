@@ -28,7 +28,7 @@
 #import "CCScene.h"
 #import "Support/CGPointExtension.h"
 #import "CCDirector.h"
-#import "CCSprite.h"
+
 
 @implementation CCScene
 -(id) init
@@ -36,18 +36,8 @@
 	if( (self=[super init]) ) {
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		self.ignoreAnchorPointForPosition = YES;
-		anchorPoint_ = ccp(0.5f, 0.5f);
+		_anchorPoint = ccp(0.5f, 0.5f);
 		[self setContentSize:s];
-		
-		//	すべての画面に共通することなのでここで入れる
-		CGRect	screenBounds	= [[UIScreen mainScreen] bounds];
-		if( screenBounds.size.height == 568 )
-		{
-			CCSprite*	pFillter	= [CCSprite spriteWithFile:@"black.png"];
-			[pFillter setAnchorPoint:ccp(0,0)];
-			[pFillter setPosition:ccp(480, 0)];
-			[self addChild:pFillter z:30.f];
-		}
 	}
 
 	return self;

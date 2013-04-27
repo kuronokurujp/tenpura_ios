@@ -53,7 +53,7 @@
 	const SAVE_DATA_ST*	pSaveData	= [pDataSaveGame getData];
 
 	CCNode*	pNode	= nil;
-	CCARRAY_FOREACH(children_, pNode)
+	CCARRAY_FOREACH(_children, pNode)
 	{
 		if( [pNode isKindOfClass:[AnimActionNumCounterLabelTTF class]] )
 		{

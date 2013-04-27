@@ -229,7 +229,7 @@ static const _OJAMA_STATE_DATA_ST	s_ojamaStateDataList[]	=
 	[super pauseSchedulerAndActions];
 	
 	CCNode*	pNode	= nil;
-	CCARRAY_FOREACH(children_, pNode)
+	CCARRAY_FOREACH(_children, pNode)
 	{
 		[pNode pauseSchedulerAndActions];
 	}
@@ -243,7 +243,7 @@ static const _OJAMA_STATE_DATA_ST	s_ojamaStateDataList[]	=
 	[super resumeSchedulerAndActions];
 	
 	CCNode*	pNode	= nil;
-	CCARRAY_FOREACH(children_, pNode)
+	CCARRAY_FOREACH(_children, pNode)
 	{
 		[pNode resumeSchedulerAndActions];
 	}

@@ -406,7 +406,7 @@ enum
 	[super pauseSchedulerAndActions];
 	
 	CCNode*	pNode	= nil;
-	CCARRAY_FOREACH(children_, pNode)
+	CCARRAY_FOREACH(_children, pNode)
 	{
 		[pNode pauseSchedulerAndActions];
 	}
@@ -420,7 +420,7 @@ enum
 	[super resumeSchedulerAndActions];
 	
 	CCNode*	pNode	= nil;
-	CCARRAY_FOREACH(children_, pNode)
+	CCARRAY_FOREACH(_children, pNode)
 	{
 		[pNode resumeSchedulerAndActions];
 	}

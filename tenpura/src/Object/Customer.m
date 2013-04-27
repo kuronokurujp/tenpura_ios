@@ -218,7 +218,7 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 -(BOOL)isEatTenpura:(SInt32)in_no
 {
 	CCNode*	pNode	= nil;
-	CCARRAY_FOREACH(children_, pNode)
+	CCARRAY_FOREACH(_children, pNode)
 	{
 		if( [pNode isKindOfClass:[TenpuraIcon class]] )
 		{
@@ -241,7 +241,7 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 {
 	UInt32	cnt	= 0;
 	CCNode*	pNode	= nil;
-	CCARRAY_FOREACH(children_, pNode)
+	CCARRAY_FOREACH(_children, pNode)
 	{
 		if( [pNode isKindOfClass:[TenpuraIcon class]] )
 		{
@@ -270,7 +270,7 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 {
 	CCNode*	pNode	= nil;
 
-	CCARRAY_FOREACH(children_, pNode)
+	CCARRAY_FOREACH(_children, pNode)
 	{
 		if( [pNode isKindOfClass:[TenpuraIcon class]] )
 		{
@@ -287,7 +287,7 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 	CCArray*	pRemoveNodeArray	= [CCArray array];
 	
 	CCNode*	pNode	= nil;
-	CCARRAY_FOREACH(children_, pNode)
+	CCARRAY_FOREACH(_children, pNode)
 	{
 		if( [pNode isKindOfClass:[TenpuraIcon class]] )
 		{
@@ -311,7 +311,7 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 {
 	TenpuraIcon*	pRemoveIcon	= nil;
 	CCNode*	pNode	= nil;
-	CCARRAY_FOREACH(children_, pNode)
+	CCARRAY_FOREACH(_children, pNode)
 	{
 		if( [pNode isKindOfClass:[TenpuraIcon class]] )
 		{
@@ -339,7 +339,7 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 {
 	SInt32	cnt	= 0;
 	CCNode*	pNode	= nil;
-	CCARRAY_FOREACH(children_, pNode)
+	CCARRAY_FOREACH(_children, pNode)
 	{
 		if( [pNode isKindOfClass:[TenpuraIcon class]] )
 		{
@@ -390,7 +390,7 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 -(void)	pauseSchedulerAndActions
 {
 	CCNode*	pNode	= nil;
-	CCARRAY_FOREACH(children_, pNode)
+	CCARRAY_FOREACH(_children, pNode)
 	{
 		[pNode pauseSchedulerAndActions];
 	}
@@ -404,7 +404,7 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 -(void)	resumeSchedulerAndActions
 {
 	CCNode*	pNode	= nil;
-	CCARRAY_FOREACH(children_, pNode)
+	CCARRAY_FOREACH(_children, pNode)
 	{
 		[pNode resumeSchedulerAndActions];
 	}

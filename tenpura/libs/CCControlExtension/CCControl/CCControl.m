@@ -135,7 +135,7 @@
     {
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		// Enabled the touch event
-        self.isTouchEnabled         = YES;
+        [self setTouchEnabled:YES];
 #elif __MAC_OS_X_VERSION_MAX_ALLOWED
         // Enabled the mouse event
 		self.mouseEnabled         = YES;
