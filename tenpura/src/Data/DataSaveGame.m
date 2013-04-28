@@ -133,7 +133,7 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 -(const SAVE_DATA_ITEM_ST*)getNetaPackOfIndex:(UInt32)in_idx
 {
 	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
-	if( pData != nil )
+	if( (pData != nil) && (in_idx < pData->netaNum) )
 	{
 		if( 0 < pData->aNetaPacks[in_idx].num )
 		{
@@ -162,7 +162,7 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 -(const SAVE_DATA_ITEM_ST*)getItemOfIndex:(UInt32)in_idx
 {
 	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
-	if( pData != nil )
+	if( (pData != nil) && (in_idx < pData->itemNum) )
 	{
 		if( 0 < pData->aItems[in_idx].num )
 		{

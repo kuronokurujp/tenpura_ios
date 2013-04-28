@@ -30,6 +30,9 @@
 
 //	関数定義
 
+//	鍋画像設定(アイテム設定で鍋を変更することがある)
+-(void)	setNabeImageFileName:(NSString*)in_pNabeFileName;
+
 //	天ぷら追加
 -(Tenpura*)	addTenpura:(const NETA_DATA_ST*)in_pData;
 //	追加天ぷらすべて削除

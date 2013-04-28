@@ -144,6 +144,10 @@ static DataItemList*	s_pInst	= nil;
 	memcpy( data.fileName, pStr, [[in_dataArray objectAtIndex:dataIdx] length]);
 	++dataIdx;
 	
+	//	画像イメージタイプ
+	data.imageType	= [(NSNumber*)[in_dataArray objectAtIndex:dataIdx] integerValue];
+	++dataIdx;
+	
 	return data;
 }
 

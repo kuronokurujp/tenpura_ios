@@ -137,6 +137,7 @@ enum
 		Float32	raiseTimeRate	= 1.f;
 		
 		//	オプションアイテムによる追加設定
+		NSString*	pNabeImageFileName	= nil;
 		{
 			DataItemList*	pItemListInst	= [DataItemList shared];
 			CCNode*	pNode	= nil;
@@ -149,6 +150,11 @@ enum
 					const ITEM_DATA_ST*	pItem	= [pItemListInst getDataSearchId:[pNumber intValue]];
 					if( pItem != nil )
 					{
+						if( pItem->imageType == eITEM_IMG_TYPE_NABE )
+						{
+							pNabeImageFileName	= [NSString stringWithUTF8String:pItem->fileName];
+						}
+						
 						SInt32	num	= sizeof(pItem->aItemDataNo) / sizeof(pItem->aItemDataNo[0]);
 						for( SInt32 i = 0; i < num; ++i )
 						{
@@ -294,6 +300,12 @@ enum
 				[mp_feverMessage setZOrder:19.f];
 				[mp_feverEvent setZOrder:20.f];
 			}
+			
+			//	鍋アイテムがあれば鍋画像を変更する
+			if( [pNabeImageFileName isEqualToString:@""] == NO )
+			{
+				[mp_nabe setNabeImageFileName:pNabeImageFileName];
+			}			
 		}
 
 		//	客

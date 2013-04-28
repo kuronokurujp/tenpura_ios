@@ -52,8 +52,7 @@ enum
 		mb_fever	= NO;
 		m_flyTimeRate	= 1.f;
 		m_setFlyTimeRate	= 1.f;
-		mp_sp	= [CCSprite node];
-		[mp_sp initWithFile:@"nabe0.png"];
+		mp_sp	= [CCSprite spriteWithFile:@"nabe0.png"];
 		[mp_sp setAnchorPoint:ccp(0,0)];
 		
 		[self addChild:mp_sp];
@@ -116,6 +115,27 @@ enum
 			}
 		}
 	}
+}
+
+/*
+	@brief	鍋画像設定(アイテム設定で鍋を変更することがある)
+*/
+-(void)	setNabeImageFileName:(NSString*)in_pNabeFileName
+{
+	if( in_pNabeFileName == nil )
+	{
+		return;
+	}
+
+	if( mp_sp != nil )
+	{
+		[self removeChild:mp_sp cleanup:YES];
+	}
+	
+	mp_sp	= [CCSprite spriteWithFile:in_pNabeFileName];
+	[mp_sp setAnchorPoint:ccp(0,0)];
+		
+	[self addChild:mp_sp];
 }
 
 /*

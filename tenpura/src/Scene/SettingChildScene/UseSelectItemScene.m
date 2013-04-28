@@ -166,6 +166,24 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 	}
 
 	UInt32	useNum	= 0;
+	const ITEM_DATA_ST*	pItemData	= [[DataItemList shared] getDataSearchId:pItem->no];
+
+	SettingItemBtn*	pItemBtn	= nil;
+	CCARRAY_FOREACH(mp_useItemNoList, pItemBtn)
+	{
+		if( pItemBtn.type != eITEM_TYPE_OPTION )
+		{
+			continue;
+		}
+
+		if( pItemBtn.itemNo == pItemData->no )
+		{
+			//	使用中
+			++useNum;
+		}
+	}
+	
+	//	現在選択中のボタンで設定されている物と同じなら設定個数を一つ外す
 	if( mp_settingItemBtn.itemNo == pItem->no )
 	{
 		--useNum;

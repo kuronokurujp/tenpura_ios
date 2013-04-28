@@ -108,11 +108,19 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 */
 -(SWTableViewCell*)	table:(SWTableView *)table cellAtIndex:(NSUInteger)idx
 {
-	const NETA_PACK_DATA_ST*	pData	= [[DataNetaPackList shared] getData:idx];
 	SWTableViewCell*	pCell	= [super table:table cellAtIndex:idx];
 	SiireTableCell*	pItemCell	= (SiireTableCell*)[pCell getChildByTag:eSW_TABLE_TAG_CELL_LAYOUT];
 	NSAssert(pItemCell, @"");
+	
+	[pItemCell setColor:ccGRAY];
 
+	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] getNetaPackOfIndex:idx];
+	if( pItem == nil )
+	{
+		return pCell;
+	}
+
+	const NETA_PACK_DATA_ST*	pData	= [[DataNetaPackList shared] getData:pItem->no];
 	if( pData == NULL )
 	{
 		return pCell;
@@ -122,19 +130,11 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 	
 	//	すでに使用設定中か
 	const UInt32 NotUsenetaNum	= [self getNotUsenetaNum:idx];
-	if( NotUsenetaNum <= 0 )
-	{
-		//	使用中はセルの色を変える
-		[pItemCell setColor:ccGRAY];
-	}
-	else
+	if( 0 < NotUsenetaNum )
 	{
 		[pItemCell setColor:ccWHITE];
 	}
 
-	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] getNetaPackOfIndex:idx];
-	if( pItem != nil )
-	
 	//	天ぷらアイコン/ネタ名表示
 	{
 		int	num	= sizeof(pData->aNetaId) / sizeof(pData->aNetaId[0]);
@@ -159,21 +159,19 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 				[pName setVisible:NO];
 			}
 		}
-	}
-
-	{
-	//	アイテム名表示
-	{
-		NSString*	pTenpuraName	= [NSString stringWithUTF8String:[pDataBaseTextShared getText:pData->textID]];
-		[pItemCell.pNameLabel setString:pTenpuraName];
-	}
+		
+		//	アイテム名表示
+		{
+			NSString*	pTenpuraName	= [NSString stringWithUTF8String:[pDataBaseTextShared getText:pData->textID]];
+			[pItemCell.pNameLabel setString:pTenpuraName];
+		}
 	
-	//	購入金額表示
-	{
-		NSString*	pTitleName		= [NSString stringWithUTF8String:[pDataBaseTextShared getText:58]];
-		NSString*	pStr	= [NSString stringWithFormat:@"%@:%ld", pTitleName, pData->money];
-		[pItemCell.pMoneyLabel setString:pStr];
-	}
+		//	購入金額表示
+		{
+			NSString*	pTitleName		= [NSString stringWithUTF8String:[pDataBaseTextShared getText:58]];
+			NSString*	pStr	= [NSString stringWithFormat:@"%@:%ld", pTitleName, pData->money];
+			[pItemCell.pMoneyLabel setString:pStr];
+		}
 	}
 
 	return pCell;

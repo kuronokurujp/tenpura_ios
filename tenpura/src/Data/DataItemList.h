@@ -21,7 +21,14 @@ enum
 	eITEM_IMPACT_EAT_TIME_THREE_FOUR,	//	食べる時間が3/4
 };
 
-//	ネタデータ
+//	アイテム画像の種類一覧
+enum
+{
+	eITEM_IMG_TYPE_NONE	= 0,
+	eITEM_IMG_TYPE_NABE,
+};
+
+//	アイテムデータ
 typedef struct
 {
 	SInt32		no;
@@ -30,6 +37,7 @@ typedef struct
 	SInt32		sellMoney;
 	UInt32		aItemDataNo[2];
 	char		fileName[128];
+	SInt32		imageType;
 } ITEM_DATA_ST;
 
 @interface DataItemList : NSObject
