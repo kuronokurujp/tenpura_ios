@@ -246,17 +246,17 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 }
 
 /*
-	@brief	スコア追加
-	@param	in_score	: 加算するスコア数
+	@brief	スコア設定
+	@param	in_score	: スコア数
 */
--(void)	addSaveScore:(int64_t)in_score
+-(void)	setSaveScore:(int64_t)in_score
 {
 	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
 	NSAssert( pData, @"セーブデータ取得失敗" );
 
 	if( pData != nil )
 	{
-		pData->score	+= in_score;
+		pData->score	= in_score;
 		[mp_SaveData save];
 	}
 }

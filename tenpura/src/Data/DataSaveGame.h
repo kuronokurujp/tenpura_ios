@@ -87,8 +87,8 @@ typedef struct
 -(BOOL)addItem:(UInt32)in_no;
 //	金額加算
 -(void)	addSaveMoeny:(long)in_addMoney;
-//	スコア追加
--(void)	addSaveScore:(int64_t)in_score;
+//	スコア設定
+-(void)	setSaveScore:(int64_t)in_score;
 
 //	現在時刻を記録
 -(BOOL)	saveDate;

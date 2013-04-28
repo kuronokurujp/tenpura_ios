@@ -50,10 +50,12 @@
 	{
 		[self schedule:@selector(_begin:)];
 		m_resultType	= eRESULT_TYPE_NONE;
+		mb_hiscore	= NO;
 		
 		mp_endLogoSp	= [CCSprite spriteWithFile:@"play_end.png"];
 		[mp_endLogoSp setVisible:NO];
-		[self addChild:mp_endLogoSp];		
+		[self addChild:mp_endLogoSp];
+		
 	}
 	
 	return	self;
@@ -66,6 +68,22 @@
 {
 	GameScene*	pGameScene	= (GameScene*)[self parent];
 	
+	//	スコアと金額をセーブに
+	{
+		DataSaveGame*	pDataSaveGame	= [DataSaveGame shared];
+		const SAVE_DATA_ST*	pSaveData	= [pDataSaveGame getData];
+	
+		int64_t	score	= [pGameScene getScore];
+		mb_hiscore	= ( pSaveData->score < score );
+		if( mb_hiscore == YES )
+		{
+			[pDataSaveGame setSaveScore:score];
+		}
+	
+		int64_t	money	= [pGameScene getMoney];
+		[pDataSaveGame addSaveMoeny:money];
+	}
+
 	//	天ぷらを消滅
 	[pGameScene->mp_nabe allCleanTenpura];
 	
@@ -203,21 +221,6 @@
 */
 -(void)	_end:(ccTime)in_time
 {
-	GameScene*	pGameScene	= (GameScene*)[self parent];
-
-	DataSaveGame*	pDataSaveGame	= [DataSaveGame shared];
-	const SAVE_DATA_ST*	pSaveData	= [pDataSaveGame getData];
-	
-	//	ハイスコアであれば記録
-	int64_t	score	= [pGameScene getScore];
-	if( pSaveData->score < score )
-	{
-		[pDataSaveGame addSaveScore:score];
-	}
-	
-	int64_t	money	= [pGameScene getMoney];
-	[pDataSaveGame addSaveMoeny:money];
-
 	[self setVisible:NO];
 }
 
@@ -227,21 +230,22 @@
 -(void)	_createMenu
 {
 	CGSize	winSize	= [[CCDirector sharedDirector] winSize];
-	
-	GameScene*	pGameScene	= (GameScene*)[self parent];
-	DataSaveGame*	pDataSaveGame	= [DataSaveGame shared];
-	const SAVE_DATA_ST*	pSaveData	= [pDataSaveGame getData];
-	
+		
 	//	ハイスコアであれば記録
-	int64_t	score	= [pGameScene getScore];
 	NSString*	pResultCcbiFileName	= @"game_result.ccbi";
-	if( pSaveData->score < score )
+	if( mb_hiscore )
 	{
 		pResultCcbiFileName	= @"game_result_hiscore.ccbi";
 	}
 
 	CCNode*	pNode	= [CCBReader nodeGraphFromFile:pResultCcbiFileName owner:self parentSize:winSize];
 	[self addChild:pNode];
+	
+	CCNode*	pReaderNode	= nil;
+	CCARRAY_FOREACH(pNode.children, pReaderNode)
+	{
+		[self _setResultLabel:pReaderNode];
+	}
 }
 
 /*
@@ -288,6 +292,48 @@
 	m_resultType	= eRESULT_TYPE_SINAGAKI;
 	
 	[[SoundManager shared] playSe:@"btnClick"];
+}
+
+/*
+	@brief
+*/
+-(void)	_setResultLabel:(CCNode*)in_pNode
+{
+	GameScene*	pGameScene	= (GameScene*)[self parent];
+	DataSaveGame*	pDataSaveGame	= [DataSaveGame shared];
+	const SAVE_DATA_ST*	pSaveData	= [pDataSaveGame getData];
+
+	if( [in_pNode isKindOfClass:[CCNode class]] )
+	{
+		CCNode*	pChildReaderNode	= nil;
+		CCARRAY_FOREACH(in_pNode.children, pChildReaderNode)
+		{
+			if( [pChildReaderNode isKindOfClass:[CCLabelTTF class]] )
+			{
+				CCLabelTTF*	pLabel	= (CCLabelTTF*)pChildReaderNode;
+				if( [pLabel.string isEqualToString:@"score"] )
+				{
+					pLabel.string	= [NSString stringWithFormat:@"%lld", [pGameScene getScore]];
+				}
+				else if ( [pLabel.string isEqualToString:@"hiscore"] )
+				{
+					pLabel.string	= [NSString stringWithFormat:@"%lld", pSaveData->score];
+				}
+				else if( [pLabel.string isEqualToString:@"money"] )
+				{
+					pLabel.string	= [NSString stringWithFormat:@"%lld", [pGameScene getMoney]];
+				}
+				else if( [pLabel.string isEqualToString:@"allmoney"] )
+				{
+					pLabel.string	= [NSString stringWithFormat:@"%ld", pSaveData->money];
+				}
+			}
+			else if( [pChildReaderNode isKindOfClass:[CCNode class]] )
+			{
+				[self _setResultLabel:pChildReaderNode];
+			}
+		}
+	}
 }
 
 @end

@@ -480,7 +480,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn/btn_back.png</string>
+							<string>btn/btn_left.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -503,7 +503,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn/btn_back.png</string>
+							<string>btn/btn_left.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -578,7 +578,7 @@
 						<string>ScaleLock</string>
 						<key>value</key>
 						<array>
-							<real>-1</real>
+							<real>1</real>
 							<real>1</real>
 							<false/>
 							<integer>0</integer>
@@ -678,7 +678,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn/btn_left.png</string>
+							<string>btn/btn_rigth.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -701,7 +701,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn/btn_back.png</string>
+							<string>btn/btn_rigth.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -724,7 +724,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn/btn_back.png</string>
+							<string>btn/btn_rigth.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -740,6 +740,8 @@
 						</array>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>

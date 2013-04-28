@@ -21,6 +21,7 @@ typedef enum
 @private
 	ResultTypeEnum	m_resultType;
 	CCSprite*		mp_endLogoSp;
+	BOOL			mb_hiscore;
 }
 
 @property (nonatomic, readonly)ResultTypeEnum resultType;
