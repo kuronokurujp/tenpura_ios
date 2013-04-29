@@ -120,7 +120,7 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 		return pCell;
 	}
 
-	const NETA_PACK_DATA_ST*	pData	= [[DataNetaPackList shared] getData:pItem->no];
+	const NETA_PACK_DATA_ST*	pData	= [[DataNetaPackList shared] getDataSearchId:pItem->no];
 	if( pData == NULL )
 	{
 		return pCell;
