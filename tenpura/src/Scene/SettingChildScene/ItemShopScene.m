@@ -60,7 +60,8 @@
 	
 	//	効果内容表示
 	{
-		[pItemCell.pDataLabel setString:[DataBaseText getString:pData->contentTextID]];
+		NSString*	pFormat	= [DataBaseText getString:pData->contentTextID];
+		[pItemCell.pDataLabel setString:[NSString stringWithFormat:pFormat, pData->value]];
 	}
 	
 	//	購入金額表示

@@ -992,7 +992,7 @@ enum
 {
 	if( mp_gameScene->mp_feverEvent.visible == NO )
 	{
-		Float32	feverTime	= 5.f;
+		Float32	feverTime	= mp_gameScene->m_feverTime;
 		
 		[self unschedule:_cmd];
 

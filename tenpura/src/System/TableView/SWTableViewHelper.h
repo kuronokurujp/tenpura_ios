@@ -37,7 +37,7 @@ typedef struct
 		eSW_TABLE_TAG_CELL_MAX,
 	};
 
-@private
+@protected
 	//	変数定義
 	SWTableView*	mp_table;
 	SW_INIT_DATA_ST	m_data;
@@ -48,8 +48,12 @@ typedef struct
 @property	(nonatomic, retain)NSString*	textFontName;
 
 //	関数
-//	初期化
+//	初期化(初期化の段階でリストデータが分からない場合に呼ぶ)
+-(id)	initWithFree;
+//	初期化（初期化の段階でリストデータが分かる場合に呼ぶ）
 -(id)	initWithData:(SW_INIT_DATA_ST*)in_pData;
+//	セットアップ（初期化処理以外で画面セットアップを呼ぶ場合に必要）
+-(void)	setup:(SW_INIT_DATA_ST*)in_pData;
 //	ビュー再更新
 -(void)	reloadUpdate;
 //	セル項目をタッチアクション実行

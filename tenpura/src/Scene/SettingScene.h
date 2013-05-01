@@ -50,6 +50,8 @@
 
 @property	(nonatomic, readonly)UInt32 itemNo;
 @property	(nonatomic, readonly)SInt32	type;
+@property	(nonatomic, readonly)SInt32	itemSelectType;
+@property	(nonatomic, readonly)SInt32	itemSelectType2;
 
 -(void)settingItem:(SInt32)in_type :(SInt32)in_textId :(SInt32)in_no;
 

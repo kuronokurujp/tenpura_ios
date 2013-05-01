@@ -130,14 +130,12 @@ static DataItemList*	s_pInst	= nil;
 	++dataIdx;
 	
 	//	アイテム効果ID
-	{
-		SInt32	num	= sizeof(data.aItemDataNo) / sizeof(data.aItemDataNo[0]);
-		for( SInt32 i = 0; i < num; ++i )
-		{
-			data.aItemDataNo[i]	= [(NSNumber*)[in_dataArray objectAtIndex:dataIdx] integerValue];
-			++dataIdx;
-		}
-	}
+	data.itemType	= [(NSNumber*)[in_dataArray objectAtIndex:dataIdx] integerValue];
+	++dataIdx;
+
+	//	アイテム効果値
+	data.value	= [(NSNumber*)[in_dataArray objectAtIndex:dataIdx] doubleValue];
+	++dataIdx;
 
 	//	データファイル名
 	const char*	pStr	= [[in_dataArray objectAtIndex:dataIdx] UTF8String];

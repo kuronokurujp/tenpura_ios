@@ -45,6 +45,7 @@
 @property	(nonatomic, readonly)Float32	customerMoneyPutTime;
 @property	(nonatomic, readonly)Float32	combMessageTime;
 @property	(nonatomic, readonly)Float32	gameTime;
+@property	(nonatomic, readonly)Float32	feverTime;
 
 @end
 
@@ -58,8 +59,10 @@
 	CCLabelTTF*	mp_timerPut;
 	AnimActionNumCounterLabelTTF*	mp_scorePut;
 	Float32	m_timeVal;
+	Float32	m_feverTime;
 	Float32	m_combAddTime;
-	UInt32	m_scoreRate;
+	Float32	m_gameEndScoreRate;
+	Float32	m_scoreRate;
 	UInt32	m_moneyRate;
 
 	CCArray*	mp_settingItemList;

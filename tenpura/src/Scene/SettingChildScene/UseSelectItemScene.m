@@ -34,20 +34,11 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 */
 -(id)	init
 {
-	SW_INIT_DATA_ST	data	= { 0 };
-
-	const SAVE_DATA_ST*	pData	= [[DataSaveGame shared] getData];
-	data.viewMax	= pData->itemNum > s_netaTableViewCellMax ? pData->itemNum : s_netaTableViewCellMax;
-
-	strcpy(data.aCellFileName, "useSelectItemTableCell.ccbi");
-
-	data.viewPos	= ccp( TABLE_POS_X, TABLE_POS_Y );
-	data.viewSize	= CGSizeMake(TABLE_SIZE_WIDTH, TABLE_SIZE_HEIGHT );
-
-	if( self = [super initWithData:&data] )
+	if( self = [super initWithFree] )
 	{
 		mp_settingItemBtn	= nil;
 		mp_useItemNoList	= nil;
+		mp_selectItemNoList	= nil;
 	}
 	
 	return self;
@@ -58,6 +49,12 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 */
 -(void)	dealloc
 {
+	if( mp_selectItemNoList != nil )
+	{
+		[mp_selectItemNoList release];
+	}
+	
+	mp_selectItemNoList	= nil;
 	mp_settingItemBtn	= nil;
 	mp_useItemNoList	= nil;
 
@@ -68,7 +65,7 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 	@brief	初期化後に行う必須設定
 	@note	更新前にしないとハングする。
 */
--(void)	setup:(SettingItemBtn*)in_pItemBtn :(CCArray*)in_pUseItemNoList
+-(void)	setup:(SettingItemBtn*)in_pItemBtn :(CCArray*)in_pUseItemNoList :(CCArray*)in_pSelectTypeList
 {
 	NSAssert(in_pItemBtn, @"アイテム設定項目がnil");
 	NSAssert(in_pUseItemNoList, @"設定中のアイテムリストがnil");
@@ -76,6 +73,47 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 	mp_settingItemBtn	= in_pItemBtn;
 	mp_useItemNoList	= in_pUseItemNoList;
 
+	SInt32	listNum	= 0;
+	
+	if( (in_pSelectTypeList != nil) && (0 < [in_pSelectTypeList count]) )
+	{
+		//	選択するリスト作成
+		mp_selectItemNoList	= [[CCArray alloc] init];
+		
+		const SAVE_DATA_ST*	pSaveData	= [[DataSaveGame shared] getData];
+		for( NSUInteger i = 0; i < pSaveData->itemNum; ++i )
+		{
+			const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] getItemOfIndex:i];
+			if( pItem != nil )
+			{
+				const ITEM_DATA_ST*	pItemData	= [[DataItemList shared] getDataSearchId:pItem->no];
+				NSAssert(pItemData, @"");
+				
+				NSNumber*	pNumObj	= nil;
+				CCARRAY_FOREACH(in_pSelectTypeList, pNumObj)
+				{
+					if( pItemData->itemType == [pNumObj intValue] )
+					{
+						[mp_selectItemNoList addObject:[NSNumber numberWithUnsignedInteger:i]];
+					}
+				}
+			}
+		}
+
+		listNum	= [mp_selectItemNoList count];
+	}
+	
+	SW_INIT_DATA_ST	data	= { 0 };
+
+	data.viewMax	= listNum > s_netaTableViewCellMax ? listNum : s_netaTableViewCellMax;
+
+	strcpy(data.aCellFileName, "useSelectItemTableCell.ccbi");
+
+	data.viewPos	= ccp( TABLE_POS_X, TABLE_POS_Y );
+	data.viewSize	= CGSizeMake(TABLE_SIZE_WIDTH, TABLE_SIZE_HEIGHT );
+
+	[super setup:&data];
+	
 	[self reloadUpdate];
 }
 
@@ -88,18 +126,26 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 	[super table:table cellTouched:cell];
 	
 	UInt32	idx	= [cell objectID];
-	const UInt32 NotUsenetaNum	= [self getNotUsenetaNum:idx];
-	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] getItemOfIndex:idx];
-	if( (pItem != nil) && (0 < NotUsenetaNum) )
+	
+	SInt32	itemListIdx	= -1;
+	if( idx < [mp_selectItemNoList count] )
 	{
-		[self actionCellTouch:cell];
-
-		const ITEM_DATA_ST*	pItemData	= [[DataItemList shared] getDataSearchId:pItem->no];
-		[mp_settingItemBtn settingItem:eITEM_TYPE_OPTION:pItemData->textID:pItemData->no];
-
-		[[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:g_sceneChangeTime];
+		NSNumber*	pNumObj	= [mp_selectItemNoList objectAtIndex:idx];
+		itemListIdx	= [pNumObj intValue];
 		
-		[[SoundManager shared] playSe:@"btnClick"];
+		const UInt32 NotUsenetaNum	= [self getNotUsenetaNum:itemListIdx];
+		const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] getItemOfIndex:itemListIdx];
+		if( (pItem != nil) && (0 < NotUsenetaNum) )
+		{
+			[self actionCellTouch:cell];
+
+			const ITEM_DATA_ST*	pItemData	= [[DataItemList shared] getDataSearchId:pItem->no];
+			[mp_settingItemBtn settingItem:eITEM_TYPE_OPTION:pItemData->textID:pItemData->no];
+
+			[[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:g_sceneChangeTime];
+		
+			[[SoundManager shared] playSe:@"btnClick"];
+		}
 	}
 }
 
@@ -112,8 +158,15 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 	UseSelectItemTableCell*	pItemCell	= (UseSelectItemTableCell*)[pCell getChildByTag:eSW_TABLE_TAG_CELL_LAYOUT];
 	NSAssert(pItemCell, @"");
 
+	SInt32	itemListIdx	= -1;
+	if( idx < [mp_selectItemNoList count] )
+	{	
+		NSNumber*	pNumObj	= [mp_selectItemNoList objectAtIndex:idx];
+		itemListIdx	= [pNumObj intValue];
+	}
+
 	//	すでに使用設定中か
-	const UInt32 NotUsenetaNum	= [self getNotUsenetaNum:idx];
+	const UInt32 NotUsenetaNum	= [self getNotUsenetaNum:itemListIdx];
 	if( NotUsenetaNum <= 0 )
 	{
 		//	使用中はセルの色を変える
@@ -124,7 +177,7 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 		[pItemCell setColor:ccWHITE];
 	}
 
-	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] getItemOfIndex:idx];
+	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] getItemOfIndex:itemListIdx];
 	if( pItem != nil )
 	{
 		const ITEM_DATA_ST*	pItemData	= [[DataItemList shared] getDataSearchId:pItem->no];
@@ -139,10 +192,8 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 		
 		//	効果内容
 		{
-			NSString*	pStr	= [NSString stringWithUTF8String:[[DataBaseText shared] getText:pItemData->contentTextID]];
-
-			CCLabelTTF*	pLabel	= pItemCell.pDataLabel;
-			[pLabel setString:pStr];
+			NSString*	pFormat	= [DataBaseText getString:pItemData->contentTextID];
+			[pItemCell.pDataLabel setString:[NSString stringWithFormat:pFormat, pItemData->value]];	
 		}
 	}
 

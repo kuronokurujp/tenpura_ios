@@ -295,7 +295,11 @@
 			[pSettingUseItemBtn runAction:pActBlink];
 		}
 
-		[pUseSelectItemScene setup:pSettingUseItemBtn:mp_useItemNoList];
+		CCArray*	pItemSelectTypeList	= [CCArray array];
+		[pItemSelectTypeList addObject:[NSNumber numberWithUnsignedInt:pSettingUseItemBtn.itemSelectType]];
+		[pItemSelectTypeList addObject:[NSNumber numberWithUnsignedInt:pSettingUseItemBtn.itemSelectType2]];
+
+		[pUseSelectItemScene setup:pSettingUseItemBtn:mp_useItemNoList:pItemSelectTypeList];
 	}
 
 	CCScene* scene = [CCScene node];
@@ -433,8 +437,8 @@
 */
 @implementation SettingItemBtn
 
-@synthesize itemNo	= m_itemNo;
 @synthesize type	= m_type;
+@synthesize itemNo	= m_itemNo;
 
 /*
 	@brief

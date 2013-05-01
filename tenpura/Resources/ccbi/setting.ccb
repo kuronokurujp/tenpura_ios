@@ -855,6 +855,29 @@
 						<array/>
 						<key>customClass</key>
 						<string>SettingItemBtn</string>
+						<key>customProperties</key>
+						<array>
+							<dict>
+								<key>name</key>
+								<string>itemSelectType</string>
+								<key>optimized</key>
+								<false/>
+								<key>type</key>
+								<integer>0</integer>
+								<key>value</key>
+								<string>1</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>itemSelectType2</string>
+								<key>optimized</key>
+								<false/>
+								<key>type</key>
+								<integer>0</integer>
+								<key>value</key>
+								<string>0</string>
+							</dict>
+						</array>
 						<key>displayName</key>
 						<string>SettingItemBtn</string>
 						<key>memberVarAssignmentName</key>
@@ -871,7 +894,7 @@
 								<key>value</key>
 								<array>
 									<real>355</real>
-									<real>229</real>
+									<real>228</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -968,6 +991,29 @@
 						<array/>
 						<key>customClass</key>
 						<string>SettingItemBtn</string>
+						<key>customProperties</key>
+						<array>
+							<dict>
+								<key>name</key>
+								<string>itemSelectType</string>
+								<key>optimized</key>
+								<false/>
+								<key>type</key>
+								<integer>0</integer>
+								<key>value</key>
+								<string>2</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>itemSelectType2</string>
+								<key>optimized</key>
+								<false/>
+								<key>type</key>
+								<integer>0</integer>
+								<key>value</key>
+								<string>0</string>
+							</dict>
+						</array>
 						<key>displayName</key>
 						<string>SettingItemBtn</string>
 						<key>memberVarAssignmentName</key>
@@ -1081,6 +1127,29 @@
 						<array/>
 						<key>customClass</key>
 						<string>SettingItemBtn</string>
+						<key>customProperties</key>
+						<array>
+							<dict>
+								<key>name</key>
+								<string>itemSelectType</string>
+								<key>optimized</key>
+								<false/>
+								<key>type</key>
+								<integer>0</integer>
+								<key>value</key>
+								<string>3</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>itemSelectType2</string>
+								<key>optimized</key>
+								<false/>
+								<key>type</key>
+								<integer>0</integer>
+								<key>value</key>
+								<string>4</string>
+							</dict>
+						</array>
 						<key>displayName</key>
 						<string>SettingItemBtn</string>
 						<key>memberVarAssignmentName</key>
@@ -1096,7 +1165,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>355</real>
+									<real>357</real>
 									<real>129</real>
 									<integer>0</integer>
 								</array>
@@ -1186,6 +1255,8 @@
 								</array>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 				</array>
 				<key>customClass</key>

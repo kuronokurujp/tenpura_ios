@@ -12,13 +12,10 @@
 //	アイテム効果内容一覧
 enum
 {
-	eITEM_IMPACT_MONEY_TWO_RATE	= 1,	//	金額が２倍
-	eITEM_IMPACT_SCORE_TWO_RATE,		//	スコアが２倍
-	eITEM_IMPACT_RAISE_TIME_HALF,		//	揚げる速度が２倍
-	eITEM_IMPACT_COMB_ADD_ONE_TIME,		//	コンボタイムに１秒追加
-	eITEM_IMPACT_COMB_ADD_THREE_TIME,	//	コンボタイムに３秒追加
-	eITEM_IMPACT_EAT_TIME_HALF,			//	食べる時間が半分
-	eITEM_IMPACT_EAT_TIME_THREE_FOUR,	//	食べる時間が3/4
+	eITEM_IMPACT_SCORE_POWERUP	= 1,	//	スコア倍増
+	eITEM_IMPACT_TIME_ADD,				//	タイム増加
+	eITEM_IMPACT_FIVER_TIME_ADD,		//	フィーバータイム増加
+	eITEM_IMPACT_END_SCORE_POWERUP,		//	最終得点の倍増
 };
 
 //	アイテム画像の種類一覧
@@ -35,7 +32,8 @@ typedef struct
 	UInt32		textID;
 	UInt32		contentTextID;
 	SInt32		sellMoney;
-	UInt32		aItemDataNo[2];
+	UInt32		itemType;
+	Float32		value;
 	char		fileName[128];
 	SInt32		imageType;
 } ITEM_DATA_ST;

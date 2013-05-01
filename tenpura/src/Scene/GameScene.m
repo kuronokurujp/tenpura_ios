@@ -133,8 +133,13 @@ enum
 			[pDataTenpuraPosList clearFlg];
 		}
 
+		//	パワーアップリスト
 		Float32	customerEatRate	= 1.f;
 		Float32	raiseTimeRate	= 1.f;
+		Float32	addGameTime	= 0;
+		Float32	addFeverTime	= 0;
+		Float32	scorePowerUpRate	= 0;
+		Float32	gameEndScorePowerUpRate	= 0;
 		
 		//	オプションアイテムによる追加設定
 		NSString*	pNabeImageFileName	= nil;
@@ -155,53 +160,31 @@ enum
 							pNabeImageFileName	= [NSString stringWithUTF8String:pItem->fileName];
 						}
 						
-						SInt32	num	= sizeof(pItem->aItemDataNo) / sizeof(pItem->aItemDataNo[0]);
-						for( SInt32 i = 0; i < num; ++i )
+						switch( pItem->itemType )
 						{
-							switch( pItem->aItemDataNo[i] )
+							//	スコア倍増
+							case eITEM_IMPACT_SCORE_POWERUP:
 							{
-								//	金額が２倍
-								case eITEM_IMPACT_MONEY_TWO_RATE:
-								{
-									m_moneyRate *= 2;
-									break;
-								}
-								//	スコアが２倍
-								case eITEM_IMPACT_SCORE_TWO_RATE:
-								{
-									m_scoreRate *= 2;
-									break;
-								}
-								//	揚げる速度が２倍
-								case eITEM_IMPACT_RAISE_TIME_HALF:
-								{
-									raiseTimeRate *= 0.5f;
-									break;
-								}
-								//	コンボタイムに１秒追加
-								case eITEM_IMPACT_COMB_ADD_ONE_TIME:
-								{
-									m_combAddTime	+= 1.f;
-									break;
-								}
-								//	コンボタイムに３秒追加
-								case eITEM_IMPACT_COMB_ADD_THREE_TIME:
-								{
-									m_combAddTime	+= 3.f;
-									break;
-								}
-								//	食べる時間が半分
-								case eITEM_IMPACT_EAT_TIME_HALF:
-								{
-									customerEatRate *= 0.5f;
-									break;
-								}
-								//	食べる時間が3/4
-								case eITEM_IMPACT_EAT_TIME_THREE_FOUR:
-								{
-									customerEatRate	*= (3.f / 4.f);
-									break;
-								}
+								scorePowerUpRate += (pItem->value - 1.f);
+								break;
+							}
+							//	タイム増加
+							case eITEM_IMPACT_TIME_ADD:
+							{
+								addGameTime += pItem->value;
+								break;
+							}
+							//	フィーバータイム増加
+							case eITEM_IMPACT_FIVER_TIME_ADD:
+							{
+								addFeverTime += pItem->value;
+								break;
+							}
+							//	最終得点の倍増
+							case eITEM_IMPACT_END_SCORE_POWERUP:
+							{
+								gameEndScorePowerUpRate += (pItem->value - 1.f);
+								break;
 							}
 						}
 					}
@@ -283,8 +266,21 @@ enum
 			[self addChild:pCCBReader];
 			mp_gameSceneData	= (GameSceneData*)pCCBReader;
 			
-			m_timeVal	= mp_gameSceneData.gameTime;
-			[mp_timerPut setString:[NSString stringWithFormat:@"%03ld", (SInt32)m_timeVal]];
+			//	ゲームシーンパラメータ設定
+			{
+				//	ゲームの残り時間
+				m_timeVal	= addGameTime + mp_gameSceneData.gameTime;
+				[mp_timerPut setString:[NSString stringWithFormat:@"%03ld", (SInt32)m_timeVal]];
+				
+				//	フィーバー時間
+				m_feverTime	= addFeverTime + mp_gameSceneData.feverTime;
+				
+				//	取得スコア倍増レート
+				m_scoreRate	= 1.f + scorePowerUpRate;
+				
+				//	ゲーム終了スコアの倍増レート
+				m_gameEndScoreRate	= 1.f + gameEndScorePowerUpRate;
+			}
 
 			//	オブジェクトの描画プライオリティ修正
 			{

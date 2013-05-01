@@ -16,35 +16,26 @@
 @synthesize textFontName	= mp_textFontName;
 
 /*
-	@brief
+	@brief	初期化(初期化の段階でリストデータが分からない場合に呼ぶ)
+*/
+-(id)	initWithFree
+{
+	if( [super init] )
+	{
+	}
+	
+	return self;
+}
+
+/*
+	@brief	初期化（初期化の段階でリストデータが分かる場合に呼ぶ）
 */
 -(id)	initWithData:(SW_INIT_DATA_ST*)in_pData
 {
 	NSAssert(in_pData, @"スクロールビューデータがない");
 	if( self = [super init] )
 	{
-		mp_textFontName	= [[NSString alloc] initWithString:@"Helvetica"];
-
-		//	セルファイル名はアドレスしかもっていないので注意
-		m_data	= *in_pData;
-		if( m_data.aCellFileName[ 0 ] != 0 )
-		{
-			CCNode*	pCellScene	= [CCBReader nodeGraphFromFile:[NSString stringWithUTF8String:m_data.aCellFileName]];
-			NSAssert([pCellScene isKindOfClass:[CCSprite class]], @"");
-			
-			CCSprite*	pTmpSp	= (CCSprite*)pCellScene;
-			m_data.cellSize	= [pTmpSp contentSize];
-		}
-
-		mp_table	= [SWTableView viewWithDataSource:self size:m_data.viewSize contentOffset:ccp(0,0)];
-		[mp_table setPosition:m_data.viewPos];
-		[mp_table setContentOffset:ccp( [mp_table minContainerOffset].x, [mp_table minContainerOffset].y )];
-
-		mp_table.direction	= SWScrollViewDirectionVertical;
-		mp_table.delegate	= self;
-		mp_table.verticalFillOrder	= SWTableViewFillTopDown;
-		
-		[self addChild:mp_table z:3.f];
+		[self setup:in_pData];
 	}
 
 	return self;
@@ -60,6 +51,40 @@
 
 	mp_table	= nil;
 	[super dealloc];
+}
+
+/*
+	@brief	セットアップ（初期化処理以外で画面セットアップを呼ぶ場合に必要）
+*/
+-(void)	setup:(SW_INIT_DATA_ST*)in_pData
+{
+	if( in_pData == nil )
+	{
+		return;
+	}
+	
+	mp_textFontName	= [[NSString alloc] initWithString:@"Helvetica"];
+
+	//	セルファイル名はアドレスしかもっていないので注意
+	m_data	= *in_pData;
+	if( m_data.aCellFileName[ 0 ] != 0 )
+	{
+		CCNode*	pCellScene	= [CCBReader nodeGraphFromFile:[NSString stringWithUTF8String:m_data.aCellFileName]];
+		NSAssert([pCellScene isKindOfClass:[CCSprite class]], @"");
+			
+		CCSprite*	pTmpSp	= (CCSprite*)pCellScene;
+		m_data.cellSize	= [pTmpSp contentSize];
+	}
+
+	mp_table	= [SWTableView viewWithDataSource:self size:m_data.viewSize contentOffset:ccp(0,0)];
+	[mp_table setPosition:m_data.viewPos];
+	[mp_table setContentOffset:ccp( [mp_table minContainerOffset].x, [mp_table minContainerOffset].y )];
+
+	mp_table.direction	= SWScrollViewDirectionVertical;
+	mp_table.delegate	= self;
+	mp_table.verticalFillOrder	= SWTableViewFillTopDown;
+		
+	[self addChild:mp_table z:3.f];
 }
 
 /*
