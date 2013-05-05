@@ -35,6 +35,7 @@ typedef enum
 
 @interface Customer : CCNode
 {
+@private
 	//	変数定義
 	TYPE_ENUM		m_type;
 	CCSprite*		mp_sp;
@@ -63,6 +64,7 @@ typedef enum
 @property	(nonatomic, readonly )SInt32 money;
 @property	(nonatomic, readonly )SInt32 score;
 @property	(nonatomic, readonly)Float32	eatTimeRate;
+@property	(nonatomic, retain)Nabe*	nabe;
 
 //	初期化
 -(id)	initToType:(SInt32)in_idx :(Nabe*)in_pNabe :(CCArray*)in_pSettingTenpuraList :(Float32)in_eatTimeRate;

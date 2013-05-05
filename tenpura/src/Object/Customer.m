@@ -26,6 +26,7 @@
 @synthesize money	= m_money;
 @synthesize score	= m_score;
 @synthesize eatTimeRate	= m_eatTimeRate;
+@synthesize nabe	= mp_nabe;
 
 //	食べれる最大数
 enum

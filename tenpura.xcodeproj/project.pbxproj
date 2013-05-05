@@ -29,6 +29,7 @@
 		CE31E3831734D255009316FC /* nabe06_a.png in Resources */ = {isa = PBXBuildFile; fileRef = CE31E3821734D255009316FC /* nabe06_a.png */; };
 		CE33C89516888852004782A4 /* help.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE33C89416888852004782A4 /* help.ccbi */; };
 		CE33C899168888BD004782A4 /* HelpScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CE33C898168888BD004782A4 /* HelpScene.m */; };
+		CE3F6840173691F2002296E4 /* nabe05_a.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3F683F173691F2002296E4 /* nabe05_a.png */; };
 		CE412EB916DC4C940034A4BA /* abura.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE412EB716DC4C940034A4BA /* abura.plist */; };
 		CE412EBA16DC4C940034A4BA /* abura.png in Resources */ = {isa = PBXBuildFile; fileRef = CE412EB816DC4C940034A4BA /* abura.png */; };
 		CE412EBD16DC90300034A4BA /* ItemShopTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE412EBC16DC90300034A4BA /* ItemShopTableCell.m */; };
@@ -511,6 +512,7 @@
 		CE33C89416888852004782A4 /* help.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = help.ccbi; path = Resources/ccbi/help.ccbi; sourceTree = "<group>"; };
 		CE33C897168888BD004782A4 /* HelpScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelpScene.h; path = src/Scene/HelpScene.h; sourceTree = "<group>"; };
 		CE33C898168888BD004782A4 /* HelpScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HelpScene.m; path = src/Scene/HelpScene.m; sourceTree = "<group>"; };
+		CE3F683F173691F2002296E4 /* nabe05_a.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nabe05_a.png; path = Resources/bg/nabe05_a.png; sourceTree = "<group>"; };
 		CE412EB716DC4C940034A4BA /* abura.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = abura.plist; path = Resources/anim/abura/abura.plist; sourceTree = "<group>"; };
 		CE412EB816DC4C940034A4BA /* abura.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = abura.png; path = Resources/anim/abura/abura.png; sourceTree = "<group>"; };
 		CE412EBB16DC90300034A4BA /* ItemShopTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ItemShopTableCell.h; path = src/TableCells/ItemShopTableCell.h; sourceTree = "<group>"; };
@@ -2138,6 +2140,7 @@
 			children = (
 				CEA1E236172D6A300064AC38 /* nabe02_a.png */,
 				CEA1E237172D6A300064AC38 /* nabe03_a.png */,
+				CE3F683F173691F2002296E4 /* nabe05_a.png */,
 				CE31E3821734D255009316FC /* nabe06_a.png */,
 				CEA1E238172D6A300064AC38 /* nabe04_a.png */,
 				CED247FE163998BB00506CA8 /* nabe0.png */,
@@ -2805,6 +2808,7 @@
 				CEBC3C231731B0E80060FD5F /* whinna0.png in Resources */,
 				CEBC3C241731B0E80060FD5F /* zombie0.png in Resources */,
 				CE31E3831734D255009316FC /* nabe06_a.png in Resources */,
+				CE3F6840173691F2002296E4 /* nabe05_a.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,8 +13,10 @@
 {
 @private
 	SInt32	m_num;
+	SInt32	m_oldNum;
 	SInt32	m_count;
 	SInt32	m_addNum;
+	ccTime	m_time;
 	NSString*	mp_format;
 }
 

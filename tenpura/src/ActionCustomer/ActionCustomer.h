@@ -57,7 +57,7 @@
 -(void)eatVeryBat:(Tenpura*)in_pTenpura :(SInt32)in_score :(SInt32)in_money;
 
 //	違う食べ物を与えたときの怒りアクション
--(void)anger;
+-(void)anger:(Tenpura*)in_pTenpura;
 
 -(BOOL)	isEatting;
 

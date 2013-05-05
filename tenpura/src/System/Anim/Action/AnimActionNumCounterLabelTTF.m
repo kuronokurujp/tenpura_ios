@@ -22,7 +22,8 @@
 		m_num	= 0;
 		m_count	= 0;
 		m_addNum	= 0;
-		
+		m_time	= 0.f;
+		m_oldNum	= 0;
 		mp_format	= @"%d";
 
 		[self scheduleUpdate];
@@ -47,7 +48,9 @@
 {
 	if( m_num != m_count )
 	{
-		m_num += m_addNum;
+		m_time += delta;
+		Float32	inp	= MIN(m_time, 1.f);
+		m_num = m_oldNum + (inp * m_addNum);
 		[super setString:[NSString stringWithFormat:mp_format, m_num]];
 	}
 }
@@ -75,7 +78,9 @@
 	if( m_num != m_count )
 	{
 		//	カウントアニメ開始
-		m_addNum	= (m_count - m_num) > 0 ? 1 : -1;
+		m_oldNum	= m_num;
+		m_addNum	= (m_count - m_num);// > 0 ? 1 : -1;
+		m_time	= 0;
 	}
 }
 

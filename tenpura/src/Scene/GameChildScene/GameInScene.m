@@ -46,6 +46,13 @@ enum
 	eCHILD_TAG_SCENE_FEVER,
 };
 
+typedef enum
+{
+	eEAT_STATE_NONE,
+	eEAT_STATE_HIT	= 1,
+	eEAT_STATE_NO_HIT,
+} eEAT_STATE;
+
 /*
 	@brief
 */
@@ -286,7 +293,7 @@ enum
 -(void)	_timer:(ccTime)in_time;
 
 //	客がネタを食べるかどうか
--(BOOL)	_throwTenpuraToCutomer:(Customer*)in_pCustomer :(TENPURA_STATE_ET)in_tenpuraState :(NETA_DATA_ST*)in_pData;
+-(eEAT_STATE)	_throwTenpuraToCutomer:(Customer*)in_pCustomer :(TENPURA_STATE_ET)in_tenpuraState :(NETA_DATA_ST*)in_pData;
 //	ネタが客とヒットしているか
 -(Customer*)	_isHitCustomer:(CGRect)in_rect;
 -(void)	_endTouch;
@@ -566,7 +573,7 @@ enum
 	{
 		//	客にヒットしているか
 		BOOL	bHitCustomer	= NO;
-		BOOL	bEatTenpura		= NO;
+		eEAT_STATE	eEatTenpuraState	= eEAT_STATE_NONE;
 
 		pCustomer	= [self _isHitCustomer:[mp_touchTenpura boundingBox]];
 		if( pCustomer != nil )
@@ -574,69 +581,77 @@ enum
 			//	ヒット
 			bHitCustomer	= YES;
 			//	天ぷらを消して客のアクションを決める
-			bEatTenpura	= [self _throwTenpuraToCutomer:pCustomer:mp_touchTenpura];
-			if( bEatTenpura == YES )
+			eEatTenpuraState	= [self _throwTenpuraToCutomer:pCustomer:mp_touchTenpura];
+			if( eEatTenpuraState != eEAT_STATE_NONE )
 			{
-				switch ((SInt32)mp_touchTenpura.state)
+				if( eEatTenpuraState == eEAT_STATE_HIT )
 				{
-					case eTENPURA_STATE_VERYGOOD:
+					switch ((SInt32)mp_touchTenpura.state)
 					{
-						++m_veryEatCnt;
-						if( mp_touchTenpura.state == eTENPURA_STATE_VERYGOOD )
+						case eTENPURA_STATE_VERYGOOD:
 						{
-							++m_combCnt;
-
-							//	コンボメッセージを出す
+							++m_veryEatCnt;
+							if( mp_touchTenpura.state == eTENPURA_STATE_VERYGOOD )
 							{
-								CCNode*	pComboMessage	= [self getChildByTag:eNORMAL_SCENE_CHILD_TAG_COMBO_MESSAGE];
-								//	コンボ数値変更
-								if( 2 <= m_combCnt )
+								++m_combCnt;
+
+								//	コンボメッセージを出す
 								{
-									ComboMessage*	pCombo	= (ComboMessage*)pComboMessage;
-									[pCombo start:m_combCnt];
+									CCNode*	pComboMessage	= [self getChildByTag:eNORMAL_SCENE_CHILD_TAG_COMBO_MESSAGE];
+									//	コンボ数値変更
+									if( 2 <= m_combCnt )
+									{
+										ComboMessage*	pCombo	= (ComboMessage*)pComboMessage;
+										[pCombo start:m_combCnt];
+									}
+
+									[self unschedule:@selector(_updateCombo)];
+									[self schedule:@selector(_updateCombo)];
+	
+									[self unschedule:@selector(_exitCombMessage)];
+									[self unschedule:@selector(_timerComb:)];
+								
+									[self scheduleOnce:@selector(_exitCombMessage) delay:pGameScene->mp_gameSceneData.combMessageTime];
+									[self scheduleOnce:@selector(_timerComb:) delay:pGameScene->mp_gameSceneData.combDelTime + pGameScene->m_combAddTime];
 								}
 
-								[self unschedule:@selector(_updateCombo)];
-								[self schedule:@selector(_updateCombo)];
-	
-								[self unschedule:@selector(_exitCombMessage)];
-								[self unschedule:@selector(_timerComb:)];
-								
-								[self scheduleOnce:@selector(_exitCombMessage) delay:pGameScene->mp_gameSceneData.combMessageTime];
-								[self scheduleOnce:@selector(_timerComb:) delay:pGameScene->mp_gameSceneData.combDelTime + pGameScene->m_combAddTime];
+								//	フィーバーを出すか
+								if( ( m_combCnt % 10 ) == 0 )
+								{
+									++m_feverCnt;
+									mb_fever	= YES;
+								}
 							}
-
-							//	フィーバーを出すか
-							if( ( m_combCnt % 10 ) == 0 )
-							{
-								++m_feverCnt;
-								mb_fever	= YES;
-							}
+							break;
 						}
-						break;
+						default:
+						{
+							m_combCnt	= 0;
+							m_veryEatCnt	= 0;
+							break;
+						}
 					}
-					default:
+					
+					if( ([self _getPutCustomerNum] <= 1) && ( [pCustomer getEatCnt] <= 0 ) )
 					{
-						m_combCnt	= 0;
-						m_veryEatCnt	= 0;
-						break;
+						//	客が一人しかいない状態で退場する時客が新しく出す
+						[pGameScene putCustomer:YES];
+					}
+					else if( s_PutCustomerCombNum <= m_veryEatCnt )
+					{
+						[pGameScene putCustomer:YES];
 					}
 				}
-
-				if( ([self _getPutCustomerNum] <= 1) && ( [pCustomer getEatCnt] <= 0 ) )
+				else
 				{
-					//	客が一人しかいない状態で退場する時客が新しく出す
-					[pGameScene putCustomer:YES];
-				}
-				else if( s_PutCustomerCombNum <= m_veryEatCnt )
-				{
-					[pGameScene putCustomer:YES];
+					m_combCnt		= 0;
+					m_veryEatCnt	= 0;
 				}
 			}
 			else
 			{
 				//	食べるのに失敗
-				m_combCnt	= 0;
+				m_combCnt		= 0;
 				m_veryEatCnt	= 0;
 			}
 			
@@ -644,7 +659,7 @@ enum
 		}
 
 		CGPoint	nowTenpuraPos	= mp_touchTenpura.position;
-		if( ( bHitCustomer == YES ) && ( bEatTenpura == YES ) )
+		if( ( bHitCustomer == YES ) && ( eEatTenpuraState != eEAT_STATE_NONE ) )
 		{
 			//	食べるのに成功
 		}
@@ -716,38 +731,35 @@ enum
 	@return	食べたかどうか
 	@note	取得スコア/金額の反映させる
 */
--(BOOL)	_throwTenpuraToCutomer:(Customer*)in_pCustomer :(Tenpura*)in_pTenpura
+-(eEAT_STATE)	_throwTenpuraToCutomer:(Customer*)in_pCustomer :(Tenpura*)in_pTenpura
 {
 	if( (in_pTenpura == nil) || in_pCustomer == nil )
 	{
-		return NO;
+		return eEAT_STATE_NONE;
 	}
 	
 	GameScene*	pGameScene	= mp_gameScene;
 	if( pGameScene == nil )
 	{
-		return NO;
+		return eEAT_STATE_NONE;
 	}
 
 	if( [in_pCustomer getEatCnt] <= 0 )
 	{
-		return NO;
+		return eEAT_STATE_NONE;
 	}
 
 	SInt32	addScoreNum	= 0;
 	SInt32	addMoneyNum	= 0;
 	
-	BOOL	bEat		= NO;
-	
 	//	客が欲しい天ぷらでなければ客がおこって終了
 	if( [in_pCustomer isEatTenpura:in_pTenpura.data.no] == NO )
 	{
-		[in_pCustomer.act anger];
-		return	bEat;
+		[in_pCustomer.act anger:in_pTenpura];
+		return	eEAT_STATE_NO_HIT;
 	}
 
 	TENPURA_STATE_ET	tenpuraState	= in_pTenpura.state;
-	bEat	= YES;
 	addScoreNum	= in_pTenpura.data.aStatusList[tenpuraState].score;
 	addMoneyNum	= in_pTenpura.data.aStatusList[tenpuraState].money;
 	
@@ -804,7 +816,7 @@ enum
 	//	取得金額反映
 	in_pCustomer.addMoney	= addMoneyNum;
 	
-	return bEat;
+	return eEAT_STATE_HIT;
 }
 
 /*

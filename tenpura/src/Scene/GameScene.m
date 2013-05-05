@@ -204,6 +204,7 @@ enum
 				{
 					DataSettingNetaPack*	pDataSettingNetaPack	= (DataSettingNetaPack*)pNode;
 					const NETA_PACK_DATA_ST*	pNetaPackData	= [pDataNetaPackListInst getDataSearchId:pDataSettingNetaPack.no];
+					NSAssert1(pNetaPackData, @"error:neta.no%ld", pDataSettingNetaPack.no);
 					if( pNetaPackData != nil )
 					{
 						for( SInt32 i = 0; i < eNETA_PACK_MAX; ++i )
