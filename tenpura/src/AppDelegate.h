@@ -15,13 +15,14 @@
 //	前方宣言
 @class TweetViewController;
 @class BannerViewController;
-@class StoreAppPurchaseManager;
 
-@interface AppController : NSObject <
+@interface AppController : NSObject
+<
 	UIApplicationDelegate,
 	CCDirectorDelegate,
-	GameKitHelperProtocol,
-	StoreAppPurchaseManagerProtocol>
+	StoreAppPurchaseManagerProtocol,
+	GameKitHelperProtocol
+>
 {
 	UIWindow *window_;
 	UINavigationController *navController_;
@@ -30,7 +31,6 @@
 
 	BannerViewController*	mp_bannerViewCtrl;
 	TweetViewController*	mp_tweetViewController;
-	UIAlertView*	mp_storeBuyCheckAlerView;
 }
 
 @property (nonatomic, retain) UIWindow *window;

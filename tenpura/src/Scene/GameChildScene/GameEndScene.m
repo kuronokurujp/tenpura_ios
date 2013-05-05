@@ -73,7 +73,7 @@
 		DataSaveGame*	pDataSaveGame	= [DataSaveGame shared];
 		const SAVE_DATA_ST*	pSaveData	= [pDataSaveGame getData];
 	
-		int64_t	score	= [pGameScene getScore];
+		int64_t	score	= [pGameScene getScoreByGameEnd];
 		mb_hiscore	= ( pSaveData->score < score );
 		if( mb_hiscore == YES )
 		{
@@ -313,7 +313,7 @@
 				CCLabelTTF*	pLabel	= (CCLabelTTF*)pChildReaderNode;
 				if( [pLabel.string isEqualToString:@"score"] )
 				{
-					pLabel.string	= [NSString stringWithFormat:@"%lld", [pGameScene getScore]];
+					pLabel.string	= [NSString stringWithFormat:@"%lld", [pGameScene getScoreByGameEnd]];
 				}
 				else if ( [pLabel.string isEqualToString:@"hiscore"] )
 				{

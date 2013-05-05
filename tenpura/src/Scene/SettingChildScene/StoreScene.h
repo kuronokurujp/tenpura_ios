@@ -11,14 +11,22 @@
 
 #import "./../BaseMenuScene.h"
 #import "./../../System/TableView/SWTableViewHelper.h"
+#import "./../../System/Store/StoreAppPurchaseManager.h"
+
+@class StoreAppPurchaseManager;
 
 @interface StoreScene : SWTableViewHelper
 <
-	UIAlertViewDelegate
+	UIAlertViewDelegate,
+	StoreAppPurchaseManagerProtocol
 >
 {
 @private
-	UIAlertView*	mp_buyEndAlertView;
+	UIAlertView*	mp_storeBuyCheckAlerView;
+	UIView*	mp_grayView;
+	UIActivityIndicatorView*	mp_indicator;
 }
+
++(void)	payment:(NSString*)in_pProducts;
 
 @end

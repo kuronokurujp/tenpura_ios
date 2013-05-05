@@ -80,8 +80,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>61</real>
-							<real>217</real>
+							<real>43</real>
+							<real>220</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -182,8 +182,8 @@
 						<string>Size</string>
 						<key>value</key>
 						<array>
-							<real>100</real>
-							<real>60</real>
+							<real>80</real>
+							<real>80</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -1255,8 +1255,6 @@
 								</array>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 				</array>
 				<key>customClass</key>
@@ -1921,8 +1919,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>177</real>
-							<real>217</real>
+							<real>123</real>
+							<real>220</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -2023,8 +2021,8 @@
 						<string>Size</string>
 						<key>value</key>
 						<array>
-							<real>100</real>
-							<real>60</real>
+							<real>80</real>
+							<real>80</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -2201,8 +2199,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>73</real>
-							<real>86</real>
+							<real>202</real>
+							<real>220</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -2303,8 +2301,8 @@
 						<string>Size</string>
 						<key>value</key>
 						<array>
-							<real>60</real>
-							<real>60</real>
+							<real>80</real>
+							<real>80</real>
 							<integer>0</integer>
 						</array>
 					</dict>

@@ -204,12 +204,15 @@ enum
 				{
 					DataSettingNetaPack*	pDataSettingNetaPack	= (DataSettingNetaPack*)pNode;
 					const NETA_PACK_DATA_ST*	pNetaPackData	= [pDataNetaPackListInst getDataSearchId:pDataSettingNetaPack.no];
-					for( SInt32 i = 0; i < eNETA_PACK_MAX; ++i )
+					if( pNetaPackData != nil )
 					{
-						if( 0 < pNetaPackData->aNetaId[i] )
+						for( SInt32 i = 0; i < eNETA_PACK_MAX; ++i )
 						{
-							NSNumber*	num	= [NSNumber numberWithInt:pNetaPackData->aNetaId[i]];
-							[mp_settingItemList addObject:num];
+							if( 0 < pNetaPackData->aNetaId[i] )
+							{
+								NSNumber*	num	= [NSNumber numberWithInt:pNetaPackData->aNetaId[i]];
+								[mp_settingItemList addObject:num];
+							}
 						}
 					}
 				}
@@ -577,6 +580,19 @@ enum
 	{
 		score += pCustomer.score;
 	}
+		
+	score	= MIN(score, 999999);
+
+	return score;
+}
+
+/*
+	@brief	スコア取得
+*/
+-(int64_t)	getScoreByGameEnd
+{
+	int64_t	score	= [self getScore];
+	score *= m_gameEndScoreRate;
 	
 	return score;
 }

@@ -18,7 +18,6 @@
 @implementation StoreAppPurchaseManager
 
 @synthesize delegate	= m_delegate;
-@synthesize pProductDic	= mp_productDic;
 @synthesize bLoad	= mb_loading;
 
 static	StoreAppPurchaseManager*	sp_storeAppManagerInst	= nil;
@@ -68,7 +67,8 @@ static	const char*	sp_transactionFlgName	= "storeTransactionFlg";
 		mb_loading	= NO;
 		mp_skProductsRequest	= nil;
 		m_delegate	= nil;
-		mp_productDic	= [[NSMutableDictionary alloc] init];
+		
+		[[SKPaymentQueue defaultQueue] addTransactionObserver:self];
 	}
 
 	return self;
@@ -84,11 +84,6 @@ static	const char*	sp_transactionFlgName	= "storeTransactionFlg";
 	{
 		[mp_skProductsRequest release];
 	}
-	
-	if( mp_productDic )
-	{
-		[mp_productDic release];
-	}
 
 	[super dealloc];
 }
@@ -98,10 +93,15 @@ static	const char*	sp_transactionFlgName	= "storeTransactionFlg";
 */
 -(BOOL)requestProduct:(NSString*)in_pIdName
 {
+	if( [self isTransaction] == true )
+	{
+		return NO;
+	}
+
 	//	課金設定リクエスト可能
 	[self _requestProductData:in_pIdName];
 
-	mb_loading	= true;
+	mb_loading	= YES;
 	return YES;
 }
 
@@ -139,6 +139,18 @@ static	const char*	sp_transactionFlgName	= "storeTransactionFlg";
 	}
 
 	return YES;
+}
+
+/*
+	@brief	リクエスト取得失敗
+*/
+-(void)	request:(SKRequest *)request didFailWithError:(NSError *)error
+{
+	mb_loading	= NO;
+	if( m_delegate && ([m_delegate respondsToSelector:@selector(onErrorRequest:)]) )
+	{
+		[m_delegate onErrorRequest:error];
+	}
 }
 
 /*
@@ -205,14 +217,8 @@ static	const char*	sp_transactionFlgName	= "storeTransactionFlg";
 	for( SKProduct*	pProduct in response.products )
 	{
 		NSLog(@"volid product identifier: %@", pProduct.productIdentifier);
-		/*
-		//	プロダクトを保管
-		if( [mp_productDic objectForKey:pProduct.productIdentifier] == nil )
-		{
-			[mp_productDic setObject:pProduct forKey:pProduct.productIdentifier];
-		}
-		*/
 		[self requestPayment:pProduct];
+		break;
 	}
 }
 
@@ -258,7 +264,7 @@ static	const char*	sp_transactionFlgName	= "storeTransactionFlg";
 
 				if( (m_delegate != nil ) && ([m_delegate respondsToSelector:@selector(onPaymentFailed:)]) )
 				{
-					[m_delegate onPaymentFailed:pTrans.error.code];
+					[m_delegate onPaymentFailed:pTrans.error];
 				}
 				
 				break;
@@ -294,7 +300,7 @@ static	const char*	sp_transactionFlgName	= "storeTransactionFlg";
 		[[NSUserDefaults standardUserDefaults] synchronize];
 	}
 
-	mb_loading	= false;
+	mb_loading	= NO;
 	if( (m_delegate != nil ) && ([m_delegate respondsToSelector:@selector(onEndTransaction)]) )
 	{
 		[m_delegate onEndTransaction];
@@ -339,8 +345,6 @@ static	const char*	sp_transactionFlgName	= "storeTransactionFlg";
 	{
 		[m_delegate onRequest];
 	}
-
-	[[SKPaymentQueue defaultQueue] addTransactionObserver:self];
 
 	mp_skProductsRequest	= [[SKProductsRequest alloc] initWithProductIdentifiers:
 								[NSSet setWithObject:in_pIdName]];

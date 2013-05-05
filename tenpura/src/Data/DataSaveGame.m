@@ -256,7 +256,7 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 
 	if( pData != nil )
 	{
-		pData->score	= in_score;
+		pData->score	= MIN( in_score, eSCORE_MAX_NUM );
 		[mp_SaveData save];
 	}
 }
@@ -273,6 +273,7 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 	if( pData != nil )
 	{
 		pData->money	= pData->money + in_addMoney;
+		pData->money	= MIN(pData->money, eMONEY_MAX_NUM);
 		[mp_SaveData save];
 	}
 }

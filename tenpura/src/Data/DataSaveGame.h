@@ -13,6 +13,13 @@
 //	前方宣言
 @class SaveData;
 
+//	設定可能な値最大値
+enum
+{
+	eSCORE_MAX_NUM	= 999999,
+	eMONEY_MAX_NUM	= 999999,
+};
+
 //	セーブデータ内容
 enum
 {

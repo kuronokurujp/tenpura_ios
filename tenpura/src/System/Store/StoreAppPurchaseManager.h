@@ -23,6 +23,8 @@ typedef enum
 
 //	リクエスト開始
 -(void)	onRequest;
+//	リクエストエラー
+-(void)	onErrorRequest:(NSError*)in_pError;
 
 //	トランザクションの開始／終了
 -(void)	onStartTransaction:(const STORE_REQUEST_TYPE_ENUM)in_type;
@@ -33,7 +35,7 @@ typedef enum
 //	リストア完了
 -(void)	onPaymentRestore:(NSString*)in_pProducts;
 //	決済途中キャンセル
--(void)	onPaymentFailed:(SInt32)in_errorType;
+-(void)	onPaymentFailed:(NSError*)in_pError;
 
 @end
 
@@ -51,11 +53,9 @@ typedef enum
 
 	BOOL	mb_loading;
 	SKProductsRequest*	mp_skProductsRequest;
-	NSMutableDictionary*	mp_productDic;
 }
 
 @property	(nonatomic, retain)	id<StoreAppPurchaseManagerProtocol>	delegate;
-@property	(nonatomic, retain)	NSMutableDictionary*	pProductDic;
 @property	(nonatomic, readonly)	BOOL	bLoad;
 
 //	関数定義

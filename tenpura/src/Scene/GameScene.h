@@ -91,6 +91,7 @@
 
 //	取得したスコア／金額
 -(int64_t)	getScore;
+-(int64_t)	getScoreByGameEnd;
 -(int64_t)	getMoney;
 
 @end

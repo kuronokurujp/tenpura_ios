@@ -58,10 +58,16 @@ static NSString*	sp_MissionChkBoxOnSpriteName	= @"checkon.png";
 			CCSprite*	pChkBoxOn	= [CCSprite spriteWithFile:sp_MissionChkBoxOnSpriteName];
 			[pChkBoxOn setPosition:pos];
 			[pNode addChild:pChkBoxOn];
+			[pChkBoxOn setVisible:NO];
+			
+			mp_chkBoxOn	= pChkBoxOn;
 
 			CCSprite*	pChkBoxOff	= [CCSprite spriteWithFile:sp_MissionChkBoxOffSpriteName];
 			[pChkBoxOff setPosition:pos];
 			[pNode addChild:pChkBoxOff];
+			[pChkBoxOff setVisible:NO];
+			
+			mp_chkBoxOff	= pChkBoxOff;
 		}
 	}
 }

@@ -36,6 +36,7 @@
 	if( self = [super init] )
 	{
 		[self setup:in_pData];
+		[self reloadUpdate];
 	}
 
 	return self;

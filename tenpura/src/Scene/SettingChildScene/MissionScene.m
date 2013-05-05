@@ -35,7 +35,6 @@
 
 	if( self = [super initWithData:&data] )
 	{
-		[self reloadUpdate];
 	}
 	
 	return self;
@@ -76,17 +75,25 @@
 	CCLabelTTF*	pCellTextLabel	= pItemCell.pNameLabel;
 	[pCellTextLabel setString:[pMissionInst getMissonName:idx]];
 
+	BOOL	bSuccess	= [pMissionInst isSuccess:idx];
 	//	ミッション達成のON/OFF
-	[pItemCell.pChkBoxOn setVisible:NO];
-	[pItemCell.pChkBoxOn setVisible:NO];
-	
-	if( [pMissionInst isSuccess:idx] == YES )
+	if( pItemCell.pChkBoxOn != nil )
 	{
-		[pItemCell.pChkBoxOn setVisible:YES];
+		[pItemCell.pChkBoxOn setVisible:NO];
+		if( bSuccess == YES )
+		{
+			[pItemCell.pChkBoxOn setVisible:YES];
+		}
 	}
-	else
+	
+	if( pItemCell.pChkBoxOff != nil )
 	{
-		[pItemCell.pChkBoxOn setVisible:YES];
+		[pItemCell.pChkBoxOff setVisible:NO];
+	
+		if( bSuccess == NO )
+		{
+			[pItemCell.pChkBoxOff setVisible:YES];
+		}
 	}
 
 	return pCell;
