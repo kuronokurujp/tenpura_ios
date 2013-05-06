@@ -268,6 +268,10 @@ enum ACTION_SP_ENUM
 */
 -(void)	anger:(Tenpura*)in_pTenpura
 {
+	//	天ぷらを再配置する
+	NETA_DATA_ST	data	= in_pTenpura.data;
+	[mp_customer.nabe addTenpura:&data];
+
 	[mp_customer stopAllActions];
 	[mp_customer setAnim:eCUSTOMER_ANIM_BAD :true];
 	
@@ -277,19 +281,6 @@ enum ACTION_SP_ENUM
 	[self _actEat:in_pTenpura :YES];
 
 	[[SoundManager shared] playSe:@"seki"];
-}
-
-/*
-	@brief	食べている途中か
-*/
--(BOOL)	isEatting
-{
-	if( [mp_customer getActionByTag:eACT_TAG_EAT] != nil  )
-	{
-		return YES;
-	}
-	
-	return NO;
 }
 
 /*
@@ -428,13 +419,6 @@ enum ACTION_SP_ENUM
 {
 	NSAssert(in_pTenpura, @"客が食べる天ぷらがない");	
 	
-	//	すでに食べた時の文字表示しているなら削除
-	CCNode*	pEatMessageSp	= [self getChildByTag:eACT_SP_TAG_EAT_MESSAGE];
-	if( pEatMessageSp != nil )
-	{
-		[self removeChild:pEatMessageSp cleanup:YES];
-	}
-
 	//	天ぷらの食べるアクション
 	[self _actEat:in_pTenpura :NO];
 
@@ -458,6 +442,15 @@ enum ACTION_SP_ENUM
 	if(in_pTenpura == nil)
 	{
 		return;
+	}
+
+	{
+		//	食べた時の表示削除
+		CCNode*	pEatMessageSp	= [self getChildByTag:eACT_SP_TAG_EAT_MESSAGE];
+		if( pEatMessageSp != nil )
+		{
+			[self removeChild:pEatMessageSp cleanup:YES];
+		}
 	}
 
 	//	食べる演出を入れる
@@ -497,12 +490,6 @@ enum ACTION_SP_ENUM
 					[self removeChild:pEatMessageSp cleanup:YES];
 				}
 			}
-			else
-			{
-				//	天ぷらを再配置する
-				NETA_DATA_ST	data	= in_pTenpura.data;
-				[mp_customer.nabe addTenpura:&data];
-			}
 
 			m_getScore	= 0;
 			m_getMoeny	= 0;
@@ -530,10 +517,10 @@ enum ACTION_SP_ENUM
 		CGRect	rect	= mp_customer.charSprite.textureRect;
 		
 		CGPoint	pos	= ccp(rect.size.width * anthorPos.x, rect.size.height * anthorPos.y);
-		[in_pTenpura setPosition:pos];
-		[in_pTenpura eatAction:time];
 		[in_pTenpura removeFromParentAndCleanup:NO];
 		[mp_customer addChild:in_pTenpura z:2.f tag:eACT_SP_TAG_TENPURA];
+		[in_pTenpura setPosition:pos];
+		[in_pTenpura eatAction:time];
 	}
 }
 

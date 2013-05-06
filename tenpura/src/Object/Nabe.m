@@ -26,7 +26,7 @@
 //	定数定義
 enum
 {
-	eTEPURA_MAX	= 32,	//	天ぷら最大確保個数
+	eTEPURA_MAX	= 64,	//	天ぷら最大確保個数
 };
 
 //	鍋内に表示するZオーダー一覧
@@ -149,14 +149,13 @@ enum
 
 	Tenpura*	pTenpura	= nil;
 	CCNode*		pNode		= nil;
-	SInt32		idx			= 0;
 	
 	CCARRAY_FOREACH(_children, pNode)
 	{
 		if( [pNode isKindOfClass:[Tenpura class]] == YES )
 		{
 			pTenpura	= (Tenpura*)pNode;
-			if( [pTenpura isFly] == NO )
+			if( ([pTenpura isFly] == NO) && (pTenpura.visible == NO) )
 			{
 				UInt32	posIdx	= [pDataTenpuraPosList getIdxNoUse];
 				[pDataTenpuraPosList setUseFlg:YES :posIdx];
@@ -169,8 +168,6 @@ enum
 				
 				return pTenpura;
 			}
-			
-			++idx;
 		}
 	}
 

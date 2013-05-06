@@ -1517,7 +1517,6 @@
 		CED245DF1639964D00506CA8 = {
 			isa = PBXGroup;
 			children = (
-				CE2DB17A172B731400E97D84 /* Security.framework */,
 				CED246001639964D00506CA8 /* tenpura */,
 				CED245ED1639964D00506CA8 /* Frameworks */,
 				CED245EB1639964D00506CA8 /* Products */,
@@ -1535,6 +1534,7 @@
 		CED245ED1639964D00506CA8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CE2DB17A172B731400E97D84 /* Security.framework */,
 				CEF7FA2D16BFF8DF00A69042 /* libz.dylib */,
 				CEF7FA3116BFF8F600A69042 /* iAd.framework */,
 				CEF7FA2F16BFF8E800A69042 /* MapKit.framework */,

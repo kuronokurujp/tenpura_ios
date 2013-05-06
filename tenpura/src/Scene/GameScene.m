@@ -205,15 +205,13 @@ enum
 					DataSettingNetaPack*	pDataSettingNetaPack	= (DataSettingNetaPack*)pNode;
 					const NETA_PACK_DATA_ST*	pNetaPackData	= [pDataNetaPackListInst getDataSearchId:pDataSettingNetaPack.no];
 					NSAssert1(pNetaPackData, @"error:neta.no%ld", pDataSettingNetaPack.no);
-					if( pNetaPackData != nil )
+
+					for( SInt32 i = 0; i < eNETA_PACK_MAX; ++i )
 					{
-						for( SInt32 i = 0; i < eNETA_PACK_MAX; ++i )
+						if( 0 < pNetaPackData->aNetaId[i] )
 						{
-							if( 0 < pNetaPackData->aNetaId[i] )
-							{
-								NSNumber*	num	= [NSNumber numberWithInt:pNetaPackData->aNetaId[i]];
-								[mp_settingItemList addObject:num];
-							}
+							NSNumber*	num	= [NSNumber numberWithInt:pNetaPackData->aNetaId[i]];
+							[mp_settingItemList addObject:num];
 						}
 					}
 				}

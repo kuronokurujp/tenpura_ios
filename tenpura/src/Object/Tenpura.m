@@ -10,6 +10,7 @@
 
 #import "./../Data/DataTenpuraPosList.h"
 #import "./../Data/DataGlobal.h"
+#import "./../Object/Customer.h"
 #import	"./../System/Anim/AnimManager.h"
 #import "./../System/Sound/SoundManager.h"
 
@@ -270,10 +271,15 @@ enum
 -(void)	eatAction:(Float32)in_time
 {
 	NSAssert(mb_fly == YES, @"天ぷらをあげていない");
+	NSAssert( (_parent != nil ) && ([_parent isKindOfClass:[Customer class]] == YES), @"このアクションは客が親でないとだめ");
 
 	DataTenpuraPosList*	pDataTenpuraPosList	= [DataTenpuraPosList shared];
 	[pDataTenpuraPosList setUseFlg:NO :m_posDataIdx];
 	m_posDataIdx	= -1;
+
+	AnimActionSprite*	pEff	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_ABURA];
+	[pEff end];
+	[pEff setVisible:NO];
 
 	mb_lock	= YES;
 	[mp_sp setScale:0.5f];

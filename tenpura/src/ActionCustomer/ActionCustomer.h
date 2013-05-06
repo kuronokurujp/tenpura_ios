@@ -59,6 +59,4 @@
 //	違う食べ物を与えたときの怒りアクション
 -(void)anger:(Tenpura*)in_pTenpura;
 
--(BOOL)	isEatting;
-
 @end
