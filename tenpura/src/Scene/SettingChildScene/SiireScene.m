@@ -22,7 +22,7 @@
 
 @interface SiireScene (PrivateMethod)
 
--(void)setMoneyString:(UInt32)in_num;
+-(BOOL)	_isCellSelect:(SInt32)in_idx;
 
 @end
 
@@ -62,6 +62,12 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 	NSAssert(pItemCell, @"");
 
 	if( pData == NULL )
+	{
+		return pCell;
+	}
+	
+	//	選択可能かチェック
+	if( [self _isCellSelect:idx] == NO )
 	{
 		return pCell;
 	}
@@ -160,6 +166,11 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 */
 -(BOOL)	isBuy:(SInt32)in_idx
 {
+	if( [self _isCellSelect:in_idx] == NO )
+	{
+		return NO;
+	}
+
 	SInt32	sellMoney	= [self getSellMoney:in_idx];
 	UInt32	nowMoney	= [[DataSaveGame shared] getData]->money;
 	
@@ -170,7 +181,24 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 		return ( sellMoney <= nowMoney );
 	}
 
-	return false;
+	return NO;
+}
+
+/*
+	@brief	選択可能かチェック
+*/
+-(BOOL)	_isCellSelect:(SInt32)in_idx
+{
+	if( 0 < in_idx )
+	{
+		//	選択するアイテムのリスト前のアイテムを持っているか
+		SInt32	backIdx	= in_idx - 1;
+		const NETA_PACK_DATA_ST*	pData	= [[DataNetaPackList shared] getData:backIdx];
+		const SAVE_DATA_ITEM_ST*	pNetaPackData	= [[DataSaveGame shared] getNetaPack:pData->no];
+		return ( pNetaPackData != nil );
+	}
+	
+	return YES;
 }
 
 @end

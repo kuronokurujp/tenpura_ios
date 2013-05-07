@@ -14,6 +14,14 @@
 #import "./../../Data/DataItemList.h"
 #import "./../../Data/DataBaseText.h"
 
+//	内部関数
+@interface ItemShopScene (PrivateMethod)
+
+//	セル選択可能か
+-(BOOL)	_isCellSelect:(SInt32)in_idx;
+
+@end
+
 @implementation ItemShopScene
 
 /*
@@ -41,6 +49,12 @@
 	SWTableViewCell*	pCell	= [super table:table cellAtIndex:idx];
 	ItemShopTableCell*	pItemCell	= (ItemShopTableCell*)[pCell getChildByTag:eSW_TABLE_TAG_CELL_LAYOUT];
 	NSAssert(pItemCell, @"");
+	
+	//	選択可能かチェック
+	if( [self _isCellSelect:idx] == NO )
+	{
+		return pCell;
+	}
 
 	//	購入できない場合の対応
 	{
@@ -114,6 +128,11 @@
 */
 -(BOOL)	isBuy:(SInt32)in_idx
 {
+	if( [self _isCellSelect:in_idx] == NO )
+	{
+		return NO;
+	}
+
 	SInt32	sellMoney	= [self getSellMoney:in_idx];
 	UInt32	nowMoney	= [[DataSaveGame shared] getData]->money;
 	
@@ -125,6 +144,23 @@
 	}
 
 	return false;
+}
+
+/*
+	@brief	セル選択可能か
+*/
+-(BOOL)	_isCellSelect:(SInt32)in_idx
+{
+	if( 0 < in_idx )
+	{
+		SInt32	backIdx	= in_idx - 1;
+		const ITEM_DATA_ST*	pData	= [[DataItemList shared] getData:backIdx];
+		const SAVE_DATA_ITEM_ST*	pItemData	= [[DataSaveGame shared] getItem:pData->no];
+		
+		return (pItemData != nil);
+	}
+	
+	return YES;
 }
 
 @end

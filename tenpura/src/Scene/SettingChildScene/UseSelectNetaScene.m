@@ -65,6 +65,15 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 }
 
 /*
+	@brief
+*/
+-(void)	onEnter
+{
+	[super onEnter];
+	[self reloadUpdate];
+}
+
+/*
 	@brief	初期化後に行う必須設定
 	@note	更新前にしないとハングする。
 */

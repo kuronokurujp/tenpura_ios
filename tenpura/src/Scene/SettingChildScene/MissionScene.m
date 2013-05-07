@@ -43,6 +43,15 @@
 /*
 	@brief
 */
+-(void)	onEnter
+{
+	[super onEnter];
+	[self reloadUpdate];
+}
+
+/*
+	@brief
+*/
 -(void)	pressBackBtn
 {
 	[[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:g_sceneChangeTime];

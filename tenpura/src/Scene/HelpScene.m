@@ -129,16 +129,11 @@ static NSString*	sp_helpHtmlNameList[]	=
 }
 
 /*
-	@brief	タイトルに戻る
+	@brief	前の画面に戻る
 */
 -(void)	pressBackBtn
 {
-	CCScene*	pTitleScene	= [CCBReader sceneWithNodeGraphFromFile:@"title.ccbi"];
-
-	CCTransitionFade*	pTransFade	=
-	[CCTransitionFade transitionWithDuration:g_sceneChangeTime scene:pTitleScene withColor:ccBLACK];
-	
-	[[CCDirector sharedDirector] replaceScene:pTransFade];
+	[[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:g_sceneChangeTime];
 	
 	[[SoundManager shared] playSe:@"pressBtnClick"];
 }

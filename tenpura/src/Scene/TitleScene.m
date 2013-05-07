@@ -107,7 +107,7 @@
 	CCTransitionFade*	pTransFade	=
 	[CCTransitionFade transitionWithDuration:g_sceneChangeTime scene:helpScene withColor:ccBLACK];
 	
-	[[CCDirector sharedDirector] replaceScene:pTransFade];
+	[[CCDirector sharedDirector] pushScene:pTransFade];
 	
 	[[SoundManager shared] playSe:@"btnClick"];
 }

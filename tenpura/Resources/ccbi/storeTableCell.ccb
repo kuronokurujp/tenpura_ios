@@ -42,8 +42,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>179</real>
-							<real>20</real>
+							<real>37</real>
+							<real>5</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -54,8 +54,8 @@
 						<string>Point</string>
 						<key>value</key>
 						<array>
-							<real>0.5</real>
-							<real>0.5</real>
+							<real>0.0</real>
+							<real>0.0</real>
 						</array>
 					</dict>
 					<dict>
@@ -94,7 +94,7 @@
 						<string>FloatScale</string>
 						<key>value</key>
 						<array>
-							<real>12</real>
+							<real>22</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -170,8 +170,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>338</real>
-							<real>19</real>
+							<real>320</real>
+							<real>6</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -182,8 +182,8 @@
 						<string>Point</string>
 						<key>value</key>
 						<array>
-							<real>0.5</real>
-							<real>0.5</real>
+							<real>0.0</real>
+							<real>0.0</real>
 						</array>
 					</dict>
 					<dict>
@@ -222,7 +222,7 @@
 						<string>FloatScale</string>
 						<key>value</key>
 						<array>
-							<real>12</real>
+							<real>16</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -275,6 +275,8 @@
 						<string>money</string>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>
@@ -330,9 +332,18 @@
 					<string>tableView/neta_cell.png</string>
 				</array>
 			</dict>
+			<dict>
+				<key>name</key>
+				<string>blendFunc</string>
+				<key>type</key>
+				<string>Blendmode</string>
+				<key>value</key>
+				<array>
+					<integer>770</integer>
+					<integer>771</integer>
+				</array>
+			</dict>
 		</array>
-		<key>selected</key>
-		<true/>
 	</dict>
 	<key>notes</key>
 	<array/>

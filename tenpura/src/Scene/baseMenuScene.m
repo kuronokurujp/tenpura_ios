@@ -9,6 +9,8 @@
 #import "BaseMenuScene.h"
 #import "./../Data/DataSaveGame.h"
 #import "./../System/Anim/Action/AnimActionNumCounterLabelTTF.h"
+#import "./../System/Sound/SoundManager.h"
+#import "./../CCBReader/CCBReader.h"
 
 @implementation BaseMenuScene
 
@@ -89,6 +91,21 @@
 	{
 		[mp_nowMoneyText setCountNum:pSaveData->money];
 	}
+}
+
+/*
+	@brief	ヘルプ画面へ遷移
+*/
+-(void)	onBtnHelpScene
+{
+	CCScene*	helpScene	= [CCBReader sceneWithNodeGraphFromFile:@"help.ccbi"];
+
+	CCTransitionFade*	pTransFade	=
+	[CCTransitionFade transitionWithDuration:g_sceneChangeTime scene:helpScene withColor:ccBLACK];
+	
+	[[CCDirector sharedDirector] pushScene:pTransFade];
+	
+	[[SoundManager shared] playSe:@"btnClick"];
 }
 
 @end

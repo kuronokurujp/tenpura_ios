@@ -128,6 +128,18 @@
 						<array>
 							<dict>
 								<key>name</key>
+								<string>position</string>
+								<key>type</key>
+								<string>Position</string>
+								<key>value</key>
+								<array>
+									<real>1</real>
+									<real>0.0</real>
+									<integer>0</integer>
+								</array>
+							</dict>
+							<dict>
+								<key>name</key>
 								<string>anchorPoint</string>
 								<key>type</key>
 								<string>Point</string>
@@ -280,7 +292,7 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>-50</real>
+											<real>-90</real>
 											<real>0.0</real>
 											<integer>0</integer>
 										</array>
@@ -292,8 +304,8 @@
 										<string>Point</string>
 										<key>value</key>
 										<array>
-											<real>0.5</real>
-											<real>0.5</real>
+											<real>0.0</real>
+											<real>0.0</real>
 										</array>
 									</dict>
 									<dict>
@@ -332,7 +344,7 @@
 										<string>FloatScale</string>
 										<key>value</key>
 										<array>
-											<real>12</real>
+											<real>22</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -420,8 +432,8 @@
 										<string>Point</string>
 										<key>value</key>
 										<array>
-											<real>0.5</real>
-											<real>0.5</real>
+											<real>0.0</real>
+											<real>0.0</real>
 										</array>
 									</dict>
 									<dict>
@@ -460,7 +472,7 @@
 										<string>FloatScale</string>
 										<key>value</key>
 										<array>
-											<real>12</real>
+											<real>22</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -690,7 +702,7 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>-50</real>
+											<real>-90</real>
 											<real>0.0</real>
 											<integer>0</integer>
 										</array>
@@ -702,8 +714,8 @@
 										<string>Point</string>
 										<key>value</key>
 										<array>
-											<real>0.5</real>
-											<real>0.5</real>
+											<real>0.0</real>
+											<real>0.0</real>
 										</array>
 									</dict>
 									<dict>
@@ -742,7 +754,7 @@
 										<string>FloatScale</string>
 										<key>value</key>
 										<array>
-											<real>12</real>
+											<real>22</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -830,8 +842,8 @@
 										<string>Point</string>
 										<key>value</key>
 										<array>
-											<real>0.5</real>
-											<real>0.5</real>
+											<real>0.0</real>
+											<real>0.0</real>
 										</array>
 									</dict>
 									<dict>
@@ -870,7 +882,7 @@
 										<string>FloatScale</string>
 										<key>value</key>
 										<array>
-											<real>12</real>
+											<real>22</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1100,7 +1112,7 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>-50</real>
+											<real>-90</real>
 											<real>0.0</real>
 											<integer>0</integer>
 										</array>
@@ -1112,8 +1124,8 @@
 										<string>Point</string>
 										<key>value</key>
 										<array>
-											<real>0.5</real>
-											<real>0.5</real>
+											<real>0.0</real>
+											<real>0.0</real>
 										</array>
 									</dict>
 									<dict>
@@ -1143,7 +1155,7 @@
 										<key>type</key>
 										<string>FontTTF</string>
 										<key>value</key>
-										<string>Helvetica</string>
+										<string>Arial-BoldMT</string>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -1152,7 +1164,7 @@
 										<string>FloatScale</string>
 										<key>value</key>
 										<array>
-											<real>12</real>
+											<real>22</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1163,8 +1175,8 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>0</integer>
-											<integer>0</integer>
+											<integer>255</integer>
+											<integer>19</integer>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1240,8 +1252,8 @@
 										<string>Point</string>
 										<key>value</key>
 										<array>
-											<real>0.5</real>
-											<real>0.5</real>
+											<real>0.0</real>
+											<real>0.0</real>
 										</array>
 									</dict>
 									<dict>
@@ -1271,7 +1283,7 @@
 										<key>type</key>
 										<string>FontTTF</string>
 										<key>value</key>
-										<string>Helvetica</string>
+										<string>Arial-BoldMT</string>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -1280,7 +1292,7 @@
 										<string>FloatScale</string>
 										<key>value</key>
 										<array>
-											<real>12</real>
+											<real>22</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1291,8 +1303,8 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>0</integer>
-											<integer>0</integer>
+											<integer>255</integer>
+											<integer>19</integer>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1333,6 +1345,8 @@
 										<string>hiscore</string>
 									</dict>
 								</array>
+								<key>selected</key>
+								<true/>
 							</dict>
 						</array>
 						<key>customClass</key>
@@ -1510,7 +1524,7 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>-50</real>
+											<real>-90</real>
 											<real>0.0</real>
 											<integer>0</integer>
 										</array>
@@ -1522,8 +1536,8 @@
 										<string>Point</string>
 										<key>value</key>
 										<array>
-											<real>0.5</real>
-											<real>0.5</real>
+											<real>0.0</real>
+											<real>0.0</real>
 										</array>
 									</dict>
 									<dict>
@@ -1562,7 +1576,7 @@
 										<string>FloatScale</string>
 										<key>value</key>
 										<array>
-											<real>12</real>
+											<real>22</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1573,8 +1587,8 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>0</integer>
-											<integer>0</integer>
+											<integer>255</integer>
+											<integer>19</integer>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1650,8 +1664,8 @@
 										<string>Point</string>
 										<key>value</key>
 										<array>
-											<real>0.5</real>
-											<real>0.5</real>
+											<real>0.0</real>
+											<real>0.0</real>
 										</array>
 									</dict>
 									<dict>
@@ -1690,7 +1704,7 @@
 										<string>FloatScale</string>
 										<key>value</key>
 										<array>
-											<real>12</real>
+											<real>22</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1701,8 +1715,8 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>0</integer>
-											<integer>0</integer>
+											<integer>255</integer>
+											<integer>19</integer>
 											<integer>0</integer>
 										</array>
 									</dict>
