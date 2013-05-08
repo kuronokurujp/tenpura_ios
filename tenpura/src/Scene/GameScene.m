@@ -22,6 +22,7 @@
 #import "./../Data/DataItemList.h"
 #import "./../System/Sound/SoundManager.h"
 #import "./../System/Anim/Action/AnimActionNumCounterLabelTTF.h"
+#import "./../Object/SpriteZSetting.h"
 
 #import "./../CCBReader/CCBReader.h"
 
@@ -58,8 +59,6 @@
 */
 @implementation GameSceneData
 
-@synthesize combDelTime	= combDelTime;
-
 /*
 	@brief
 */
@@ -90,9 +89,7 @@
 
 @implementation GameScene
 
-static const Float32	s_baseTimeVal	= 30.f;
-
-//	各ゲームシーン
+//	各ゲームシーンのタグ
 enum
 {
 	eGAME_START_SCENE_TAG	= 0,
@@ -223,6 +220,7 @@ enum
 		{
 			//	制御するオブジェクトを取得
 			CCArray*	pCCLabelTTFArray	= [CCArray array];
+			CCArray*	pSpriteArray		= [CCArray array];
 			CCNode*	pCCBReader	= [CCBReader nodeGraphFromFile:@"gameIn.ccbi" owner:self parentSize:size];
 			CCNode*	pChildNode	= nil;
 			CCARRAY_FOREACH(pCCBReader.children, pChildNode)
@@ -263,6 +261,10 @@ enum
 				{
 					mp_feverEvent	= (GameInFeverEvent*)pChildNode;
 				}
+				else if( [pChildNode isKindOfClass:[SpriteZSetting class]] )
+				{
+					[pSpriteArray addObject:pChildNode];
+				}
 			}
 
 			[self addChild:pCCBReader];
@@ -293,6 +295,13 @@ enum
 				CCARRAY_FOREACH(pCCLabelTTFArray, pLabel)
 				{
 					[pLabel setZOrder:3.f];
+				}
+				
+				CCNode*	pNode	= nil;
+				CCARRAY_FOREACH(pSpriteArray, pNode)
+				{
+					SpriteZSetting*	pSpZ	= (SpriteZSetting*)pNode;
+					[pSpZ setZOrder:pSpZ.z];
 				}
 				
 				[mp_feverMessage setZOrder:19.f];
@@ -525,19 +534,6 @@ enum
 	}
 	
 	return pCustomer;
-}
-
-/*
-	@breif	客を一人退場
-*/
--(void)	exitCustomer:(Customer*)in_pCustomer
-{
-	if( in_pCustomer == nil )
-	{
-		return;
-	}
-	
-	[in_pCustomer.act exit];
 }
 
 /*

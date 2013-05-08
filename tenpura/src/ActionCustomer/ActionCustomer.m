@@ -18,15 +18,14 @@
 //	非公開関数
 @interface ActionCustomer (PrivateMedhot)
 
+-(void)	_initPut:(id)sender;
+
 //	食べる時のメッセージ
 -(void)	_putEatMessage:(NSString*)in_messageFileName;
 
--(void)	_actPut;
--(void)	_initPut:(id)sender;
+-(void)	_actPut:(BOOL)in_bSettingEat;
 //	食べるアクション
 -(void)	_actEat:(Tenpura*)in_pTenpura :(BOOL)in_bReset;
-
--(void)	_endPutNumber:(id)sender;
 
 //	スコアアクション作成
 -(CCAction*)	_createPutScoreAction:(SInt32)in_num;
@@ -63,7 +62,6 @@ enum ACTION_SP_ENUM
 {
 	if( self = [super init] )
 	{
-		mb_SettingEat	= NO;
 		mb_flash	= NO;
 
 		mp_customer	= in_pCustomer;
@@ -71,17 +69,34 @@ enum ACTION_SP_ENUM
 		
 		//	取得したスコアラベル
 		{
+			m_scoreLabelPos	= ccp(rect.size.width * 0.4f, rect.size.height * 0.5f - 16.f );
+
 			mp_scoreLabel	= [CCLabelTTF labelWithString:@"" fontName:@"Marker Felt" fontSize:32];
+			[mp_scoreLabel setAnchorPoint:ccp(0, 0.5f)];
 			[mp_scoreLabel setVisible:NO];
-			[mp_scoreLabel setPosition:ccp(rect.size.width * 0.5f, rect.size.height * 0.5f - 16.f )];
+			[mp_scoreLabel setPosition:m_scoreLabelPos];
+			
+			CCSprite*	pIconSp	= [CCSprite spriteWithFile:@"icon_s.png"];
+			[pIconSp setPosition:ccp(-20.f, 15)];
+			[mp_scoreLabel addChild:pIconSp];
+
 			[mp_customer addChild:mp_scoreLabel z:2.f];
 		}
 		
 		//	取得した金額ラベル
 		{
+			m_moneyLabelPos	= ccp(rect.size.width * 0.4f, rect.size.height * 0.5f + 16.f );
+
 			mp_moneyLabel	= [CCLabelTTF labelWithString:@"" fontName:@"Marker Felt" fontSize:32];
+			[mp_moneyLabel setAnchorPoint:ccp(0, 0.5f)];
 			[mp_moneyLabel setVisible:NO];
-			[mp_moneyLabel setPosition:ccp(rect.size.width * 0.5f, rect.size.height * 0.5f + 16.f )];
+			[mp_moneyLabel setPosition:m_moneyLabelPos];
+			
+			CCSprite*	pIconSp	= [CCSprite spriteWithFile:@"icon_c.png"];
+			mp_moneyIcon	= pIconSp;
+			[pIconSp setPosition:ccp(-20.f, 20)];
+			[mp_moneyLabel addChild:pIconSp];
+
 			[mp_customer addChild:mp_moneyLabel z:2.f];
 		}
 	}
@@ -94,8 +109,7 @@ enum ACTION_SP_ENUM
 */
 -(void)putEat
 {
-	mb_SettingEat	= YES;
-	[self _actPut];
+	[self _actPut:YES];
 }
 
 /*
@@ -103,8 +117,7 @@ enum ACTION_SP_ENUM
 */
 -(void)	putResult
 {
-	mb_SettingEat	= NO;
-	[self _actPut];
+	[self _actPut:NO];
 	
 	//	食べた天ぷらがあれば後始末
 	CCNode*	pTenpuraNode	= [mp_customer getChildByTag:eACT_SP_TAG_TENPURA];
@@ -201,26 +214,12 @@ enum ACTION_SP_ENUM
 }
 
 /*
-	@breif
+	@breif	リザルト時の結果表示
 */
 -(void)	putResultScore
 {
 	[self _createPutResultScoreAction:mp_customer.money];
 	[self _createPutResultMoneyAction:mp_customer.score];
-}
-
-/*
-	@breif	食べる成功
-*/
--(void)	eatGood:(Tenpura*)in_pTenpura :(SInt32)in_score :(SInt32)in_money
-{
-	[mp_customer stopAllActions];
-	[mp_customer setAnim:eCUSTOMER_ANIM_HAPPY :true];
-	[self _eat:in_pTenpura:in_score:in_money];
-	
-	[self _putEatMessage:[NSString stringWithUTF8String:gpa_spriteFileNameList[eSPRITE_FILE_CUS_MOJI00]]];
-
-	[[SoundManager shared] playSe:@"eat"];
 }
 
 /*
@@ -298,7 +297,7 @@ enum ACTION_SP_ENUM
 /*
 	@brief	出現アクション設定
 */
--(void)	_actPut
+-(void)	_actPut:(BOOL)in_bSettingEat
 {
 	[mp_customer stopAllActions];
 	[mp_customer setScale:1.f];
@@ -315,14 +314,12 @@ enum ACTION_SP_ENUM
 		Customer*	pCustomer	= mp_customer;
 		pCustomer.bPut	= YES;
 
-		if( mb_SettingEat == YES )
+		if( in_bSettingEat == YES )
 		{
 			//	客が食べたいものを作成
 			[pCustomer createEatList];
 			[mp_customer setAnim:eCUSTOMER_ANIM_NORMAL :YES];
 		}
-	
-		mb_SettingEat	= NO;
 	}];
 	CCSequence*		pSeq		= [CCSequence actions:pEaseMove, pEndFunc, nil];
 	
@@ -345,24 +342,25 @@ enum ACTION_SP_ENUM
 /*
 	@brief
 */
--(void)	_endPutNumber:(id)sender
-{
-	[sender setVisible:NO];
-}
-
-/*
-	@brief
-*/
 -(CCAction*)	_createPutScoreAction:(SInt32)in_num
 {
-	CCFadeIn*		pFaedIn		= [CCFadeIn actionWithDuration:0.1f];
+	[mp_scoreLabel stopAllActions];
+
+	CCFadeIn*		pFaedIn		= [CCFadeIn actionWithDuration:0.05f];
+	CCMoveBy*		pMove		= [CCMoveBy actionWithDuration:0.1f position:ccp(0, 10)];
+	CCSpawn*		pSpawn		= [CCSpawn actionOne:pFaedIn two:pMove];
+	
 	CCFadeOut*		pFadeOut	= [CCFadeOut actionWithDuration:0.1f];
-	CCCallFuncN*	pEndFunc	= [CCCallFuncN actionWithTarget:self selector:@selector(_endPutNumber:)];
-	CCSequence*		pSeq		= [CCSequence actions:pFaedIn,pFadeOut,pEndFunc,nil];
+	CCCallBlock*	pEndFunc	= [CCCallBlock actionWithBlock:^(void){
+		[mp_scoreLabel stopAllActions];
+		[mp_scoreLabel setVisible:NO];
+	}];
+	CCSequence*		pSeq		= [CCSequence actions:pSpawn,pFadeOut,pEndFunc,nil];
 
 	[mp_scoreLabel setString:[NSString stringWithFormat:@"%ld", in_num]];
 	[mp_scoreLabel runAction:pSeq];
 	[mp_scoreLabel setVisible:YES];
+	[mp_scoreLabel setPosition:m_scoreLabelPos];
 
 	return pSeq;
 }
@@ -372,14 +370,41 @@ enum ACTION_SP_ENUM
 */
 -(CCAction*)	_createPutMoneyAction:(SInt32)in_num
 {
-	CCFadeIn*		pFaedIn		= [CCFadeIn actionWithDuration:0.1f];
-	CCFadeOut*		pFadeOut	= [CCFadeOut actionWithDuration:0.1f];
-	CCCallFuncN*	pEndFunc	= [CCCallFuncN actionWithTarget:self selector:@selector(_endPutNumber:)];
-	CCSequence*		pSeq		= [CCSequence actions:pFaedIn,pFadeOut,pEndFunc,nil];
+	[mp_moneyLabel stopAllActions];
+	[mp_moneyIcon stopAllActions];
+
+	CCSequence*		pSeq	= nil;
+	//	全体のアクション設定
+	{
+		CCFadeIn*		pFaedIn		= [CCFadeIn actionWithDuration:0.05f];
+		CCMoveBy*		pMove		= [CCMoveBy actionWithDuration:0.1f position:ccp(0, 10)];
+		CCSpawn*		pSpawn		= [CCSpawn actionOne:pFaedIn two:pMove];
+
+		CCFadeOut*		pFadeOut	= [CCFadeOut actionWithDuration:0.1f];
+		CCCallBlock*	pEndFunc	= [CCCallBlock actionWithBlock:^(void){		
+			[mp_moneyLabel stopAllActions];
+			[mp_moneyIcon stopAllActions];
+			[mp_moneyLabel setVisible:NO];
+		}];
+		
+		pSeq		= [CCSequence actions:pSpawn,pFadeOut,pEndFunc,nil];
+		
+		[mp_moneyLabel runAction:pSeq];
+	}
+	
+	//	アイコンのアクション設定
+	{
+		CCScaleTo*	pScale	= [CCScaleTo actionWithDuration:0.1f scaleX:-1 scaleY:1];
+		CCScaleTo*	pScaleReturn	= [CCScaleTo actionWithDuration:0.1f scaleX:1 scaleY:1];
+		
+		CCSequence*	pIconSeq	= [CCSequence actionOne:pScale two:pScaleReturn];
+		CCRepeatForever*	pRepeatFor	= [CCRepeatForever actionWithAction:pIconSeq];
+		[mp_moneyIcon runAction:pRepeatFor];
+	}
 
 	[mp_moneyLabel setString:[NSString stringWithFormat:@"%ld", in_num]];
-	[mp_moneyLabel runAction:pSeq];
 	[mp_moneyLabel setVisible:YES];
+	[mp_moneyLabel setPosition:m_moneyLabelPos];
 
 	return pSeq;
 }
@@ -391,6 +416,7 @@ enum ACTION_SP_ENUM
 {
 	CCFadeIn*		pFadeIn		= [CCFadeIn actionWithDuration:0.1f];
 
+	[mp_scoreLabel setPosition:m_scoreLabelPos];
 	[mp_scoreLabel setString:[NSString stringWithFormat:@"%ld", in_num]];
 	[mp_scoreLabel runAction:pFadeIn];
 	[mp_scoreLabel setVisible:YES];
@@ -405,6 +431,8 @@ enum ACTION_SP_ENUM
 {
 	CCFadeIn*		pFaedIn		= [CCFadeIn actionWithDuration:0.1f];
 
+	[mp_moneyIcon setScale:1];
+	[mp_moneyLabel setPosition:m_moneyLabelPos];
 	[mp_moneyLabel setString:[NSString stringWithFormat:@"%ld", in_num]];
 	[mp_moneyLabel runAction:pFaedIn];
 	[mp_moneyLabel setVisible:YES];
@@ -435,7 +463,6 @@ enum ACTION_SP_ENUM
 
 /*
 	@brief	食べるアクション
-	@note	天ぷらを再配置することもできる
 */
 -(void)	_actEat:(Tenpura*)in_pTenpura :(BOOL)in_bReset
 {
@@ -497,7 +524,7 @@ enum ACTION_SP_ENUM
 		CCSequence*	pSeq	= [CCSequence actions:pRepeat, pEndCall, nil];
 
 		pSeq.tag	= eACT_TAG_EAT;
-		[mp_customer runAction:pSeq];
+		[mp_customer.charSprite runAction:pSeq];
 		
 		time	= scaleTime * 2.f;
 		time	*= repeatCnt;
@@ -522,6 +549,36 @@ enum ACTION_SP_ENUM
 		[in_pTenpura setPosition:pos];
 		[in_pTenpura eatAction:time];
 	}
+}
+
+/*
+	@brief
+*/
+-(void)	pauseSchedulerAndActions
+{
+	CCNode*	pNode	= nil;
+	CCARRAY_FOREACH(_children, pNode)
+	{
+		[pNode pauseSchedulerAndActions];
+	}
+	
+	[mp_moneyIcon pauseSchedulerAndActions];
+	[super pauseSchedulerAndActions];
+}
+
+/*
+	@brief
+*/
+-(void)	resumeSchedulerAndActions
+{
+	CCNode*	pNode	= nil;
+	CCARRAY_FOREACH(_children, pNode)
+	{
+		[pNode resumeSchedulerAndActions];
+	}
+
+	[mp_moneyIcon resumeSchedulerAndActions];
+	[super resumeSchedulerAndActions];
 }
 
 @end

@@ -17,7 +17,7 @@
 @interface Nabe (PrivateMethod)
 
 //	追加した天ぷら削除
--(void)	_cleanTenpura:(Tenpura*)in_pTenpura :(BOOL)in_bCleanUp;
+-(void)	_cleanTenpura:(Tenpura*)in_pTenpura;
 
 @end
 
@@ -26,7 +26,7 @@
 //	定数定義
 enum
 {
-	eTEPURA_MAX	= 64,	//	天ぷら最大確保個数
+	eTEPURA_MAX	= 32,	//	天ぷら最大確保個数
 };
 
 //	鍋内に表示するZオーダー一覧
@@ -155,7 +155,7 @@ enum
 		if( [pNode isKindOfClass:[Tenpura class]] == YES )
 		{
 			pTenpura	= (Tenpura*)pNode;
-			if( ([pTenpura isFly] == NO) && (pTenpura.visible == NO) )
+			if( ([pTenpura isUse] == NO) && (pTenpura.visible == NO) )
 			{
 				UInt32	posIdx	= [pDataTenpuraPosList getIdxNoUse];
 				[pDataTenpuraPosList setUseFlg:YES :posIdx];
@@ -164,6 +164,7 @@ enum
 				[pTenpura start];
 				[pTenpura setRaiseTimeRate:m_flyTimeRate];
 				[pTenpura setZOrder:m_tenpuraZOrder];
+				[pTenpura setEnableFever:mb_fever];
 				m_tenpuraZOrder += 1;
 				
 				return pTenpura;
@@ -188,7 +189,7 @@ enum
 		if( [pNode isKindOfClass:[Tenpura class]] )
 		{
 			pTenpura	= (Tenpura*)pNode;
-			[self _cleanTenpura:pTenpura:YES];
+			[self _cleanTenpura:pTenpura];
 		}
 		else if( [pNode isKindOfClass:[OjamaTenpura class]] )
 		{
@@ -268,7 +269,7 @@ enum
 -(void)	onAddChildTenpura:(CCNode*)in_pTenpura;
 {
 	NSAssert(in_pTenpura, @"天ぷらがない");
-	[self _cleanTenpura:(Tenpura*)in_pTenpura :YES];
+	[self _cleanTenpura:(Tenpura*)in_pTenpura];
 	[in_pTenpura removeFromParentAndCleanup:NO];
 	[self addChild:in_pTenpura];
 }
@@ -362,29 +363,19 @@ enum
 /*
 	@brief	天ぷら削除
 */
--(void)	_cleanTenpura:(Tenpura*)in_pTenpura :(BOOL)in_bCleanUp
+-(void)	_cleanTenpura:(Tenpura*)in_pTenpura
 {
 	if( in_pTenpura == nil )
 	{
 		return;
 	}
 
-	//	使用した座標データを未使用状態に
-	if( in_pTenpura.posDataIdx != -1 )
+	if(in_pTenpura.visible == YES)
 	{
-		DataTenpuraPosList*	pDataTenpuraPosList	= [DataTenpuraPosList shared];
-		[pDataTenpuraPosList setUseFlg:NO :in_pTenpura.posDataIdx];
+		m_tenpuraZOrder -= 1;
 	}
 
-	if( in_bCleanUp == YES )
-	{
-		if(in_pTenpura.visible == YES)
-		{
-			m_tenpuraZOrder -= 1;
-		}
-
-		[in_pTenpura end];
-	}
+	[in_pTenpura end];
 }
 
 #if 0

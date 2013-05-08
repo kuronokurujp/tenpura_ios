@@ -8,7 +8,6 @@
 
 @interface TweetViewController (PriveteMethod)
 
-
 - (void)pressBackBtn:(id)sender;
 
 @end
@@ -27,9 +26,8 @@ enum
 /*
 	@brief
 */
-- (id)initToSetup:(NSString*)in_pRetBtnText :(NSString*)in_pRetImageFileName
+- (id)initToSetup:(NSString*)in_pRetImageFileName
 {
-	mp_retBtnText	= [in_pRetBtnText retain];
 	mp_retBtnImageFileName	= [in_pRetImageFileName retain];
 
 	if( self = [super init] )
@@ -69,7 +67,7 @@ enum
 			[m_pTweetWebView setDelegate:self];
 			[self.view addSubview:m_pTweetWebView];
 		}
-        
+
 		//	 戻るボタンビュー設置
 		{
 			UIView*	pOldBtnView	= [self.view viewWithTag:eTAB_BTN_VIEW];
@@ -77,15 +75,14 @@ enum
 
 			UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
 			[btn setBackgroundImage:[UIImage imageNamed:mp_retBtnImageFileName] forState:UIControlStateNormal];
-			[btn setTitle:mp_retBtnText forState:UIControlStateNormal];
 		
 			btn.tag	= eTAB_BTN_VIEW;
 			[btn addTarget:self action:@selector(pressBackBtn:) forControlEvents:UIControlEventTouchUpInside];
 			[self.view addSubview:btn];
 		}
-    }
+	}
 
-    return self;
+	return self;
 }
 
 /*
@@ -93,11 +90,10 @@ enum
 */
 - (void)dealloc
 {
-	[mp_retBtnText release];
 	[mp_retBtnImageFileName release];
 	
-    [m_pTweetWebView release];
-    [super dealloc];
+	[m_pTweetWebView release];
+	[super dealloc];
 }
 
 /*

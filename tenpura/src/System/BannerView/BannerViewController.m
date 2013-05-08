@@ -133,6 +133,16 @@
 -(void)	adView:(GADBannerView *)view didFailToReceiveAdWithError:(GADRequestError *)error
 {
 	NSLog(@"adView:didFallError:%@", [error localizedDescription]);
+	
+	//	再度読み込み
+	GADRequest*	pRp	= [GADRequest request];
+#ifdef DEBUG
+	pRp.testing	= YES;
+	pRp.testDevices	= [NSArray arrayWithObjects:GAD_SIMULATOR_ID, nil];
+#endif
+	NSLog(@"BannerUnitId : %@", mp_unitIDName);
+	mp_bannerView.adUnitID	= mp_unitIDName;
+	[mp_bannerView loadRequest:pRp];
 }
 
 /*

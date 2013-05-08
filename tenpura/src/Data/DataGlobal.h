@@ -106,6 +106,7 @@ enum
 	eSPRITE_FILE_MAX,
 };
 
+//	事前読み込みスプライトファイル
 extern	char*	gpa_spriteFileNameList[eSPRITE_FILE_MAX];
 
 #endif

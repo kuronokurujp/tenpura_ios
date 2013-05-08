@@ -23,7 +23,9 @@
 	CCArray*			mp_useItemNoList;
 	CCControlButton*	mp_gameStartBtn;
 	UIAlertView*		mp_missionSucceesAlertView;
+	UIAlertView*		mp_missionBounesAlertView;
 	LeftMoveTicker*		mp_ticker;
+	UInt32	m_missionSuccessIdx;
 }
 
 @property	(nonatomic, retain)CCArray*	useItemNoList;

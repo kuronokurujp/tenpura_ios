@@ -53,5 +53,7 @@
 -(void)	startLoop:(BOOL)in_bReverse;
 -(void)	end;
 -(void)	frame:(const UInt32)idx;
+//	不透明度設定
+-(void)	setOpacity:(GLubyte)in_opacity;
 
 @end

@@ -196,7 +196,15 @@
 		[self end];
 		CCSpriteFrame*	pFrame	= (CCSpriteFrame*)[mp_frameList objectAtIndex:idx];
 		[mp_sp setDisplayFrame:pFrame];
-	}
+	}	
+}
+
+/*
+	@brief	不透明度設定
+*/
+-(void)	setOpacity:(GLubyte)in_opacity
+{
+	[mp_sp setOpacity:in_opacity];
 }
 
 /*

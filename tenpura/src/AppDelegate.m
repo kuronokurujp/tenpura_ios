@@ -160,8 +160,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
 
 	//	TweetView作成
 	{
-		NSString*	pRetBtnName	= [DataBaseText getString:106];
-		mp_tweetViewController = [[TweetViewController alloc] initToSetup:pRetBtnName :@"btn_back.png"];
+		mp_tweetViewController = [[TweetViewController alloc] initToSetup:@"btn_back.png"];
 	}
 	
 	//	TweetView呼び出し

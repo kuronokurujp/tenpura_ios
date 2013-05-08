@@ -24,8 +24,6 @@
 //	消滅演出終了
 -(void)	_endEatAction;
 
-//	揚げる処理
--(void)	_doNextRaise:(ccTime)delta;
 //	状態設定
 -(void)	_setState:(const TENPURA_STATE_ET)in_eState;
 
@@ -105,11 +103,17 @@ enum
 {
 	if( [self isFly] && (mb_fever == NO) )
 	{
-		m_nowRaiseTime	+= delta;
 		Float32	nextRaiseTime	= [self _getRaiseTime:m_state];
-		if( (0.f <= nextRaiseTime) && ( nextRaiseTime <= m_nowRaiseTime ) )
+		if( 0.f <= nextRaiseTime )
 		{
-			[self _doNextRaise:0.f];
+			m_nowRaiseTime	+= delta;
+			if( nextRaiseTime <= m_nowRaiseTime )
+			{
+				m_nowRaiseTime	= 0.f;
+
+				++m_state;
+				[self _setState:m_state];
+			}
 		}
 	}
 
@@ -181,6 +185,8 @@ enum
 			AnimActionSprite*	pAburaAnim	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_ABURA];
 			[pAburaAnim startLoop:NO];
 			[pAburaAnim setVisible:YES];
+			[pAburaAnim setScale:1.5f];
+			[pAburaAnim setOpacity:255 * 0.8f];
 		}];
 	
 		CCSequence*	pSeq		= [CCSequence actionOne:pScaleBy two:pEndCall];
@@ -201,7 +207,15 @@ enum
 -(void)	end
 {
 	[mp_sp setScale:s_normalScaleVal];
-	mb_fly		= NO;
+
+	//	使用した座標データを未使用状態に
+	if( m_posDataIdx != -1 )
+	{
+		DataTenpuraPosList*	pDataTenpuraPosList	= [DataTenpuraPosList shared];
+		[pDataTenpuraPosList setUseFlg:NO :m_posDataIdx];
+	}
+
+	mb_fly			= NO;
 	mb_lock			= NO;
 	m_posDataIdx	= -1;
 	m_nowRaiseTime	= 0.f;
@@ -263,6 +277,14 @@ enum
 -(BOOL)	isFly
 {
 	return (mb_fly && (mb_lock == NO));
+}
+
+/*
+	@brief	使用中か
+*/
+-(BOOL)	isUse
+{
+	return mb_fly;
 }
 
 /*
@@ -486,22 +508,12 @@ enum
 }
 
 /*
-	@brief
-*/
--(void)	_doNextRaise:(ccTime)delta
-{
-	++m_state;
-	[self _setState:m_state];
-}
-
-/*
 	@brief	状態設定
 */
 -(void)	_setState:(const TENPURA_STATE_ET)in_eState
 {
 	if( in_eState < eTENPURA_STATE_MAX )
 	{
-		m_nowRaiseTime	= 0.f;
 		{
 			switch ((SInt32)in_eState)
 			{

@@ -27,6 +27,7 @@
 		[[GameKitHelper shared] authenticateLocalPlayer];
 
 #ifdef DEBUG
+//	デバッグ画面
 	CCMenuItemFont*	pResetSaveItem		= [CCMenuItemFont	itemWithString:[NSString stringWithUTF8String:[[DataBaseText shared] getText:0]]
 	block:^(id sender)
 	{
@@ -119,10 +120,12 @@
 {
 	[[SoundManager shared] playSe:@"btnClick"];
 	
-	DataBaseText*	pDataText	= [DataBaseText shared];
-	NSString*	pURLText	= [NSString stringWithUTF8String:[pDataText getText:72]];
-	NSURL*	pUrl	= [NSURL URLWithString:pURLText];
-	[[UIApplication sharedApplication] openURL:pUrl];
+	CCScene*	creditScene	= [CCBReader sceneWithNodeGraphFromFile:@"credit.ccbi"];
+
+	CCTransitionFade*	pTransFade	=
+	[CCTransitionFade transitionWithDuration:g_sceneChangeTime scene:creditScene withColor:ccBLACK];
+
+	[[CCDirector sharedDirector] pushScene:pTransFade];
 }
 
 @end

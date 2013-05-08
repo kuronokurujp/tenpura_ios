@@ -50,19 +50,7 @@ const char*	gp_leaderboardDataName	= "GameScore";
 //	サウンドデータ管理ファイル名GameScore
 const char*	gp_soundDataListName	= "soundListData";
 
-/*
-//	ローディング対象のテクスチャーファイル名一覧
-static const char*	gp_MissionListCellSpriteName	= "neta_cell.png";
-static const char*	gp_MissionChkBoxOffSpriteName	= "checkoff.png";
-static const char*	gp_MissionChkBoxOnSpriteName	= "checkon.png";
-static const char*	gp_NabeSpriteName	= "nabe0.png";
-static const char*	gp_SireCellFileName		= "sire_cell.png";
-static const char*	gp_NotBuyCellFileName	= "not_buy_cell.png";
-static const char*	gp_CutomerCharFileName	= "customer0.png";
-static const char*	gp_GamePlayEndSpritFileName	= "play_end.png";
-static const char*	gp_GamePlayStartSpritFileName	= "play_start.png";
-*/
-
+//	アニメデータ一覧
 ANIM_DATA_ST	ga_animDataList[eANIM_MAX]	=
 {
 	{ "bomb.png", "bomb.plist", 60.f },

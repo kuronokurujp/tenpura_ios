@@ -257,7 +257,7 @@ enum
 			}
 			case eMISSION_TYPE_ID_HISCORE:
 			{
-				if( pData->customData.hiscore.score < pSaveData->score )
+				if( pData->customData.hiscore.score <= pSaveData->score )
 				{
 					//	成功
 				//	[pSaveDataInst saveRank:pData->customData.hiscore.rank];

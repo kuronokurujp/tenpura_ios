@@ -83,14 +83,13 @@
 
 //	客を一人出す
 -(Customer*) putCustomer:(BOOL)in_bCreateEat;
-//	客を一人退場
--(void)	exitCustomer:(Customer*)in_pCustomer;
 
 //	オブジェクトのポーズ
 -(void)	pauseObject:(BOOL)in_bFlg;
 
 //	取得したスコア／金額
 -(int64_t)	getScore;
+//	ゲーム終了時のスコア値
 -(int64_t)	getScoreByGameEnd;
 -(int64_t)	getMoney;
 

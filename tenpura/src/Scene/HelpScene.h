@@ -9,8 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
-#import "./../../libs/CCControlExtension/CCControl/CCControlButton.h"
-
 /*
 	@brief	ヘルプ画面表示
 	@note	html内にimgタグを使って画像を参照している時には

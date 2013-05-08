@@ -15,18 +15,21 @@
 @class TenpuraIcon;
 
 /*
-	@brief	客用のアクションリスト一覧
+	@brief	客のアクション制御
 */
 @interface ActionCustomer : CCNode
 {
 	Customer*	mp_customer;
 	CCLabelTTF*	mp_scoreLabel;
 	CCLabelTTF*	mp_moneyLabel;
+	CCSprite*	mp_moneyIcon;
+	
+	CGPoint	m_scoreLabelPos;
+	CGPoint	m_moneyLabelPos;
 	
 	SInt32	m_getScore;
 	SInt32	m_getMoeny;
 	
-	BOOL	mb_SettingEat;
 	BOOL	mb_flash;
 }
 
@@ -51,12 +54,14 @@
 -(void)	putResultScore;
 
 //	食べた時のアクション
--(void)eatGood:(Tenpura*)in_pTenpura :(SInt32)in_score :(SInt32)in_money;
 -(void)eatVeryGood:(Tenpura*)in_pTenpura :(SInt32)in_score :(SInt32)in_money;
 -(void)eatBat:(Tenpura*)in_pTenpura :(SInt32)in_score :(SInt32)in_money;
 -(void)eatVeryBat:(Tenpura*)in_pTenpura :(SInt32)in_score :(SInt32)in_money;
 
 //	違う食べ物を与えたときの怒りアクション
 -(void)anger:(Tenpura*)in_pTenpura;
+
+-(void)	pauseSchedulerAndActions;
+-(void)	resumeSchedulerAndActions;
 
 @end

@@ -21,8 +21,10 @@
 */
 @interface GameInScene : CCLayer
 {
-@private	
+@private
+	//	通常ゲーム状態
 	GameInNormalScene*	mp_normalScene;
+	//	フィーバー中の状態
 	GameInFeverScene*	mp_feverScene;
 }
 

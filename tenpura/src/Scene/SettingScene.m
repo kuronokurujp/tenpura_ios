@@ -44,7 +44,11 @@
 		[AnimManager end];
 
 		mp_useItemNoList	= [[CCArray alloc] init];
+		mp_gameStartBtn	= nil;
 		mp_missionSucceesAlertView	= nil;
+		mp_missionBounesAlertView	= nil;
+		mp_ticker	= nil;
+		m_missionSuccessIdx	= 0;
 		
 		[[SoundManager shared] playBgm:@"normalBGM"];
 	}
@@ -62,6 +66,14 @@
 		[mp_missionSucceesAlertView release];
 		mp_missionSucceesAlertView	= nil;
 	}
+	
+	if( mp_missionBounesAlertView != nil )
+	{
+		[mp_missionBounesAlertView release];
+		mp_missionBounesAlertView	= nil;
+	}
+	
+	mp_ticker	= nil;
 	
 	if( mp_useItemNoList != nil )
 	{
@@ -396,8 +408,43 @@
 */
 -(void)	alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-	//	他に成功しているミッションがないかチェック
-	[self _checkMissionSuccess];
+	if( alertView == mp_missionSucceesAlertView )
+	{
+		if( mp_missionSucceesAlertView != nil )
+		{
+			[mp_missionSucceesAlertView release];
+			mp_missionSucceesAlertView	= nil;
+		}
+
+		if( mp_missionBounesAlertView != nil )
+		{
+			[mp_missionBounesAlertView release];
+			mp_missionBounesAlertView	= nil;
+		}
+		
+		DataMissionList*	pMissionInst	= [DataMissionList shared];
+
+		//	報酬内容を出す
+		mp_missionBounesAlertView	= [[UIAlertView alloc]	initWithTitle:[DataBaseText getString:800]
+										message:[pMissionInst getSuccessMsg:m_missionSuccessIdx]
+										delegate:self
+										cancelButtonTitle:[DataBaseText getString:46]
+										otherButtonTitles:nil];
+		[mp_missionBounesAlertView show];
+		
+		m_missionSuccessIdx	= 0;
+	}
+	else if( alertView == mp_missionBounesAlertView )
+	{
+		if( mp_missionBounesAlertView != nil )
+		{
+			[mp_missionBounesAlertView release];
+			mp_missionBounesAlertView	= nil;
+		}
+
+		//	他に成功しているミッションがないかチェック
+		[self _checkMissionSuccess];
+	}
 }
 
 /*
@@ -411,6 +458,7 @@
 	{
 		if( [pMissionInst checSuccess:i] == YES )
 		{
+			m_missionSuccessIdx	= i;
 			[pMissionInst setSuccess:YES:i];
 			//	ミッション成功メッセージを出す（アラート）
 			if( mp_missionSucceesAlertView != nil )
@@ -420,7 +468,7 @@
 			}
 
 			mp_missionSucceesAlertView	= [[UIAlertView alloc]	initWithTitle:[DataBaseText getString:68]
-											message:[pMissionInst getSuccessMsg:i]
+											message:[pMissionInst getMissonName:i]
 											delegate:self
 											cancelButtonTitle:[DataBaseText getString:46]
 											otherButtonTitles:nil];

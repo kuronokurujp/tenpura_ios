@@ -12,15 +12,35 @@
 
 @implementation AppBankEventBanner
 
+#define API_KEY	@"a6eca9dd074372c898dd1df549301f277c53f2b9"
+#define SPOT_ID	@"3172"
+
 @synthesize delegate;
 
--(void)requestBannerAd:(GADAdSize)adSize parameter:(NSString *)serverParameter label:(NSString *)serverLabel request:(GADCustomEventRequest *)request{
-
+-(void)requestBannerAd:(GADAdSize)adSize parameter:(NSString *)serverParameter label:(NSString *)serverLabel request:(GADCustomEventRequest *)request
+{
 	if( appbankView != nil )
 	{
 		[appbankView setDelegate:nil];
 		[appbankView release];
 		appbankView	= nil;
+	}
+	
+	NSArray* pItems	= nil;
+	if( serverParameter != nil )
+	{
+		pItems	= [serverParameter componentsSeparatedByString:@","];
+	}
+
+	NSString*	pApiKey	= API_KEY;
+	NSString*	pSPotId	= SPOT_ID;
+	if( pItems != nil )
+	{
+		SInt32	dataIdx	= 0;
+		pApiKey	= [pItems objectAtIndex:dataIdx];
+		++dataIdx;
+
+		pSPotId	= [pItems objectAtIndex:dataIdx];
 	}
 
 	appbankView =[[NADView alloc]init];
@@ -32,7 +52,7 @@
 
 	[appbankView  setFrame:CGRectMake(0, 0, adSize.size.width, adSize.size.height)];
 	[appbankView setDelegate:self];
-	[appbankView setNendID:API_KEY spotID:SPOT_ID];
+	[appbankView setNendID:pApiKey spotID:pSPotId];
 	[appbankView load:nil];
 }
 
@@ -53,6 +73,8 @@
 -(void) nadViewDidFailToReceiveAd:(NADView *)adView
 {
 	NSLog(@"delegate nadViewDidReceiveAd:");
+	//	再ロード
+	[appbankView load:nil];
 }
 
 -(void) viewWillDisappear:(BOOL)animated

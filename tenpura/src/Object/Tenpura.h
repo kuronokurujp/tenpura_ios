@@ -53,6 +53,8 @@
 -(BOOL)	isTouchOK;
 //	揚げている途中か
 -(BOOL)	isFly;
+//	使用中か
+-(BOOL)	isUse;
 
 //	食べるアクション
 -(void)	eatAction:(Float32)in_time;
