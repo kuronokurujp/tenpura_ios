@@ -131,7 +131,7 @@ typedef enum
 	}
 	
 	int64_t	nowScoreNum	= [pGameScene getScore];
-	if( pGameScene->mp_scorePut.countNum != nowScoreNum )
+	if( [pGameScene->mp_scorePut getCountNum] != nowScoreNum )
 	{
 		[pGameScene->mp_scorePut setCountNum:nowScoreNum];
 	}

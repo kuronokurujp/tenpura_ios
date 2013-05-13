@@ -233,20 +233,23 @@ enum
 				//	テキストオブジェクト
 				else if( [pChildNode isKindOfClass:[CCLabelTTF class]] )
 				{
-					CCLabelTTF*	pLabel	= (CCLabelTTF*)pChildNode;
+				}
+				else if( [pChildNode isKindOfClass:[CCLabelBMFont class]] )
+				{
+					CCLabelBMFont*	pLabel	= (CCLabelBMFont*)pChildNode;
 
-					if( [pLabel.string isEqualToString:@"timeNum"] )
+					if( ([pLabel.string isEqualToString:@"scoreNum"]) && ([pLabel isKindOfClass:[AnimActionNumCounterLabelBMT class]]) )
 					{
-						mp_timerPut	= pLabel;
-						[mp_timerPut setString:[NSString stringWithFormat:@"%03ld", (SInt32)m_timeVal]];
-					}
-					else if( ([pLabel.string isEqualToString:@"scoreNum"]) && ([pLabel isKindOfClass:[AnimActionNumCounterLabelTTF class]]) )
-					{
-						mp_scorePut	= (AnimActionNumCounterLabelTTF*)pLabel;
+						mp_scorePut	= (AnimActionNumCounterLabelBMT*)pLabel;
 						[mp_scorePut setStringFormat:@"%06ld"];
 						[mp_scorePut setNum:0];
 					}
-
+					else if( [pLabel.string isEqualToString:@"timeNum"] )
+					{
+						mp_timerPut	= (AnimActionNumCounterLabelBMT*)pLabel;
+						[mp_timerPut setString:[NSString stringWithFormat:@"%03ld", (SInt32)m_timeVal]];
+					}
+					
 					[pCCLabelTTFArray addObject:pLabel];
 				}
 				else if( [pChildNode isKindOfClass:[GameInFeverMessage class]] )
@@ -291,13 +294,13 @@ enum
 				[mp_nabe setZOrder:2.f];
 				mp_nabe.setFlyTimeRate	= raiseTimeRate;
 				
-				CCLabelTTF*	pLabel	= nil;
-				CCARRAY_FOREACH(pCCLabelTTFArray, pLabel)
+				CCNode*	pNode	= nil;
+				
+				CCARRAY_FOREACH(pCCLabelTTFArray, pNode)
 				{
-					[pLabel setZOrder:3.f];
+					[pNode setZOrder:3.f];
 				}
 				
-				CCNode*	pNode	= nil;
 				CCARRAY_FOREACH(pSpriteArray, pNode)
 				{
 					SpriteZSetting*	pSpZ	= (SpriteZSetting*)pNode;

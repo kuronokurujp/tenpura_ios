@@ -20,9 +20,14 @@
 @interface ActionCustomer : CCNode
 {
 	Customer*	mp_customer;
-	CCLabelTTF*	mp_scoreLabel;
-	CCLabelTTF*	mp_moneyLabel;
+	CCNodeRGBA*	mp_score;
+	CCNodeRGBA*	mp_money;
+	
+	CCLabelBMFont*	mp_scoreLabel;
+	CCLabelBMFont*	mp_moneyLabel;
+
 	CCSprite*	mp_moneyIcon;
+	CCSprite*	mp_scoreIcon;
 	
 	CGPoint	m_scoreLabelPos;
 	CGPoint	m_moneyLabelPos;

@@ -8,7 +8,7 @@
 
 #import "AnimActionNumCounterLabelTTF.h"
 
-@implementation AnimActionNumCounterLabelTTF
+@implementation AnimActionNumCounter
 
 @synthesize countNum	= m_count;
 
@@ -17,17 +17,12 @@
 */
 -(id)	init
 {
-	if( self = [super init] )
-	{
-		m_num	= 0;
-		m_count	= 0;
-		m_addNum	= 0;
-		m_time	= 0.f;
-		m_oldNum	= 0;
-		mp_format	= @"%d";
-
-		[self scheduleUpdate];
-	}
+	m_num	= 0;
+	m_count	= 0;
+	m_addNum	= 0;
+	m_time	= 0.f;
+	m_oldNum	= 0;
+	mp_format	= @"%d";
 
 	return self;
 }
@@ -44,15 +39,18 @@
 /*
 	@brief
 */
--(void)	update:(ccTime)delta
+-(bool)	update:(ccTime)delta
 {
 	if( m_num != m_count )
 	{
 		m_time += delta;
 		Float32	inp	= MIN(m_time, 1.f);
 		m_num = m_oldNum + (inp * m_addNum);
-		[super setString:[NSString stringWithFormat:mp_format, m_num]];
+		
+		return YES;
 	}
+	
+	return NO;
 }
 
 /*
@@ -90,9 +88,166 @@
 -(void)	setNum:(SInt32)in_num
 {
 	m_count	= in_num;
-	m_num	= in_num;
-	
-	[super setString:[NSString stringWithFormat:mp_format, m_num]];
+	m_num	= in_num;	
+}
+
+/*
+	@brief	文字列取得
+*/
+-(NSString*)	getText
+{
+	return [NSString stringWithFormat:mp_format, m_num];
 }
 
 @end
+
+@implementation AnimActionNumCounterLabelTTF
+
+/*
+	@brief	初期化
+*/
+-(id)	init
+{
+	if( self = [super init] )
+	{
+		mp_animCnt	= [AnimActionNumCounter alloc];
+		[self scheduleUpdate];
+	}
+
+	return self;
+}
+
+/*
+	@brief
+*/
+-(void)	dealloc
+{
+	if( mp_animCnt != nil )
+	{
+		[mp_animCnt release];
+	}
+
+	[super dealloc];
+}
+
+/*
+	@brief
+*/
+-(void)	update:(ccTime)delta
+{
+	if( [mp_animCnt update:delta] == YES )
+	{
+		[super setString:[mp_animCnt getText]];
+	}
+}
+
+/*
+	@brief	表示フォーマット
+*/
+-(void)	setStringFormat:(NSString*)in_pFormat
+{
+	[mp_animCnt setStringFormat:in_pFormat];
+}
+
+/*
+	@brief	カウント目標値設定
+*/
+-(void)	setCountNum:(SInt32)in_num
+{
+	[mp_animCnt setCountNum:in_num];
+}
+
+/*
+	@brief	カウントせずに即反映
+*/
+-(void)	setNum:(SInt32)in_num
+{
+	[mp_animCnt setNum:in_num];
+	[super setString:[mp_animCnt getText]];
+}
+
+/*
+	@brief	カウント値取得
+*/
+-(SInt32)	getCountNum
+{
+	return mp_animCnt.countNum;
+}
+
+@end
+
+@implementation AnimActionNumCounterLabelBMT
+
+/*
+	@brief	初期化
+*/
+-(id)	init
+{
+	if( self = [super init] )
+	{
+		mp_animCnt	= [AnimActionNumCounter alloc];
+		[self scheduleUpdate];
+	}
+
+	return self;
+}
+
+/*
+	@brief
+*/
+-(void)	dealloc
+{
+	if( mp_animCnt != nil )
+	{
+		[mp_animCnt release];
+	}
+
+	[super dealloc];
+}
+
+/*
+	@brief
+*/
+-(void)	update:(ccTime)delta
+{
+	if( [mp_animCnt update:delta] == YES )
+	{
+		[super setString:[mp_animCnt getText]];
+	}
+}
+
+/*
+	@brief	表示フォーマット
+*/
+-(void)	setStringFormat:(NSString*)in_pFormat
+{
+	[mp_animCnt setStringFormat:in_pFormat];
+}
+
+/*
+	@brief	カウント目標値設定
+*/
+-(void)	setCountNum:(SInt32)in_num
+{
+	[mp_animCnt setCountNum:in_num];
+}
+
+/*
+	@brief	カウントせずに即反映
+*/
+-(void)	setNum:(SInt32)in_num
+{
+	[mp_animCnt setNum:in_num];
+	[super setString:[mp_animCnt getText]];
+}
+
+/*
+	@brief	カウント値取得
+*/
+-(SInt32)	getCountNum
+{
+	return mp_animCnt.countNum;
+}
+
+@end
+

@@ -87,7 +87,7 @@
 	NSAssert(pSaveData, @"セーブデータの中身がない");
 
 	//	金額反映
-	if( mp_nowMoneyText.countNum != pSaveData->money )
+	if([ mp_nowMoneyText getCountNum] != pSaveData->money )
 	{
 		[mp_nowMoneyText setCountNum:pSaveData->money];
 	}

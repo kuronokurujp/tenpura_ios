@@ -70,34 +70,39 @@ enum ACTION_SP_ENUM
 		//	取得したスコアラベル
 		{
 			m_scoreLabelPos	= ccp(rect.size.width * 0.4f, rect.size.height * 0.5f - 16.f );
+			mp_score	= [CCNodeRGBA node];
+			[mp_score setPosition:m_scoreLabelPos];
 
-			mp_scoreLabel	= [CCLabelTTF labelWithString:@"" fontName:@"Marker Felt" fontSize:32];
+			mp_scoreLabel	= [CCLabelBMFont labelWithString:@"1" fntFile:@"font_suuji_aka.fnt"];
 			[mp_scoreLabel setAnchorPoint:ccp(0, 0.5f)];
-			[mp_scoreLabel setVisible:NO];
-			[mp_scoreLabel setPosition:m_scoreLabelPos];
+			[mp_score addChild:mp_scoreLabel];
 			
 			CCSprite*	pIconSp	= [CCSprite spriteWithFile:@"icon_s.png"];
-			[pIconSp setPosition:ccp(-20.f, 15)];
-			[mp_scoreLabel addChild:pIconSp];
+			[pIconSp setPosition:ccp(-20.f, 0)];
+			[mp_score addChild:pIconSp];
+			mp_scoreIcon	= pIconSp;
 
-			[mp_customer addChild:mp_scoreLabel z:2.f];
+			[mp_score setVisible:NO];
+			[mp_customer addChild:mp_score z:2.f];
 		}
 		
 		//	取得した金額ラベル
 		{
 			m_moneyLabelPos	= ccp(rect.size.width * 0.4f, rect.size.height * 0.5f + 16.f );
+			mp_money	= [CCNodeRGBA node];
+			[mp_money setPosition:m_moneyLabelPos];
 
-			mp_moneyLabel	= [CCLabelTTF labelWithString:@"" fontName:@"Marker Felt" fontSize:32];
+			mp_moneyLabel	= [CCLabelBMFont labelWithString:@"1" fntFile:@"font_suuji_kii.fnt"];
 			[mp_moneyLabel setAnchorPoint:ccp(0, 0.5f)];
-			[mp_moneyLabel setVisible:NO];
-			[mp_moneyLabel setPosition:m_moneyLabelPos];
-			
+			[mp_money addChild:mp_moneyLabel];
+
 			CCSprite*	pIconSp	= [CCSprite spriteWithFile:@"icon_c.png"];
 			mp_moneyIcon	= pIconSp;
-			[pIconSp setPosition:ccp(-20.f, 20)];
-			[mp_moneyLabel addChild:pIconSp];
+			[pIconSp setPosition:ccp(-20.f, 0)];
+			[mp_money addChild:pIconSp];
 
-			[mp_customer addChild:mp_moneyLabel z:2.f];
+			[mp_money setVisible:NO];
+			[mp_customer addChild:mp_money z:2.f];
 		}
 	}
 
@@ -344,7 +349,8 @@ enum ACTION_SP_ENUM
 */
 -(CCAction*)	_createPutScoreAction:(SInt32)in_num
 {
-	[mp_scoreLabel stopAllActions];
+	[mp_scoreIcon stopAllActions];
+	[mp_score stopAllActions];
 
 	CCFadeIn*		pFaedIn		= [CCFadeIn actionWithDuration:0.05f];
 	CCMoveBy*		pMove		= [CCMoveBy actionWithDuration:0.1f position:ccp(0, 10)];
@@ -352,15 +358,26 @@ enum ACTION_SP_ENUM
 	
 	CCFadeOut*		pFadeOut	= [CCFadeOut actionWithDuration:0.1f];
 	CCCallBlock*	pEndFunc	= [CCCallBlock actionWithBlock:^(void){
-		[mp_scoreLabel stopAllActions];
-		[mp_scoreLabel setVisible:NO];
+		[mp_score stopAllActions];
+		[mp_scoreIcon stopAllActions];
+		[mp_score setVisible:NO];
 	}];
 	CCSequence*		pSeq		= [CCSequence actions:pSpawn,pFadeOut,pEndFunc,nil];
 
+	//	アイコンのアクション設定
+	{
+		CCScaleTo*	pScale	= [CCScaleTo actionWithDuration:0.1f scaleX:-1 scaleY:1];
+		CCScaleTo*	pScaleReturn	= [CCScaleTo actionWithDuration:0.1f scaleX:1 scaleY:1];
+		
+		CCSequence*	pIconSeq	= [CCSequence actionOne:pScale two:pScaleReturn];
+		CCRepeatForever*	pRepeatFor	= [CCRepeatForever actionWithAction:pIconSeq];
+		[mp_scoreIcon runAction:pRepeatFor];
+	}
+
 	[mp_scoreLabel setString:[NSString stringWithFormat:@"%ld", in_num]];
-	[mp_scoreLabel runAction:pSeq];
-	[mp_scoreLabel setVisible:YES];
-	[mp_scoreLabel setPosition:m_scoreLabelPos];
+	[mp_score runAction:pSeq];
+	[mp_score setVisible:YES];
+	[mp_score setPosition:m_scoreLabelPos];
 
 	return pSeq;
 }
@@ -370,7 +387,7 @@ enum ACTION_SP_ENUM
 */
 -(CCAction*)	_createPutMoneyAction:(SInt32)in_num
 {
-	[mp_moneyLabel stopAllActions];
+	[mp_money stopAllActions];
 	[mp_moneyIcon stopAllActions];
 
 	CCSequence*		pSeq	= nil;
@@ -382,14 +399,14 @@ enum ACTION_SP_ENUM
 
 		CCFadeOut*		pFadeOut	= [CCFadeOut actionWithDuration:0.1f];
 		CCCallBlock*	pEndFunc	= [CCCallBlock actionWithBlock:^(void){		
-			[mp_moneyLabel stopAllActions];
+			[mp_money stopAllActions];
 			[mp_moneyIcon stopAllActions];
-			[mp_moneyLabel setVisible:NO];
+			[mp_money setVisible:NO];
 		}];
 		
 		pSeq		= [CCSequence actions:pSpawn,pFadeOut,pEndFunc,nil];
 		
-		[mp_moneyLabel runAction:pSeq];
+		[mp_money runAction:pSeq];
 	}
 	
 	//	アイコンのアクション設定
@@ -403,8 +420,9 @@ enum ACTION_SP_ENUM
 	}
 
 	[mp_moneyLabel setString:[NSString stringWithFormat:@"%ld", in_num]];
-	[mp_moneyLabel setVisible:YES];
-	[mp_moneyLabel setPosition:m_moneyLabelPos];
+
+	[mp_money setVisible:YES];
+	[mp_money setPosition:m_moneyLabelPos];
 
 	return pSeq;
 }
@@ -416,10 +434,13 @@ enum ACTION_SP_ENUM
 {
 	CCFadeIn*		pFadeIn		= [CCFadeIn actionWithDuration:0.1f];
 
-	[mp_scoreLabel setPosition:m_scoreLabelPos];
+	[mp_scoreIcon stopAllActions];
+	[mp_scoreIcon setScale:1];
+
+	[mp_score setPosition:m_scoreLabelPos];
 	[mp_scoreLabel setString:[NSString stringWithFormat:@"%ld", in_num]];
-	[mp_scoreLabel runAction:pFadeIn];
-	[mp_scoreLabel setVisible:YES];
+	[mp_score runAction:pFadeIn];
+	[mp_score setVisible:YES];
 
 	return pFadeIn;
 }
@@ -431,11 +452,13 @@ enum ACTION_SP_ENUM
 {
 	CCFadeIn*		pFaedIn		= [CCFadeIn actionWithDuration:0.1f];
 
+	[mp_moneyIcon stopAllActions];
 	[mp_moneyIcon setScale:1];
-	[mp_moneyLabel setPosition:m_moneyLabelPos];
+	[mp_money setPosition:m_moneyLabelPos];
+	
 	[mp_moneyLabel setString:[NSString stringWithFormat:@"%ld", in_num]];
-	[mp_moneyLabel runAction:pFaedIn];
-	[mp_moneyLabel setVisible:YES];
+	[mp_money runAction:pFaedIn];
+	[mp_money setVisible:YES];
 
 	return pFaedIn;
 }
@@ -563,6 +586,8 @@ enum ACTION_SP_ENUM
 	}
 	
 	[mp_moneyIcon pauseSchedulerAndActions];
+	[mp_scoreIcon pauseSchedulerAndActions];
+
 	[super pauseSchedulerAndActions];
 }
 
@@ -578,6 +603,8 @@ enum ACTION_SP_ENUM
 	}
 
 	[mp_moneyIcon resumeSchedulerAndActions];
+	[mp_scoreIcon resumeSchedulerAndActions];
+
 	[super resumeSchedulerAndActions];
 }
 

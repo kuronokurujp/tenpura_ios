@@ -160,7 +160,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
 
 	//	TweetView作成
 	{
-		mp_tweetViewController = [[TweetViewController alloc] initToSetup:@"btn_back.png"];
+		mp_tweetViewController = [[TweetViewController alloc] initToSetup:@"btn_twitter01.png"];
 	}
 	
 	//	TweetView呼び出し
