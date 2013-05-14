@@ -1239,7 +1239,7 @@ static BOOL _mixerRateSet = NO;
 
 -(id) init {
 	if ((self = [super init])) {
-		_children = [[NSMutableArray alloc] initWithCapacity:32];
+		children_ = [[NSMutableArray alloc] initWithCapacity:32];
 		enabled_ = YES;
 		mute_ = NO;
 	}
@@ -1250,11 +1250,11 @@ static BOOL _mixerRateSet = NO;
 	//Synchronize child with group settings;
 	[interruptibleTarget setMute:mute_];
 	[interruptibleTarget setEnabled:enabled_];
-	[_children addObject:interruptibleTarget];
+	[children_ addObject:interruptibleTarget];
 }
 
 -(void) removeAudioInterruptTarget:(NSObject<CDAudioInterruptProtocol>*) interruptibleTarget {
-	[_children removeObjectIdenticalTo:interruptibleTarget];
+	[children_ removeObjectIdenticalTo:interruptibleTarget];
 }
 
 - (BOOL) mute {
@@ -1270,7 +1270,7 @@ static BOOL _mixerRateSet = NO;
 		return;
 	}
 
-	for (NSObject<CDAudioInterruptProtocol>* target in _children) {
+	for (NSObject<CDAudioInterruptProtocol>* target in children_) {
 		[target setMute:newMuteValue];
 	}
 }
@@ -1285,7 +1285,7 @@ static BOOL _mixerRateSet = NO;
 		return;
 	}
 
-	for (NSObject<CDAudioInterruptProtocol>* target in _children) {
+	for (NSObject<CDAudioInterruptProtocol>* target in children_) {
 		[target setEnabled:enabledValue];
 	}
 }

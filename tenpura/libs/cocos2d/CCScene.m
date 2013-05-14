@@ -30,7 +30,6 @@
 #import "CCDirector.h"
 #import "CCSprite.h"
 
-
 @implementation CCScene
 -(id) init
 {
@@ -39,6 +38,7 @@
 		self.ignoreAnchorPointForPosition = YES;
 		_anchorPoint = ccp(0.5f, 0.5f);
 		[self setContentSize:s];
+		
 		
 		//	すべての画面に共通することなのでここで入れる
 		CGRect	screenBounds	= [[UIScreen mainScreen] bounds];

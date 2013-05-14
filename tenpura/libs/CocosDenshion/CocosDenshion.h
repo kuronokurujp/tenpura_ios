@@ -322,7 +322,7 @@ typedef struct _sourceInfo {
 @interface CDAudioInterruptTargetGroup : NSObject <CDAudioInterruptProtocol> {
 	BOOL mute_;
 	BOOL enabled_;
-	NSMutableArray *_children;
+	NSMutableArray *children_;
 }
 -(void) addAudioInterruptTarget:(NSObject<CDAudioInterruptProtocol>*) interruptibleTarget;
 @end
