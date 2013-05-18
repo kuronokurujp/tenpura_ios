@@ -22,6 +22,10 @@
 {
 	if( self = [super init] )
 	{
+		mp_soldOutSprite	= [CCSprite spriteWithFile:@"font_sold-out.png"];
+		[self addChild:mp_soldOutSprite];
+		[mp_soldOutSprite setVisible:NO];
+
 		mp_nameLabel	= nil;
 		mp_dataLabel	= nil;
 		mp_moneyLabel	= nil;
@@ -58,6 +62,18 @@
 			}
 		}
 	}
+	
+	CGRect	rect	= [self textureRect];
+	[mp_soldOutSprite setPosition:ccp(rect.size.width * 0.5f, rect.size.height * 0.5f)];
+}
+
+/*
+	@brief	購入済みかどうかの判定を設定
+*/
+-(void)	setEnableSoldOut:(BOOL)in_bFlg
+{
+	[mp_soldOutSprite setVisible:in_bFlg];
+	[self setColor:ccGRAY];
 }
 
 @end

@@ -26,6 +26,7 @@
 		CE2DB17B172B731400E97D84 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2DB17A172B731400E97D84 /* Security.framework */; };
 		CE2DB185172B78CA00E97D84 /* AppBankEventBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2DB184172B78CA00E97D84 /* AppBankEventBanner.m */; };
 		CE2F301C16B8C7E40010610D /* GameInFeverMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2F301B16B8C7E40010610D /* GameInFeverMessage.m */; };
+		CE306A791743DB4400BCACE9 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = CE306A781743DB4400BCACE9 /* Reachability.m */; };
 		CE31E3831734D255009316FC /* nabe06_a.png in Resources */ = {isa = PBXBuildFile; fileRef = CE31E3821734D255009316FC /* nabe06_a.png */; };
 		CE33C89516888852004782A4 /* help.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE33C89416888852004782A4 /* help.ccbi */; };
 		CE33C899168888BD004782A4 /* HelpScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CE33C898168888BD004782A4 /* HelpScene.m */; };
@@ -512,6 +513,8 @@
 		CE2DB1DD172B79CD00E97D84 /* GADCustomEventRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADCustomEventRequest.h; sourceTree = "<group>"; };
 		CE2F301A16B8C7E30010610D /* GameInFeverMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameInFeverMessage.h; path = src/Object/GameInFeverMessage.h; sourceTree = "<group>"; };
 		CE2F301B16B8C7E40010610D /* GameInFeverMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameInFeverMessage.m; path = src/Object/GameInFeverMessage.m; sourceTree = "<group>"; };
+		CE306A771743DB4400BCACE9 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		CE306A781743DB4400BCACE9 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		CE31E3821734D255009316FC /* nabe06_a.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nabe06_a.png; path = Resources/bg/nabe06_a.png; sourceTree = "<group>"; };
 		CE33C89416888852004782A4 /* help.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = help.ccbi; path = Resources/ccbi/help.ccbi; sourceTree = "<group>"; };
 		CE33C897168888BD004782A4 /* HelpScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelpScene.h; path = src/Scene/HelpScene.h; sourceTree = "<group>"; };
@@ -1350,6 +1353,16 @@
 			path = Mediation;
 			sourceTree = "<group>";
 		};
+		CE306A761743DB4400BCACE9 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				CE306A771743DB4400BCACE9 /* Reachability.h */,
+				CE306A781743DB4400BCACE9 /* Reachability.m */,
+			);
+			name = Network;
+			path = src/System/Network;
+			sourceTree = "<group>";
+		};
 		CE3864B01742993400C176F3 /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
@@ -2095,6 +2108,7 @@
 		CED24798163997A700506CA8 /* System */ = {
 			isa = PBXGroup;
 			children = (
+				CE306A761743DB4400BCACE9 /* Network */,
 				CED37D7516E4357400191102 /* Store */,
 				CE216D5D16B37A3B000E0E29 /* Anim */,
 				CE1B74C61699D68D00DD2C07 /* FileLoad */,
@@ -3050,6 +3064,7 @@
 				CE3865E9174299EF00C176F3 /* CDXPropertyModifierAction.m in Sources */,
 				CE3865EA174299EF00C176F3 /* CocosDenshion.m in Sources */,
 				CE3865EC174299EF00C176F3 /* SimpleAudioEngine.m in Sources */,
+				CE306A791743DB4400BCACE9 /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

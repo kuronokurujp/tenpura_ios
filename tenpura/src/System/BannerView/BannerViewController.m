@@ -10,14 +10,26 @@
 #import "cocos2d.h"
 #import "AppDelegate.h"
 #import "./../../Admob/GADRequest.h"
+#import "./../Network/Reachability.h"
 
 #import <AdSupport/ASIdentifierManager.h>
 
+@interface BannerViewController (PrivateMethod)
+
+-(BOOL)	_loadRequest;
+
+@end
+
 @implementation BannerViewController
 
+/*
+	@brief	初期化
+*/
 -(id)	initWithID:(NSString*)in_pIdName
 {
 	mp_unitIDName	= [in_pIdName retain];
+	mb_use	= YES;
+
 	if( self = [super init] )
 	{
 	}
@@ -48,14 +60,20 @@
 */
 -(void)	dealloc
 {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+
 	if( [mp_bannerView isDescendantOfView:self.view] == YES )
 	{
 		[mp_bannerView removeFromSuperview];
 	}
-
+	
 	mp_unitIDName	= nil;
-	[mp_bannerView release];
-	mp_bannerView	= nil;
+	
+	if( mp_bannerView != nil )
+	{
+		[mp_bannerView release];
+		mp_bannerView	= nil;
+	}
 
 	[super dealloc];
 }
@@ -87,21 +105,19 @@
 {
 	[super viewDidLoad];
 	
-	//	親のビューを呼ばないとサイト以降しない
+	//	親のビューを呼ばないとサイト移行しない
 	AppController*	pApp	= (AppController*)[UIApplication sharedApplication].delegate;
 	mp_bannerView.rootViewController	= pApp.navController;
 	
 	mp_bannerView.delegate	= self;
 	[self.view addSubview:mp_bannerView];
 	
-	GADRequest*	pRp	= [GADRequest request];
-#ifdef DEBUG
-	pRp.testing	= YES;
-	pRp.testDevices	= [NSArray arrayWithObjects:GAD_SIMULATOR_ID, nil];
-#endif
-	NSLog(@"BannerUnitId : %@", mp_unitIDName);
-	mp_bannerView.adUnitID	= mp_unitIDName;
-	[mp_bannerView loadRequest:pRp];
+	if( [self _loadRequest] == NO )
+	{
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notifiedNetworkStatus:) name:kReachabilityChangedNotification object:nil];
+		[[Reachability reachabilityForLocalWiFi] startNotifier];
+		[[Reachability reachabilityForInternetConnection] startNotifier];
+	}
 }
 
 /*
@@ -124,7 +140,7 @@
 {
 	//	スライドアニメをする
 	[UIView beginAnimations:@"BannerSlide" context:nil];
-	[UIView commitAnimations];
+	[UIView commitAnimations];	
 }
 
 /*
@@ -132,17 +148,7 @@
 */
 -(void)	adView:(GADBannerView *)view didFailToReceiveAdWithError:(GADRequestError *)error
 {
-	NSLog(@"adView:didFallError:%@", [error localizedDescription]);
-	
-	//	再度読み込み
-	GADRequest*	pRp	= [GADRequest request];
-#ifdef DEBUG
-	pRp.testing	= YES;
-	pRp.testDevices	= [NSArray arrayWithObjects:GAD_SIMULATOR_ID, nil];
-#endif
-	NSLog(@"BannerUnitId : %@", mp_unitIDName);
-	mp_bannerView.adUnitID	= mp_unitIDName;
-	[mp_bannerView loadRequest:pRp];
+	NSLog(@"adView:didFallError:%@", [error localizedDescription]);		
 }
 
 /*
@@ -203,7 +209,64 @@
 */
 -(void)	showHide:(BOOL)in_bFlg
 {
-	[mp_bannerView setHidden:in_bFlg];
+	if( mb_use ==  YES )
+	{
+		[mp_bannerView setHidden:in_bFlg];
+	}
+}
+
+/*
+	@brief
+*/
+-(void)	setUse:(BOOL)in_bUse
+{
+	if( (mb_use == YES) && (in_bUse == NO) )
+	{
+		[mp_bannerView setHidden:YES];
+		[[NSNotificationCenter defaultCenter] removeObserver:self];
+	}
+
+	mb_use	= in_bUse;
+}
+
+/*
+	@brief	通信成功したら呼ばれる
+*/
+-(void)	notifiedNetworkStatus:(NSNotification *)notification
+{
+	if( [self _loadRequest] == YES )
+	{
+		//	成功したのでオブサーバーから外す
+		[[NSNotificationCenter defaultCenter] removeObserver:self];
+	}
+}
+
+/*
+	@brief	ロードリクエスト
+*/
+-(BOOL)	_loadRequest
+{
+	NetworkStatus	netStatus	= [[Reachability reachabilityForLocalWiFi] currentReachabilityStatus];
+	if ( netStatus == NotReachable )
+	{
+		return	NO;
+	}
+
+	if( mb_use == NO )
+	{
+		return NO;
+	}
+
+	GADRequest*	pRp	= [GADRequest request];
+#ifdef DEBUG
+	pRp.testing	= YES;
+	pRp.testDevices	= [NSArray arrayWithObjects:GAD_SIMULATOR_ID, nil];
+#endif
+	NSLog(@"BannerUnitId : %@", mp_unitIDName);
+	mp_bannerView.adUnitID	= mp_unitIDName;
+	[mp_bannerView loadRequest:pRp];
+	
+	return	YES;
 }
 
 @end

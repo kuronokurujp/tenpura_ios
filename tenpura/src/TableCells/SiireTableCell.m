@@ -23,6 +23,9 @@
 	{
 		mp_nameLabel	= nil;
 		mp_moneyLabel	= nil;
+		mp_soldOutSprite	= [CCSprite spriteWithFile:@"font_sold-out.png"];
+		[self addChild:mp_soldOutSprite];
+		[mp_soldOutSprite setVisible:NO];
 		
 		for( SInt32 i = 0; i < sizeof(mpa_netaNameList) / sizeof(mpa_netaNameList[0]); ++i )
 		{
@@ -76,6 +79,9 @@
 			++cnt;
 		}
 	}
+	
+	CGRect	rect	= [self textureRect];
+	[mp_soldOutSprite setPosition:ccp(rect.size.width * 0.5f, rect.size.height * 0.5f)];
 }
 
 /*
@@ -103,5 +109,15 @@
 	
 	return nil;
 }
+
+/*
+	@brief	購入済みかどうかの設定
+*/
+-(void)	setEnableSoldOut:(BOOL)in_bFlg
+{
+	[mp_soldOutSprite setVisible:in_bFlg];
+	[self setColor:ccGRAY];
+}
+
 
 @end

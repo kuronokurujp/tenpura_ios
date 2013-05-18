@@ -144,7 +144,13 @@ void uncaughtExceptionHandler( NSException* in_pException )
 	//	広告ビュー作成
 	{
 		mp_bannerViewCtrl	= [[BannerViewController alloc] initWithID:[DataBaseText getString:73]];
-		[mp_bannerViewCtrl setBannerPos:ccp(ga_bannerPos[0], ga_bannerPos[1])];		
+		[mp_bannerViewCtrl setBannerPos:ccp(ga_bannerPos[0], ga_bannerPos[1])];
+		
+		const	SAVE_DATA_ST*	pSaveData	= [[DataSaveGame shared] getData];
+		if( pSaveData->adsDel == 1 )
+		{
+			[mp_bannerViewCtrl setUse:NO];
+		}
 	}
 
 	//	広告ビュー呼び出し
@@ -378,6 +384,12 @@ void uncaughtExceptionHandler( NSException* in_pException )
 */
 -(void)	onBannerHide
 {
+	const	SAVE_DATA_ST*	pSaveData	= [[DataSaveGame shared] getData];
+	if( pSaveData->adsDel == 1 )
+	{
+		[mp_bannerViewCtrl setUse:NO];
+	}
+
 	[mp_bannerViewCtrl showHide:YES];
 }
 

@@ -103,10 +103,19 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 	//	購入できない場合の対応
 	{
 		[pItemCell setColor:ccWHITE];
-		if( [self isBuy:idx] == false )
+		if( [self isBuy:idx] == NO )
 		{
 			//	購入できない
-			[pItemCell setColor:ccGRAY];
+			const NETA_PACK_DATA_ST*	pData	= [[DataNetaPackList shared] getData:idx];
+			const SAVE_DATA_ITEM_ST*	pNetaPackData	= [[DataSaveGame shared] getNetaPack:pData->no];
+			if( ( pNetaPackData != NULL ) && ( 0 < pNetaPackData->num ) )
+			{
+				[pItemCell setEnableSoldOut:YES];
+			}
+			else
+			{
+				[pItemCell setColor:ccGRAY];
+			}
 		}		
 	}
 

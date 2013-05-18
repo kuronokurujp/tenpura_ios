@@ -27,6 +27,7 @@
 @private
 	GADBannerView*	mp_bannerView;
 	NSString*	mp_unitIDName;
+	BOOL	mb_use;
 }
 
 //	関数
@@ -34,5 +35,6 @@
 -(void)	setBannerPos:(CGPoint)in_pos;
 -(void)	setBannerID:(const char*)in_pName;
 -(void)	showHide:(BOOL)in_bFlg;
+-(void)	setUse:(BOOL)in_bUse;
 
 @end

@@ -15,10 +15,13 @@
 	CCLabelTTF*	mp_nameLabel;
 	CCLabelTTF*	mp_dataLabel;
 	CCLabelTTF*	mp_moneyLabel;
+	CCSprite*	mp_soldOutSprite;
 }
 
 @property	(nonatomic, retain)CCLabelTTF*	pNameLabel;
 @property	(nonatomic, retain)CCLabelTTF*	pDataLabel;
 @property	(nonatomic, retain)CCLabelTTF*	pMoneyLabel;
+
+-(void)	setEnableSoldOut:(BOOL)in_bFlg;
 
 @end
