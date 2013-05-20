@@ -311,6 +311,16 @@ enum {
  */
 -(void) onEnterTransitionDidFinish;
 
+/*
+	このノードが使用可能になった瞬間呼ばれる
+	シーンを切り替える瞬間に呼ばれる
+	シーン作成時にデータ作成の段階では切り替わる前のシーン表示中なので、
+	作成のレスポンスが長いとシーンの動きが一瞬止まっておかしくなる。
+	シーンを切り替わる瞬間に下記の関数が呼ばれるのでここでデータ作成をすれば
+	止まる問題はなくなる。
+*/
+-(void)	onEnterActive;
+
 /** Event that is called every time the CCNode leaves the 'stage'.
  If the CCNode leaves the 'stage' with a transition, this event is called when the transition finishes.
  During onExit you can't access a sibling node.

@@ -18,6 +18,7 @@
 {
 	UIAlertView*	mp_buyCheckAlertView;
 	UIAlertView*	mp_buyAlertView;
+	NSString*		mp_cellFileName;
 	
 	SWTableViewCell*	mp_buyItemCell;
 }

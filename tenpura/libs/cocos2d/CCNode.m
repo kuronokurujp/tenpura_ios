@@ -645,6 +645,11 @@ static NSUInteger globalOrderOfArrival = 1;
 	[_children makeObjectsPerformSelector:@selector(onEnterTransitionDidFinish)];
 }
 
+-(void)	onEnterActive
+{
+	[_children makeObjectsPerformSelector:@selector(onEnterActive)];
+}
+
 -(void) onExitTransitionDidStart
 {
 	[_children makeObjectsPerformSelector:@selector(onExitTransitionDidStart)];

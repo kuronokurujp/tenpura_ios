@@ -22,6 +22,20 @@
 */
 -(id)	init
 {
+	if( self = [super init] )
+	{
+	}
+	
+	return self;
+}
+
+/*
+	@brief
+*/
+-(void)	onEnterActive
+{
+	[super onEnterActive];
+
 	SW_INIT_DATA_ST	data	= { 0 };
 	DataMissionList*	pMissionInst	= [DataMissionList shared];
 	NSAssert(pMissionInst, @"ミッションリストデータがない");
@@ -33,19 +47,7 @@
 	data.viewPos	= ccp( TABLE_POS_X, TABLE_POS_Y );
 	data.viewSize	= CGSizeMake(TABLE_SIZE_WIDTH, TABLE_SIZE_HEIGHT );
 
-	if( self = [super initWithData:&data] )
-	{
-	}
-	
-	return self;
-}
-
-/*
-	@brief
-*/
--(void)	onEnter
-{
-	[super onEnter];
+	[self setup:&data];
 	[self reloadUpdate];
 }
 

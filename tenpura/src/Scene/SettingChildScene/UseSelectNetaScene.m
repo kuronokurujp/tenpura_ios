@@ -34,17 +34,7 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 */
 -(id)	init
 {
-	SW_INIT_DATA_ST	data	= { 0 };
-
-	const SAVE_DATA_ST*	pData	= [[DataSaveGame shared] getData];
-	data.viewMax	= pData->netaNum > s_netaTableViewCellMax ? pData->netaNum : s_netaTableViewCellMax;
-
-	strcpy(data.aCellFileName, "siireTableCell.ccbi");
-	
-	data.viewPos	= ccp( TABLE_POS_X, TABLE_POS_Y );
-	data.viewSize	= CGSizeMake(TABLE_SIZE_WIDTH, TABLE_SIZE_HEIGHT );
-
-	if( self = [super initWithData:&data] )
+	if( self = [super init] )
 	{
 		mp_settingItemBtn	= nil;
 		mp_useItemNoList	= nil;
@@ -62,15 +52,6 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 	mp_useItemNoList	= nil;
 
 	[super dealloc];
-}
-
-/*
-	@brief
-*/
--(void)	onEnter
-{
-	[super onEnter];
-	[self reloadUpdate];
 }
 
 /*
@@ -237,6 +218,27 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 	[[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:g_sceneChangeTime];
 	
 	[[SoundManager shared] playSe:@"pressBtnClick"];
+}
+
+/*
+	@brief
+*/
+-(void)	onEnterActive
+{
+	[super onEnterActive];
+	
+	SW_INIT_DATA_ST	data	= { 0 };
+
+	const SAVE_DATA_ST*	pData	= [[DataSaveGame shared] getData];
+	data.viewMax	= pData->netaNum > s_netaTableViewCellMax ? pData->netaNum : s_netaTableViewCellMax;
+
+	strcpy(data.aCellFileName, "siireTableCell.ccbi");
+	
+	data.viewPos	= ccp( TABLE_POS_X, TABLE_POS_Y );
+	data.viewSize	= CGSizeMake(TABLE_SIZE_WIDTH, TABLE_SIZE_HEIGHT );
+
+	[self setup:&data];
+	[self reloadUpdate];
 }
 
 /*

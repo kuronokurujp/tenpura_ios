@@ -33,43 +33,16 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 -(id)	initWithCellDataFileName:(NSString*)in_pFileName
 {
 	NSAssert(in_pFileName, @"");
-
-	SW_INIT_DATA_ST	data	= { 0 };
-
-	data.viewMax	= [self getCellMax] > s_sireTableViewCellMax ? [self getCellMax] : s_sireTableViewCellMax;
-	
-	strcpy(data.aCellFileName, [in_pFileName UTF8String]);
-	
-	data.viewPos	= ccp( TABLE_POS_X, TABLE_POS_Y );
-	data.viewSize	= CGSizeMake(TABLE_SIZE_WIDTH, TABLE_SIZE_HEIGHT );
-
-	if( self = [super initWithData:&data] )
+	if( self = [super init] )
 	{
-		[self reloadUpdate];
-
+		mp_cellFileName	= nil;
+		mp_buyAlertView	= nil;
+		mp_buyCheckAlertView	= nil;
 		mp_buyItemCell	= nil;
 
-		//	アラートを出す
-		mp_buyCheckAlertView	= [[UIAlertView alloc]	initWithTitle:[DataBaseText getString:45]
-												message:[DataBaseText getString:49]
-												delegate:self
-												cancelButtonTitle:[DataBaseText getString:46]
-												otherButtonTitles:[DataBaseText getString:47], nil];
-								
-		mp_buyAlertView	= [[UIAlertView alloc]	initWithTitle:[DataBaseText getString:50]
-												message:[DataBaseText getString:48]
-												delegate:self
-												cancelButtonTitle:[DataBaseText getString:46]
-												otherButtonTitles:nil];
-								
+		mp_cellFileName	= [in_pFileName retain];	
 	}
 
-	return self;
-}
-
--(id)	init
-{
-	NSAssert(0, @"");
 	return self;
 }
 
@@ -174,9 +147,34 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 /*
 	@brief
 */
--(void)	onEnter
+-(void)	onEnterActive
 {
-	[super onEnter];
+	[super onEnterActive];
+
+	SW_INIT_DATA_ST	data	= { 0 };
+
+	data.viewMax	= [self getCellMax] > s_sireTableViewCellMax ? [self getCellMax] : s_sireTableViewCellMax;
+	
+	strcpy(data.aCellFileName, [mp_cellFileName UTF8String]);
+	
+	data.viewPos	= ccp( TABLE_POS_X, TABLE_POS_Y );
+	data.viewSize	= CGSizeMake(TABLE_SIZE_WIDTH, TABLE_SIZE_HEIGHT );
+	[self setup:&data];
+
+	//	アラートを出す
+	mp_buyCheckAlertView	= [[UIAlertView alloc]	initWithTitle:[DataBaseText getString:45]
+											message:[DataBaseText getString:49]
+											delegate:self
+											cancelButtonTitle:[DataBaseText getString:46]
+											otherButtonTitles:[DataBaseText getString:47], nil];
+								
+	mp_buyAlertView	= [[UIAlertView alloc]	initWithTitle:[DataBaseText getString:50]
+											message:[DataBaseText getString:48]
+											delegate:self
+											cancelButtonTitle:[DataBaseText getString:46]
+											otherButtonTitles:nil];
+				
+
 	[self reloadUpdate];
 }
 

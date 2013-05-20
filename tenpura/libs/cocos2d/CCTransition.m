@@ -136,6 +136,8 @@ const NSInteger kSceneFade = 0xFADEFADE;
 -(void) hideOutShowIn
 {
 	[_inScene setVisible:YES];
+	[_inScene onEnterActive];
+
 	[_outScene setVisible:NO];
 }
 
