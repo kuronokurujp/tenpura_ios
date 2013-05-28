@@ -34,6 +34,7 @@ typedef struct
 	SInt32		sellMoney;
 	UInt32		itemType;
 	Float32		value;
+	SInt32		unlockItemNo;
 	char		fileName[128];
 	SInt32		imageType;
 } ITEM_DATA_ST;

@@ -83,7 +83,7 @@
 	NSAssert(pItemCell, @"");
 
 	//	ミッション名
-	CCLabelTTF*	pCellTextLabel	= pItemCell.pNameLabel;
+	CCLabelBMFont*	pCellTextLabel	= pItemCell.pNameLabel;
 	[pCellTextLabel setString:[pMissionInst getMissonName:idx]];
 
 	BOOL	bSuccess	= [pMissionInst isSuccess:idx];

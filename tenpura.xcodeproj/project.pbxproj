@@ -21,6 +21,12 @@
 		CE216D6D16B37AE9000E0E29 /* bomb.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE216D6B16B37AE9000E0E29 /* bomb.plist */; };
 		CE216D7616B37B8C000E0E29 /* AnimManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE216D7516B37B8C000E0E29 /* AnimManager.m */; };
 		CE216D7A16B37B9A000E0E29 /* AnimActionSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = CE216D7916B37B9A000E0E29 /* AnimActionSprite.m */; };
+		CE298E661754F34E0035C3DB /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE298E651754F34E0035C3DB /* Default@2x.png */; };
+		CE298E681754F35E0035C3DB /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE298E671754F35E0035C3DB /* Default@2x.png */; };
+		CE298E6A1754F3900035C3DB /* Available_on_the_App_Store_Badge_US-UK_135x40.png in Resources */ = {isa = PBXBuildFile; fileRef = CE298E691754F3900035C3DB /* Available_on_the_App_Store_Badge_US-UK_135x40.png */; };
+		CE298E6C1754F3940035C3DB /* Download_on_the_App_Store_Badge_US-UK_135x40.png in Resources */ = {isa = PBXBuildFile; fileRef = CE298E6B1754F3940035C3DB /* Download_on_the_App_Store_Badge_US-UK_135x40.png */; };
+		CE298E6F1754F4920035C3DB /* font.fnt in Resources */ = {isa = PBXBuildFile; fileRef = CE298E6D1754F4920035C3DB /* font.fnt */; };
+		CE298E701754F4920035C3DB /* font.png in Resources */ = {isa = PBXBuildFile; fileRef = CE298E6E1754F4920035C3DB /* font.png */; };
 		CE2DB178172B72B600E97D84 /* libNendAd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2DB175172B72B600E97D84 /* libNendAd.a */; settings = {ATTRIBUTES = (Weak, ); }; };
 		CE2DB179172B72B700E97D84 /* NADView_readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE2DB177172B72B600E97D84 /* NADView_readme.txt */; };
 		CE2DB17B172B731400E97D84 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2DB17A172B731400E97D84 /* Security.framework */; };
@@ -165,7 +171,6 @@
 		CE4FE28B16DCA5870094EA66 /* siireTableCell.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE4FE28A16DCA5870094EA66 /* siireTableCell.ccbi */; };
 		CE4FE29116DCAB3B0094EA66 /* UseSelectItemTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4FE29016DCAB3B0094EA66 /* UseSelectItemTableCell.m */; };
 		CE4FE29316DCACE00094EA66 /* useSelectItemTableCell.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE4FE29216DCACE00094EA66 /* useSelectItemTableCell.ccbi */; };
-		CE4FE29616DCB2140094EA66 /* UseSelectNetaTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4FE29516DCB2130094EA66 /* UseSelectNetaTableCell.m */; };
 		CE4FE29B16DCBB220094EA66 /* MissionTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4FE29A16DCBB210094EA66 /* MissionTableCell.m */; };
 		CE4FE29E16DCBB380094EA66 /* StoreTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4FE29D16DCBB380094EA66 /* StoreTableCell.m */; };
 		CE4FE2A016DCBC430094EA66 /* storeTableCell.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE4FE29F16DCBC430094EA66 /* storeTableCell.ccbi */; };
@@ -362,7 +367,6 @@
 		CEE232EE174129B800AC8197 /* font_suuji_aka.png in Resources */ = {isa = PBXBuildFile; fileRef = CEE232EA174129B800AC8197 /* font_suuji_aka.png */; };
 		CEE232EF174129B800AC8197 /* font_suuji_kii.fnt in Resources */ = {isa = PBXBuildFile; fileRef = CEE232EB174129B800AC8197 /* font_suuji_kii.fnt */; };
 		CEE232F0174129B800AC8197 /* font_suuji_kii.png in Resources */ = {isa = PBXBuildFile; fileRef = CEE232EC174129B800AC8197 /* font_suuji_kii.png */; };
-		CEE232F217412EE500AC8197 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEE232F117412EE500AC8197 /* Default@2x.png */; };
 		CEE23B2B1646764B0033ADA0 /* textData.csv in Resources */ = {isa = PBXBuildFile; fileRef = CEE23B2A1646764B0033ADA0 /* textData.csv */; };
 		CEE23B2F164676850033ADA0 /* DataBaseText.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE23B2E164676850033ADA0 /* DataBaseText.m */; };
 		CEE23B3716468A070033ADA0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEE23B3916468A070033ADA0 /* Localizable.strings */; };
@@ -499,6 +503,12 @@
 		CE216D7516B37B8C000E0E29 /* AnimManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimManager.m; path = src/System/Anim/AnimManager.m; sourceTree = "<group>"; };
 		CE216D7816B37B9A000E0E29 /* AnimActionSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimActionSprite.h; path = src/System/Anim/Action/AnimActionSprite.h; sourceTree = "<group>"; };
 		CE216D7916B37B9A000E0E29 /* AnimActionSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimActionSprite.m; path = src/System/Anim/Action/AnimActionSprite.m; sourceTree = "<group>"; };
+		CE298E651754F34E0035C3DB /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Resources/Default@2x.png"; sourceTree = "<group>"; };
+		CE298E671754F35E0035C3DB /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		CE298E691754F3900035C3DB /* Available_on_the_App_Store_Badge_US-UK_135x40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Available_on_the_App_Store_Badge_US-UK_135x40.png"; path = "Resources/credit/Available_on_the_App_Store_Badge_US-UK_135x40.png"; sourceTree = "<group>"; };
+		CE298E6B1754F3940035C3DB /* Download_on_the_App_Store_Badge_US-UK_135x40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Download_on_the_App_Store_Badge_US-UK_135x40.png"; path = "Resources/credit/Download_on_the_App_Store_Badge_US-UK_135x40.png"; sourceTree = "<group>"; };
+		CE298E6D1754F4920035C3DB /* font.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = font.fnt; path = Resources/text/font.fnt; sourceTree = "<group>"; };
+		CE298E6E1754F4920035C3DB /* font.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = font.png; path = Resources/text/font.png; sourceTree = "<group>"; };
 		CE2DB175172B72B600E97D84 /* libNendAd.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libNendAd.a; sourceTree = "<group>"; };
 		CE2DB176172B72B600E97D84 /* NADView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NADView.h; sourceTree = "<group>"; };
 		CE2DB177172B72B600E97D84 /* NADView_readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NADView_readme.txt; sourceTree = "<group>"; };
@@ -780,8 +790,6 @@
 		CE4FE28F16DCAB3B0094EA66 /* UseSelectItemTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UseSelectItemTableCell.h; path = src/TableCells/UseSelectItemTableCell.h; sourceTree = "<group>"; };
 		CE4FE29016DCAB3B0094EA66 /* UseSelectItemTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UseSelectItemTableCell.m; path = src/TableCells/UseSelectItemTableCell.m; sourceTree = "<group>"; };
 		CE4FE29216DCACE00094EA66 /* useSelectItemTableCell.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = useSelectItemTableCell.ccbi; path = Resources/ccbi/useSelectItemTableCell.ccbi; sourceTree = "<group>"; };
-		CE4FE29416DCB2130094EA66 /* UseSelectNetaTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UseSelectNetaTableCell.h; path = src/TableCells/UseSelectNetaTableCell.h; sourceTree = "<group>"; };
-		CE4FE29516DCB2130094EA66 /* UseSelectNetaTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UseSelectNetaTableCell.m; path = src/TableCells/UseSelectNetaTableCell.m; sourceTree = "<group>"; };
 		CE4FE29916DCBB210094EA66 /* MissionTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MissionTableCell.h; path = src/TableCells/MissionTableCell.h; sourceTree = "<group>"; };
 		CE4FE29A16DCBB210094EA66 /* MissionTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MissionTableCell.m; path = src/TableCells/MissionTableCell.m; sourceTree = "<group>"; };
 		CE4FE29C16DCBB370094EA66 /* StoreTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StoreTableCell.h; path = src/TableCells/StoreTableCell.h; sourceTree = "<group>"; };
@@ -1045,7 +1053,6 @@
 		CEE232EA174129B800AC8197 /* font_suuji_aka.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = font_suuji_aka.png; path = Resources/text/font_suuji_aka.png; sourceTree = "<group>"; };
 		CEE232EB174129B800AC8197 /* font_suuji_kii.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = font_suuji_kii.fnt; path = Resources/text/font_suuji_kii.fnt; sourceTree = "<group>"; };
 		CEE232EC174129B800AC8197 /* font_suuji_kii.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = font_suuji_kii.png; path = Resources/text/font_suuji_kii.png; sourceTree = "<group>"; };
-		CEE232F117412EE500AC8197 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../Default@2x.png"; sourceTree = "<group>"; };
 		CEE23B2A1646764B0033ADA0 /* textData.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = textData.csv; path = Resources/data/textData.csv; sourceTree = "<group>"; };
 		CEE23B2D164676850033ADA0 /* DataBaseText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataBaseText.h; path = src/Data/DataBaseText.h; sourceTree = "<group>"; };
 		CEE23B2E164676850033ADA0 /* DataBaseText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataBaseText.m; path = src/Data/DataBaseText.m; sourceTree = "<group>"; };
@@ -1656,6 +1663,8 @@
 		CE541E2716B297D600CD07D8 /* text */ = {
 			isa = PBXGroup;
 			children = (
+				CE298E6D1754F4920035C3DB /* font.fnt */,
+				CE298E6E1754F4920035C3DB /* font.png */,
 				CE541E2816B297E400CD07D8 /* moji00.png */,
 				CEE232E9174129B800AC8197 /* font_suuji_aka.fnt */,
 				CEE232EA174129B800AC8197 /* font_suuji_aka.png */,
@@ -1818,6 +1827,7 @@
 		CED245DF1639964D00506CA8 = {
 			isa = PBXGroup;
 			children = (
+				CE298E671754F35E0035C3DB /* Default@2x.png */,
 				CED246001639964D00506CA8 /* tenpura */,
 				CED245ED1639964D00506CA8 /* Frameworks */,
 				CED245EB1639964D00506CA8 /* Products */,
@@ -1892,7 +1902,7 @@
 				CED247F81639988F00506CA8 /* bg */,
 				CED246021639964D00506CA8 /* Default.png */,
 				CEF6B08716B5CBB3006B620B /* Default-568h@2x.png */,
-				CEE232F117412EE500AC8197 /* Default@2x.png */,
+				CE298E651754F34E0035C3DB /* Default@2x.png */,
 				CED246181639964D00506CA8 /* Info.plist */,
 				CED246191639964D00506CA8 /* iTunesArtwork */,
 			);
@@ -2133,8 +2143,6 @@
 				CE4FE29016DCAB3B0094EA66 /* UseSelectItemTableCell.m */,
 				CE4FE28716DCA52B0094EA66 /* SiireTableCell.h */,
 				CE4FE28816DCA52B0094EA66 /* SiireTableCell.m */,
-				CE4FE29416DCB2130094EA66 /* UseSelectNetaTableCell.h */,
-				CE4FE29516DCB2130094EA66 /* UseSelectNetaTableCell.m */,
 				CE4FE29916DCBB210094EA66 /* MissionTableCell.h */,
 				CE4FE29A16DCBB210094EA66 /* MissionTableCell.m */,
 				CE4FE29C16DCBB370094EA66 /* StoreTableCell.h */,
@@ -2348,6 +2356,8 @@
 		CEDA0A49173A543800AE14AF /* credit */ = {
 			isa = PBXGroup;
 			children = (
+				CE298E6B1754F3940035C3DB /* Download_on_the_App_Store_Badge_US-UK_135x40.png */,
+				CE298E691754F3900035C3DB /* Available_on_the_App_Store_Badge_US-UK_135x40.png */,
 				CEDA0A4A173A544600AE14AF /* credit.html */,
 			);
 			name = credit;
@@ -2852,7 +2862,12 @@
 				CEE232EE174129B800AC8197 /* font_suuji_aka.png in Resources */,
 				CEE232EF174129B800AC8197 /* font_suuji_kii.fnt in Resources */,
 				CEE232F0174129B800AC8197 /* font_suuji_kii.png in Resources */,
-				CEE232F217412EE500AC8197 /* Default@2x.png in Resources */,
+				CE298E661754F34E0035C3DB /* Default@2x.png in Resources */,
+				CE298E681754F35E0035C3DB /* Default@2x.png in Resources */,
+				CE298E6A1754F3900035C3DB /* Available_on_the_App_Store_Badge_US-UK_135x40.png in Resources */,
+				CE298E6C1754F3940035C3DB /* Download_on_the_App_Store_Badge_US-UK_135x40.png in Resources */,
+				CE298E6F1754F4920035C3DB /* font.fnt in Resources */,
+				CE298E701754F4920035C3DB /* font.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2960,7 +2975,6 @@
 				CE412EBD16DC90300034A4BA /* ItemShopTableCell.m in Sources */,
 				CE4FE28916DCA52B0094EA66 /* SiireTableCell.m in Sources */,
 				CE4FE29116DCAB3B0094EA66 /* UseSelectItemTableCell.m in Sources */,
-				CE4FE29616DCB2140094EA66 /* UseSelectNetaTableCell.m in Sources */,
 				CE4FE29B16DCBB220094EA66 /* MissionTableCell.m in Sources */,
 				CE4FE29E16DCBB380094EA66 /* StoreTableCell.m in Sources */,
 				CE538F4416DDD54600A45E0B /* AnimActionNumCounterLabelTTF.m in Sources */,

@@ -57,9 +57,9 @@
 	CCNode*	pNode	= nil;
 	CCARRAY_FOREACH(_children, pNode)
 	{
-		if( [pNode isKindOfClass:[AnimActionNumCounterLabelTTF class]] )
+		if( [pNode isKindOfClass:[AnimActionNumCounterLabelBMT class]] )
 		{
-			AnimActionNumCounterLabelTTF*	pLabel	= (AnimActionNumCounterLabelTTF*)pNode;
+			AnimActionNumCounterLabelBMT*	pLabel	= (AnimActionNumCounterLabelBMT*)pNode;
 			if( [pLabel.string isEqualToString:@"moneyNum"] )
 			{
 				mp_nowMoneyText	= pLabel;

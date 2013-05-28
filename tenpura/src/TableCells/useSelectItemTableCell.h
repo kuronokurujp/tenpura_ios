@@ -11,11 +11,11 @@
 
 @interface UseSelectItemTableCell : CCSprite {
 @private
-	CCLabelTTF*	mp_nameLabel;
-	CCLabelTTF*	mp_dataLabel;
+	CCLabelBMFont*	mp_nameLabel;
+	CCLabelBMFont*	mp_dataLabel;
 }
 
-@property	(nonatomic, retain)CCLabelTTF*	pNameLabel;
-@property	(nonatomic, retain)CCLabelTTF*	pDataLabel;
+@property	(nonatomic, retain)CCLabelBMFont*	pNameLabel;
+@property	(nonatomic, retain)CCLabelBMFont*	pDataLabel;
 
 @end

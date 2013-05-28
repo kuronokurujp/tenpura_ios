@@ -36,9 +36,9 @@
 	CCNode*	pNode	= nil;
 	CCARRAY_FOREACH(_children, pNode)
 	{
-		if( [pNode isKindOfClass:[CCLabelTTF class]] )
+		if( [pNode isKindOfClass:[CCLabelBMFont class]] )
 		{
-			CCLabelTTF*	pLabel	= (CCLabelTTF*)pNode;
+			CCLabelBMFont*	pLabel	= (CCLabelBMFont*)pNode;
 			if( [pLabel.string isEqualToString:@"name"] )
 			{
 				mp_nameLabel	= pLabel;

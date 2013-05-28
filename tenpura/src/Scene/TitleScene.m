@@ -93,7 +93,16 @@
 */
 -(void)	pressGameCenterBtn
 {
-	[[GameKitHelper shared] showLeaderboard];
+	if( [[GameKitHelper shared] showLeaderboard] == NO )
+    {
+        //	機能制限でつかえない
+        UIAlertView*	pAlert	= [[[UIAlertView alloc]
+                                    initWithTitle:@"" message:[DataBaseText getString:157]
+                                    delegate:nil
+                                    cancelButtonTitle:[DataBaseText getString:46]
+                                    otherButtonTitles:nil, nil] autorelease];
+        [pAlert show];
+    }
 	
 	[[SoundManager shared] playSe:@"btnClick"];
 }

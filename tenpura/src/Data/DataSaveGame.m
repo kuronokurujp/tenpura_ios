@@ -188,8 +188,11 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 		if( ( pData->netaNum < ( eSAVE_DATA_ITEMS_MAX - 1 ) ) && ( pItem == nil ) )
 		{
 			//	追加可能
-			pData->aNetaPacks[ pData->netaNum ].no	= in_no;
-			++pData->aNetaPacks[ pData->netaNum ].num;
+			SAVE_DATA_ITEM_ST*	pAddItem	= &pData->aNetaPacks[ pData->netaNum ];
+			pAddItem->no	= in_no;
+			pAddItem->unlockFlg	= 1;
+			++pAddItem->num;
+
 			++pData->netaNum;
 			
 			[mp_SaveData save];
@@ -220,8 +223,10 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 		if( ( pData->itemNum < ( eSAVE_DATA_ITEMS_MAX - 1 ) ) && ( pItem == nil ) )
 		{
 			//	追加可能
-			pData->aItems[ pData->itemNum ].no	= in_no;
-			++pData->aItems[ pData->itemNum ].num;
+			SAVE_DATA_ITEM_ST*	pAddItem	= &pData->aItems[ pData->itemNum ];
+			pAddItem->no	= in_no;
+			pAddItem->unlockFlg	= 1;
+			++pAddItem->num;
 			++pData->itemNum;
 			
 			[mp_SaveData save];

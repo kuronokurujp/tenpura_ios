@@ -12,12 +12,12 @@
 @interface MissionTableCell : CCSprite {
 
 @private
-	CCLabelTTF*	mp_name;
+	CCLabelBMFont*	mp_name;
 	CCNode*	mp_chkBoxOn;
 	CCNode*	mp_chkBoxOff;
 }
 
-@property	(nonatomic, retain)CCLabelTTF*	pNameLabel;
+@property	(nonatomic, retain)CCLabelBMFont*	pNameLabel;
 @property	(nonatomic, retain)CCNode*	pChkBoxOn;
 @property	(nonatomic, retain)CCNode*	pChkBoxOff;
 

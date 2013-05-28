@@ -308,9 +308,9 @@
 		CCNode*	pChildReaderNode	= nil;
 		CCARRAY_FOREACH(in_pNode.children, pChildReaderNode)
 		{
-			if( [pChildReaderNode isKindOfClass:[CCLabelTTF class]] )
+			if( [pChildReaderNode isKindOfClass:[CCLabelBMFont class]] )
 			{
-				CCLabelTTF*	pLabel	= (CCLabelTTF*)pChildReaderNode;
+				CCLabelBMFont*	pLabel	= (CCLabelBMFont*)pChildReaderNode;
 				if( [pLabel.string isEqualToString:@"score"] )
 				{
 					pLabel.string	= [NSString stringWithFormat:@"%lld", [pGameScene getScoreByGameEnd]];

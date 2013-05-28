@@ -12,15 +12,17 @@
 @interface ItemShopTableCell : CCSprite {
 
 @private
-	CCLabelTTF*	mp_nameLabel;
-	CCLabelTTF*	mp_dataLabel;
-	CCLabelTTF*	mp_moneyLabel;
+	CCLabelBMFont*	mp_nameLabel;
+	CCLabelBMFont*	mp_dataLabel;
+	CCLabelBMFont*	mp_moneyLabel;
+	CCLabelBMFont*	mp_unknowLabel;
 	CCSprite*	mp_soldOutSprite;
 }
 
-@property	(nonatomic, retain)CCLabelTTF*	pNameLabel;
-@property	(nonatomic, retain)CCLabelTTF*	pDataLabel;
-@property	(nonatomic, retain)CCLabelTTF*	pMoneyLabel;
+@property	(nonatomic, retain)CCLabelBMFont*	pNameLabel;
+@property	(nonatomic, retain)CCLabelBMFont*	pDataLabel;
+@property	(nonatomic, retain)CCLabelBMFont*	pMoneyLabel;
+@property	(nonatomic, retain)CCLabelBMFont*	pUnknowLabel;
 
 -(void)	setEnableSoldOut:(BOOL)in_bFlg;
 

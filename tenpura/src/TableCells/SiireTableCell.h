@@ -14,17 +14,19 @@
 @interface SiireTableCell : CCSprite {
 
 @private
-	CCLabelTTF*	mp_nameLabel;
-	CCLabelTTF*	mp_moneyLabel;
-	CCLabelTTF*	mpa_netaNameList[eNETA_PACK_MAX];
+	CCLabelBMFont*	mp_nameLabel;
+	CCLabelBMFont*	mp_moneyLabel;
+	CCLabelBMFont*	mp_unknowLabel;
+	CCLabelBMFont*	mpa_netaNameList[eNETA_PACK_MAX];
 	TenpuraIcon*	mpa_tenpuraIcon[eNETA_PACK_MAX];
 	CCSprite*	mp_soldOutSprite;
 }
 
-@property	(nonatomic, retain)CCLabelTTF*	pNameLabel;
-@property	(nonatomic, retain)CCLabelTTF*	pMoneyLabel;
+@property	(nonatomic, retain)CCLabelBMFont*	pNameLabel;
+@property	(nonatomic, retain)CCLabelBMFont*	pMoneyLabel;
+@property	(nonatomic, retain)CCLabelBMFont*	pUnknowLabel;
 
--(CCLabelTTF*)	getNetaNameLabel:(SInt32)in_idx;
+-(CCLabelBMFont*)	getNetaNameLabel:(SInt32)in_idx;
 -(TenpuraIcon*)	getNetaIconObj:(SInt32)in_idx;
 -(void)	setEnableSoldOut:(BOOL)in_bFlg;
 

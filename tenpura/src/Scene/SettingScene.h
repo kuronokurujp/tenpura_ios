@@ -44,7 +44,7 @@
 		eITEM_TYPE_OPTION,
 	};
 @private
-	CCLabelTTF*	mp_itemName;
+	CCLabelBMFont*	mp_itemName;
 	
 	UInt32	m_itemNo;
 	SInt32	m_type;

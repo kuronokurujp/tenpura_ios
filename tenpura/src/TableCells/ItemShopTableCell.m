@@ -14,6 +14,7 @@
 @synthesize pNameLabel	= mp_nameLabel;
 @synthesize pDataLabel	= mp_dataLabel;
 @synthesize pMoneyLabel	= mp_moneyLabel;
+@synthesize pUnknowLabel	= mp_unknowLabel;
 
 /*
 	@brief	初期化
@@ -29,6 +30,7 @@
 		mp_nameLabel	= nil;
 		mp_dataLabel	= nil;
 		mp_moneyLabel	= nil;
+		mp_unknowLabel	= nil;
 	}
 	
 	return self;
@@ -42,9 +44,9 @@
 	CCNode*	pNode	= nil;
 	CCARRAY_FOREACH(_children, pNode)
 	{
-		if( [pNode isKindOfClass:[CCLabelTTF class]] )
+		if( [pNode isKindOfClass:[CCLabelBMFont class]] )
 		{
-			CCLabelTTF*	pLabel	= (CCLabelTTF*)pNode;
+			CCLabelBMFont*	pLabel	= (CCLabelBMFont*)pNode;
 			if( [pLabel.string isEqualToString:@"name"] )
 			{
 				mp_nameLabel	= pLabel;
@@ -59,6 +61,11 @@
 			{
 				mp_moneyLabel	= pLabel;
 				[mp_moneyLabel setString:@""];
+			}
+			else if( [pLabel.string isEqualToString:@"unknow"] )
+			{
+				mp_unknowLabel	= pLabel;
+				[mp_unknowLabel setString:@""];
 			}
 		}
 	}

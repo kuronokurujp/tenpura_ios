@@ -67,9 +67,9 @@
 -(void)	reportAchievmentWithID:(NSString*)identifier :(float)percent;
 
 //	リーダーボード表示
--(void)	showLeaderboard;
+-(bool)	showLeaderboard;
 //	ゲームセンター表示
--(void)	showGameCenter;
+-(bool)	showGameCenter;
 
 #ifdef DEBUG
 //	アチーブメントのデータリセット

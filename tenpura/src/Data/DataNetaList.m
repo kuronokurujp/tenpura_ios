@@ -140,11 +140,7 @@ static DataNetaList*	s_pInst	= nil;
 		data.aStatusList[i].money	= [(NSNumber*)[in_dataArray objectAtIndex:dataIdx] integerValue];
 		++dataIdx;
 	}
-		
-	//	ショップ販売金額
-	data.sellMoney	= [(NSNumber*)[in_dataArray objectAtIndex:dataIdx] integerValue];
-	++dataIdx;
-	
+
 	//	データファイル名
 	const char*	pStr	= [[in_dataArray objectAtIndex:dataIdx] UTF8String];
 	memcpy( data.fileName, pStr, [[in_dataArray objectAtIndex:dataIdx] length]);

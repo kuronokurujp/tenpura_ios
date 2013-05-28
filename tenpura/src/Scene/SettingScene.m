@@ -495,9 +495,9 @@
 {
 	if( self = [super init] )
 	{
-		mp_itemName	= [CCLabelTTF labelWithString:@"" fontName:@"Marker Felt" fontSize:16];
+        mp_itemName = [CCLabelBMFont labelWithString:@"" fntFile:@"font.fnt"];
+        [mp_itemName setScale:0.5];
 		[mp_itemName setPosition:ccp(225 >> 1, 40 >> 1)];
-		[mp_itemName setColor:ccBLACK];
 		[self addChild:mp_itemName z:20];
 		
 		m_itemNo	= 0;

@@ -23,7 +23,6 @@ typedef struct
 		SInt32	money;
 	}aStatusList[3];
 
-	SInt32	sellMoney;
 	char		fileName[128];
 } NETA_DATA_ST;
 

@@ -194,7 +194,7 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 
 		//	アイテム名
 		{
-			CCLabelTTF*	pLabel	= pItemCell.pNameLabel;
+			CCLabelBMFont*	pLabel	= pItemCell.pNameLabel;
 			NSString*	pStr	= [NSString stringWithUTF8String:[[DataBaseText shared] getText:pItemData->textID]];
 			[pLabel setString:pStr];
 		}

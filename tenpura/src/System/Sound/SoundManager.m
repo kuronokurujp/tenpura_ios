@@ -177,7 +177,7 @@ static	SoundManager*	sp_inst	= nil;
 */
 -(const SInt32)	playBgm:(NSString*)in_pName
 {
-#if 0
+#if 1
 	NSAssert(in_pName, @"サウンドのデータ名を指定していない");
 	UInt32	dataMax	= m_dataNum;
 	for( UInt32 i = 0; i < dataMax; ++i )

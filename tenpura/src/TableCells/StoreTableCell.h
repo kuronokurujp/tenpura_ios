@@ -12,11 +12,11 @@
 @interface StoreTableCell : CCSprite
 {
 @private
-	CCLabelTTF*	mp_name;
-	CCLabelTTF*	mp_money;
+	CCLabelBMFont*	mp_name;
+	CCLabelBMFont*	mp_money;
 }
 
-@property	(nonatomic, retain)CCLabelTTF*	pNameLabel;
-@property	(nonatomic, retain)CCLabelTTF*	pMoneyLabel;
+@property	(nonatomic, retain)CCLabelBMFont*	pNameLabel;
+@property	(nonatomic, retain)CCLabelBMFont*	pMoneyLabel;
 
 @end

@@ -20,7 +20,7 @@
 */
 -(id)	initWithFree
 {
-	if( [super init] )
+	if( self = [super init] )
 	{
 	}
 	

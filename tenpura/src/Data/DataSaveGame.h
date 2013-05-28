@@ -31,36 +31,38 @@ enum
 
 typedef struct
 {
-	unsigned char	no;		//	0(1)
-	unsigned char	num;	//	1(1)
-} SAVE_DATA_ITEM_ST;	// 2byte
+	unsigned char	no;			//	0(1)
+	unsigned char	num;		//	1(1)
+	unsigned char	unlockFlg;	//	2(1)
+	unsigned char	dummy;		//	3(1)
+} SAVE_DATA_ITEM_ST;	// 4byte
 
 //
 typedef struct
 {
 	//	ネタ所持数
-	SAVE_DATA_ITEM_ST	aNetaPacks[eSAVE_DATA_NETA_PACKS_MAX];	//	0(128)
-	long	netaNum;				//	128(4)
+	SAVE_DATA_ITEM_ST	aNetaPacks[eSAVE_DATA_NETA_PACKS_MAX];	//	0(256)
+	long	netaNum;				//	256(4)
 	
 	//	アイテム所持数
-	SAVE_DATA_ITEM_ST	aItems[eSAVE_DATA_ITEMS_MAX];	//	132(64)
-	long	itemNum;					//	196(4)
+	SAVE_DATA_ITEM_ST	aItems[eSAVE_DATA_ITEMS_MAX];	//	260(128)
+	long	itemNum;					//	388(4)
 
 	//	所持金
-	long	money;					//	200(4)
+	long	money;					//	392(4)
 	//	日付
-	long	year, month, day;		//	204(12)
+	long	year, month, day;		//	396(12)
 		
-	int64_t	score;				//	216(8)
-	char	use;				//	224(1)
-	char	check;				//	225(1)
+	int64_t	score;				//	408(8)
+	char	use;				//	409(1)
+	char	check;				//	410(1)
 	
-	char	aMissionFlg[eSAVE_DATA_MISSION_MAX];		//	226(64)
-	char	rank;							//	290(1)
-	char	adsDel;				//	291(1)
+	char	aMissionFlg[eSAVE_DATA_MISSION_MAX];		//	411(64)
+	char	rank;							//	475(1)
+	char	adsDel;				//	476(1)
 	
 	//	予約領域
-	char	dummy[220];				//	292(220)
+	char	dummy[35];				//	476(35)
 } SAVE_DATA_ST;	//	512byte
 
 @interface DataSaveGame : NSObject
@@ -88,8 +90,6 @@ typedef struct
 
 //	ネタ追加
 -(BOOL)addNetaPack:(UInt32)in_no;
-//	ネタ減らす
-//-(BOOL)subNeta:(UInt32)in_no;
 //	アイテム追加
 -(BOOL)addItem:(UInt32)in_no;
 //	金額加算

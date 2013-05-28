@@ -89,30 +89,13 @@
 */
 -(id)	init
 {
-	SW_INIT_DATA_ST	data	= { 0 };
-
-	SInt32		dataNum	= [[DataStoreList shared] dataNum];
-	data.viewMax	= dataNum < 6 ? 6 : dataNum;
-
-	strcpy(data.aCellFileName, "storeTableCell.ccbi");
-
-	data.viewPos	= ccp( TABLE_POS_X, TABLE_POS_Y );
-	data.viewSize	= CGSizeMake(TABLE_SIZE_WIDTH, TABLE_SIZE_HEIGHT );
-
-	if( self = [super initWithData:&data] )
+	if( self = [super init] )
 	{
-		[self reloadUpdate];
+		[StoreAppPurchaseManager share].delegate	= self;
+		mp_grayView	= nil;
+		mp_indicator	= nil;
 	}
 	
-	[StoreAppPurchaseManager share].delegate	= self;
-	mp_grayView	= nil;
-	mp_indicator	= nil;
-
-	//	ストア処理中のアラート
-	{
-		mp_storeBuyCheckAlerView	= [[UIAlertView alloc] initWithTitle:@"" message:@"" delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
-	}
-
 	return self;
 }
 
@@ -123,15 +106,6 @@
 {
 	[mp_storeBuyCheckAlerView release];
 	[super dealloc];
-}
-
-/*
-	@brief
-*/
--(void)	onEnter
-{
-	[super onEnter];
-	[self reloadUpdate];
 }
 
 /*
@@ -210,6 +184,33 @@
 	}
 	
 	return pCell;
+}
+
+/*
+	@brief
+*/
+-(void)	onEnterActive
+{
+	[super onEnterActive];
+	
+	SW_INIT_DATA_ST	data	= { 0 };
+
+	SInt32		dataNum	= [[DataStoreList shared] dataNum];
+	data.viewMax	= dataNum < 6 ? 6 : dataNum;
+
+	strcpy(data.aCellFileName, "storeTableCell.ccbi");
+
+	data.viewPos	= ccp( TABLE_POS_X, TABLE_POS_Y );
+	data.viewSize	= CGSizeMake(TABLE_SIZE_WIDTH, TABLE_SIZE_HEIGHT );
+
+	[self setup:&data];
+	
+	//	ストア処理中のアラート
+	{
+		mp_storeBuyCheckAlerView	= [[UIAlertView alloc] initWithTitle:@"" message:@"" delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
+	}
+	
+	[self reloadUpdate];
 }
 
 /*
@@ -304,7 +305,6 @@
 */
 -(void)	onPaymentRestore:(NSString*)in_pProducts
 {
-	
 }
 
 /*
@@ -442,7 +442,6 @@
 	}
 
 	[UIApplication sharedApplication].networkActivityIndicatorVisible	= NO;
-
 }
 
 @end

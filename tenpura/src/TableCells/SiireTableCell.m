@@ -13,6 +13,7 @@
 
 @synthesize pNameLabel	= mp_nameLabel;
 @synthesize pMoneyLabel	= mp_moneyLabel;
+@synthesize pUnknowLabel	= mp_unknowLabel;
 
 /*
 	@brief	初期化
@@ -23,6 +24,7 @@
 	{
 		mp_nameLabel	= nil;
 		mp_moneyLabel	= nil;
+		mp_unknowLabel	= nil;
 		mp_soldOutSprite	= [CCSprite spriteWithFile:@"font_sold-out.png"];
 		[self addChild:mp_soldOutSprite];
 		[mp_soldOutSprite setVisible:NO];
@@ -50,9 +52,9 @@
 	CCNode*	pNode	= nil;
 	CCARRAY_FOREACH(_children, pNode)
 	{
-		if( [pNode isKindOfClass:[CCLabelTTF class]] )
+		if( [pNode isKindOfClass:[CCLabelBMFont class]] )
 		{
-			CCLabelTTF*	pLabel	= (CCLabelTTF*)pNode;
+			CCLabelBMFont*	pLabel	= (CCLabelBMFont*)pNode;
 			if( [pLabel.string isEqualToString:@"name"] )
 			{
 				mp_nameLabel	= pLabel;
@@ -72,6 +74,11 @@
 				mp_moneyLabel	= pLabel;
 				[mp_moneyLabel setString:@""];
 			}
+			else if( [pLabel.string isEqualToString:@"unknow"] )
+			{
+				mp_unknowLabel	= pLabel;
+				[mp_unknowLabel setString:@""];
+			}
 		}
 		else if( [pNode isKindOfClass:[TenpuraIcon class]] )
 		{
@@ -87,7 +94,7 @@
 /*
 	@brief
 */
--(CCLabelTTF*)	getNetaNameLabel:(SInt32)in_idx
+-(CCLabelBMFont*)	getNetaNameLabel:(SInt32)in_idx
 {
 	if( in_idx < sizeof(mpa_netaNameList) / sizeof(mpa_netaNameList[0]) )
 	{

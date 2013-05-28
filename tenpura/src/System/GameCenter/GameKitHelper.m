@@ -149,7 +149,7 @@ static GameKitHelper*	s_pGameKitHelperInst	= nil;
 			else if( pLocalPlayer.isAuthenticated )
 			{
 				CCLOG(@"authenticated");
-				[self loadAchiveements];
+		//		[self loadAchiveements];
 			}
 			else
 			{
@@ -167,7 +167,7 @@ static GameKitHelper*	s_pGameKitHelperInst	= nil;
 				[self setLastError:pError];
 				if( pError == nil )
 				{
-					[self loadAchiveements];
+	//				[self loadAchiveements];
 				}
 			}];
 		}
@@ -300,7 +300,7 @@ static GameKitHelper*	s_pGameKitHelperInst	= nil;
 /*
 	@brief	リーダーボード表示
 */
--(void)	showLeaderboard
+-(bool)	showLeaderboard
 {
 	__block	GKLocalPlayer*	pLocalPlayer	= nil;;
 	dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
@@ -309,7 +309,7 @@ static GameKitHelper*	s_pGameKitHelperInst	= nil;
 
 	if( ( mb_isGameCenterAvaliable == NO ) || ( pLocalPlayer.authenticated == NO ) )
 	{
-		return;
+		return  NO;
 	}
 	
 	GKLeaderboardViewController*	pLeaderboardVC	= [[[GKLeaderboardViewController alloc] init] autorelease];
@@ -319,13 +319,15 @@ static GameKitHelper*	s_pGameKitHelperInst	= nil;
 		
 		AppController*	pApp	= (AppController*)[UIApplication sharedApplication].delegate;
 		[pApp.navController presentModalViewController:pLeaderboardVC animated:YES];
-	}
+    }
+    
+    return YES;
 }
 
 /*
 	@brief	ゲームセンター表示
 */
--(void)	showGameCenter
+-(bool)	showGameCenter
 {
 	__block	GKLocalPlayer*	pLocalPlayer	= nil;;
 	dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
@@ -334,7 +336,7 @@ static GameKitHelper*	s_pGameKitHelperInst	= nil;
 
 	if( ( mb_isGameCenterAvaliable == NO ) || ( pLocalPlayer.authenticated == NO ) )
 	{
-		return;
+		return  NO;
 	}
 	
 	if( 6.0 <= [[[UIDevice currentDevice] systemVersion] floatValue])
@@ -348,6 +350,8 @@ static GameKitHelper*	s_pGameKitHelperInst	= nil;
 			[pApp.navController presentModalViewController:pGameViewCtrl animated:YES];
 		}
 	}
+    
+    return YES;
 }
 
 #ifdef DEBUG

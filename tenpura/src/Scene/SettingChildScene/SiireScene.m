@@ -66,14 +66,24 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 		return pCell;
 	}
 	
+	DataBaseText*	pDataBaseTextShared	= [DataBaseText shared];
+
+	[pItemCell.pUnknowLabel setString:@""];
+
 	//	選択可能かチェック
 	if( [self _isCellSelect:idx] == NO )
 	{
+		//	アイテム名表示
+		{
+			NSString*	pTenpuraName	= [NSString stringWithUTF8String:[pDataBaseTextShared getText:156]];
+			[pItemCell.pUnknowLabel setString:pTenpuraName];
+		}
+
+		[pItemCell setColor:ccGRAY];
+
 		return pCell;
 	}
 	
-	DataBaseText*	pDataBaseTextShared	= [DataBaseText shared];
-
 	//	天ぷらアイコン/ネタ名表示
 	{
 		int	num	= sizeof(pData->aNetaId) / sizeof(pData->aNetaId[0]);
@@ -81,7 +91,7 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 		{
 			const	NETA_DATA_ST*	pNetaData	= [[DataNetaList shared] getDataSearchId:pData->aNetaId[i]];
 			TenpuraIcon*	pIcon	= [pItemCell getNetaIconObj:i];
-			CCLabelTTF*		pName	= [pItemCell getNetaNameLabel:i];
+			CCLabelBMFont*		pName	= [pItemCell getNetaNameLabel:i];
 			
 			[pName setString:@""];
 			if( pNetaData != nil )

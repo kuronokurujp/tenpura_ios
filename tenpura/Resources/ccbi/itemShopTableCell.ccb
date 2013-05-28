@@ -22,13 +22,13 @@
 		<array>
 			<dict>
 				<key>baseClass</key>
-				<string>CCLabelTTF</string>
+				<string>CCLabelBMFont</string>
 				<key>children</key>
 				<array/>
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>CCLabelTTF</string>
+				<string>CCLabelBMFont</string>
 				<key>memberVarAssignmentName</key>
 				<string></string>
 				<key>memberVarAssignmentType</key>
@@ -42,8 +42,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>16</real>
-							<real>7</real>
+							<real>9</real>
+							<real>14</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -81,62 +81,22 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>fontName</string>
+						<string>fntFile</string>
 						<key>type</key>
-						<string>FontTTF</string>
+						<string>FntFile</string>
 						<key>value</key>
-						<string>Helvetica</string>
+						<string>text/font.fnt</string>
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>fontSize</string>
+						<string>blendFunc</string>
 						<key>type</key>
-						<string>FloatScale</string>
+						<string>Blendmode</string>
 						<key>value</key>
 						<array>
-							<real>22</real>
-							<integer>0</integer>
+							<integer>770</integer>
+							<integer>771</integer>
 						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>color</string>
-						<key>type</key>
-						<string>Color3</string>
-						<key>value</key>
-						<array>
-							<integer>0</integer>
-							<integer>0</integer>
-							<integer>0</integer>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>dimensions</string>
-						<key>type</key>
-						<string>Size</string>
-						<key>value</key>
-						<array>
-							<real>0.0</real>
-							<real>0.0</real>
-							<integer>0</integer>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>horizontalAlignment</string>
-						<key>type</key>
-						<string>IntegerLabeled</string>
-						<key>value</key>
-						<integer>0</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>verticalAlignment</string>
-						<key>type</key>
-						<string>IntegerLabeled</string>
-						<key>value</key>
-						<integer>0</integer>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -147,18 +107,16 @@
 						<string>name</string>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
-				<string>CCLabelTTF</string>
+				<string>CCLabelBMFont</string>
 				<key>children</key>
 				<array/>
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>CCLabelTTF</string>
+				<string>CCLabelBMFont</string>
 				<key>memberVarAssignmentName</key>
 				<string></string>
 				<key>memberVarAssignmentType</key>
@@ -172,8 +130,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>216</real>
-							<real>10</real>
+							<real>220</real>
+							<real>6</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -211,62 +169,22 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>fontName</string>
+						<string>fntFile</string>
 						<key>type</key>
-						<string>FontTTF</string>
+						<string>FntFile</string>
 						<key>value</key>
-						<string>Helvetica</string>
+						<string>text/font.fnt</string>
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>fontSize</string>
+						<string>blendFunc</string>
 						<key>type</key>
-						<string>FloatScale</string>
+						<string>Blendmode</string>
 						<key>value</key>
 						<array>
-							<real>16</real>
-							<integer>0</integer>
+							<integer>770</integer>
+							<integer>771</integer>
 						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>color</string>
-						<key>type</key>
-						<string>Color3</string>
-						<key>value</key>
-						<array>
-							<integer>0</integer>
-							<integer>0</integer>
-							<integer>0</integer>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>dimensions</string>
-						<key>type</key>
-						<string>Size</string>
-						<key>value</key>
-						<array>
-							<real>0.0</real>
-							<real>0.0</real>
-							<integer>0</integer>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>horizontalAlignment</string>
-						<key>type</key>
-						<string>IntegerLabeled</string>
-						<key>value</key>
-						<integer>0</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>verticalAlignment</string>
-						<key>type</key>
-						<string>IntegerLabeled</string>
-						<key>value</key>
-						<integer>0</integer>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -280,13 +198,13 @@
 			</dict>
 			<dict>
 				<key>baseClass</key>
-				<string>CCLabelTTF</string>
+				<string>CCLabelBMFont</string>
 				<key>children</key>
 				<array/>
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>CCLabelTTF</string>
+				<string>CCLabelBMFont</string>
 				<key>memberVarAssignmentName</key>
 				<string></string>
 				<key>memberVarAssignmentType</key>
@@ -300,8 +218,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>386</real>
-							<real>9</real>
+							<real>220</real>
+							<real>31</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -339,62 +257,22 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>fontName</string>
+						<string>fntFile</string>
 						<key>type</key>
-						<string>FontTTF</string>
+						<string>FntFile</string>
 						<key>value</key>
-						<string>Helvetica</string>
+						<string>text/font.fnt</string>
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>fontSize</string>
+						<string>blendFunc</string>
 						<key>type</key>
-						<string>FloatScale</string>
+						<string>Blendmode</string>
 						<key>value</key>
 						<array>
-							<real>18</real>
-							<integer>0</integer>
+							<integer>770</integer>
+							<integer>771</integer>
 						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>color</string>
-						<key>type</key>
-						<string>Color3</string>
-						<key>value</key>
-						<array>
-							<integer>0</integer>
-							<integer>0</integer>
-							<integer>0</integer>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>dimensions</string>
-						<key>type</key>
-						<string>Size</string>
-						<key>value</key>
-						<array>
-							<real>0.0</real>
-							<real>0.0</real>
-							<integer>0</integer>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>horizontalAlignment</string>
-						<key>type</key>
-						<string>IntegerLabeled</string>
-						<key>value</key>
-						<integer>0</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>verticalAlignment</string>
-						<key>type</key>
-						<string>IntegerLabeled</string>
-						<key>value</key>
-						<integer>0</integer>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -403,6 +281,96 @@
 						<string>Text</string>
 						<key>value</key>
 						<string>money</string>
+					</dict>
+				</array>
+				<key>selected</key>
+				<true/>
+			</dict>
+			<dict>
+				<key>baseClass</key>
+				<string>CCLabelBMFont</string>
+				<key>children</key>
+				<array/>
+				<key>customClass</key>
+				<string></string>
+				<key>displayName</key>
+				<string>CCLabelBMFont</string>
+				<key>memberVarAssignmentName</key>
+				<string></string>
+				<key>memberVarAssignmentType</key>
+				<integer>0</integer>
+				<key>properties</key>
+				<array>
+					<dict>
+						<key>name</key>
+						<string>position</string>
+						<key>type</key>
+						<string>Position</string>
+						<key>value</key>
+						<array>
+							<real>240</real>
+							<real>30</real>
+							<integer>0</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>anchorPoint</string>
+						<key>type</key>
+						<string>Point</string>
+						<key>value</key>
+						<array>
+							<real>0.5</real>
+							<real>0.5</real>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>scale</string>
+						<key>type</key>
+						<string>ScaleLock</string>
+						<key>value</key>
+						<array>
+							<real>1</real>
+							<real>1</real>
+							<false/>
+							<integer>0</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>ignoreAnchorPointForPosition</string>
+						<key>type</key>
+						<string>Check</string>
+						<key>value</key>
+						<false/>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>fntFile</string>
+						<key>type</key>
+						<string>FntFile</string>
+						<key>value</key>
+						<string>text/font.fnt</string>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>blendFunc</string>
+						<key>type</key>
+						<string>Blendmode</string>
+						<key>value</key>
+						<array>
+							<integer>770</integer>
+							<integer>771</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>string</string>
+						<key>type</key>
+						<string>Text</string>
+						<key>value</key>
+						<string>unknow</string>
 					</dict>
 				</array>
 			</dict>
@@ -457,7 +425,7 @@
 				<key>value</key>
 				<array>
 					<string></string>
-					<string>tableView/neta_cell.png</string>
+					<string>tableView/sire_cell60.png</string>
 				</array>
 			</dict>
 			<dict>

@@ -591,8 +591,6 @@
 								</array>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -639,7 +637,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>355</real>
+									<real>362</real>
 									<real>228</real>
 									<integer>0</integer>
 								</array>
@@ -775,7 +773,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>355</real>
+									<real>362</real>
 									<real>178</real>
 									<integer>0</integer>
 								</array>
@@ -911,7 +909,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>357</real>
+									<real>362</real>
 									<real>129</real>
 									<integer>0</integer>
 								</array>
@@ -1537,7 +1535,7 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>123</real>
+							<real>125</real>
 							<real>220</real>
 							<integer>0</integer>
 						</array>
@@ -1745,7 +1743,7 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>829</real>
+							<real>821</real>
 							<real>79</real>
 							<integer>0</integer>
 						</array>
@@ -1817,7 +1815,7 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>202</real>
+							<real>207</real>
 							<real>220</real>
 							<integer>0</integer>
 						</array>
@@ -2005,13 +2003,13 @@
 			</dict>
 			<dict>
 				<key>baseClass</key>
-				<string>CCSprite</string>
+				<string>CCLabelBMFont</string>
 				<key>children</key>
 				<array/>
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>CCSprite</string>
+				<string>CCLabelBMFont</string>
 				<key>memberVarAssignmentName</key>
 				<string></string>
 				<key>memberVarAssignmentType</key>
@@ -2025,8 +2023,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>357</real>
-							<real>256</real>
+							<real>71</real>
+							<real>290</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -2064,26 +2062,42 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>displayFrame</string>
+						<string>fntFile</string>
 						<key>type</key>
-						<string>SpriteFrame</string>
+						<string>FntFile</string>
+						<key>value</key>
+						<string>text/font.fnt</string>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>blendFunc</string>
+						<key>type</key>
+						<string>Blendmode</string>
 						<key>value</key>
 						<array>
-							<string></string>
-							<string>text/slot_select_item.png</string>
+							<integer>770</integer>
+							<integer>771</integer>
 						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>string</string>
+						<key>type</key>
+						<string>Text</string>
+						<key>value</key>
+						<string>textId:13</string>
 					</dict>
 				</array>
 			</dict>
 			<dict>
 				<key>baseClass</key>
-				<string>CCSprite</string>
+				<string>CCLabelBMFont</string>
 				<key>children</key>
 				<array/>
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>CCSprite</string>
+				<string>CCLabelBMFont</string>
 				<key>memberVarAssignmentName</key>
 				<string></string>
 				<key>memberVarAssignmentType</key>
@@ -2097,8 +2111,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>125</real>
-							<real>161</real>
+							<real>122</real>
+							<real>165</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -2136,26 +2150,42 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>displayFrame</string>
+						<string>fntFile</string>
 						<key>type</key>
-						<string>SpriteFrame</string>
+						<string>FntFile</string>
+						<key>value</key>
+						<string>text/font.fnt</string>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>blendFunc</string>
+						<key>type</key>
+						<string>Blendmode</string>
 						<key>value</key>
 						<array>
-							<string></string>
-							<string>text/slot_select_tane.png</string>
+							<integer>770</integer>
+							<integer>771</integer>
 						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>string</string>
+						<key>type</key>
+						<string>Text</string>
+						<key>value</key>
+						<string>textId:14</string>
 					</dict>
 				</array>
 			</dict>
 			<dict>
 				<key>baseClass</key>
-				<string>CCSprite</string>
+				<string>CCLabelBMFont</string>
 				<key>children</key>
 				<array/>
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>CCSprite</string>
+				<string>CCLabelBMFont</string>
 				<key>memberVarAssignmentName</key>
 				<string></string>
 				<key>memberVarAssignmentType</key>
@@ -2169,8 +2199,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>80</real>
-							<real>287</real>
+							<real>360</real>
+							<real>260</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -2208,14 +2238,30 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>displayFrame</string>
+						<string>fntFile</string>
 						<key>type</key>
-						<string>SpriteFrame</string>
+						<string>FntFile</string>
+						<key>value</key>
+						<string>text/font.fnt</string>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>blendFunc</string>
+						<key>type</key>
+						<string>Blendmode</string>
 						<key>value</key>
 						<array>
-							<string></string>
-							<string>text/slot_select_honjitsu.png</string>
+							<integer>770</integer>
+							<integer>771</integer>
 						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>string</string>
+						<key>type</key>
+						<string>Text</string>
+						<key>value</key>
+						<string>textId:69</string>
 					</dict>
 				</array>
 			</dict>

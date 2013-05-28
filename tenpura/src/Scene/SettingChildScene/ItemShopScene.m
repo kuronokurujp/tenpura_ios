@@ -49,10 +49,20 @@
 	SWTableViewCell*	pCell	= [super table:table cellAtIndex:idx];
 	ItemShopTableCell*	pItemCell	= (ItemShopTableCell*)[pCell getChildByTag:eSW_TABLE_TAG_CELL_LAYOUT];
 	NSAssert(pItemCell, @"");
+
+	[pItemCell.pUnknowLabel setString:@""];
 	
 	//	選択可能かチェック
 	if( [self _isCellSelect:idx] == NO )
 	{
+		//	アイテム名表示
+		{
+			NSString*	pItemName	= [NSString stringWithUTF8String:[pDataBaseTextShared getText:156]];
+			[pItemCell.pUnknowLabel setString:pItemName];
+		}
+
+		[pItemCell setColor:ccGRAY];
+
 		return pCell;
 	}
 
@@ -151,16 +161,16 @@
 */
 -(BOOL)	_isCellSelect:(SInt32)in_idx
 {
-	if( 0 < in_idx )
+	const ITEM_DATA_ST*	pData	= [[DataItemList shared] getData:in_idx];
+	if( pData->unlockItemNo == -1 )
 	{
-		SInt32	backIdx	= in_idx - 1;
-		const ITEM_DATA_ST*	pData	= [[DataItemList shared] getData:backIdx];
-		const SAVE_DATA_ITEM_ST*	pItemData	= [[DataSaveGame shared] getItem:pData->no];
-		
-		return (pItemData != nil);
+		return YES;
 	}
 	
-	return YES;
+	const SAVE_DATA_ITEM_ST*	pItemData	= [[DataSaveGame shared] getItem:pData->unlockItemNo];
+	return (pItemData != nil);
 }
+
+
 
 @end

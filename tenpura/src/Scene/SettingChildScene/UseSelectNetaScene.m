@@ -132,7 +132,7 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 		{
 			const	NETA_DATA_ST*	pNetaData	= [[DataNetaList shared] getDataSearchId:pData->aNetaId[i]];
 			TenpuraIcon*	pIcon	= [pItemCell getNetaIconObj:i];
-			CCLabelTTF*		pName	= [pItemCell getNetaNameLabel:i];
+			CCLabelBMFont*		pName	= [pItemCell getNetaNameLabel:i];
 			
 			[pName setString:@""];
 			if( pNetaData != nil )

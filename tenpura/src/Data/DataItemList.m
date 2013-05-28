@@ -137,6 +137,10 @@ static DataItemList*	s_pInst	= nil;
 	data.value	= [(NSNumber*)[in_dataArray objectAtIndex:dataIdx] doubleValue];
 	++dataIdx;
 
+	//	アイテム解放条件
+	data.unlockItemNo	= [(NSNumber*)[in_dataArray objectAtIndex:dataIdx] doubleValue];
+	++dataIdx;
+
 	//	データファイル名
 	const char*	pStr	= [[in_dataArray objectAtIndex:dataIdx] UTF8String];
 	memcpy( data.fileName, pStr, [[in_dataArray objectAtIndex:dataIdx] length]);
