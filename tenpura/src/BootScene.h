@@ -18,5 +18,6 @@
 
 // returns a CCScene that contains the BootScene as the only child
 +(CCScene *) scene;
++(void) setting;
 
 @end

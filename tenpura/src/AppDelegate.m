@@ -113,18 +113,8 @@ void uncaughtExceptionHandler( NSException* in_pException )
 	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
 
 	//	必要なデータを読み込む
-	[DataSaveGame shared];
-	[DataNetaList shared];
-	[DataTenpuraPosList shared];
-	[DataBaseText shared];
-	[DataItemList shared];
-	[DataCustomerList shared];
-	[DataOjamaNetaList shared];
-	[DataStoreList shared];
-	[DataNetaPackList shared];
-	[StoreAppPurchaseManager share];
-	[DataStoreList shared];
-	
+    [BootScene setting];
+
 	//	アドオンのトランザクションが残っている場合の対応
 	[StoreAppPurchaseManager share].delegate	= self;
 
