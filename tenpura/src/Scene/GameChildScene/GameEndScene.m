@@ -18,6 +18,7 @@
 #import "./../../Data/DataGlobal.h"
 #import "./../../System/Sound/SoundManager.h"
 #import "./../../System/Anim/Action/AnimActionNumCounterLabelTTF.h"
+#import "./../../System/GameCenter/GameKitHelper.h"
 
 //	非公開関数
 @interface GameEndScene (PrivateMethod)
@@ -78,6 +79,8 @@
 		if( mb_hiscore == YES )
 		{
 			[pDataSaveGame setSaveScore:score];
+            NSString*	pDataName	= [NSString stringWithUTF8String:gp_leaderboardDataName];
+            [[GameKitHelper shared] submitScore:score category:pDataName];
 		}
 	
 		int64_t	money	= [pGameScene getMoney];

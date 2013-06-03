@@ -26,6 +26,12 @@
 	{
 		[[GameKitHelper shared] authenticateLocalPlayer];
 
+        {
+            CCParticleSystemQuad*   pParticle   = [CCParticleSystemQuad particleWithFile:@"konoha.plist"];
+            NSAssert(pParticle, @"");
+            [self addChild:pParticle z:1];
+        }
+        
 #ifdef DEBUG
 //	デバッグ画面
 	CCMenuItemFont*	pResetSaveItem		= [CCMenuItemFont	itemWithString:[NSString stringWithUTF8String:[[DataBaseText shared] getText:0]]
