@@ -25,12 +25,6 @@
 	if( self = [super init] )
 	{
 		[[GameKitHelper shared] authenticateLocalPlayer];
-
-        {
-            CCParticleSystemQuad*   pParticle   = [CCParticleSystemQuad particleWithFile:@"konoha.plist"];
-            NSAssert(pParticle, @"");
-            [self addChild:pParticle z:1];
-        }
         
 #ifdef DEBUG
 //	デバッグ画面
@@ -141,6 +135,29 @@
 	[CCTransitionFade transitionWithDuration:g_sceneChangeTime scene:creditScene withColor:ccBLACK];
 
 	[[CCDirector sharedDirector] pushScene:pTransFade];
+}
+
+/*
+ @brief	CCBI読み込み終了
+ */
+- (void) didLoadFromCCB
+{
+	CCNode*	pNode	= nil;
+	CCARRAY_FOREACH(_children, pNode)
+	{
+		//	セッティング項目をあらかじめ取得する
+		if( [pNode isKindOfClass:[CCLabelTTF class]] )
+		{
+            CCLabelTTF* pLabelTTF   = (CCLabelTTF*)pNode;
+            if( [[pLabelTTF string] isEqualToString:@"konohaByParticle"] )
+            {
+                CCParticleSystemQuad*   pParticle   = [CCParticleSystemQuad particleWithFile:@"konoha.plist"];
+                NSAssert(pParticle, @"");
+                [pLabelTTF addChild:pParticle];
+            }
+            [pLabelTTF setString:@""];
+		}
+	}
 }
 
 @end
