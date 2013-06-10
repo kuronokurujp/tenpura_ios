@@ -43,8 +43,6 @@
 -(void)	onAddChildTenpura:(CCNode*)in_pTenpura;
 //	フィーバー設定
 -(void)	setEnableFever:(const BOOL)in_bFlg;
-//	おじゃまを出す
--(void)	putOjamaTenpura;
 
 //	配置した天ぷらもポーズする
 -(void)	pauseSchedulerAndActions;

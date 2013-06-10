@@ -279,7 +279,6 @@
 		CEBC3C181731B0E80060FD5F /* satumaimo.png in Resources */ = {isa = PBXBuildFile; fileRef = CEBC3BC11731B0E80060FD5F /* satumaimo.png */; };
 		CEBC3C191731B0E80060FD5F /* shiitake0.png in Resources */ = {isa = PBXBuildFile; fileRef = CEBC3BC21731B0E80060FD5F /* shiitake0.png */; };
 		CEBC3C1B1731B0E80060FD5F /* shishito0.png in Resources */ = {isa = PBXBuildFile; fileRef = CEBC3BC41731B0E80060FD5F /* shishito0.png */; };
-		CEBC3C1D1731B0E80060FD5F /* sumapho.png in Resources */ = {isa = PBXBuildFile; fileRef = CEBC3BC61731B0E80060FD5F /* sumapho.png */; };
 		CEBC3C1E1731B0E80060FD5F /* suraim0.png in Resources */ = {isa = PBXBuildFile; fileRef = CEBC3BC71731B0E80060FD5F /* suraim0.png */; };
 		CEBC3C201731B0E80060FD5F /* taranome0.png in Resources */ = {isa = PBXBuildFile; fileRef = CEBC3BC91731B0E80060FD5F /* taranome0.png */; };
 		CEBC3C211731B0E80060FD5F /* tikyu0.png in Resources */ = {isa = PBXBuildFile; fileRef = CEBC3BCA1731B0E80060FD5F /* tikyu0.png */; };
@@ -386,7 +385,6 @@
 		CEEFB28B16DAF86300DFB1F5 /* bomb.png in Resources */ = {isa = PBXBuildFile; fileRef = CEEFB28A16DAF86300DFB1F5 /* bomb.png */; };
 		CEEFB29016DAFBB400DFB1F5 /* DataCustomerList.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEFB28F16DAFBB400DFB1F5 /* DataCustomerList.m */; };
 		CEEFB29416DB01CC00DFB1F5 /* customerListData.csv in Resources */ = {isa = PBXBuildFile; fileRef = CEEFB29316DB01CC00DFB1F5 /* customerListData.csv */; };
-		CEEFB29C16DB281400DFB1F5 /* OjamaTenpura.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEFB29B16DB281400DFB1F5 /* OjamaTenpura.m */; };
 		CEEFB29F16DB2B8A00DFB1F5 /* DataOjamaNetaList.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEFB29E16DB2B8A00DFB1F5 /* DataOjamaNetaList.m */; };
 		CEEFB2A116DB2D6000DFB1F5 /* ojamaDataList.csv in Resources */ = {isa = PBXBuildFile; fileRef = CEEFB2A016DB2D6000DFB1F5 /* ojamaDataList.csv */; };
 		CEEFB2A916DB533D00DFB1F5 /* bigBomb.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEEFB2A716DB533D00DFB1F5 /* bigBomb.plist */; };
@@ -910,7 +908,6 @@
 		CEBC3BC11731B0E80060FD5F /* satumaimo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = satumaimo.png; path = Resources/tenpura/satumaimo.png; sourceTree = "<group>"; };
 		CEBC3BC21731B0E80060FD5F /* shiitake0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = shiitake0.png; path = Resources/tenpura/shiitake0.png; sourceTree = "<group>"; };
 		CEBC3BC41731B0E80060FD5F /* shishito0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = shishito0.png; path = Resources/tenpura/shishito0.png; sourceTree = "<group>"; };
-		CEBC3BC61731B0E80060FD5F /* sumapho.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sumapho.png; path = Resources/tenpura/sumapho.png; sourceTree = "<group>"; };
 		CEBC3BC71731B0E80060FD5F /* suraim0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = suraim0.png; path = Resources/tenpura/suraim0.png; sourceTree = "<group>"; };
 		CEBC3BC91731B0E80060FD5F /* taranome0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = taranome0.png; path = Resources/tenpura/taranome0.png; sourceTree = "<group>"; };
 		CEBC3BCA1731B0E80060FD5F /* tikyu0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tikyu0.png; path = Resources/tenpura/tikyu0.png; sourceTree = "<group>"; };
@@ -1082,8 +1079,6 @@
 		CEEFB28E16DAFBB400DFB1F5 /* DataCustomerList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataCustomerList.h; path = src/Data/DataCustomerList.h; sourceTree = "<group>"; };
 		CEEFB28F16DAFBB400DFB1F5 /* DataCustomerList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataCustomerList.m; path = src/Data/DataCustomerList.m; sourceTree = "<group>"; };
 		CEEFB29316DB01CC00DFB1F5 /* customerListData.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = customerListData.csv; path = Resources/data/customerListData.csv; sourceTree = "<group>"; };
-		CEEFB29A16DB281400DFB1F5 /* OjamaTenpura.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OjamaTenpura.h; path = src/Object/OjamaTenpura.h; sourceTree = "<group>"; };
-		CEEFB29B16DB281400DFB1F5 /* OjamaTenpura.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OjamaTenpura.m; path = src/Object/OjamaTenpura.m; sourceTree = "<group>"; };
 		CEEFB29D16DB2B8A00DFB1F5 /* DataOjamaNetaList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataOjamaNetaList.h; path = src/Data/DataOjamaNetaList.h; sourceTree = "<group>"; };
 		CEEFB29E16DB2B8A00DFB1F5 /* DataOjamaNetaList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataOjamaNetaList.m; path = src/Data/DataOjamaNetaList.m; sourceTree = "<group>"; };
 		CEEFB2A016DB2D6000DFB1F5 /* ojamaDataList.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ojamaDataList.csv; path = Resources/data/ojamaDataList.csv; sourceTree = "<group>"; };
@@ -2087,8 +2082,6 @@
 				CEF24C3616C2468F00AE4B31 /* TenpuraIcon.h */,
 				CEF24C3716C2468F00AE4B31 /* TenpuraIcon.m */,
 				CEEFB2A616DB434700DFB1F5 /* TenpuraProtocol.h */,
-				CEEFB29A16DB281400DFB1F5 /* OjamaTenpura.h */,
-				CEEFB29B16DB281400DFB1F5 /* OjamaTenpura.m */,
 				CEFBC2A91687182100C3C233 /* Ticker.h */,
 				CEFBC2AA1687182100C3C233 /* Ticker.m */,
 				CE0C82FC16B914F80086CEEA /* GameInFeverEvent.h */,
@@ -2345,7 +2338,6 @@
 				CEBC3BC11731B0E80060FD5F /* satumaimo.png */,
 				CEBC3BC21731B0E80060FD5F /* shiitake0.png */,
 				CEBC3BC41731B0E80060FD5F /* shishito0.png */,
-				CEBC3BC61731B0E80060FD5F /* sumapho.png */,
 				CEBC3BC71731B0E80060FD5F /* suraim0.png */,
 				CEBC3BC91731B0E80060FD5F /* taranome0.png */,
 				CEBC3BCA1731B0E80060FD5F /* tikyu0.png */,
@@ -2843,7 +2835,6 @@
 				CEBC3C181731B0E80060FD5F /* satumaimo.png in Resources */,
 				CEBC3C191731B0E80060FD5F /* shiitake0.png in Resources */,
 				CEBC3C1B1731B0E80060FD5F /* shishito0.png in Resources */,
-				CEBC3C1D1731B0E80060FD5F /* sumapho.png in Resources */,
 				CEBC3C1E1731B0E80060FD5F /* suraim0.png in Resources */,
 				CEBC3C201731B0E80060FD5F /* taranome0.png in Resources */,
 				CEBC3C211731B0E80060FD5F /* tikyu0.png in Resources */,
@@ -2980,7 +2971,6 @@
 				CEBB5D4416BB64530022776F /* ItemShopScene.m in Sources */,
 				CEF24C3816C2468F00AE4B31 /* TenpuraIcon.m in Sources */,
 				CEEFB29016DAFBB400DFB1F5 /* DataCustomerList.m in Sources */,
-				CEEFB29C16DB281400DFB1F5 /* OjamaTenpura.m in Sources */,
 				CEEFB29F16DB2B8A00DFB1F5 /* DataOjamaNetaList.m in Sources */,
 				CEED71DE16DB5F19001D4104 /* StoreScene.m in Sources */,
 				CEED71E816DB6D8E001D4104 /* DataStoreList.m in Sources */,

@@ -10,7 +10,6 @@
 
 #import "./../Data/DataTenpuraPosList.h"
 #import "./../Data/DataOjamaNetaList.h"
-#import "./../Object/OjamaTenpura.h"
 #import "./../Data/DataGlobal.h"
 #import "./../System/Anim/AnimManager.h"
 
@@ -191,10 +190,6 @@ enum
 			pTenpura	= (Tenpura*)pNode;
 			[self _cleanTenpura:pTenpura];
 		}
-		else if( [pNode isKindOfClass:[OjamaTenpura class]] )
-		{
-			[pRemoveTenpura addObject:pNode];
-		}
 	}
 
 	CCARRAY_FOREACH(pRemoveTenpura, pNode)
@@ -231,36 +226,6 @@ enum
 			}
 		}
 	}
-	else if( [in_pTenpura isKindOfClass:[OjamaTenpura class]] )
-	{
-		//	大爆発
-		AnimManager*	pAnimManager	= [AnimManager shared];
-		AnimActionSprite*	pEff	= [pAnimManager play:[NSString stringWithUTF8String:ga_animDataList[eANIM_BIGBOMG].pImageFileName]];
-		pEff.bAutoRelease	= YES;
-		[self addChild:pEff];
-
-		[pEff setVisible:YES];
-		{
-			CGRect	imgRect	= [mp_sp textureRect];
-			CGPoint	pos	= ccp(_position.x + imgRect.size.width * 0.5f, _position.y + imgRect.size.height * 0.5f);
-			[pEff setPosition:pos];
-		}
-		[pEff setZOrder:eZORDER_BIG_EXP];
-		
-		//	おじゃま処理を送信
-		OjamaTenpura*	pOjamaTenpura	= (OjamaTenpura*)in_pTenpura;
-		OJAMA_NETA_DATA	data	= pOjamaTenpura.data;
-		NSValue*	val	= [NSValue value:&data withObjCType:@encode(OJAMA_NETA_DATA)];
-
-		NSString*	pDataName		= [NSString stringWithUTF8String:gp_startOjamaDataName];
-		NSDictionary*	pDlc	= [NSDictionary dictionaryWithObjectsAndKeys:val,	pDataName, nil];
-
-		NSString*	pOBName	= [NSString stringWithUTF8String:gp_startOjamaObserverName];
-		NSNotification*	pNotification	=
-		[NSNotification notificationWithName:pOBName object:self userInfo:pDlc];
-	
-		[[NSNotificationCenter defaultCenter] postNotification:pNotification];
-	}
 }
 
 /*
@@ -292,30 +257,6 @@ enum
 	}
 	
 	mb_fever	= in_bFlg;
-}
-
-/*
-	@brief	おじゃまを出す
-*/
--(void)	putOjamaTenpura
-{
-	DataOjamaNetaList*	pOjamaNetaList	= [DataOjamaNetaList shared];
-	
-	SInt32	cnt	= CCRANDOM_0_1() * pOjamaNetaList.dataNum;
-	if( cnt <= 0 )
-	{
-		cnt	= 1;
-	}
-
-	for( SInt32 i = 0; i < cnt; ++i )
-	{
-		OjamaTenpura*	pOjama	= [OjamaTenpura node];
-		[self addChild:pOjama z:eZORDER_OJAMA_TENPURA];
-
-		[pOjama setup:[pOjamaNetaList getData:i] :1.f];
-		pOjama.delegate	= self;
-		[pOjama start];
-	}
 }
 
 /*
