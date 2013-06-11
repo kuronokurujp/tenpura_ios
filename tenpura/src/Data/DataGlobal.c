@@ -78,4 +78,5 @@ char*	gpa_spriteFileNameList[eSPRITE_FILE_MAX]	=
 	"moji00.png",
 	"moji01.png",
 	"moji02.png",
+    "font.png",
 };

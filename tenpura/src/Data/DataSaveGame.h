@@ -20,6 +20,11 @@ enum
 	eMONEY_MAX_NUM	= 999999,
 };
 
+enum
+{
+    eNABE_LVUP_NUM  = 10
+};
+
 //	セーブデータ内容
 enum
 {
@@ -56,13 +61,16 @@ typedef struct
 	int64_t	score;				//	408(8)
 	char	use;				//	409(1)
 	char	check;				//	410(1)
+    char    padding[2];          //  411(2)
 	
-	char	aMissionFlg[eSAVE_DATA_MISSION_MAX];		//	411(64)
-	char	rank;							//	475(1)
-	char	adsDel;				//	476(1)
+	char	aMissionFlg[eSAVE_DATA_MISSION_MAX];		//	413(64)
+	char	adsDel;				//	477(1)
+    char    padding2[3];          //  478(3)
 	
 	//	予約領域
-	char	dummy[35];				//	476(35)
+    unsigned short  nabeLv;     //  481(2)
+    unsigned short  nabeExp;    //  483(2)
+	char	dummy[27];				//	485(27)
 } SAVE_DATA_ST;	//	512byte
 
 @interface DataSaveGame : NSObject
@@ -103,11 +111,11 @@ typedef struct
 //	ミッションフラグをたてる
 -(void)	saveMissionFlg:(BOOL)in_flg :(UInt32)in_idx;
 
-//	ランク設定
--(void)	saveRank:(char)in_rank;
-
 //	広告削除
 -(void)	saveCutAdsFlg;
+
+//  なべ経験値加算（レベルがあがるとtrueが変える）
+-(BOOL) addNabeExp:(unsigned short)in_expNum;
 
 //	データ丸ごと取得
 -(const SAVE_DATA_ST*)getData;

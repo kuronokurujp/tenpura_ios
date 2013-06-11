@@ -22,6 +22,7 @@
 
 static DataSaveGame*	s_pDataSaveGameInst	= nil;
 static NSString*		s_pSaveIdName	= @"TenpuraGameData";
+static const unsigned short   s_maxLv_dataSaveGame    = 999;
 
 /*
 	@brief
@@ -325,17 +326,28 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 }
 
 /*
-	@brief	ランク設定
-	@param	設定するランク値
-*/
--(void)	saveRank:(char)in_rank
+    @brief  なべ経験値加算
+ */
+-(BOOL) addNabeExp:(unsigned short)in_expNum
 {
-	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
+    SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
 	if( pData != nil )
-	{
-		pData->rank	= in_rank;
-		[mp_SaveData save];
-	}
+    {
+        pData->nabeExp += in_expNum;
+        if( eNABE_LVUP_NUM <= pData->nabeExp )
+        {
+            unsigned short addLv    = pData->nabeExp / eNABE_LVUP_NUM;
+            pData->nabeLv += addLv;
+            if( s_maxLv_dataSaveGame <= pData->nabeLv )
+            {
+                pData->nabeLv   = s_maxLv_dataSaveGame;
+            }
+            
+            return true;
+        }
+    }
+
+    return false;
 }
 
 /*
@@ -370,6 +382,7 @@ static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 	out_pData->aNetaPacks[ 0 ].no	= 1;
 	out_pData->aNetaPacks[ 0 ].num	= 1;
 	out_pData->netaNum	= 1;
+    out_pData->nabeLv   = 1;
 }
 
 /*

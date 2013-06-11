@@ -85,6 +85,8 @@
 //	リザルト
 -(void)	_updateResult:(ccTime)delta;
 
+-(void) _changeNabe:(Nabe*)in_pNabeObj :(const unsigned short)in_lv;
+
 @end
 
 @implementation GameScene
@@ -139,7 +141,6 @@ enum
 		Float32	gameEndScorePowerUpRate	= 0;
 		
 		//	オプションアイテムによる追加設定
-		NSString*	pNabeImageFileName	= nil;
 		{
 			DataItemList*	pItemListInst	= [DataItemList shared];
 			CCNode*	pNode	= nil;
@@ -151,12 +152,7 @@ enum
 					//	アイテムNOからオプション設定
 					const ITEM_DATA_ST*	pItem	= [pItemListInst getDataSearchId:[pNumber intValue]];
 					if( pItem != nil )
-					{
-						if( pItem->imageType == eITEM_IMG_TYPE_NABE )
-						{
-							pNabeImageFileName	= [NSString stringWithUTF8String:pItem->fileName];
-						}
-						
+					{						
 						switch( pItem->itemType )
 						{
 							//	スコア倍増
@@ -273,6 +269,8 @@ enum
 			[self addChild:pCCBReader];
 			mp_gameSceneData	= (GameSceneData*)pCCBReader;
 			
+            const SAVE_DATA_ST* pSaveData   = [[DataSaveGame shared] getData];
+
 			//	ゲームシーンパラメータ設定
 			{
 				//	ゲームの残り時間
@@ -283,7 +281,8 @@ enum
 				m_feverTime	= addFeverTime + mp_gameSceneData.feverTime;
 				
 				//	取得スコア倍増レート
-				m_scoreRate	= 1.f + scorePowerUpRate;
+                //  アイテムと鍋レベル（レベル/10分加算）
+				m_scoreRate	= 1.f + (scorePowerUpRate + ((Float32)pSaveData->nabeLv / (Float32)eNABE_LVUP_NUM));
 				
 				//	ゲーム終了スコアの倍増レート
 				m_gameEndScoreRate	= 1.f + gameEndScorePowerUpRate;
@@ -310,12 +309,12 @@ enum
 				[mp_feverMessage setZOrder:19.f];
 				[mp_feverEvent setZOrder:20.f];
 			}
-			
-			//	鍋アイテムがあれば鍋画像を変更する
-			if( [pNabeImageFileName isEqualToString:@""] == NO )
-			{
-				[mp_nabe setNabeImageFileName:pNabeImageFileName];
-			}			
+
+            //  レベルにあわせて鍋内容変更
+            {
+                NSAssert(pSaveData, @"");
+                [self _changeNabe:mp_nabe: pSaveData->nabeLv];
+            }
 		}
 
 		//	客
@@ -434,17 +433,21 @@ enum
 		{
 			case eRESULT_TYPE_RESTART:
 			{
+                /*
 				//	再スタート
 				CCTransitionFade*	pTransFade	=
 				[CCTransitionFade transitionWithDuration:g_sceneChangeTime scene:[GameScene scene:mp_gameData] withColor:ccBLACK];
 	
 				[[CCDirector sharedDirector] replaceScene:pTransFade];
+                 */
 
 				break;
 			}
 			case eRESULT_TYPE_SINAGAKI:
 			{
-				//	品書きに戻る
+                [[DataSaveGame shared] addNabeExp:1];
+
+				//	準備画面に戻る
 				CCScene*	sinagakiScene	= [CCBReader sceneWithNodeGraphFromFile:@"setting.ccbi"];
 
 				CCTransitionFade*	pTransFade	=
@@ -609,5 +612,48 @@ enum
 	
 	return money;
 }
+
+/*
+    @brief
+ */
+-(void) _changeNabe:(Nabe*)in_pNabeObj :(const unsigned short)in_lv
+{
+    NSAssert( in_pNabeObj, @"" );
+    static const char*  pImgFileName[5] =
+    {
+        "nabe0.png",
+        "nabe03_a.png",
+        "nabe04_a.png",
+        "nabe05_a.png",
+        "nabe06_a.png",
+    };
+
+    int nameIdx = 0;
+    //  レベルにあわせて画像を差し替え
+    if( in_lv < eNABE_LVUP_NUM )
+    {
+        nameIdx = 0;
+    }
+    else if( in_lv < eNABE_LVUP_NUM * 2 )
+    {
+        nameIdx = 1;
+    }
+    else if( in_lv < eNABE_LVUP_NUM * 3 )
+    {
+        nameIdx = 2;
+    }
+    else if( in_lv < eNABE_LVUP_NUM * 4 )
+    {
+        nameIdx = 3;
+    }
+    else
+    {
+        nameIdx = 4;
+    }
+
+    NSString*   pNabeImageFileName  = [NSString stringWithUTF8String:pImgFileName[nameIdx]];
+    [in_pNabeObj setNabeImageFileName:pNabeImageFileName];
+}
+
 
 @end

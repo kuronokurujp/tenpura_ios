@@ -376,6 +376,8 @@
 */
 - (void) didLoadFromCCB
 {
+    const SAVE_DATA_ST* pSaveData   = [[DataSaveGame shared] getData];
+
 	CCNode*	pNode	= nil;
 	CCARRAY_FOREACH(_children, pNode)
 	{
@@ -400,6 +402,21 @@
 		{
 			mp_ticker	= (LeftMoveTicker*)pNode;
 		}
+        else if( [pNode isKindOfClass:[CCSprite class]])
+        {
+            CCNode*	pChildNode	= nil;
+            CCARRAY_FOREACH(pNode.children, pChildNode)
+            {
+                if( [pChildNode isKindOfClass:[CCLabelBMFont class]])
+                {
+                    CCLabelBMFont*  pLabelBmFont    = (CCLabelBMFont*)pChildNode;
+                    if( [pLabelBmFont.string isEqualToString:@"LvNum"] )
+                    {
+                        pLabelBmFont.string = [NSString stringWithFormat:@"%d", pSaveData->nabeLv];
+                    }
+                }
+            }
+        }
 	}
 }
 
