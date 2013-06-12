@@ -236,11 +236,14 @@ static const unsigned short   s_maxLv_dataSaveGame    = 999;
 		}
 		else if( pItem != nil )
 		{
-			pItem->num += 1;
-			
-			[mp_SaveData save];
-
-			return YES;
+            if( pItem->num < eSAVE_DATA_ITEM_USE_MAX )
+            {
+                pItem->num += 1;
+                
+                [mp_SaveData save];
+                
+                return YES;
+            }
 		}
 		else
 		{
@@ -249,6 +252,21 @@ static const unsigned short   s_maxLv_dataSaveGame    = 999;
 	}
 	
 	return NO;
+}
+
+/*
+    @brief
+ */
+-(BOOL) subItem:(UInt32)in_no
+{
+	SAVE_DATA_ITEM_ST*	pItem	= [self _getItem:in_no];
+    if( pItem != NULL )
+    {
+        --pItem->num;
+        return YES;
+    }
+
+    return NO;
 }
 
 /*

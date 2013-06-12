@@ -13,9 +13,11 @@
 @private
 	CCLabelBMFont*	mp_nameLabel;
 	CCLabelBMFont*	mp_dataLabel;
+    CCLabelBMFont*  mp_numLabel;
 }
 
 @property	(nonatomic, retain)CCLabelBMFont*	pNameLabel;
 @property	(nonatomic, retain)CCLabelBMFont*	pDataLabel;
+@property   (nonatomic, retain)CCLabelBMFont*   pNumLabel;
 
 @end

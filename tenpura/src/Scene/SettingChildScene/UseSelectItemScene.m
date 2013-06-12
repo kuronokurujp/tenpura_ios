@@ -204,6 +204,11 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 			NSString*	pFormat	= [DataBaseText getString:pItemData->contentTextID];
 			[pItemCell.pDataLabel setString:[NSString stringWithFormat:pFormat, pItemData->value]];	
 		}
+        
+        //  所有数
+        {
+            [pItemCell.pNumLabel setString:[NSString stringWithFormat:@"%ld", NotUsenetaNum]];
+        }
 	}
 
 	return pCell;

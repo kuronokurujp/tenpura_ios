@@ -89,6 +89,7 @@
 	
 	CGRect	rect	= [self textureRect];
 	[mp_soldOutSprite setPosition:ccp(rect.size.width * 0.5f, rect.size.height * 0.5f)];
+    [mp_soldOutSprite setZOrder:10];
 }
 
 /*

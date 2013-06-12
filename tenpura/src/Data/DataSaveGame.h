@@ -31,7 +31,7 @@ enum
 	eSAVE_DATA_NETA_PACKS_MAX	= 64,
 	eSAVE_DATA_ITEMS_MAX	= 32,
 	eSAVE_DATA_MISSION_MAX	= 64,
-	eSAVE_DATA_NETA_USE_MAX	= 99,
+	eSAVE_DATA_ITEM_USE_MAX	= 99,
 };
 
 typedef struct
@@ -97,9 +97,11 @@ typedef struct
 -(const SAVE_DATA_ITEM_ST*)getItemOfIndex:(UInt32)in_idx;
 
 //	ネタ追加
--(BOOL)addNetaPack:(UInt32)in_no;
+-(BOOL) addNetaPack:(UInt32)in_no;
 //	アイテム追加
--(BOOL)addItem:(UInt32)in_no;
+-(BOOL) addItem:(UInt32)in_no;
+-(BOOL) subItem:(UInt32)in_no;
+
 //	金額加算
 -(void)	addSaveMoeny:(long)in_addMoney;
 //	スコア設定

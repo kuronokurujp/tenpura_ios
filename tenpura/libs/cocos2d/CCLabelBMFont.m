@@ -996,7 +996,16 @@ void FNTConfigRemoveCache( void )
 		[_configuration release];
 		_configuration = [newConf retain];
         
-		[self setTexture:[[CCTextureCache sharedTextureCache] addImage:_configuration.atlasName]];
+        CCTexture2D*    pTex    = [[CCTextureCache sharedTextureCache] textureForKey:_configuration.atlasName];
+        if( pTex == NULL )
+        {
+            [self setTexture:[[CCTextureCache sharedTextureCache] addImage:_configuration.atlasName]];
+        }
+        else
+        {
+            [self setTexture:pTex];
+        }
+
 		[self createFontChars];
 	}
 }

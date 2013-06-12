@@ -163,22 +163,26 @@
 		}
 	}
 
-	CCArray*	pDataSettingItem	= [[[CCArray alloc] init] autorelease];
-	//	受け渡しためのデータリスト作成
-	{
-		SettingItemBtn*	pSettingItemBtn	= nil;
-		CCARRAY_FOREACH(mp_useItemNoList, pSettingItemBtn)
-		{
-			if( ( 0 < pSettingItemBtn.itemNo ) && ( pSettingItemBtn.type == eITEM_TYPE_OPTION ) )
-			{
-				[pDataSettingItem addObject:[NSNumber numberWithInt:pSettingItemBtn.itemNo]];
-			}
-		}
-	}
-
 	//	データがないと先へ進めない
 	if( 0 < [pDataSettingTenpura count] )
 	{
+        CCArray*	pDataSettingItem	= [[[CCArray alloc] init] autorelease];
+        //	受け渡しためのデータリスト作成
+        {
+            DataSaveGame*   pSaveGameInst   = [DataSaveGame shared];
+
+            SettingItemBtn*	pSettingItemBtn	= nil;
+            CCARRAY_FOREACH(mp_useItemNoList, pSettingItemBtn)
+            {
+                if( ( 0 < pSettingItemBtn.itemNo ) && ( pSettingItemBtn.type == eITEM_TYPE_OPTION ) )
+                {
+                    [pDataSettingItem addObject:[NSNumber numberWithInt:pSettingItemBtn.itemNo]];
+                    //  アイテムを減らす
+                    [pSaveGameInst subItem:pSettingItemBtn.itemNo];
+                }
+            }
+        }
+
 		//	アニメ登録
 		{
 			AnimManager*	pEffMng	= [AnimManager shared];

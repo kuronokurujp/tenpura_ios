@@ -52,6 +52,8 @@
 
 	[pItemCell.pUnknowLabel setString:@""];
 	
+    DataSaveGame*	pDataSaveGameInst	= [DataSaveGame shared];
+
 	//	選択可能かチェック
 	if( [self _isCellSelect:idx] == NO )
 	{
@@ -69,11 +71,21 @@
 	//	購入できない場合の対応
 	{
 		[pItemCell setColor:ccWHITE];
+        [pItemCell setEnableSoldOut:NO];
+
 		if( [self isBuy:idx] == false )
 		{
 			//	購入できない
-			[pItemCell setColor:ccGRAY];
-		}		
+            const SAVE_DATA_ITEM_ST*	pItemData	= [[DataSaveGame shared] getItem:pData->no];
+            if( ( pItemData == NULL ) || ( pItemData->num < eSAVE_DATA_ITEM_USE_MAX ) )
+            {
+                [pItemCell setColor:ccGRAY];
+            }
+            else
+            {
+                [pItemCell setEnableSoldOut:YES];
+            }
+		}
 	}
 
 	//	アイテム名表示
@@ -94,6 +106,20 @@
 		NSString*	pStr	= [NSString stringWithFormat:@"%@:%ld", pTitleName, pData->sellMoney];
 		[pItemCell.pMoneyLabel setString:pStr];
 	}
+    
+    //  所有数表示
+    {
+        const SAVE_DATA_ITEM_ST*    pItemData   = [pDataSaveGameInst getItem:pData->no];
+        if( pItemData != NULL )
+        {
+            [pItemCell.pNumLabel setVisible:YES];
+            [pItemCell.pNumLabel setString:[NSString stringWithFormat:@"%d", pItemData->num]];
+        }
+        else
+        {
+            [pItemCell.pNumLabel setVisible:NO];
+        }
+    }
 
 	return pCell;
 }
@@ -148,7 +174,7 @@
 	
 	const ITEM_DATA_ST*	pData	= [[DataItemList shared] getData:in_idx];
 	const SAVE_DATA_ITEM_ST*	pItemData	= [[DataSaveGame shared] getItem:pData->no];
-	if( ( pItemData == NULL ) || ( pItemData->num < 1 ) )
+	if( ( pItemData == NULL ) || ( pItemData->num < eSAVE_DATA_ITEM_USE_MAX ) )
 	{
 		return ( sellMoney <= nowMoney );
 	}
@@ -170,7 +196,5 @@
 	const SAVE_DATA_ITEM_ST*	pItemData	= [[DataSaveGame shared] getItem:pData->unlockItemNo];
 	return (pItemData != nil);
 }
-
-
 
 @end

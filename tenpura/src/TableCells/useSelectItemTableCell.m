@@ -13,6 +13,7 @@
 
 @synthesize pNameLabel	= mp_nameLabel;
 @synthesize pDataLabel	= mp_dataLabel;
+@synthesize pNumLabel   = mp_numLabel;
 
 /*
 	@brief	初期化
@@ -49,6 +50,11 @@
 				mp_dataLabel	= pLabel;
 				[mp_dataLabel setString:@""];
 			}
+            else if( [pLabel.string isEqualToString:@"num"] )
+            {
+                mp_numLabel = pLabel;
+                [mp_numLabel setString:@""];
+            }
 		}
 	}
 }

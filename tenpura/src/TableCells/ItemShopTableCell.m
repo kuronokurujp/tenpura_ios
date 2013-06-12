@@ -15,6 +15,7 @@
 @synthesize pDataLabel	= mp_dataLabel;
 @synthesize pMoneyLabel	= mp_moneyLabel;
 @synthesize pUnknowLabel	= mp_unknowLabel;
+@synthesize pNumLabel       = mp_numLabel;
 
 /*
 	@brief	初期化
@@ -31,6 +32,7 @@
 		mp_dataLabel	= nil;
 		mp_moneyLabel	= nil;
 		mp_unknowLabel	= nil;
+        mp_numLabel = NULL;
 	}
 	
 	return self;
@@ -67,11 +69,17 @@
 				mp_unknowLabel	= pLabel;
 				[mp_unknowLabel setString:@""];
 			}
+            else if( [pLabel.string isEqualToString:@"num"] )
+            {
+                mp_numLabel = pLabel;
+                [mp_numLabel setString:@""];
+            }
 		}
 	}
 	
 	CGRect	rect	= [self textureRect];
 	[mp_soldOutSprite setPosition:ccp(rect.size.width * 0.5f, rect.size.height * 0.5f)];
+    [mp_soldOutSprite setZOrder:10];
 }
 
 /*
