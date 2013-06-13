@@ -79,7 +79,7 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 	
 	UInt32	idx	= [cell objectID];
 	const UInt32 NotUsenetaNum	= [self getNotUsenetaNum:idx];
-	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] getNetaPackOfIndex:idx];
+	const SAVE_DATA_NETA_ST*	pItem	= [[DataSaveGame shared] getNetaPackOfIndex:idx];
 	if( (pItem != nil) && (0 < NotUsenetaNum) )
 	{
 		[self actionCellTouch:cell];
@@ -104,7 +104,7 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 	
 	[pItemCell setColor:ccGRAY];
 
-	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] getNetaPackOfIndex:idx];
+	const SAVE_DATA_NETA_ST*	pItem	= [[DataSaveGame shared] getNetaPackOfIndex:idx];
 	if( pItem == nil )
 	{
 		return pCell;
@@ -177,7 +177,7 @@ static const SInt32	s_netaTableViewCellMax	= 6;
 		return NO;
 	}
 	
-	const SAVE_DATA_ITEM_ST*	pItem	= [[DataSaveGame shared] getNetaPackOfIndex:in_idx];
+	const SAVE_DATA_NETA_ST*	pItem	= [[DataSaveGame shared] getNetaPackOfIndex:in_idx];
 	if( pItem == nil )
 	{
 		return 0;

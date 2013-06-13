@@ -117,7 +117,7 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 		{
 			//	購入できない
 			const NETA_PACK_DATA_ST*	pData	= [[DataNetaPackList shared] getData:idx];
-			const SAVE_DATA_ITEM_ST*	pNetaPackData	= [[DataSaveGame shared] getNetaPack:pData->no];
+			const SAVE_DATA_NETA_ST*	pNetaPackData	= [[DataSaveGame shared] getNetaPack:pData->no];
 			if( ( pNetaPackData != NULL ) && ( 0 < pNetaPackData->num ) )
 			{
 				[pItemCell setEnableSoldOut:YES];
@@ -194,7 +194,7 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 	UInt32	nowMoney	= [[DataSaveGame shared] getData]->money;
 	
 	const NETA_PACK_DATA_ST*	pData	= [[DataNetaPackList shared] getData:in_idx];
-	const SAVE_DATA_ITEM_ST*	pNetaPackData	= [[DataSaveGame shared] getNetaPack:pData->no];
+	const SAVE_DATA_NETA_ST*	pNetaPackData	= [[DataSaveGame shared] getNetaPack:pData->no];
 	if( ( pNetaPackData == NULL ) || ( pNetaPackData->num == 0 ) )
 	{
 		return ( sellMoney <= nowMoney );
@@ -213,7 +213,7 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 		//	選択するアイテムのリスト前のアイテムを持っているか
 		SInt32	backIdx	= in_idx - 1;
 		const NETA_PACK_DATA_ST*	pData	= [[DataNetaPackList shared] getData:backIdx];
-		const SAVE_DATA_ITEM_ST*	pNetaPackData	= [[DataSaveGame shared] getNetaPack:pData->no];
+		const SAVE_DATA_NETA_ST*	pNetaPackData	= [[DataSaveGame shared] getNetaPack:pData->no];
 		return ( pNetaPackData != nil );
 	}
 	

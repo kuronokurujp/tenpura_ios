@@ -48,8 +48,8 @@ enum
 typedef enum
 {
 	eEAT_STATE_NONE,
-	eEAT_STATE_HIT	= 1,
-	eEAT_STATE_NO_HIT,
+	eEAT_STATE_OK	= 1,
+	eEAT_STATE_NG,
 } eEAT_STATE;
 
 /*
@@ -502,14 +502,20 @@ enum
 			eEatTenpuraState	= [self _throwTenpuraToCutomer:pCustomer:mp_touchTenpura];
 			if( eEatTenpuraState != eEAT_STATE_NONE )
 			{
-				if( eEatTenpuraState == eEAT_STATE_HIT )
+				if( eEatTenpuraState == eEAT_STATE_OK )
 				{
+                    ++pGameScene->m_eatTenpuraMaxNum;
+
 					switch ((SInt32)mp_touchTenpura.state)
 					{
 						case eTENPURA_STATE_VERYGOOD:
 						{
+                            //  与えた天ぷらの回数をカウント(ネタごとのハイスコアにする)
+                            {
+                                [pGameScene addHiScoreByTenpura:mp_touchTenpura.data.no :1];                                
+                            }
+                            
 							++m_veryEatCnt;
-							if( mp_touchTenpura.state == eTENPURA_STATE_VERYGOOD )
 							{
 								++m_combCnt;
 
@@ -550,15 +556,22 @@ enum
 						}
 					}
 					
+                    BOOL    bNewPutCustomer = NO;
 					if( ([self _getPutCustomerNum] <= 1) && ( [pCustomer getEatCnt] <= 0 ) )
 					{
+                        bNewPutCustomer = YES;
 						//	客が一人しかいない状態で退場する時客が新しく出す
-						[pGameScene putCustomer:YES];
 					}
 					else if( s_PutCustomerCombNum <= m_veryEatCnt )
 					{
-						[pGameScene putCustomer:YES];
+                        bNewPutCustomer = YES;
 					}
+                    
+                    if( bNewPutCustomer == YES )
+                    {
+						[pGameScene putCustomer:YES];
+                        ++pGameScene->m_putCustomerMaxNum;
+                    }
 				}
 				else
 				{
@@ -674,7 +687,7 @@ enum
 	if( [in_pCustomer isEatTenpura:in_pTenpura.data.no] == NO )
 	{
 		[in_pCustomer.act anger:in_pTenpura];
-		return	eEAT_STATE_NO_HIT;
+		return	eEAT_STATE_NG;
 	}
 
 	TENPURA_STATE_ET	tenpuraState	= in_pTenpura.state;
@@ -734,7 +747,7 @@ enum
 	//	取得金額反映
 	in_pCustomer.addMoney	= addMoneyNum;
 	
-	return eEAT_STATE_HIT;
+	return eEAT_STATE_OK;
 }
 
 /*

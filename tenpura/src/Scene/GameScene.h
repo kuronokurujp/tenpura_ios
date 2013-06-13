@@ -20,6 +20,11 @@
 @class AnimActionNumCounterLabelBMT;
 @class GameInBG;
 
+typedef struct
+{
+    UInt32  no;
+    UInt8   hiscore;
+} _GAME_SCENT_HISCORE_TENPURA_DATA_ST;
 /*
 	@brief	ゲーム開始時に設定するデータ
 */
@@ -64,8 +69,12 @@
 	Float32	m_gameEndScoreRate;
 	Float32	m_scoreRate;
 	UInt32	m_moneyRate;
+    UInt8   m_putCustomerMaxNum;
+    UInt8   m_eatTenpuraMaxNum;
 
 	CCArray*	mp_settingItemList;
+    CCArray*    mp_tenpuraHiscoreList;
+
 	GameData*	mp_gameData;
 	GameSceneData*	mp_gameSceneData;
 	
@@ -83,6 +92,9 @@
 
 //	客を一人出す
 -(Customer*) putCustomer:(BOOL)in_bCreateEat;
+
+//  天ぷらのスコア加算(天ぷらの種類NO、スコア加算値 天ぷらの種類NOが見つからない場合は何もしない)
+-(void) addHiScoreByTenpura:(UInt32)in_no :(UInt8)in_num;
 
 //	オブジェクトのポーズ
 -(void)	pauseObject:(BOOL)in_bFlg;

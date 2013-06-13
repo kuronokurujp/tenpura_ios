@@ -35,10 +35,10 @@
 	}
 	];
 	[pResetSaveItem setFontSize:12.f];
+    [pResetSaveItem setColor:ccBLACK];
 	
 	CCMenu*	pMenu	= [CCMenu menuWithItems:pResetSaveItem, nil];
-	CGSize	winSize	= [[CCDirector sharedDirector] winSize];
-	[pMenu setPosition:ccp( 120.f, winSize.height - 32 )];
+	[pMenu setPosition:ccp( 80.f, 300 )];
 	[self addChild:pMenu z:20];
 #endif
 		[[SoundManager shared] playBgm:@"normalBGM"];

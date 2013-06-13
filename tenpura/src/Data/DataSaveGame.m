@@ -13,7 +13,7 @@
 //	非公開関数
 @interface DataSaveGame (PriveteMethod)
 
--(SAVE_DATA_ITEM_ST*)	_getNetaPack:(UInt32)in_no;
+-(SAVE_DATA_NETA_ST*)	_getNetaPack:(UInt32)in_no;
 -(SAVE_DATA_ITEM_ST*)	_getItem:(UInt32)in_no;
 
 @end
@@ -121,7 +121,7 @@ static const unsigned short   s_maxLv_dataSaveGame    = 999;
 	@param	in_no	: アイテムno
 	@return	アイテムnoのデータアドレス
 */
--(const SAVE_DATA_ITEM_ST*)getNetaPack:(UInt32)in_no
+-(const SAVE_DATA_NETA_ST*)getNetaPack:(UInt32)in_no
 {
 	return [self _getNetaPack:in_no];
 }
@@ -131,7 +131,7 @@ static const unsigned short   s_maxLv_dataSaveGame    = 999;
 	@parma	in_idx	: アイテムリストidx
 	@return	指定したアイテムリストidxのデータアドレス
 */
--(const SAVE_DATA_ITEM_ST*)getNetaPackOfIndex:(UInt32)in_idx
+-(const SAVE_DATA_NETA_ST*)getNetaPackOfIndex:(UInt32)in_idx
 {
 	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
 	if( (pData != nil) && (in_idx < pData->netaNum) )
@@ -181,15 +181,15 @@ static const unsigned short   s_maxLv_dataSaveGame    = 999;
 */
 -(BOOL)addNetaPack:(UInt32)in_no
 {
-	SAVE_DATA_ITEM_ST*	pItem	= [self _getNetaPack:in_no];
+	SAVE_DATA_NETA_ST*	pItem	= [self _getNetaPack:in_no];
 
 	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
 	if( pData != nil )
 	{
-		if( ( pData->netaNum < ( eSAVE_DATA_ITEMS_MAX - 1 ) ) && ( pItem == nil ) )
+		if( ( pData->netaNum < eSAVE_DATA_ITEMS_MAX ) && ( pItem == nil ) )
 		{
 			//	追加可能
-			SAVE_DATA_ITEM_ST*	pAddItem	= &pData->aNetaPacks[ pData->netaNum ];
+			SAVE_DATA_NETA_ST*	pAddItem	= &pData->aNetaPacks[ pData->netaNum ];
 			pAddItem->no	= in_no;
 			pAddItem->unlockFlg	= 1;
 			++pAddItem->num;
@@ -210,6 +210,22 @@ static const unsigned short   s_maxLv_dataSaveGame    = 999;
 }
 
 /*
+    @brief
+ */
+-(void) setNetaMaxNum:(UInt32)in_no :(UInt8)in_num
+{
+    SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
+    {
+        NSAssert(in_no < sizeof(pData->aNetaMaxNum) / sizeof(pData->aNetaMaxNum[0]), @"");
+        if( pData->aNetaMaxNum[in_no] < in_num )
+        {
+            pData->aNetaMaxNum[in_no]  = in_num;
+            [mp_SaveData save];
+        }
+    }
+}
+
+/*
 	@brief	アイテム追加
 	@param	in_no	: 追加するアイテムno(1つ追加)
 	@return	追加成功 = YES / 追加失敗 = NO
@@ -221,7 +237,7 @@ static const unsigned short   s_maxLv_dataSaveGame    = 999;
 	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
 	if( pData != nil )
 	{
-		if( ( pData->itemNum < ( eSAVE_DATA_ITEMS_MAX - 1 ) ) && ( pItem == nil ) )
+		if( ( pData->itemNum < eSAVE_DATA_ITEMS_MAX ) && ( pItem == nil ) )
 		{
 			//	追加可能
 			SAVE_DATA_ITEM_ST*	pAddItem	= &pData->aItems[ pData->itemNum ];
@@ -281,6 +297,36 @@ static const unsigned short   s_maxLv_dataSaveGame    = 999;
 	if( pData != nil )
 	{
 		pData->score	= MIN( in_score, eSCORE_MAX_NUM );
+		[mp_SaveData save];
+	}
+}
+
+/*
+    @brief
+ */
+-(void) setPutCustomerMaxNum:(UInt8)in_num
+{
+    SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
+	NSAssert( pData, @"セーブデータ取得失敗" );
+    
+	if( pData != nil && pData->putCustomerMaxnum < in_num)
+	{
+		pData->putCustomerMaxnum	= in_num;
+		[mp_SaveData save];
+	}
+}
+
+/*
+    @brief
+ */
+-(void) setEatTenpuraMaxNum:(UInt8)in_num
+{
+    SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
+	NSAssert( pData, @"セーブデータ取得失敗" );
+    
+	if( pData != nil && pData->eatTenpuraMaxNum < in_num)
+	{
+		pData->eatTenpuraMaxNum	= in_num;
 		[mp_SaveData save];
 	}
 }
@@ -422,7 +468,7 @@ static const unsigned short   s_maxLv_dataSaveGame    = 999;
 	@param	in_no : ネタno
 	@return	noネタデータ / nil = ネタデータがない or アイテム数が０
 */
--(SAVE_DATA_ITEM_ST*)	_getNetaPack:(UInt32)in_no
+-(SAVE_DATA_NETA_ST*)	_getNetaPack:(UInt32)in_no
 {
 	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
 	if( pData != nil )

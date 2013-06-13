@@ -126,6 +126,8 @@ enum
 		m_scoreRate	= 1;
 		m_moneyRate	= 1;
 		m_combAddTime	= 0.f;
+        m_putCustomerMaxNum = 0;
+        m_eatTenpuraMaxNum  = 0;
 
 		{
 			DataTenpuraPosList*	pDataTenpuraPosList	= [DataTenpuraPosList shared];
@@ -188,6 +190,7 @@ enum
 		//	なべに配置できるてんぷらリスト作成
 		{
 			mp_settingItemList	= [[CCArray alloc] init];
+            mp_tenpuraHiscoreList   = [[CCArray alloc] init];
 
 			DataNetaPackList*	pDataNetaPackListInst	= [DataNetaPackList shared];
 			CCNode*	pNode	= nil;
@@ -203,6 +206,10 @@ enum
 					{
 						if( 0 < pNetaPackData->aNetaId[i] )
 						{
+                            _GAME_SCENT_HISCORE_TENPURA_DATA_ST data    = { pNetaPackData->aNetaId[i], 0};
+                            NSData* pSetData    = [[NSData alloc] initWithBytes:&data length:sizeof(data)];
+                            [mp_tenpuraHiscoreList addObject:pSetData];
+                            
 							NSNumber*	num	= [NSNumber numberWithInt:pNetaPackData->aNetaId[i]];
 							[mp_settingItemList addObject:num];
 						}
@@ -361,6 +368,17 @@ enum
 		[mp_customerArray release];
 	}	
 	mp_customerArray	= nil;
+    
+    if( mp_tenpuraHiscoreList != nil )
+    {
+        NSData* pData   = nil;
+        CCARRAY_FOREACH(mp_tenpuraHiscoreList, pData)
+        {
+            [pData release];
+        }
+        [mp_tenpuraHiscoreList release];
+    }
+    mp_tenpuraHiscoreList   = nil;
 	
 	[super dealloc];
 }
@@ -465,6 +483,27 @@ enum
 		
 		[self removeChildByTag:eGAME_RESULT_SCENE_TAG cleanup:YES];
 	}
+}
+
+/*
+    @brief
+ */
+-(void) addHiScoreByTenpura:(UInt32)in_no :(UInt8)in_num
+{
+    NSData* pData   = nil;
+    _GAME_SCENT_HISCORE_TENPURA_DATA_ST*    pSetData    = nil;
+    CCARRAY_FOREACH(mp_tenpuraHiscoreList, pData)
+    {
+        if( pData != nil )
+        {
+            pSetData    = (_GAME_SCENT_HISCORE_TENPURA_DATA_ST*)[pData bytes];
+            if( pSetData->no == in_no )
+            {
+                pSetData->hiscore += in_num;
+                break;
+            }
+        }
+    }
 }
 
 /*
@@ -654,6 +693,5 @@ enum
     NSString*   pNabeImageFileName  = [NSString stringWithUTF8String:pImgFileName[nameIdx]];
     [in_pNabeObj setNabeImageFileName:pNabeImageFileName];
 }
-
 
 @end

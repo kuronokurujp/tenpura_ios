@@ -69,33 +69,63 @@
 {
 	GameScene*	pGameScene	= (GameScene*)[self parent];
 	
-	//	スコアと金額をセーブに
+	//	処理開始時にセーブをする
 	{
 		DataSaveGame*	pDataSaveGame	= [DataSaveGame shared];
 		const SAVE_DATA_ST*	pSaveData	= [pDataSaveGame getData];
 	
-		int64_t	score	= [pGameScene getScoreByGameEnd];
-		mb_hiscore	= ( pSaveData->score < score );
-		if( mb_hiscore == YES )
-		{
-			[pDataSaveGame setSaveScore:score];
-            NSString*	pDataName	= [NSString stringWithUTF8String:gp_leaderboardDataName];
-            [[GameKitHelper shared] submitScore:score category:pDataName];
-		}
-	
-		int64_t	money	= [pGameScene getMoney];
-		[pDataSaveGame addSaveMoeny:money];
+        //  ハイスコア
+        {
+            //  ポイント
+            {
+                int64_t	score	= [pGameScene getScoreByGameEnd];
+                mb_hiscore	= ( pSaveData->score < score );
+                if( mb_hiscore == YES )
+                {
+                    [pDataSaveGame setSaveScore:score];
+                    NSString*	pDataName	= [NSString stringWithUTF8String:gp_leaderboardDataName];
+                    [[GameKitHelper shared] submitScore:score category:pDataName];
+                }
+            }
+            
+            //  食べた回数、客が現れた回数の最高数を保存
+            {
+                [pDataSaveGame setEatTenpuraMaxNum:pGameScene->m_eatTenpuraMaxNum];
+                [pDataSaveGame setPutCustomerMaxNum:pGameScene->m_putCustomerMaxNum];
+            }
+            
+            //  天ぷらのネタごとにハイスコア設定
+            {
+                CCArray*    pArray  = pGameScene->mp_tenpuraHiscoreList;
+                NSData* pTmpData    = nil;
+                _GAME_SCENT_HISCORE_TENPURA_DATA_ST*    pHiScoreByTenpura   = nil;
+                CCARRAY_FOREACH(pArray, pTmpData)
+                {
+                    pHiScoreByTenpura   = (_GAME_SCENT_HISCORE_TENPURA_DATA_ST*)[pTmpData bytes];
+                    [pDataSaveGame setNetaMaxNum:pHiScoreByTenpura->no :pHiScoreByTenpura->hiscore];
+                }
+            }
+        }
+	       
+        //  金額
+        {
+            int64_t	money	= [pGameScene getMoney];
+            [pDataSaveGame addSaveMoeny:money];
+        }
 	}
 
 	//	天ぷらを消滅
 	[pGameScene->mp_nabe allCleanTenpura];
 	
 	//	客を一時停止
-	Customer*	pCustomer	= nil;
-	CCARRAY_FOREACH(pGameScene->mp_customerArray,pCustomer)
-	{
-		[pCustomer pauseSchedulerAndActions];
-	}
+    {
+        CCArray*    pArray  = pGameScene->mp_customerArray;
+        Customer*	pCustomer	= nil;
+        CCARRAY_FOREACH(pArray, pCustomer)
+        {
+            [pCustomer pauseSchedulerAndActions];
+        }        
+    }
 	
 	//	ロゴ表示イベント
 	{
@@ -139,7 +169,8 @@
 	Customer*	pCustomer	= nil;
 	
 	{
-		CCARRAY_FOREACH( pGameScene->mp_customerArray, pCustomer )
+        CCArray*    pArray  = pGameScene->mp_customerArray;
+		CCARRAY_FOREACH( pArray, pCustomer )
 		{
 			//	停止した客を再起動
 			[pCustomer resumeSchedulerAndActions];
@@ -169,14 +200,17 @@
 	GameScene*	pGameScene	= (GameScene*)[self parent];
 
 	SInt32	cnt	= 0;
-	Customer*	pCustomer	= nil;
-	CCARRAY_FOREACH( pGameScene->mp_customerArray, pCustomer )
-	{
-		if( ( pCustomer.visible == YES ) && ( pCustomer.bPut == YES ) )
-		{
-			++cnt;
-		}
-	}
+    {
+        CCArray*    pArray  = pGameScene->mp_customerArray;
+        Customer*	pCustomer	= nil;
+        CCARRAY_FOREACH( pArray, pCustomer )
+        {
+            if( ( pCustomer.visible == YES ) && ( pCustomer.bPut == YES ) )
+            {
+                ++cnt;
+            }
+        }
+    }
 
 	if( (cnt >= eCUSTOMER_MAX) && (mp_endLogoSp.visible == NO) )
 	{
@@ -191,12 +225,15 @@
 -(void)	_endPrepaEvent:(ccTime)in_time
 {
 	GameScene*	pGameScene	= (GameScene*)[self parent];
-	Customer*	pCustomer	= nil;
-	CCARRAY_FOREACH( pGameScene->mp_customerArray, pCustomer )
-	{
-		//	スコア表示開始
-		[pCustomer.act putResultScore];
-	}
+    {
+        Customer*	pCustomer	= nil;
+        CCArray*    pArray  = pGameScene->mp_customerArray;
+        CCARRAY_FOREACH( pArray, pCustomer )
+        {
+            //	スコア表示開始
+            [pCustomer.act putResultScore];
+        }
+    }
 	
 	int64_t	nowScoreNum	= [pGameScene getScore];
 	[pGameScene->mp_scorePut setNum:nowScoreNum];
@@ -234,7 +271,7 @@
 {
 	CGSize	winSize	= [[CCDirector sharedDirector] winSize];
 		
-	//	ハイスコアであれば記録
+	//	ハイスコアであればハイスコア用の画面に
 	NSString*	pResultCcbiFileName	= @"game_result.ccbi";
 	if( mb_hiscore )
 	{

@@ -229,7 +229,7 @@ enum
 				DataNetaPackList*	pDataNetaPackInst	= [DataNetaPackList shared];
 				for( SInt32 i = 0; i < eSAVE_DATA_NETA_PACKS_MAX; ++i )
 				{
-					const	SAVE_DATA_ITEM_ST*	pItem	= [pSaveDataInst getNetaPackOfIndex:i];
+					const	SAVE_DATA_NETA_ST*	pItem	= [pSaveDataInst getNetaPackOfIndex:i];
 					if( pItem != NULL )
 					{
 						const NETA_PACK_DATA_ST*	pNetaPackData	= [pDataNetaPackInst getDataSearchId:pItem->no];
