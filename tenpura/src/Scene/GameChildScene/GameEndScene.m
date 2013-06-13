@@ -77,8 +77,8 @@
         //  ハイスコア
         {
             //  ポイント
+            SInt32	score	= [pGameScene getScoreByGameEnd];
             {
-                int64_t	score	= [pGameScene getScoreByGameEnd];
                 mb_hiscore	= ( pSaveData->score < score );
                 if( mb_hiscore == YES )
                 {
@@ -96,14 +96,7 @@
             
             //  天ぷらのネタごとにハイスコア設定
             {
-                CCArray*    pArray  = pGameScene->mp_tenpuraHiscoreList;
-                NSData* pTmpData    = nil;
-                _GAME_SCENT_HISCORE_TENPURA_DATA_ST*    pHiScoreByTenpura   = nil;
-                CCARRAY_FOREACH(pArray, pTmpData)
-                {
-                    pHiScoreByTenpura   = (_GAME_SCENT_HISCORE_TENPURA_DATA_ST*)[pTmpData bytes];
-                    [pDataSaveGame setNetaMaxNum:pHiScoreByTenpura->no :pHiScoreByTenpura->hiscore];
-                }
+                [pDataSaveGame setHiscoreNetaPack:pGameScene->m_useNetaPackNo :score];
             }
         }
 	       
@@ -353,15 +346,15 @@
 				CCLabelBMFont*	pLabel	= (CCLabelBMFont*)pChildReaderNode;
 				if( [pLabel.string isEqualToString:@"score"] )
 				{
-					pLabel.string	= [NSString stringWithFormat:@"%lld", [pGameScene getScoreByGameEnd]];
+					pLabel.string	= [NSString stringWithFormat:@"%ld", [pGameScene getScoreByGameEnd]];
 				}
 				else if ( [pLabel.string isEqualToString:@"hiscore"] )
 				{
-					pLabel.string	= [NSString stringWithFormat:@"%lld", pSaveData->score];
+					pLabel.string	= [NSString stringWithFormat:@"%ld", pSaveData->score];
 				}
 				else if( [pLabel.string isEqualToString:@"money"] )
 				{
-					pLabel.string	= [NSString stringWithFormat:@"%lld", [pGameScene getMoney]];
+					pLabel.string	= [NSString stringWithFormat:@"%ld", [pGameScene getMoney]];
 				}
 				else if( [pLabel.string isEqualToString:@"allmoney"] )
 				{

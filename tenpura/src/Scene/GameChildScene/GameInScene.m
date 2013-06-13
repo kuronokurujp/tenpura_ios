@@ -509,12 +509,7 @@ enum
 					switch ((SInt32)mp_touchTenpura.state)
 					{
 						case eTENPURA_STATE_VERYGOOD:
-						{
-                            //  与えた天ぷらの回数をカウント(ネタごとのハイスコアにする)
-                            {
-                                [pGameScene addHiScoreByTenpura:mp_touchTenpura.data.no :1];                                
-                            }
-                            
+						{                            
 							++m_veryEatCnt;
 							{
 								++m_combCnt;

@@ -22,7 +22,7 @@
 
 static DataSaveGame*	s_pDataSaveGameInst	= nil;
 static NSString*		s_pSaveIdName	= @"TenpuraGameData";
-static const unsigned short   s_maxLv_dataSaveGame    = 999;
+static const UInt16   s_maxLv_dataSaveGame    = 999;
 
 /*
 	@brief
@@ -212,14 +212,14 @@ static const unsigned short   s_maxLv_dataSaveGame    = 999;
 /*
     @brief
  */
--(void) setNetaMaxNum:(UInt32)in_no :(UInt8)in_num
+-(void) setHiscoreNetaPack:(UInt32)in_no :(SInt32)in_hiscore
 {
     SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
     {
-        NSAssert(in_no < sizeof(pData->aNetaMaxNum) / sizeof(pData->aNetaMaxNum[0]), @"");
-        if( pData->aNetaMaxNum[in_no] < in_num )
+        NSAssert(in_no < sizeof(pData->aNetaPackHiscore) / sizeof(pData->aNetaPackHiscore[0]), @"");
+        if( pData->aNetaPackHiscore[in_no] < in_hiscore )
         {
-            pData->aNetaMaxNum[in_no]  = in_num;
+            pData->aNetaPackHiscore[in_no]  = in_hiscore;
             [mp_SaveData save];
         }
     }
@@ -289,7 +289,7 @@ static const unsigned short   s_maxLv_dataSaveGame    = 999;
 	@brief	スコア設定
 	@param	in_score	: スコア数
 */
--(void)	setSaveScore:(int64_t)in_score
+-(void)	setSaveScore:(SInt32)in_score
 {
 	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
 	NSAssert( pData, @"セーブデータ取得失敗" );
@@ -392,7 +392,7 @@ static const unsigned short   s_maxLv_dataSaveGame    = 999;
 /*
     @brief  なべ経験値加算
  */
--(BOOL) addNabeExp:(unsigned short)in_expNum
+-(BOOL) addNabeExp:(UInt16)in_expNum
 {
     SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
 	if( pData != nil )
@@ -400,7 +400,7 @@ static const unsigned short   s_maxLv_dataSaveGame    = 999;
         pData->nabeExp += in_expNum;
         if( eNABE_LVUP_NUM <= pData->nabeExp )
         {
-            unsigned short addLv    = pData->nabeExp / eNABE_LVUP_NUM;
+            UInt16 addLv    = pData->nabeExp / eNABE_LVUP_NUM;
             pData->nabeLv += addLv;
             if( s_maxLv_dataSaveGame <= pData->nabeLv )
             {

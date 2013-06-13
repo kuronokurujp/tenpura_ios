@@ -85,7 +85,7 @@
 //	リザルト
 -(void)	_updateResult:(ccTime)delta;
 
--(void) _changeNabe:(Nabe*)in_pNabeObj :(const unsigned short)in_lv;
+-(void) _changeNabe:(Nabe*)in_pNabeObj :(const UInt16)in_lv;
 
 @end
 
@@ -128,6 +128,7 @@ enum
 		m_combAddTime	= 0.f;
         m_putCustomerMaxNum = 0;
         m_eatTenpuraMaxNum  = 0;
+        m_useNetaPackNo = -1;
 
 		{
 			DataTenpuraPosList*	pDataTenpuraPosList	= [DataTenpuraPosList shared];
@@ -190,7 +191,6 @@ enum
 		//	なべに配置できるてんぷらリスト作成
 		{
 			mp_settingItemList	= [[CCArray alloc] init];
-            mp_tenpuraHiscoreList   = [[CCArray alloc] init];
 
 			DataNetaPackList*	pDataNetaPackListInst	= [DataNetaPackList shared];
 			CCNode*	pNode	= nil;
@@ -201,15 +201,13 @@ enum
 					DataSettingNetaPack*	pDataSettingNetaPack	= (DataSettingNetaPack*)pNode;
 					const NETA_PACK_DATA_ST*	pNetaPackData	= [pDataNetaPackListInst getDataSearchId:pDataSettingNetaPack.no];
 					NSAssert1(pNetaPackData, @"error:neta.no%ld", pDataSettingNetaPack.no);
+                    
+                    m_useNetaPackNo = pDataSettingNetaPack.no;
 
 					for( SInt32 i = 0; i < eNETA_PACK_MAX; ++i )
 					{
 						if( 0 < pNetaPackData->aNetaId[i] )
 						{
-                            _GAME_SCENT_HISCORE_TENPURA_DATA_ST data    = { pNetaPackData->aNetaId[i], 0};
-                            NSData* pSetData    = [[NSData alloc] initWithBytes:&data length:sizeof(data)];
-                            [mp_tenpuraHiscoreList addObject:pSetData];
-                            
 							NSNumber*	num	= [NSNumber numberWithInt:pNetaPackData->aNetaId[i]];
 							[mp_settingItemList addObject:num];
 						}
@@ -369,17 +367,6 @@ enum
 	}	
 	mp_customerArray	= nil;
     
-    if( mp_tenpuraHiscoreList != nil )
-    {
-        NSData* pData   = nil;
-        CCARRAY_FOREACH(mp_tenpuraHiscoreList, pData)
-        {
-            [pData release];
-        }
-        [mp_tenpuraHiscoreList release];
-    }
-    mp_tenpuraHiscoreList   = nil;
-	
 	[super dealloc];
 }
 
@@ -483,27 +470,6 @@ enum
 		
 		[self removeChildByTag:eGAME_RESULT_SCENE_TAG cleanup:YES];
 	}
-}
-
-/*
-    @brief
- */
--(void) addHiScoreByTenpura:(UInt32)in_no :(UInt8)in_num
-{
-    NSData* pData   = nil;
-    _GAME_SCENT_HISCORE_TENPURA_DATA_ST*    pSetData    = nil;
-    CCARRAY_FOREACH(mp_tenpuraHiscoreList, pData)
-    {
-        if( pData != nil )
-        {
-            pSetData    = (_GAME_SCENT_HISCORE_TENPURA_DATA_ST*)[pData bytes];
-            if( pSetData->no == in_no )
-            {
-                pSetData->hiscore += in_num;
-                break;
-            }
-        }
-    }
 }
 
 /*
@@ -612,9 +578,9 @@ enum
 /*
 	@brief	スコア取得
 */
--(int64_t)	getScore
+-(SInt32)	getScore
 {
-	int64_t	score	= 0;
+	SInt32	score	= 0;
 	Customer*	pCustomer	= nil;
 	CCARRAY_FOREACH(mp_customerArray, pCustomer)
 	{
@@ -629,9 +595,9 @@ enum
 /*
 	@brief	スコア取得
 */
--(int64_t)	getScoreByGameEnd
+-(SInt32)	getScoreByGameEnd
 {
-	int64_t	score	= [self getScore];
+	SInt32	score	= [self getScore];
 	score *= m_gameEndScoreRate;
 	
 	return score;
@@ -640,9 +606,9 @@ enum
 /*
 	@brief	金額取得
 */
--(int64_t)	getMoney
+-(SInt32)	getMoney
 {
-	int64_t	money	= 0;
+	SInt32	money	= 0;
 	Customer*	pCustomer	= nil;
 	CCARRAY_FOREACH(mp_customerArray, pCustomer)
 	{
@@ -655,7 +621,7 @@ enum
 /*
     @brief
  */
--(void) _changeNabe:(Nabe*)in_pNabeObj :(const unsigned short)in_lv
+-(void) _changeNabe:(Nabe*)in_pNabeObj :(const UInt16)in_lv
 {
     NSAssert( in_pNabeObj, @"" );
     static const char*  pImgFileName[5] =

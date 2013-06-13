@@ -29,7 +29,6 @@ enum
 enum
 {
 	eSAVE_DATA_NETA_PACKS_MAX	= 32,
-    eSAVE_DATA_NETA_MAX     = 64,
 	eSAVE_DATA_ITEMS_MAX	= 32,
 	eSAVE_DATA_MISSION_MAX	= 32,
 	eSAVE_DATA_ITEM_USE_MAX	= 99,
@@ -56,34 +55,35 @@ typedef struct
 {
 	//	ネタ所持数
 	SAVE_DATA_NETA_ST	aNetaPacks[eSAVE_DATA_NETA_PACKS_MAX];	//	0(128)
-	long	netaNum;				//	128(4)
+	SInt32	netaNum;				//	128(4)
 	
 	//	アイテム所持数
 	SAVE_DATA_ITEM_ST	aItems[eSAVE_DATA_ITEMS_MAX];	//	130(128)
-	long	itemNum;					//	258(4)
+	SInt32	itemNum;					//	258(4)
 
 	//	所持金
-	long	money;					//	262(4)
+	SInt32	money;					//	262(4)
 	//	日付
-	long	year, month, day;		//	266(12)
+	SInt32	year, month, day;		//	266(12)
 		
-	int64_t	score;				//	278(8)
-	char	use;				//	286(1)
-	char	check;				//	287(1)
-    char    padding[1];          //  288(1)
-	char	adsDel;				//	289(1)
+	SInt32	score;				//	278(4)
+	SInt8	use;				//	282(1)
+	SInt8	check;				//	283(1)
+    SInt8    padding[1];          //  284(1)
+	SInt8	adsDel;				//	285(1)
 	
-	char	aMissionFlg[eSAVE_DATA_MISSION_MAX];		//	290(32)
-    UInt8   putCustomerMaxnum;   // 322(1)
-    UInt8   eatTenpuraMaxNum;   // 323(1)
-    char    padding2[1];          //  324(1)
+	SInt8	aMissionFlg[eSAVE_DATA_MISSION_MAX];		//	286(32)
+    UInt8   putCustomerMaxnum;   // 318(1)
+    UInt8   eatTenpuraMaxNum;   // 319(1)
+    SInt8    padding2[1];          //  320(1)
 	
-    unsigned short  nabeLv;     //  325(2)
-    unsigned short  nabeExp;    //  327(2)
+    UInt16  nabeLv;     //  321(2)
+    UInt16  nabeExp;    //  323(2)
     
-    unsigned char   aNetaMaxNum[eSAVE_DATA_NETA_MAX];   // 329(64)
+    SInt32  aNetaPackHiscore[eSAVE_DATA_NETA_PACKS_MAX];   // 325(128)
+
     //	予約領域
-	char	dummy[119];				//	393(119)
+	SInt8	dummy[59];				//	453(59)
 } SAVE_DATA_ST;	//	512byte
 
 @interface DataSaveGame : NSObject
@@ -111,8 +111,8 @@ typedef struct
 
 //	ネタ追加
 -(BOOL) addNetaPack:(UInt32)in_no;
-//  ネタごとのハイスコア(関数内部で保存している値より小さい場合は処理をスキップしている)
--(void) setNetaMaxNum:(UInt32)in_no :(UInt8)in_num;
+//  ネタパックごとのハイスコア(関数内部で保存している値より小さい場合は処理をスキップしている)
+-(void) setHiscoreNetaPack:(UInt32)in_no :(SInt32)in_hiscore;
 
 //	アイテム追加
 -(BOOL) addItem:(UInt32)in_no;
@@ -120,7 +120,7 @@ typedef struct
 //	金額加算
 -(void)	addSaveMoeny:(long)in_addMoney;
 //	スコア設定
--(void)	setSaveScore:(int64_t)in_score;
+-(void)	setSaveScore:(SInt32)in_score;
 //  客の最大出現数(関数内部で保存している値より小さい場合は処理をスキップしている)
 -(void) setPutCustomerMaxNum:(UInt8)in_num;
 //  天ぷらを食べさせた最大数(関数内部で保存している値より小さい場合は処理をスキップしている)
@@ -136,7 +136,7 @@ typedef struct
 -(void)	saveCutAdsFlg;
 
 //  なべ経験値加算（レベルがあがるとtrueが変える）
--(BOOL) addNabeExp:(unsigned short)in_expNum;
+-(BOOL) addNabeExp:(UInt16)in_expNum;
 
 //	データ丸ごと取得
 -(const SAVE_DATA_ST*)getData;
