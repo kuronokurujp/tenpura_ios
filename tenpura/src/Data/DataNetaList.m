@@ -73,11 +73,11 @@ static DataNetaList*	s_pInst	= nil;
 		NSString*	pObj	= nil;
 		NSArray*	pItems	= nil;
 
-		m_dataNum	= [pLines count];
-		NSAssert(0 < m_dataNum, @"ネタデータが一つもない。");
-		mp_dataList	= (NETA_DATA_ST*)malloc(m_dataNum * sizeof(NETA_DATA_ST));
+		UInt32  dataNum = [pLines count];
+		NSAssert(0 < dataNum, @"ネタデータが一つもない。");
+		mp_dataList	= (NETA_DATA_ST*)malloc(dataNum * sizeof(NETA_DATA_ST));
 			
-		for( SInt32 i = 0; i < m_dataNum; ++i )
+		for( SInt32 i = 0; i < dataNum; ++i )
 		{
 			pObj	= [pLines objectAtIndex:i];
 		
@@ -85,6 +85,7 @@ static DataNetaList*	s_pInst	= nil;
 			//	解析
 			mp_dataList[ i ]	= [self parse:pItems];
 		}
+        m_dataNum   = dataNum;
 		
 		[pLines release];
 	}

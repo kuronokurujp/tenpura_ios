@@ -20,7 +20,6 @@
 #import "./Data/DataMissionList.h"
 #import "./Data/DataItemList.h"
 #import "./Data/DataCustomerList.h"
-#import "./Data/DataOjamaNetaList.h"
 #import "./Data/DataStoreList.h"
 #import "./Data/DataNetaPackList.h"
 #import "./System/Sound/SoundManager.h"
@@ -118,16 +117,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
 	//	アドオンのトランザクションが残っている場合の対応
 	[StoreAppPurchaseManager share].delegate	= self;
 
-	/*
-		ミッションリストデータ読み込み順序が下記のより上だとハングするので注意
-			テキスト
-			ネタ
-			セーブデータ
-	*/
-	[DataMissionList shared];
 	[GameKitHelper shared].delegate	= self;
-	//	サウンド管理データファイル設定
-	[[SoundManager shared] setup:[NSString stringWithUTF8String:gp_soundDataListName]];
 	//	ファイルテクスチャーロード
 	[FileTexLoadManager shared];
 
@@ -263,18 +253,8 @@ void uncaughtExceptionHandler( NSException* in_pException )
 	[SimpleAudioEngine end];
 	CC_DIRECTOR_END();
 
-	[DataNetaPackList end];
-	[SoundManager end];
-	[StoreAppPurchaseManager end];
-	[DataStoreList end];
-	[DataOjamaNetaList end];
-	[DataMissionList end];
-	[DataItemList end];
-	[DataCustomerList end];
-	[DataBaseText end];
-	[DataNetaList end];
-	[DataSaveGame end];
-	[DataTenpuraPosList end];
+    [BootScene release];
+    
 	[GameKitHelper end];
 }
 

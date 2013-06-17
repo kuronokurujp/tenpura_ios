@@ -113,12 +113,12 @@ enum
 		NSString*	pObj	= nil;
 		NSArray*	pItems	= nil;
 
-		m_dataNum	= [pLines count];
-		NSAssert(0 < m_dataNum, @"データが一つもない。");
-		mp_dataList	= (struct MISSION_DATA_ST*)malloc(m_dataNum * sizeof(struct MISSION_DATA_ST));
+		SInt32  dataNum = [pLines count];
+		NSAssert(0 < dataNum, @"データが一つもない。");
+		mp_dataList	= (struct MISSION_DATA_ST*)malloc(dataNum * sizeof(struct MISSION_DATA_ST));
 		
 		UInt32	dataIdx	= 0;
-		for( SInt32 i = 0; i < m_dataNum; ++i, ++dataIdx )
+		for( SInt32 i = 0; i < dataNum; ++i, ++dataIdx )
 		{
 			pObj	= [pLines objectAtIndex:i];
 			pItems	= [pObj componentsSeparatedByString:@","];
@@ -129,7 +129,7 @@ enum
 				--dataIdx;
 			}
 		}
-		
+
 		m_dataNum	= dataIdx;
 		
 		[pLines release];

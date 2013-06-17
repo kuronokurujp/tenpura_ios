@@ -15,6 +15,7 @@
 #import "./../../Data/DataGlobal.h"
 #import "./../../Data/DataSaveGame.h"
 #import	"./../../Data/DataBaseText.h"
+#import "./../../Data/DataEventDataList.h"
 #import "./../../Data/DataGlobal.h"
 #import "./../../System/Sound/SoundManager.h"
 #import "./../../System/Anim/Action/AnimActionNumCounterLabelTTF.h"
@@ -75,6 +76,7 @@
 		const SAVE_DATA_ST*	pSaveData	= [pDataSaveGame getData];
 	
         //  ハイスコア
+        UInt8   successBit  = 0;
         {
             //  ポイント
             SInt32	score	= [pGameScene getScoreByGameEnd];
@@ -85,18 +87,35 @@
                     [pDataSaveGame setSaveScore:score];
                     NSString*	pDataName	= [NSString stringWithUTF8String:gp_leaderboardDataName];
                     [[GameKitHelper shared] submitScore:score category:pDataName];
+                    
+                    successBit |= eEVENT_SUCCESS_BIT_HISCORE;
                 }
             }
             
             //  食べた回数、客が現れた回数の最高数を保存
             {
-                [pDataSaveGame setEatTenpuraMaxNum:pGameScene->m_eatTenpuraMaxNum];
-                [pDataSaveGame setPutCustomerMaxNum:pGameScene->m_putCustomerMaxNum];
+                if( [pDataSaveGame setEatTenpuraMaxNum:pGameScene->m_eatTenpuraMaxNum] == YES )
+                {
+                    successBit |= eEVENT_SUCCESS_BIT_HIRENDER_TENPURA;
+                }
+                
+                if( [pDataSaveGame setPutCustomerMaxNum:pGameScene->m_putCustomerMaxNum] == YES )
+                {
+                    successBit |= eEVENT_SUCCESS_BIT_HIPUT_CUSTOMER;
+                }
             }
             
             //  天ぷらのネタごとにハイスコア設定
             {
-                [pDataSaveGame setHiscoreNetaPack:pGameScene->m_useNetaPackNo :score];
+                if( [pDataSaveGame setHiscoreNetaPack:pGameScene->m_useNetaPackNo :score] == YES )
+                {
+                    successBit |= eEVENT_SUCCESS_BIT_HISCORE_NETAPACK;
+                }
+            }
+            
+            if( pSaveData->invocEventNo != -1 )
+            {
+                [pDataSaveGame setSuccessEventNo:[DataEventDataList chkSuccess:pSaveData->invocEventNo :successBit]];
             }
         }
 	       

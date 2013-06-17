@@ -135,10 +135,10 @@ const NSInteger kSceneFade = 0xFADEFADE;
 
 -(void) hideOutShowIn
 {
-	[_inScene setVisible:YES];
-	[_inScene onEnterActive];
+    [_outScene setVisible:NO];
 
-	[_outScene setVisible:NO];
+    [_inScene setVisible:YES];
+	[_inScene onEnterActive];
 }
 
 // custom onEnter
@@ -843,9 +843,9 @@ const NSInteger kSceneFade = 0xFADEFADE;
 	CCNode *f = [self getChildByTag:kSceneFade];
 
 	CCActionInterval *a = [CCSequence actions:
-						   [CCFadeIn actionWithDuration:_duration/2],
+						   [CCFadeIn actionWithDuration:_duration * 0.5f],
 						   [CCCallFunc actionWithTarget:self selector:@selector(hideOutShowIn)],
-						   [CCFadeOut actionWithDuration:_duration/2],
+						   [CCFadeOut actionWithDuration:_duration * 0.5f],
 						   [CCCallFunc actionWithTarget:self selector:@selector(finish)],
 						   nil ];
 	[f runAction: a];

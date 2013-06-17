@@ -12,6 +12,7 @@
 
 //	前方宣言
 @class SaveData;
+@class DataItemList;
 
 //	設定可能な値最大値
 enum
@@ -30,7 +31,7 @@ enum
 {
 	eSAVE_DATA_NETA_PACKS_MAX	= 32,
 	eSAVE_DATA_ITEMS_MAX	= 32,
-	eSAVE_DATA_MISSION_MAX	= 32,
+	eSAVE_DATA_MISSION_MAX	= 16,
 	eSAVE_DATA_ITEM_USE_MAX	= 99,
 };
 
@@ -45,10 +46,13 @@ typedef struct
 typedef struct
 {
 	UInt8	no;			//	0(1)
-	UInt8	hiscore;	//	1(1)
+	UInt8	dumy;       //	1(1)
 	UInt8	unlockFlg;	//	2(1)
 	UInt8	num;		//	3(1)
-} SAVE_DATA_NETA_ST;	// 4byte
+    UInt32  hiscore;    //  4(4)
+    UInt32  eventHitScore;    //  8(4)
+    UInt8   padding[4]; //  12(4)
+} SAVE_DATA_NETA_ST;	// 16byte
 
 //
 typedef struct
@@ -58,33 +62,42 @@ typedef struct
 	SInt32	netaNum;				//	128(4)
 	
 	//	アイテム所持数
-	SAVE_DATA_ITEM_ST	aItems[eSAVE_DATA_ITEMS_MAX];	//	130(128)
-	SInt32	itemNum;					//	258(4)
+	SAVE_DATA_ITEM_ST	aItems[eSAVE_DATA_ITEMS_MAX];	//	130(512)
+	SInt32	itemNum;					//	642(4)
 
 	//	所持金
-	SInt32	money;					//	262(4)
-	//	日付
-	SInt32	year, month, day;		//	266(12)
+	SInt32	money;					//	646(4)
 		
-	SInt32	score;				//	278(4)
-	SInt8	use;				//	282(1)
-	SInt8	check;				//	283(1)
-    SInt8    padding[1];          //  284(1)
-	SInt8	adsDel;				//	285(1)
-	
-	SInt8	aMissionFlg[eSAVE_DATA_MISSION_MAX];		//	286(32)
-    UInt8   putCustomerMaxnum;   // 318(1)
-    UInt8   eatTenpuraMaxNum;   // 319(1)
-    SInt8    padding2[1];          //  320(1)
-	
-    UInt16  nabeLv;     //  321(2)
-    UInt16  nabeExp;    //  323(2)
+	SInt32	score;				//	650(4)
+    SInt32  eventScore;
     
-    SInt32  aNetaPackHiscore[eSAVE_DATA_NETA_PACKS_MAX];   // 325(128)
+    char   aEventTimeStr[32];  //  654(32)
+    char   aCureTimeStr[32];  //  686(32)
+
+    UInt16  nabeLv;     //  718(2)
+    UInt16  nabeExp;    //  720(2)
+
+    UInt32  chkEventPlayCnt;    //  722(4)
+
+	SInt8	use;				//	726(1)
+	SInt8	check;				//	727(1)
+    SInt8   invocEventNo;       //  728(1)
+	SInt8	adsDel;				//	729(1)
+	
+	SInt8	aMissionFlg[eSAVE_DATA_MISSION_MAX];		//	730(16)
+    
+    UInt8   putCustomerMaxnum;      // 746(1)
+    UInt8   eventPutCustomerMaxnum;   // 747(1)
+
+    UInt8   eatTenpuraMaxNum;       // 748(1)
+    UInt8   eventEatTenpuraMaxNum;
+    
+    SInt8   successEventNo;         //  749(1)
+    SInt8   eventNetaPackNo;        //  750(1)
 
     //	予約領域
-	SInt8	dummy[59];				//	453(59)
-} SAVE_DATA_ST;	//	512byte
+	SInt8	dummy[264];				//	751(264)
+} SAVE_DATA_ST;	//	1024byte
 
 @interface DataSaveGame : NSObject
 {
@@ -98,7 +111,7 @@ typedef struct
 +(void)end;
 
 //	データリセット
--(BOOL)reset;
+-(BOOL)reset:(DataItemList*)in_pDataItamList;
 //	ネタ取得
 -(const SAVE_DATA_NETA_ST*)getNetaPack:(UInt32)in_no;
 //	ネタ取得(リストidx)
@@ -108,11 +121,16 @@ typedef struct
 -(const SAVE_DATA_ITEM_ST*)getItem:(UInt32)in_no;
 //	アイテム取得(リストidx)
 -(const SAVE_DATA_ITEM_ST*)getItemOfIndex:(UInt32)in_idx;
+//  アイテムロック取得
+-(const BOOL)   isLockItem:(const UInt32)in_no;
+//  アイテムロック解除
+-(void) unlockItem:(const UInt32)in_no;
+
 
 //	ネタ追加
 -(BOOL) addNetaPack:(UInt32)in_no;
 //  ネタパックごとのハイスコア(関数内部で保存している値より小さい場合は処理をスキップしている)
--(void) setHiscoreNetaPack:(UInt32)in_no :(SInt32)in_hiscore;
+-(const BOOL) setHiscoreNetaPack:(UInt32)in_no :(SInt32)in_hiscore;
 
 //	アイテム追加
 -(BOOL) addItem:(UInt32)in_no;
@@ -122,12 +140,9 @@ typedef struct
 //	スコア設定
 -(void)	setSaveScore:(SInt32)in_score;
 //  客の最大出現数(関数内部で保存している値より小さい場合は処理をスキップしている)
--(void) setPutCustomerMaxNum:(UInt8)in_num;
+-(const BOOL) setPutCustomerMaxNum:(UInt8)in_num;
 //  天ぷらを食べさせた最大数(関数内部で保存している値より小さい場合は処理をスキップしている)
--(void) setEatTenpuraMaxNum:(UInt8)in_num;
-
-//	現在時刻を記録
--(BOOL)	saveDate;
+-(const BOOL) setEatTenpuraMaxNum:(UInt8)in_num;
 
 //	ミッションフラグをたてる
 -(void)	saveMissionFlg:(BOOL)in_flg :(UInt32)in_idx;
@@ -138,10 +153,15 @@ typedef struct
 //  なべ経験値加算（レベルがあがるとtrueが変える）
 -(BOOL) addNabeExp:(UInt16)in_expNum;
 
+//  イベント設定
+-(void) setEventNo:(SInt8)in_no;
+-(void) setSuccessEventNo:(SInt8)in_no;
+-(void) addEventChkPlayCnt;
+
 //	データ丸ごと取得
 -(const SAVE_DATA_ST*)getData;
 
 //	セーブ初期データ取得
--(void)getInitSaveData:(SAVE_DATA_ST*)out_pData;
+-(void)getInitSaveData:(SAVE_DATA_ST*)out_pData :(DataItemList*)in_pDataItemInst;
 
 @end

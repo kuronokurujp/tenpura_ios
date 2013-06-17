@@ -8,13 +8,14 @@
 
 #import "DataSaveGame.h"
 
+#import "./DataItemList.h"
 #import "./../System/Save/SaveData.h"
 
 //	非公開関数
 @interface DataSaveGame (PriveteMethod)
 
 -(SAVE_DATA_NETA_ST*)	_getNetaPack:(UInt32)in_no;
--(SAVE_DATA_ITEM_ST*)	_getItem:(UInt32)in_no;
+-(SAVE_DATA_ITEM_ST*)	_getItem:(UInt32)in_no :(const BOOL)in_chkNum;
 
 @end
 
@@ -73,7 +74,7 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 			{
 				//	データがない
 				//	リセットしてセーブする
-				[self reset];
+				[self reset: [DataItemList shared]];
 			}
 		}
 	}
@@ -99,15 +100,16 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 /*
 	@brief	リセット
 */
--(BOOL)reset
+-(BOOL)reset:(DataItemList*)in_pDataItamList
 {
+    NSAssert(in_pDataItamList, @"");
+
 	[mp_SaveData reset];
 	
 	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
 	if( pData != nil )
 	{
-		[self getInitSaveData:pData ];
-		[self saveDate];
+		[self getInitSaveData:pData: in_pDataItamList];
 		pData->use	= 1;
 	}
 	
@@ -152,7 +154,7 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 */
 -(const SAVE_DATA_ITEM_ST*)getItem:(UInt32)in_no
 {
-	return [self _getItem:in_no];
+	return [self _getItem:in_no :YES];
 }
 
 /*
@@ -172,6 +174,28 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 	}
 	
 	return nil;
+}
+
+//  アイテムロック取得
+-(const BOOL)   isLockItem:(const UInt32)in_no
+{
+    const SAVE_DATA_ITEM_ST*    pItemData   = [self _getItem:in_no :NO];
+    if( pItemData != nil )
+    {
+        return  (pItemData->unlockFlg == 1);
+    }
+    
+    return NO;
+}
+
+//  アイテムロック解除
+-(void) unlockItem:(const UInt32)in_no
+{
+    SAVE_DATA_ITEM_ST*    pItemData   = [self _getItem:in_no :NO];
+    if( pItemData != nil )
+    {
+        pItemData->unlockFlg = 1;
+    }    
 }
 
 /*
@@ -212,17 +236,17 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 /*
     @brief
  */
--(void) setHiscoreNetaPack:(UInt32)in_no :(SInt32)in_hiscore
+-(const BOOL) setHiscoreNetaPack:(UInt32)in_no :(SInt32)in_hiscore
 {
-    SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
+    SAVE_DATA_NETA_ST*  pSaveNetaData   = [self _getNetaPack:in_no];
+    if( pSaveNetaData->hiscore < in_hiscore )
     {
-        NSAssert(in_no < sizeof(pData->aNetaPackHiscore) / sizeof(pData->aNetaPackHiscore[0]), @"");
-        if( pData->aNetaPackHiscore[in_no] < in_hiscore )
-        {
-            pData->aNetaPackHiscore[in_no]  = in_hiscore;
-            [mp_SaveData save];
-        }
+        pSaveNetaData->hiscore  = in_hiscore;
+        [mp_SaveData save];
+        return YES;
     }
+    
+    return NO;
 }
 
 /*
@@ -232,7 +256,7 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 */
 -(BOOL)addItem:(UInt32)in_no
 {
-	SAVE_DATA_ITEM_ST*	pItem	= [self _getItem:in_no];
+	SAVE_DATA_ITEM_ST*	pItem	= [self _getItem:in_no :YES];
 
 	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
 	if( pData != nil )
@@ -275,7 +299,7 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
  */
 -(BOOL) subItem:(UInt32)in_no
 {
-	SAVE_DATA_ITEM_ST*	pItem	= [self _getItem:in_no];
+	SAVE_DATA_ITEM_ST*	pItem	= [self _getItem:in_no :YES];
     if( pItem != NULL )
     {
         --pItem->num;
@@ -304,7 +328,7 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 /*
     @brief
  */
--(void) setPutCustomerMaxNum:(UInt8)in_num
+-(const BOOL) setPutCustomerMaxNum:(UInt8)in_num
 {
     SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
 	NSAssert( pData, @"セーブデータ取得失敗" );
@@ -313,13 +337,17 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 	{
 		pData->putCustomerMaxnum	= in_num;
 		[mp_SaveData save];
+        
+        return YES;
 	}
+    
+    return NO;
 }
 
 /*
     @brief
  */
--(void) setEatTenpuraMaxNum:(UInt8)in_num
+-(const BOOL) setEatTenpuraMaxNum:(UInt8)in_num
 {
     SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
 	NSAssert( pData, @"セーブデータ取得失敗" );
@@ -328,7 +356,11 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 	{
 		pData->eatTenpuraMaxNum	= in_num;
 		[mp_SaveData save];
+        
+        return YES;
 	}
+    
+    return NO;
 }
 
 /*
@@ -346,32 +378,6 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 		pData->money	= MIN(pData->money, eMONEY_MAX_NUM);
 		[mp_SaveData save];
 	}
-}
-
-/*
-	@brief	現在時刻を記録
-	@return	時刻セーブ成功 = YES
-*/
--(BOOL)	saveDate
-{
-	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
-	if( pData != nil )
-	{
-		NSDate*	pDt					= [NSDate date];
-		NSCalendar*	pCal			= [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
-		NSDateComponents*	pComp	= [pCal components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:pDt];
-	
-		pData->year		= pComp.year;
-		pData->month	= pComp.month;
-		pData->day		= pComp.day;
-
-		[mp_SaveData save];
-
-		return YES;
-	}
-	
-	NSAssert( 0, @"セーブデータ取得失敗" );
-	return NO;
 }
 
 /*
@@ -415,6 +421,59 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 }
 
 /*
+    @brief  イベント設定
+ */
+-(void)   setEventNo:(SInt8)in_no
+{
+    SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
+	NSAssert(pData, @"");
+
+    pData->invocEventNo = in_no;
+    pData->successEventNo   = -1;
+    pData->chkEventPlayCnt  = 0;
+    
+    SInt8 netaIdx   = (SInt8)(random() % (long)pData->netaNum);
+    pData->eventNetaPackNo  = pData->aNetaPacks[netaIdx].no;
+
+    pData->eventEatTenpuraMaxNum  = pData->eatTenpuraMaxNum;
+    pData->eventPutCustomerMaxnum = pData->putCustomerMaxnum;
+    pData->eventScore = pData->score;
+    
+    SAVE_DATA_NETA_ST*  pSaveDataNeta   = [self _getNetaPack:pData->eventNetaPackNo];
+    NSAssert(pSaveDataNeta, @"");
+    pSaveDataNeta->eventHitScore  = pSaveDataNeta->hiscore;
+
+    {
+        NSDate* pDt = [NSDate date];
+        NSDateFormatter*    pFmt    = [[[NSDateFormatter alloc] init] autorelease];
+        pFmt.dateFormat = @"yyyy/MM/dd HH:mm:ss";
+        NSString* pString  = [pFmt stringFromDate:pDt];
+        
+        //	イベント発生時の時刻
+        const char*	pDateText	= [pString UTF8String];
+        memcpy( pData->aEventTimeStr, pDateText, sizeof(pData->aEventTimeStr));
+    }
+    
+    [mp_SaveData save];
+}
+
+-(void)   setSuccessEventNo:(SInt8)in_no
+{
+    SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
+	NSAssert(pData, @"");
+
+    pData->successEventNo   = in_no;
+}
+
+-(void) addEventChkPlayCnt
+{
+    SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
+	NSAssert(pData, @"");
+    
+    ++pData->chkEventPlayCnt;
+}
+
+/*
 	@brief	データ丸ごとアドレス取得
 	@return	データアドレス
 */
@@ -434,7 +493,7 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 	@brief	セーブ初期データ取得
 	@param	out_pData	: リセットデータを受け取る構造体アドレス
 */
--(void)	getInitSaveData:(SAVE_DATA_ST*)out_pData
+-(void)	getInitSaveData:(SAVE_DATA_ST*)out_pData :(DataItemList*)in_pDataItemInst
 {
 	if( out_pData == NULL )
 	{
@@ -442,11 +501,26 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 	}
 	
 	memset( out_pData, 0, sizeof( SAVE_DATA_ST ) );
-	out_pData->money	= 1000;
-	out_pData->aNetaPacks[ 0 ].no	= 1;
-	out_pData->aNetaPacks[ 0 ].num	= 1;
+	out_pData->money	= 1000;    
 	out_pData->netaNum	= 1;
     out_pData->nabeLv   = 1;
+    out_pData->invocEventNo = -1;
+    out_pData->successEventNo   = -1;
+
+    //  アイテムデータとのマッピング
+    {
+        DataItemList*   pDataItemListInst   = [DataItemList shared];
+        NSAssert(pDataItemListInst, @"");
+        for( int i = 0; i < pDataItemListInst.dataNum; ++i )
+        {
+            const ITEM_DATA_ST* pDataItem   = [pDataItemListInst getData:i];
+            NSAssert(pDataItem, @"");
+            out_pData->aItems[i].no = pDataItem->no;
+        }
+
+        out_pData->aNetaPacks[ 0 ].no = 1;
+        out_pData->aNetaPacks[ 0 ].num	= 1;
+    }
 }
 
 /*
@@ -490,18 +564,32 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 	@param	in_no : アイテムno
 	@return	noアイテムデータ / nil = アイテムデータがない or アイテム数が０
 */
--(SAVE_DATA_ITEM_ST*)	_getItem:(UInt32)in_no
+-(SAVE_DATA_ITEM_ST*)	_getItem:(UInt32)in_no :(const BOOL)in_chkNum
 {
 	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
 	if( pData != nil )
 	{
-		for( SInt32 i = 0; i < pData->itemNum; ++i )
-		{
-			if( ( pData->aItems[ i ].no == in_no ) && ( 0 < pData->aItems[ i ].num ) )
-			{
-				return &pData->aItems[ i ];
-			}
-		}
+        if( in_chkNum == YES )
+        {
+            for( SInt32 i = 0; i < pData->itemNum; ++i )
+            {
+                if( pData->aItems[ i ].no == in_no )
+                {
+                    return &pData->aItems[i];
+                }
+            }
+        }
+        else
+        {
+            SInt32  num = sizeof(pData->aItems) / sizeof(pData->aItems[0]);
+            for( SInt32 i = 0; i < num; ++i )
+            {
+                if( pData->aItems[ i ].no == in_no )
+                {
+                    return &pData->aItems[i];
+                }
+            }
+        }
 	}
 	
 	return nil;

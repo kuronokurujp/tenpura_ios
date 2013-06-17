@@ -12,10 +12,15 @@
 //	アイテム効果内容一覧
 enum
 {
-	eITEM_IMPACT_SCORE_POWERUP	= 1,	//	スコア倍増
-	eITEM_IMPACT_TIME_ADD,				//	タイム増加
-	eITEM_IMPACT_FIVER_TIME_ADD,		//	フィーバータイム増加
-	eITEM_IMPACT_END_SCORE_POWERUP,		//	最終得点の倍増
+	eITEM_IMPACT_SCORE_POWERUP	= 1,        //	スコア倍増
+	eITEM_IMPACT_TIME_ADD,                  //	タイム増加
+	eITEM_IMPACT_FIVER_TIME_ADD,            //	フィーバータイム増加
+	eITEM_IMPACT_END_SCORE_POWERUP,         //	最終得点の倍増
+    eITEM_IMPACT_ALL_TENPURA_EAT    = 10,   //  すべての天ぷらを食べられる
+    eITEM_IMPACT_NOT_BURN_TENPURA,          //  天ぷらがこげない
+    eITEM_IMPACT_DEL_TENPURA,               //  天ぷらをすてることができる
+    eITEM_IMPACT_ALL_MONEY_CUSTOMER,        //  客が必ず金持ちに
+    eITEM_IMPACT_OPEN_NETAPACK,             //  ネタパック一つ開く
 };
 
 //	アイテム画像の種類一覧

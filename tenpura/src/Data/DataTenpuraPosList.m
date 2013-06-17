@@ -74,11 +74,11 @@ static DataTenpuraPosList*	s_pDatTenpuraPosListInst	= nil;
 		NSString*	pObj	= nil;
 		NSArray*	pItems	= nil;
 
-		m_dataNum	= [pLines count];
-		NSAssert(0 < m_dataNum, @"天ぷら座標データが一つもない");
-		mp_dataList	= (TENPURA_POS_ST*)malloc(m_dataNum * sizeof(TENPURA_POS_ST));
+		UInt32  dataNum = [pLines count];
+		NSAssert(0 < dataNum, @"天ぷら座標データが一つもない");
+		mp_dataList	= (TENPURA_POS_ST*)malloc(dataNum * sizeof(TENPURA_POS_ST));
 
-		for( SInt32 i = 0; i < m_dataNum; ++i )
+		for( SInt32 i = 0; i < dataNum; ++i )
 		{
 			pObj	= [pLines objectAtIndex:i];
 			
@@ -86,6 +86,7 @@ static DataTenpuraPosList*	s_pDatTenpuraPosListInst	= nil;
 			//	解析
 			mp_dataList[ i ]	= [self parse:pItems];
 		}
+        m_dataNum   = dataNum;
 		
 		[pLines release];
 	}

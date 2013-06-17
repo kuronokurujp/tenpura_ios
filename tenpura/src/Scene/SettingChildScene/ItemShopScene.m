@@ -10,8 +10,6 @@
 #import "./../../TableCells/SampleCell.h"
 #import	"./../../TableCells/ItemShopTableCell.h"
 #import "./../../CCBReader/CCBReader.h"
-#import "./../../Data/DataSaveGame.h"
-#import "./../../Data/DataItemList.h"
 #import "./../../Data/DataBaseText.h"
 
 //	内部関数
@@ -29,6 +27,25 @@
 */
 -(id)	init
 {
+    //  購入できるアイテムリスト作成
+    {
+        memset(ma_itemList, 0, sizeof(ma_itemList));
+        
+        int num = 0;
+        DataItemList*   pDataItemListInst   = [DataItemList shared];
+        for( SInt32 i = 0; i < pDataItemListInst.dataNum; ++i )
+        {
+            const ITEM_DATA_ST*	pData	= [pDataItemListInst getData:i];
+            if( 0 <= pData->sellMoney )
+            {
+                ma_itemList[num]    = *pData;
+                ++num;
+            }
+        }
+        
+        m_itemNum   = num;
+    }
+
 	if( self = [super initWithCellDataFileName:@"itemShopTableCell.ccbi"] )
 	{
 	}
@@ -41,8 +58,7 @@
 */
 -(SWTableViewCell*)table:(SWTableView *)table cellAtIndex:(NSUInteger)idx
 {
-	const ITEM_DATA_ST*	pData	= [[DataItemList shared] getData:idx];
-	NSAssert(pData, @"アイテムデータがない");
+	const ITEM_DATA_ST*	pData	= &ma_itemList[idx];
 
 	DataBaseText*	pDataBaseTextShared	= [DataBaseText shared];
 
@@ -53,6 +69,8 @@
 	[pItemCell.pUnknowLabel setString:@""];
 	
     DataSaveGame*	pDataSaveGameInst	= [DataSaveGame shared];
+
+    [pItemCell setColor:ccWHITE];
 
 	//	選択可能かチェック
 	if( [self _isCellSelect:idx] == NO )
@@ -70,7 +88,6 @@
 
 	//	購入できない場合の対応
 	{
-		[pItemCell setColor:ccWHITE];
         [pItemCell setEnableSoldOut:NO];
 
 		if( [self isBuy:idx] == false )
@@ -129,8 +146,7 @@
 */
 -(SInt32)	getCellMax
 {
-	DataItemList*	pData	= [DataItemList shared];
-	return pData.dataNum;
+	return m_itemNum;
 }
 
 /*
@@ -138,7 +154,7 @@
 */
 -(SInt32)	getSellMoney:(SInt32)in_idx
 {
-	const ITEM_DATA_ST*	pData	= [[DataItemList shared] getData:in_idx];
+	const ITEM_DATA_ST*	pData	= &ma_itemList[in_idx];
 	if( pData != nil )
 	{
 		return	pData->sellMoney;
@@ -153,10 +169,30 @@
 -(BOOL)	buy:(SInt32)in_idx
 {
 	DataSaveGame*	pDataSaveGameInst	= [DataSaveGame shared];
-	
-	const ITEM_DATA_ST*	pData	= [[DataItemList shared] getData:in_idx];
+    
+	const ITEM_DATA_ST*	pData	= &ma_itemList[in_idx];
 
-	return [pDataSaveGameInst addItem:pData->no];
+    if( [pDataSaveGameInst addItem:pData->no] )
+    {
+        {
+            DataItemList*   pDataItemListInst   = [DataItemList shared];
+
+            SInt32  max = pDataItemListInst.dataNum;
+            for( SInt32 i = 0; i < max; ++i )
+            {
+                const ITEM_DATA_ST*	pUnlockItemChkData   = [pDataItemListInst getData:i];
+                if( pUnlockItemChkData->unlockItemNo == pData->no )
+                {
+                    //  購入成功したので、ロック解除
+                    [pDataSaveGameInst unlockItem:pUnlockItemChkData->no];
+                }
+            }
+        }
+        
+        return YES;
+    }
+
+	return NO;
 }
 
 /*
@@ -172,7 +208,7 @@
 	SInt32	sellMoney	= [self getSellMoney:in_idx];
 	UInt32	nowMoney	= [[DataSaveGame shared] getData]->money;
 	
-	const ITEM_DATA_ST*	pData	= [[DataItemList shared] getData:in_idx];
+	const ITEM_DATA_ST*	pData	= &ma_itemList[in_idx];
 	const SAVE_DATA_ITEM_ST*	pItemData	= [[DataSaveGame shared] getItem:pData->no];
 	if( ( pItemData == NULL ) || ( pItemData->num < eSAVE_DATA_ITEM_USE_MAX ) )
 	{
@@ -187,14 +223,13 @@
 */
 -(BOOL)	_isCellSelect:(SInt32)in_idx
 {
-	const ITEM_DATA_ST*	pData	= [[DataItemList shared] getData:in_idx];
+	const ITEM_DATA_ST*	pData	= &ma_itemList[in_idx];
 	if( pData->unlockItemNo == -1 )
 	{
 		return YES;
 	}
 	
-	const SAVE_DATA_ITEM_ST*	pItemData	= [[DataSaveGame shared] getItem:pData->unlockItemNo];
-	return (pItemData != nil);
+	return  [[DataSaveGame shared] isLockItem:pData->no];
 }
 
 @end

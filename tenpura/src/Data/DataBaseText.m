@@ -84,7 +84,8 @@ static NSString*	s_pDataBaseTextFileName	= @"textData";
 			else
 			{
 				NSArray*	pMatch	= [pRegexp matchesInString:pTextString options:0 range:NSMakeRange(0, pTextString.length)];
-				for( SInt32 i = 0; i < [pMatch count]; ++i)
+                SInt32  count   = [pMatch count];
+				for( SInt32 i = 0; i < count; ++i)
 				{
 					NSTextCheckingResult*	pRes	= [pMatch objectAtIndex:i];
 					if( pRes != nil )
@@ -137,11 +138,11 @@ static NSString*	s_pDataBaseTextFileName	= @"textData";
 		NSString*	pObj	= nil;
 		NSArray*	pItems	= nil;
 
-		m_dataNum	= [pLines count];
-		NSAssert(0 < m_dataNum, @"テキストデータがひとつもない");
-		mp_dataList	= (DATA_TEXT_ST*)malloc(m_dataNum * sizeof(DATA_TEXT_ST));
+		SInt32  dataNum = [pLines count];
+		NSAssert(0 < dataNum, @"テキストデータがひとつもない");
+		mp_dataList	= (DATA_TEXT_ST*)malloc(dataNum * sizeof(DATA_TEXT_ST));
 
-		for( SInt32 i = 0; i < m_dataNum; ++i )
+		for( SInt32 i = 0; i < dataNum; ++i )
 		{
 			pObj	= [pLines objectAtIndex:i];
 			
@@ -149,6 +150,7 @@ static NSString*	s_pDataBaseTextFileName	= @"textData";
 			//	解析
 			[self parse:&mp_dataList[ i ]:pItems];
 		}
+        m_dataNum   = dataNum;
 		
 		[pLines release];
 	}

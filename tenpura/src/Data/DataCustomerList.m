@@ -74,11 +74,11 @@ static DataCustomerList*	s_pInst	= nil;
 		NSString*	pObj	= nil;
 		NSArray*	pDatas	= nil;
 
-		m_dataNum	= [pLines count];
-		NSAssert(0 < m_dataNum, @"カスタムデータが一つもない。");
-		mp_dataList	= (CUSTOMER_DATA_ST*)malloc(m_dataNum * sizeof(CUSTOMER_DATA_ST));
+		UInt32  dataNum = [pLines count];
+		NSAssert(0 < dataNum, @"カスタムデータが一つもない。");
+		mp_dataList	= (CUSTOMER_DATA_ST*)malloc(dataNum * sizeof(CUSTOMER_DATA_ST));
 			
-		for( SInt32 i = 0; i < m_dataNum; ++i )
+		for( SInt32 i = 0; i < dataNum; ++i )
 		{
 			pObj	= [pLines objectAtIndex:i];
 		
@@ -86,6 +86,7 @@ static DataCustomerList*	s_pInst	= nil;
 			//	解析
 			mp_dataList[ i ]	= [self parse:pDatas];
 		}
+        m_dataNum   = dataNum;
 		
 		[pLines release];
 	}

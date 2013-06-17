@@ -10,9 +10,14 @@
 #import "cocos2d.h"
 
 #import "./ShopBaseScene.h"
+#import "./../../Data/DataSaveGame.h"
+#import "./../../Data/DataItemList.h"
 
 @interface ItemShopScene : ShopBaseScene
 {
+@private
+    SInt32  m_itemNum;
+    ITEM_DATA_ST   ma_itemList[eSAVE_DATA_ITEMS_MAX];
 }
 
 //	セル最大数

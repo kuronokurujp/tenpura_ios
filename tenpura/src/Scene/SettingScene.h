@@ -9,9 +9,18 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
-#import	"./../Data/DataNetaList.h"
+#import "./../Data/DataEventDataList.h"
+
 #import "./../Object/Ticker.h"
 #import "./../../libs/CCControlExtension/CCControl/CCControlButton.h"
+
+typedef enum
+{
+    eEVENT_SUCCESS_RESULT_NONE   = 0,
+    eEVENT_SUCCESS_RESULT_RUN,
+    eEVENT_SUCCESS_RESULT_OK,
+    eEVENT_SUCCESS_RESULT_NG,
+} EVENT_SUCCESS_RESULT_ENUM;
 
 @interface SettingScene : CCLayer
 <
@@ -24,8 +33,17 @@
 	CCControlButton*	mp_gameStartBtn;
 	UIAlertView*		mp_missionSucceesAlertView;
 	UIAlertView*		mp_missionBounesAlertView;
+    UIAlertView*        mp_eventInvocAlertView;
+    UIAlertView*        mp_eventSuccessAlertView;
+    UIAlertView*        mp_eventRewardAlertView;
+    UIAlertView*        mp_eventNGAlertView;
+    UIAlertView*        mp_eventChkAlertView;
 	LeftMoveTicker*		mp_ticker;
+    EVENT_SUCCESS_RESULT_ENUM   m_eventSuccessRet;
+    CCNode* mp_eventChkBtn;
+    
 	UInt32	m_missionSuccessIdx;
+    BOOL    mb_chkStartEvent;
 }
 
 @property	(nonatomic, retain)CCArray*	useItemNoList;
@@ -52,10 +70,11 @@
 
 @property	(nonatomic, readonly)UInt32 itemNo;
 @property	(nonatomic, readonly)SInt32	type;
-@property	(nonatomic, readonly)SInt32	itemSelectType;
-@property	(nonatomic, readonly)SInt32	itemSelectType2;
+//  ,区切りで値があるので、配列に変換する
+@property   (nonatomic, readonly)NSString*   itemSelectTypeList;
 
 -(void)settingItem:(SInt32)in_type :(SInt32)in_textId :(SInt32)in_no;
+-(NSArray*) getItemSelectType;
 
 @end
 
@@ -63,5 +82,12 @@
 	@brief	ゲームスタート開始ボタン
 */
 @interface SettingGameStartBtn : CCControlButton
+
+@end
+
+/*
+    @brief  イベント確認ボタン
+*/
+@interface SettingEventChkBtn : CCControlButton
 
 @end

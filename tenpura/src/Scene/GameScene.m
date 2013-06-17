@@ -120,6 +120,8 @@ enum
 {
 	if( self = [super init] )
 	{
+        [[DataSaveGame shared] addEventChkPlayCnt];
+
 		mp_gameData	= [in_pData retain];
 
 		m_timeVal	= 0.f;

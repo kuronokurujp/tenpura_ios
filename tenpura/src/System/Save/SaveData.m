@@ -90,21 +90,24 @@
 -(BOOL)	save
 {
 	assert(mp_Data != nil);
-
+/*
 	NSDictionary*	pDict	= [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithFloat:m_Size], mp_IdName, nil];
 	assert(pDict != nil);
 	[[NSUserDefaults standardUserDefaults] registerDefaults:pDict];
-	
+*/	
 	//	ゲームデータを書き込む
 	NSData*	pSaveData	= [[[NSData alloc] initWithBytes:mp_Data length:m_Size] autorelease];
 	assert(pSaveData != nil);
 	
 	[[NSUserDefaults standardUserDefaults] setObject:pSaveData forKey:mp_IdName];
-	[[NSUserDefaults standardUserDefaults] synchronize];
-	
-	BOOL	bFlg	= NO;
-	
-	return bFlg;
+	if( [[NSUserDefaults standardUserDefaults] synchronize] )
+    {
+        return YES;
+    }
+    
+    NSAssert(NO, @"");
+		
+	return NO;
 }
 
 /*

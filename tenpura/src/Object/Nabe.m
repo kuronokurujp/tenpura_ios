@@ -9,7 +9,6 @@
 #import "Nabe.h"
 
 #import "./../Data/DataTenpuraPosList.h"
-#import "./../Data/DataOjamaNetaList.h"
 #import "./../Data/DataGlobal.h"
 #import "./../System/Anim/AnimManager.h"
 

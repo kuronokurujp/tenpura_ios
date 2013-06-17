@@ -10,10 +10,15 @@
 
 #import "./../CCBReader/CCBReader.h"
 #import "./../Data/DataSaveGame.h"
+#import "./../Data/DataItemList.h"
 #import "./../Data/DataGlobal.h"
 #import "./../System/GameCenter/GameKitHelper.h"
 #import "./../System/Sound/SoundManager.h"
 #import "./../Data/DataBaseText.h"
+
+#ifdef DEBUG
+
+#endif
 
 @implementation TitleScene
 
@@ -28,16 +33,34 @@
         
 #ifdef DEBUG
 //	デバッグ画面
-	CCMenuItemFont*	pResetSaveItem		= [CCMenuItemFont	itemWithString:[NSString stringWithUTF8String:[[DataBaseText shared] getText:0]]
+        CCMenuItemFont*	pResetSaveItem		= [CCMenuItemFont	itemWithString:[NSString stringWithUTF8String:[[DataBaseText shared] getText:0]]
 	block:^(id sender)
 	{
-		[[DataSaveGame shared] reset];
+		[[DataSaveGame shared] reset: [DataItemList shared]];
 	}
 	];
 	[pResetSaveItem setFontSize:12.f];
     [pResetSaveItem setColor:ccBLACK];
-	
-	CCMenu*	pMenu	= [CCMenu menuWithItems:pResetSaveItem, nil];
+
+        CCMenuItemFont*	pFullGetItem		= [CCMenuItemFont	itemWithString:@"アイテムすべて取得"
+    block:^(id sender)
+    {
+        for( SInt32 i = 0; i < [DataItemList shared].dataNum; ++i )
+        {
+            const ITEM_DATA_ST*       pData   = [[DataItemList shared] getData:i];
+            if( pData->itemType != eITEM_IMPACT_OPEN_NETAPACK )
+            {
+                [[DataSaveGame shared] addItem:pData->no];
+            }
+        }
+    }
+    ];
+    [pFullGetItem setFontSize:12.f];
+    [pFullGetItem setColor:ccBLACK];
+    [pFullGetItem setPosition:ccp(0, -30)];
+        
+
+	CCMenu*	pMenu	= [CCMenu menuWithItems:pResetSaveItem, pFullGetItem, nil];
 	[pMenu setPosition:ccp( 80.f, 300 )];
 	[self addChild:pMenu z:20];
 #endif
