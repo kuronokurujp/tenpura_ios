@@ -24,9 +24,6 @@
 //	消滅演出終了
 -(void)	_endEatAction;
 
-//	状態設定
--(void)	_setState:(const TENPURA_STATE_ET)in_eState;
-
 //	揚げる時間を取得
 -(Float32)	_getRaiseTime:(TENPURA_STATE_ET)in_state;
 
@@ -48,6 +45,7 @@ enum
 @synthesize posDataIdx	= m_posDataIdx;
 @synthesize data		= m_data;
 @synthesize delegate	= m_delegate;
+@synthesize bNonBurn    = mb_nonBurn;
 
 /*
 	@brief	初期化
@@ -62,6 +60,7 @@ enum
 		mb_lock		= NO;
 		mb_fly		= NO;
 		mb_fever	= NO;
+        mb_nonBurn  = NO;
 		m_posDataIdx	= -1;
 		m_raiseTimeRate	= 1.f;
 		m_baseTimeRate	= 1.f;
@@ -112,7 +111,7 @@ enum
 				m_nowRaiseTime	= 0.f;
 
 				++m_state;
-				[self _setState:m_state];
+				[self setState:m_state];
 			}
 		}
 	}
@@ -339,8 +338,7 @@ enum
 {
 	if( in_bFlg == YES )
 	{
-		m_state	= eTENPURA_STATE_VERYGOOD;
-		[self _setState:m_state];
+		[self setState:eTENPURA_STATE_VERYGOOD];
 	}
 	
 	mb_fever	= in_bFlg;
@@ -372,40 +370,52 @@ enum
 /*
 	@brief
 */
--(void)	unLockTouch:(const CGPoint)in_pos
+-(void)	unLockTouch
 {
 	[mp_sp setScale:s_normalScaleVal];
-	
+    
 	//	ロック用のスケールが残っていたら削除する
 	if( [mp_sp getActionByTag:eACTTAG_LOCK_SCALE] )
 	{
 		[mp_sp stopActionByTag:eACTTAG_LOCK_SCALE];
 	}
+    
+	[self setZOrder:m_oldZOrder];
+	
+	mb_lock	= NO;
+}
+
+-(void)	unLockTouchByPos:(const CGPoint)in_pos
+{
+    [self unLockTouch];
 	
 	//	油アニメを再開
 	AnimActionSprite*	pAburaAnim	= (AnimActionSprite*)[self getChildByTag:eCHILD_TAG_ANIM_ABURA];
 	[pAburaAnim startLoop:NO];
 	[pAburaAnim setVisible:YES];
 	
-	[self setZOrder:m_oldZOrder];
-	
-	mb_lock	= NO;
 	[self setPosition:in_pos];
 }
 
 /*
 	@brief	タッチのアンロック（アクション用）
 */
--(void)	unLockTouchAct
+-(void)	unLockTouchByAct
 {
 	[mp_sp setScale:s_normalScaleVal];
 	[self setZOrder:m_oldZOrder];	
+
+	//	ロック用のスケールが残っていたら削除する
+	if( [mp_sp getActionByTag:eACTTAG_LOCK_SCALE] )
+	{
+		[mp_sp stopActionByTag:eACTTAG_LOCK_SCALE];
+	}
 
 	CCMoveTo*	pMoveAct	= [CCMoveTo actionWithDuration:0.1f position:m_touchPrevPos];
 	CCEaseIn*	pEaseInMoveAct	= [CCEaseOut actionWithAction:pMoveAct rate:2.f];
 
 	CCCallBlock*	pEndAct	= [CCCallBlock actionWithBlock:^{
-		[self unLockTouch:m_touchPrevPos];
+		[self unLockTouchByPos:m_touchPrevPos];
 	}];
 
 	CCSequence*	pSeq	= [CCSequence actionOne:pEaseInMoveAct two:pEndAct];
@@ -510,69 +520,68 @@ enum
 /*
 	@brief	状態設定
 */
--(void)	_setState:(const TENPURA_STATE_ET)in_eState
+-(void)	setState:(const TENPURA_STATE_ET)in_eState
 {
-	if( in_eState < eTENPURA_STATE_MAX )
-	{
-		{
-			switch ((SInt32)in_eState)
-			{
-				case eTENPURA_STATE_VERYGOOD:	//	最高
-				{
-					[[SoundManager shared] playSe:@"fried02"];
-					break;
-				}
-				case eTENPURA_STATE_BAD:		//	焦げ
-				{
-					[[SoundManager shared] playSe:@"fried03"];
-					break;
-				}
-				case eTENPURA_STATE_VERYBAD:	//	丸焦げ
-				{
-					[[SoundManager shared] playSe:@"fried04"];
-					break;
-				}
-			}
-			
-			//	エフェクト設定
-			[self _settingEffect:in_eState];
-		}
+	NSAssert(in_eState < eTENPURA_STATE_MAX, @"");
+    switch ((SInt32)in_eState)
+    {
+        case eTENPURA_STATE_VERYGOOD:	//	最高
+        {
+            [[SoundManager shared] playSe:@"fried02"];
+            break;
+        }
+        case eTENPURA_STATE_BAD:		//	焦げ
+        {
+            [[SoundManager shared] playSe:@"fried03"];
+            break;
+        }
+        case eTENPURA_STATE_VERYBAD:	//	丸焦げ
+        {
+            [[SoundManager shared] playSe:@"fried04"];
+            break;
+        }
+    }
+    
+    //	エフェクト設定
+    [self _settingEffect:in_eState];
 
-		switch ((SInt32)in_eState)
-		{
-			case eTENPURA_STATE_VERYGOOD:	//	最高
-			case eTENPURA_STATE_BAD:		//	焦げ
-			{
-				[mp_sp setTextureRect:[self _getTexRect:(SInt32)in_eState]];
-				break;
-			}
-			case eTENPURA_STATE_VERYBAD:		//	丸焦げ
-			{
-				[mp_sp setTextureRect:[self _getTexRect:(SInt32)in_eState]];
+    switch ((SInt32)in_eState)
+    {
+        case eTENPURA_STATE_VERYGOOD:	//	最高
+        case eTENPURA_STATE_BAD:		//	焦げ
+        {
+            [mp_sp setTextureRect:[self _getTexRect:(SInt32)in_eState]];
+            break;
+        }
+        case eTENPURA_STATE_VERYBAD:		//	丸焦げ
+        {
+            [mp_sp setTextureRect:[self _getTexRect:(SInt32)in_eState]];
+            
+            break;
+        }
+        case eTENPURA_STATE_EXP:	//	爆発
+        {
+            if( m_delegate != nil )
+            {
+                if( [m_delegate respondsToSelector:@selector(onExpTenpura:)] )
+                {
+                    [m_delegate onExpTenpura:self];
+                }
+            }
+            
+            [self setVisible:NO];
+            
+            break;
+        }
+        case eTENPURA_STATE_RESTART:
+        {
+            //	再配置可能
+            [self setVisible:NO];
+            break;
+        }
+    }
 
-				break;
-			}
-			case eTENPURA_STATE_EXP:	//	爆発
-			{
-				if( m_delegate != nil )
-				{
-					if( [m_delegate respondsToSelector:@selector(onExpTenpura:)] )
-					{
-						[m_delegate onExpTenpura:self];
-					}
-				}
-				
-				[self setVisible:NO];
-				
-				break;
-			}
-			case eTENPURA_STATE_RESTART:
-			{
-				//	再配置可能
-				break;
-			}
-		}
-	}	
+    m_state = in_eState;
 }
 
 /*
@@ -599,6 +608,13 @@ enum
 	switch ((SInt32)m_state)
 	{
 		case eTENPURA_STATE_VERYGOOD:	//	最高
+        {
+            if( mb_nonBurn == YES )
+            {
+                //  こげないようにするこれ以上進めないようにする
+                return -1;
+            }
+        }
 		case eTENPURA_STATE_BAD:		//	焦げ
 		{
 			time	= (m_data.aStatusList[m_state].changeTime * raiseSpeedRate);

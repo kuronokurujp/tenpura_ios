@@ -27,6 +27,7 @@
 @synthesize score	= m_score;
 @synthesize eatTimeRate	= m_eatTimeRate;
 @synthesize nabe	= mp_nabe;
+@synthesize bAllEat = mb_allEat;
 
 //	食べれる最大数
 enum
@@ -92,6 +93,7 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 		mp_sp	= nil;
 		m_money	= 0;
 		m_score	= 0;
+        mb_allEat   = NO;
 		m_orgEatTimeRate	= in_eatTimeRate;
 		m_eatTimeRate	= m_orgEatTimeRate * mp_customerData->eatTime;
 
@@ -218,6 +220,11 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 */
 -(BOOL)isEatTenpura:(SInt32)in_no
 {
+    if( mb_allEat == YES )
+    {
+        return YES;
+    }
+
 	CCNode*	pNode	= nil;
 	CCARRAY_FOREACH(_children, pNode)
 	{
@@ -317,7 +324,7 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 		if( [pNode isKindOfClass:[TenpuraIcon class]] )
 		{
 			TenpuraIcon*	pIcon	= (TenpuraIcon*)pNode;
-			if( pIcon.no == in_no )
+			if( (pIcon.no == in_no) || (mb_allEat == YES) )
 			{
 				pRemoveIcon	= pIcon;
 				break;

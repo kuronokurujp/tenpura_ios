@@ -19,6 +19,7 @@
 @interface AppController : NSObject
 <
 	UIApplicationDelegate,
+    UIAlertViewDelegate,
 	CCDirectorDelegate,
 	StoreAppPurchaseManagerProtocol,
 	GameKitHelperProtocol
@@ -27,8 +28,16 @@
 	UIWindow *window_;
 	UINavigationController *navController_;
 
+    UIView*	mp_grayView;
+	UIActivityIndicatorView*	mp_indicator;
+    UIAlertView*	mp_storeBuyCheckAlerView;
+    UIAlertView*    mp_storeSuccessAlerView;
+    NSString*   mp_storeSuccessProduct;
+
 	CCDirectorIOS	*director_;							// weak ref
 
+    id<StoreAppPurchaseManagerSuccessProtocol> m_storeSuccessDelegate;
+    
 	BannerViewController*	mp_bannerViewCtrl;
 	TweetViewController*	mp_tweetViewController;
 }
@@ -36,5 +45,6 @@
 @property (nonatomic, retain) UIWindow *window;
 @property (readonly) UINavigationController *navController;
 @property (readonly) CCDirectorIOS *director;
+@property (nonatomic, assign) id<StoreAppPurchaseManagerSuccessProtocol> storeSuccessDelegate;
 
 @end

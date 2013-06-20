@@ -22,7 +22,9 @@
 #import "./../Data/DataItemList.h"
 #import "./../System/Sound/SoundManager.h"
 #import "./../System/Anim/Action/AnimActionNumCounterLabelTTF.h"
+
 #import "./../Object/SpriteZSetting.h"
+#import "./../Object/DustBoxToTenpura.h"
 
 #import "./../CCBReader/CCBReader.h"
 
@@ -131,7 +133,8 @@ enum
         m_putCustomerMaxNum = 0;
         m_eatTenpuraMaxNum  = 0;
         m_useNetaPackNo = -1;
-
+        mb_moneyCustomer    = NO;
+        
 		{
 			DataTenpuraPosList*	pDataTenpuraPosList	= [DataTenpuraPosList shared];
 			[pDataTenpuraPosList clearFlg];
@@ -144,6 +147,9 @@ enum
 		Float32	addFeverTime	= 0;
 		Float32	scorePowerUpRate	= 0;
 		Float32	gameEndScorePowerUpRate	= 0;
+        BOOL    bTenpuraBurn    = NO;
+        BOOL    bDustBoxToTenpura   = NO;
+        BOOL    bAllEatCustomer = NO;
 		
 		//	オプションアイテムによる追加設定
 		{
@@ -184,6 +190,30 @@ enum
 								gameEndScorePowerUpRate += (pItem->value - 1.f);
 								break;
 							}
+                            //  すべての天ぷらを食べられる
+                            case eITEM_IMPACT_ALL_TENPURA_EAT:
+                            {
+                                bAllEatCustomer   = YES;
+                                break;
+                            }
+                             //  天ぷらがこげない
+                            case eITEM_IMPACT_NOT_BURN_TENPURA:
+                            {
+                                bTenpuraBurn    = YES;
+                                break;
+                            }
+                            //  天ぷらをすてることができる
+                            case eITEM_IMPACT_DUST_TENPURA:
+                            {
+                                bDustBoxToTenpura   = YES;
+                                break;
+                            }
+                            //  客が必ず金持ちに
+                            case eITEM_IMPACT_ALL_MONEY_CUSTOMER:
+                            {
+                                mb_moneyCustomer    = YES;
+                                break;
+                            }
 						}
 					}
 				}
@@ -234,9 +264,6 @@ enum
 					mp_nabe	= (Nabe*)pChildNode;
 				}
 				//	テキストオブジェクト
-				else if( [pChildNode isKindOfClass:[CCLabelTTF class]] )
-				{
-				}
 				else if( [pChildNode isKindOfClass:[CCLabelBMFont class]] )
 				{
 					CCLabelBMFont*	pLabel	= (CCLabelBMFont*)pChildNode;
@@ -271,7 +298,13 @@ enum
 				{
 					[pSpriteArray addObject:pChildNode];
 				}
+                else if( [pChildNode isKindOfClass:[DustBoxToTenpura class]])
+                {
+                    [pChildNode setVisible:bDustBoxToTenpura];
+                    mp_dustBoxToTenpura = (DustBoxToTenpura*)pChildNode;
+                }
 			}
+            mp_nabe.bTenpuraNonBurn = bTenpuraBurn;
 
 			[self addChild:pCCBReader];
 			mp_gameSceneData	= (GameSceneData*)pCCBReader;
@@ -315,6 +348,7 @@ enum
 				
 				[mp_feverMessage setZOrder:19.f];
 				[mp_feverEvent setZOrder:20.f];
+                [mp_dustBoxToTenpura setZOrder:20.f];
 			}
 
             //  レベルにあわせて鍋内容変更
@@ -336,6 +370,7 @@ enum
 				[pCustomer setPosition:ccp(size.width, ga_initCustomerPos[i][1])];
 				[pCustomer setAnchorPoint:ccp(0,0)];
 				[pCustomer setVisible:NO];
+                pCustomer.bAllEat   = bAllEatCustomer;
 
 				[self addChild:pCustomer];
 				[mp_customerArray addObject:pCustomer];
@@ -490,53 +525,64 @@ enum
 			{
 				TYPE_ENUM	type	= eTYPE_MAN;
 				GameInScene*	pGameInScene	= (GameInScene*)[self getChildByTag:eGAME_IN_SCENE_TAG];
-				if( pGameInScene != NULL )
-				{
-					if( [pGameInScene isFever] == YES )
-					{
-						if( m_timeVal <= mp_gameSceneData.customerMoneyPutTime )
-						{
-							int		num = rand() % 10;
-							if( num <= 7 )
-							{
-								type	= eTYPE_MONEY;
-							}
-							else
-							{
-								type	= rand() % 2;
-							}
-						}
-						else
-						{
-							type	= rand() % eTYPE_MAX;
-						}
-					}
-					else
-					{
-						if( m_timeVal <= mp_gameSceneData.customerMoneyPutTime )
-						{
-							type	= rand() % eTYPE_MAX;
-						}
-						else
-						{
-							int	randNum	= rand() % 2;
-							if( randNum == 0 )
-							{
-								type	= eTYPE_MAN;
-							}
-							else
-							{
-								type	= eTYPE_WOMAN;
-							}
-						}
-					}
+                NSAssert(pGameInScene, @"");
 
-					[pCustomer setType:type];
-					[pCustomer.act putEat];
-				}
+                if( mb_moneyCustomer == NO )
+                {
+                    if( [pGameInScene isFever] == YES )
+                    {
+                        if( m_timeVal <= mp_gameSceneData.customerMoneyPutTime )
+                        {
+                            int		num = rand() % 10;
+                            if( num <= 7 )
+                            {
+                                type	= eTYPE_MONEY;
+                            }
+                            else
+                            {
+                                type	= rand() % 2;
+                            }
+                        }
+                        else
+                        {
+                            type	= rand() % eTYPE_MAX;
+                        }
+                    }
+                    else
+                    {
+                        if( m_timeVal <= mp_gameSceneData.customerMoneyPutTime )
+                        {
+                            type	= rand() % eTYPE_MAX;
+                        }
+                        else
+                        {
+                            int	randNum	= rand() % 2;
+                            if( randNum == 0 )
+                            {
+                                type	= eTYPE_MAN;
+                            }
+                            else
+                            {
+                                type	= eTYPE_WOMAN;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    type    = eTYPE_MONEY;
+                }
+                
+                [pCustomer setType:type];
+                [pCustomer.act putEat];
 			}
 			else
 			{
+                if( mb_moneyCustomer == YES )
+                {
+                    [pCustomer setType:eTYPE_MONEY];
+                }
+
 				[pCustomer.act putResult];
 			}
 

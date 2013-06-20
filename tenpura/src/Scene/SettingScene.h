@@ -11,6 +11,8 @@
 
 #import "./../Data/DataEventDataList.h"
 
+#import "./../System/Store/StoreAppPurchaseManager.h"
+
 #import "./../Object/Ticker.h"
 #import "./../../libs/CCControlExtension/CCControl/CCControlButton.h"
 
@@ -24,7 +26,8 @@ typedef enum
 
 @interface SettingScene : CCLayer
 <
-	UIAlertViewDelegate
+	UIAlertViewDelegate,
+    StoreAppPurchaseManagerSuccessProtocol
 >
 {
 @private
@@ -42,11 +45,18 @@ typedef enum
     EVENT_SUCCESS_RESULT_ENUM   m_eventSuccessRet;
     CCNode* mp_eventChkBtn;
     
+    CCLabelTTF* mp_playerLifeNumStr;
+    CCLabelBMFont*  mp_cureTimeStr;
+    CGPoint m_playLifePos;
+    
 	UInt32	m_missionSuccessIdx;
     BOOL    mb_chkStartEvent;
 }
 
 @property	(nonatomic, retain)CCArray*	useItemNoList;
+@property   (nonatomic, readonly)SInt32 cureTimeByCcbiProperty;
+
+-(void) onStoreSuccess:(NSString*)in_pProducts;
 
 @end
 

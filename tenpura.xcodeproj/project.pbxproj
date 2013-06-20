@@ -16,6 +16,7 @@
 		CE18C49C1667ABA000ED1E85 /* DataMissionList.m in Sources */ = {isa = PBXBuildFile; fileRef = CE18C49B1667ABA000ED1E85 /* DataMissionList.m */; };
 		CE18C4A31667D84200ED1E85 /* missionListData.csv in Resources */ = {isa = PBXBuildFile; fileRef = CE18C4A21667D84200ED1E85 /* missionListData.csv */; };
 		CE1B74C91699D6BE00DD2C07 /* FileTexLoadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1B74C81699D6BE00DD2C07 /* FileTexLoadManager.m */; };
+		CE1F168E176FC50000CB0A88 /* DustBoxToTenpura.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1F168D176FC50000CB0A88 /* DustBoxToTenpura.m */; };
 		CE216D6516B37AD0000E0E29 /* star.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE216D6316B37AD0000E0E29 /* star.plist */; };
 		CE216D6916B37AE0000E0E29 /* cursor.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE216D6716B37AE0000E0E29 /* cursor.plist */; };
 		CE216D6D16B37AE9000E0E29 /* bomb.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE216D6B16B37AE9000E0E29 /* bomb.plist */; };
@@ -491,6 +492,8 @@
 		CE18C4A21667D84200ED1E85 /* missionListData.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = missionListData.csv; path = Resources/data/missionListData.csv; sourceTree = "<group>"; };
 		CE1B74C71699D6BE00DD2C07 /* FileTexLoadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileTexLoadManager.h; path = src/System/FileLoad/FileTexLoadManager.h; sourceTree = "<group>"; };
 		CE1B74C81699D6BE00DD2C07 /* FileTexLoadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileTexLoadManager.m; path = src/System/FileLoad/FileTexLoadManager.m; sourceTree = "<group>"; };
+		CE1F168C176FC50000CB0A88 /* DustBoxToTenpura.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DustBoxToTenpura.h; path = src/Object/DustBoxToTenpura.h; sourceTree = "<group>"; };
+		CE1F168D176FC50000CB0A88 /* DustBoxToTenpura.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DustBoxToTenpura.m; path = src/Object/DustBoxToTenpura.m; sourceTree = "<group>"; };
 		CE216D6316B37AD0000E0E29 /* star.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = star.plist; path = Resources/anim/star/star.plist; sourceTree = "<group>"; };
 		CE216D6716B37AE0000E0E29 /* cursor.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = cursor.plist; path = Resources/anim/cursor/cursor.plist; sourceTree = "<group>"; };
 		CE216D6B16B37AE9000E0E29 /* bomb.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = bomb.plist; path = Resources/anim/bomb/bomb.plist; sourceTree = "<group>"; };
@@ -2067,6 +2070,8 @@
 			children = (
 				CED247B8163997DD00506CA8 /* Customer.h */,
 				CED247B9163997DD00506CA8 /* Customer.m */,
+				CE1F168C176FC50000CB0A88 /* DustBoxToTenpura.h */,
+				CE1F168D176FC50000CB0A88 /* DustBoxToTenpura.m */,
 				CED247BA163997DD00506CA8 /* Nabe.h */,
 				CED247BB163997DD00506CA8 /* Nabe.m */,
 				CED247BC163997DD00506CA8 /* Tenpura.h */,
@@ -3065,6 +3070,7 @@
 				CE3865EC174299EF00C176F3 /* SimpleAudioEngine.m in Sources */,
 				CE306A791743DB4400BCACE9 /* Reachability.m in Sources */,
 				CE5E9965176C982C007288C7 /* DataEventDataList.m in Sources */,
+				CE1F168E176FC50000CB0A88 /* DustBoxToTenpura.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

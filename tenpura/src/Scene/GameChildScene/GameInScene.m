@@ -14,13 +14,17 @@
 #import "./../../Object/Nabe.h"
 #import "./../../Object/ComboMessage.h"
 #import	"./../../Object/GameInFeverEvent.h"
-#import "./../../ActionCustomer/ActionCustomer.h"
+#import "./../../Object/DustBoxToTenpura.h"
+
 #import "./../../Data/DataNetaList.h"
 #import "./../../Data/DataGlobal.h"
 #import "./../../Data/DataSaveGame.h"
+
 #import "./../../System/Sound/SoundManager.h"
 #import "./../../System/Anim/AnimManager.h"
 #import "./../../System/Anim/Action/AnimActionNumCounterLabelTTF.h"
+
+#import "./../../ActionCustomer/ActionCustomer.h"
 #import "./../../CCBReader/CCBReader.h"
 
 //	非公開関数
@@ -457,26 +461,47 @@ enum
 	CGPoint	touchPointView	= [touch locationInView:[touch view]];
 	CGPoint	touchPoint	= [[CCDirector sharedDirector] convertToGL:touchPointView];
 
+    GameScene*	pGameScene	= mp_gameScene;
+
 	if( mp_touchTenpura != nil )
 	{
-		[mp_touchTenpura setPosition:touchPoint];
-		Customer*	pTenpuraHitCustomer	= [self _isHitCustomer:[mp_touchTenpura boundingBox]];
-		if( pTenpuraHitCustomer != nil )
-		{
-			//	ヒットした場合ヒットしていると表示する。
-			[pTenpuraHitCustomer.act loopFlash];
-		}
-
-		//	天ぷらとヒットしていない客はヒット演出を止める
-		Customer*	pCustomer	= nil;
-		GameScene*	pGameScene	= mp_gameScene;
-		CCARRAY_FOREACH(pGameScene->mp_customerArray,pCustomer)
-		{
-			if( pCustomer != pTenpuraHitCustomer )
-			{
-				[pCustomer.act endFlash];
-			}
-		}
+        BOOL    bDust   = NO;
+        //  ゴミ箱にはいっているかチェック
+        DustBoxToTenpura*   pDustBoxToTenpura   = pGameScene->mp_dustBoxToTenpura;
+        if( (pDustBoxToTenpura != nil ) && (pDustBoxToTenpura.visible == YES) )
+        {
+            if( CGRectIntersectsRect([pDustBoxToTenpura boundingBox], [mp_touchTenpura boundingBox]) )
+            {
+                //  天ぷらを捨てる
+                bDust   = YES;
+                
+                [mp_touchTenpura unLockTouch];
+                [mp_touchTenpura setState:eTENPURA_STATE_RESTART];
+                mp_touchTenpura = nil;
+            }
+        }
+        
+        if( bDust == NO )
+        {
+            [mp_touchTenpura setPosition:touchPoint];
+            Customer*	pTenpuraHitCustomer	= [self _isHitCustomer:[mp_touchTenpura boundingBox]];
+            if( pTenpuraHitCustomer != nil )
+            {
+                //	ヒットした場合ヒットしていると表示する。
+                [pTenpuraHitCustomer.act loopFlash];
+            }
+            
+            //	天ぷらとヒットしていない客はヒット演出を止める
+            Customer*	pCustomer	= nil;
+            GameScene*	pGameScene	= mp_gameScene;
+            CCARRAY_FOREACH(pGameScene->mp_customerArray,pCustomer)
+            {
+                if( pCustomer != pTenpuraHitCustomer )
+                {
+                    [pCustomer.act endFlash];
+                }
+            }            
+        }
 	}
 }
 
@@ -527,10 +552,8 @@ enum
 									[self unschedule:@selector(_updateCombo)];
 									[self schedule:@selector(_updateCombo)];
 	
-									[self unschedule:@selector(_exitCombMessage)];
 									[self unschedule:@selector(_timerComb:)];
 								
-									[self scheduleOnce:@selector(_exitCombMessage) delay:pGameScene->mp_gameSceneData.combMessageTime];
 									[self scheduleOnce:@selector(_timerComb:) delay:pGameScene->mp_gameSceneData.combDelTime + pGameScene->m_combAddTime];
 								}
 
@@ -592,12 +615,12 @@ enum
 		else if( CGRectContainsRect([pGameScene->mp_nabe boundingBox], [mp_touchTenpura boundingBox]) )
 		{
 			//	鍋内なら現在位置に配置
-			[mp_touchTenpura unLockTouch:nowTenpuraPos];
+			[mp_touchTenpura unLockTouchByPos:nowTenpuraPos];
 		}
 		else
 		{
 			//	タッチ前の位置に設定しているので注意！
-			[mp_touchTenpura unLockTouchAct];
+			[mp_touchTenpura unLockTouchByAct];
 		}
 
 		mp_touchTenpura	= nil;
@@ -617,11 +640,11 @@ enum
 		if( CGRectContainsRect([pGameScene->mp_nabe boundingBox], [mp_touchTenpura boundingBox]) )
 		{
 			//	鍋内なら現在位置に配置
-			[mp_touchTenpura unLockTouch:mp_touchTenpura.position];
+			[mp_touchTenpura unLockTouchByPos:mp_touchTenpura.position];
 		}
 		else
 		{
-			[mp_touchTenpura unLockTouchAct];
+			[mp_touchTenpura unLockTouchByAct];
 		}
 
 		mp_touchTenpura	= nil;
@@ -827,7 +850,7 @@ enum
 	if( m_combCnt <= 0 )
 	{
 		[self unschedule:_cmd];
-		[self unschedule:@selector(_exitCombMessage)];
+		//[self unschedule:@selector(_exitCombMessage)];
 
 		CCNode*	pComboMessage	= [self getChildByTag:eNORMAL_SCENE_CHILD_TAG_COMBO_MESSAGE];
 		ComboMessage*	pCombo	= (ComboMessage*)pComboMessage;

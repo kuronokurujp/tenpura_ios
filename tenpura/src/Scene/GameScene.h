@@ -19,6 +19,7 @@
 @class GameInFeverMessage;
 @class AnimActionNumCounterLabelBMT;
 @class GameInBG;
+@class DustBoxToTenpura;
 
 /*
 	@brief	ゲーム開始時に設定するデータ
@@ -67,15 +68,17 @@
     UInt32  m_useNetaPackNo;
     UInt8   m_putCustomerMaxNum;
     UInt8   m_eatTenpuraMaxNum;
+    BOOL    mb_moneyCustomer;
 
 	CCArray*	mp_settingItemList;
 
 	GameData*	mp_gameData;
 	GameSceneData*	mp_gameSceneData;
 	
-	GameInFeverMessage*	mp_feverMessage;
+	GameInFeverMessage*     mp_feverMessage;
 	GameInFliterColorBG*	mp_fliterColorBG;
 	GameInFeverEvent*		mp_feverEvent;
+    DustBoxToTenpura*       mp_dustBoxToTenpura;
 }
 
 //	関数定義

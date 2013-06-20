@@ -18,6 +18,8 @@
 
 #ifdef DEBUG
 
+#import "./../Data/DataNetaPackList.h"
+
 #endif
 
 @implementation TitleScene
@@ -42,7 +44,7 @@
 	[pResetSaveItem setFontSize:12.f];
     [pResetSaveItem setColor:ccBLACK];
 
-        CCMenuItemFont*	pFullGetItem		= [CCMenuItemFont	itemWithString:@"アイテムすべて取得"
+    CCMenuItemFont*	pFullGetItem		= [CCMenuItemFont	itemWithString:@"アイテムすべて取得"
     block:^(id sender)
     {
         for( SInt32 i = 0; i < [DataItemList shared].dataNum; ++i )
@@ -58,9 +60,26 @@
     [pFullGetItem setFontSize:12.f];
     [pFullGetItem setColor:ccBLACK];
     [pFullGetItem setPosition:ccp(0, -30)];
-        
 
-	CCMenu*	pMenu	= [CCMenu menuWithItems:pResetSaveItem, pFullGetItem, nil];
+    CCMenuItemFont*	pFullGetNetaPack    = [CCMenuItemFont	itemWithString:@"ネタすべて取得"
+    block:^(id sender)
+    {
+       for( SInt32 i = 0; i < [DataNetaPackList shared].dataNum; ++i )
+       {
+           const NETA_PACK_DATA_ST* pData   = [[DataNetaPackList shared] getData:i];
+           const SAVE_DATA_NETA_ST* pSaveUseData = [[DataSaveGame shared] getNetaPack:pData->no];
+           if( pSaveUseData == nil )
+           {
+               [[DataSaveGame shared] addNetaPack:pData->no];
+           }
+       }
+    }
+    ];
+    [pFullGetNetaPack setFontSize:12.f];
+    [pFullGetNetaPack setColor:ccBLACK];
+    [pFullGetNetaPack setPosition:ccp(0, -60)];
+
+	CCMenu*	pMenu	= [CCMenu menuWithItems:pResetSaveItem, pFullGetItem, pFullGetNetaPack, nil];
 	[pMenu setPosition:ccp( 80.f, 300 )];
 	[self addChild:pMenu z:20];
 #endif

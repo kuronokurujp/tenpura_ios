@@ -21,12 +21,14 @@
 	//	変数定義
 	CCSprite*		mp_sp;
 	BOOL			mb_fever;
+    BOOL            mb_tenpuraNonBurn;
 	Float32			m_flyTimeRate;
 	Float32			m_setFlyTimeRate;
 	SInt32			m_tenpuraZOrder;
 }
 
 @property	(nonatomic, readwrite)Float32	setFlyTimeRate;
+@property   (nonatomic, readwrite)BOOL  bTenpuraNonBurn;
 
 //	関数定義
 

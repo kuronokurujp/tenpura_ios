@@ -43,6 +43,7 @@ static	const char*	sp_transactionFlgName	= "storeTransactionFlg";
 {
 	if( sp_storeAppManagerInst != nil )
 	{
+        sp_storeAppManagerInst.delegate = nil;
 		[sp_storeAppManagerInst release];
 		sp_storeAppManagerInst	= nil;
 	}
@@ -254,7 +255,7 @@ static	const char*	sp_transactionFlgName	= "storeTransactionFlg";
 				{
 					[m_delegate onPaymentPurchased:pTrans.payment.productIdentifier];
 				}
-
+                
 				break;
 			}
 			case SKPaymentTransactionStateFailed:
@@ -277,7 +278,7 @@ static	const char*	sp_transactionFlgName	= "storeTransactionFlg";
 				{
 					[m_delegate onPaymentRestore:[pTrans.payment productIdentifier]];
 				}
-				
+                
 				//	リストア
 				[queue finishTransaction:pTrans];
 				

@@ -37,6 +37,7 @@ enum
 };
 
 @synthesize setFlyTimeRate	= m_setFlyTimeRate;
+@synthesize bTenpuraNonBurn = mb_tenpuraNonBurn;
 
 /*
 	@brief	初期化
@@ -48,6 +49,7 @@ enum
 		AnimManager*	pAnimManager	= [AnimManager shared];
 
 		mb_fever	= NO;
+        mb_tenpuraNonBurn   = NO;
 		m_flyTimeRate	= 1.f;
 		m_setFlyTimeRate	= 1.f;
 		mp_sp	= [CCSprite spriteWithFile:@"nabe0.png"];
@@ -163,6 +165,9 @@ enum
 				[pTenpura setRaiseTimeRate:m_flyTimeRate];
 				[pTenpura setZOrder:m_tenpuraZOrder];
 				[pTenpura setEnableFever:mb_fever];
+                
+                pTenpura.bNonBurn   = mb_tenpuraNonBurn;
+
 				m_tenpuraZOrder += 1;
 				
 				return pTenpura;

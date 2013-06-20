@@ -22,6 +22,7 @@
 	BOOL				mb_lock;
 	BOOL				mb_fly;	//	揚げる開始
 	BOOL				mb_fever;
+    BOOL                mb_nonBurn;
 	
 	Float32				m_baseTimeRate;	//	揚げる速度の基本レート
 	Float32				m_raiseTimeRate;	//	揚げる速度のレート
@@ -36,6 +37,7 @@
 @property	(nonatomic, readonly)	SInt32	posDataIdx;
 @property	(nonatomic, readonly)	NETA_DATA_ST data;
 @property	(nonatomic, retain)		id<TenpuraProtocol>	delegate;
+@property   (nonatomic, readwrite)BOOL bNonBurn;
 
 //	セットアップ
 -(void)	setupToPosIndex:(const NETA_DATA_ST*)in_pData :(const SInt32)in_posDataIdx :(Float32)in_raiseSpeedRate;
@@ -56,6 +58,9 @@
 //	使用中か
 -(BOOL)	isUse;
 
+//	状態設定
+-(void)	setState:(const TENPURA_STATE_ET)in_eState;
+
 //	食べるアクション
 -(void)	eatAction:(Float32)in_time;
 
@@ -67,8 +72,9 @@
 
 //	タッチロック
 -(void)	lockTouch;
--(void)	unLockTouch:(const CGPoint)in_pos;
--(void)	unLockTouchAct;
+-(void)	unLockTouch;
+-(void) unLockTouchByPos:(const CGPoint)in_pos;
+-(void)	unLockTouchByAct;
 
 -(CGRect)	boundingBox;
 -(void)	pauseSchedulerAndActions;

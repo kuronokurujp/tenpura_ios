@@ -396,6 +396,43 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 }
 
 /*
+    @brief  ライフ増減
+ */
+-(void) addPlayLife:(const SInt8)in_num :(const BOOL)in_bSaveLiefTime
+{
+	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
+    SInt8   oldPlayerLife   = pData->playLife;
+    pData->playLife += in_num;
+    
+    pData->playLife = MIN(pData->playLife, eSAVE_DATA_PLAY_LIEF_MAX);
+    pData->playLife = MAX(pData->playLife, 0);
+    
+    BOOL    bSaveTime   = in_bSaveLiefTime;
+    if( pData->playLife < eSAVE_DATA_PLAY_LIEF_MAX )
+    {
+        if( (in_num < 0) && (oldPlayerLife < eSAVE_DATA_PLAY_LIEF_MAX) )
+        {
+            bSaveTime   = NO;
+        }
+        
+        if( bSaveTime )
+        {
+            //  時間を記録
+            NSDate* pDt = [NSDate date];
+            NSDateFormatter*    pFmt    = [[[NSDateFormatter alloc] init] autorelease];
+            pFmt.dateFormat = @"yyyy/MM/dd HH:mm:ss";
+            NSString* pString  = [pFmt stringFromDate:pDt];
+            
+            //	イベント発生時の時刻
+            const char*	pDateText	= [pString UTF8String];
+            memcpy( pData->aCureTimeStr, pDateText, sizeof(pData->aCureTimeStr));
+        }
+    }
+    
+    [mp_SaveData save];
+}
+
+/*
     @brief  なべ経験値加算
  */
 -(BOOL) addNabeExp:(UInt16)in_expNum
@@ -506,6 +543,7 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
     out_pData->nabeLv   = 1;
     out_pData->invocEventNo = -1;
     out_pData->successEventNo   = -1;
+    out_pData->playLife = 0;
 
     //  アイテムデータとのマッピング
     {

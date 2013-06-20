@@ -52,6 +52,7 @@ typedef enum
 	SInt32	m_score;
 	Float32	m_eatTimeRate;
 	Float32	m_orgEatTimeRate;
+    BOOL    mb_allEat;
 }
 
 //	プロパティ
@@ -65,6 +66,7 @@ typedef enum
 @property	(nonatomic, readonly )SInt32 score;
 @property	(nonatomic, readonly)Float32	eatTimeRate;
 @property	(nonatomic, retain)Nabe*	nabe;
+@property   (nonatomic, readwrite)BOOL  bAllEat;
 
 //	初期化
 -(id)	initToType:(SInt32)in_idx :(Nabe*)in_pNabe :(CCArray*)in_pSettingTenpuraList :(Float32)in_eatTimeRate;

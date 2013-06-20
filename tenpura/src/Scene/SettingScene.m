@@ -12,6 +12,7 @@
 #import "./../../libs/CCControlExtension/CCControlExtension.h"
 #import "./../CCBReader/CCBReader.h"
 
+#import "./../AppDelegate.h"
 #import "./../Data/DataSettingNetaPack.h"
 #import "./../Data/DataBaseText.h"
 #import "./../Data/DataGlobal.h"
@@ -19,6 +20,7 @@
 #import "./../Data/DataMissionList.h"
 #import	"./../Data/DataNetaPackList.h"
 #import "./../Data/DataItemList.h"
+#import "./../Data/DataStoreList.h"
 
 #import "./../System/Sound/SoundManager.h"
 #import "./../System/Anim/AnimManager.h"
@@ -27,6 +29,9 @@
 #import "./SettingChildScene/UseSelectItemScene.h"
 
 @interface SettingScene (PriveteMethod)
+
+-(void) _runGamePlay;
+-(void) _runPlayLifeProcess;
 
 -(void)	_checkMissionSuccess;
 
@@ -148,6 +153,8 @@
 */
 -(void)	onEnter
 {
+    [self _runPlayLifeProcess];
+
 	[mp_ticker setVisible:YES];
 
     [mp_eventChkBtn setVisible:NO];
@@ -188,6 +195,9 @@
 		[[NSNotificationCenter defaultCenter] postNotification:n];
 	}
 
+    {
+        [self schedule:@selector(_runPlayLifeProcess)];
+    }
 
     {
         DataSaveGame*   pDataSaveGameInst   = [DataSaveGame shared];
@@ -273,6 +283,9 @@
 */
 -(void)	onExitTransitionDidStart
 {
+    AppController*	pApp	= (AppController*)[UIApplication sharedApplication].delegate;
+    pApp.storeSuccessDelegate   = nil;
+
 	//	バナー非表示通知
 	{
 		NSString*	pBannerHideName	= [NSString stringWithUTF8String:gp_bannerHideObserverName];
@@ -291,72 +304,44 @@
 {
 	CCLOG(@"GameStart");
 
-	CCArray*	pDataSettingTenpura	= [[[CCArray alloc] init] autorelease];
-	//	受け渡しためのデータリスト作成
-	{
-		SettingItemBtn*	pSettingItemBtn	= nil;
-		CCARRAY_FOREACH(mp_useItemNoList, pSettingItemBtn)
-		{
-			if( ( 0 < pSettingItemBtn.itemNo ) && ( pSettingItemBtn.type == eITEM_TYPE_NETA ) )
-			{
-				DataSettingNetaPack*	pSettingData	= [[[DataSettingNetaPack alloc] init] autorelease];
-				pSettingData.no	= pSettingItemBtn.itemNo;
-				[pDataSettingTenpura addObject:pSettingData];
-			}
-		}
-	}
-
-	//	データがないと先へ進めない
-	if( 0 < [pDataSettingTenpura count] )
-	{
-        CCArray*	pDataSettingItem	= [[[CCArray alloc] init] autorelease];
-        //	受け渡しためのデータリスト作成
+    DataSaveGame*   pSaveGameInst   = [DataSaveGame shared];
+    const SAVE_DATA_ST* pSaveData   = [pSaveGameInst getData];
+    if( pSaveData->playLife <= 0 )
+    {
+        //  ライフ購入のアドオン処理へ
+        StoreAppPurchaseManager*	pStoreApp	= [StoreAppPurchaseManager share];
+        
+        DataStoreList*	pDataStoreInst	= [DataStoreList shared];
+        const STORE_DATA_ST*	pData	= [pDataStoreInst getDataSearchId:eSTORE_ID_CURELIEF];
+        if( pData != nil )
         {
-            DataSaveGame*   pSaveGameInst   = [DataSaveGame shared];
-
-            SettingItemBtn*	pSettingItemBtn	= nil;
-            CCARRAY_FOREACH(mp_useItemNoList, pSettingItemBtn)
+            if( pStoreApp.bLoad == false )
             {
-                if( ( 0 < pSettingItemBtn.itemNo ) && ( pSettingItemBtn.type == eITEM_TYPE_OPTION ) )
+                if( [pStoreApp isPayment] == YES )
                 {
-                    [pDataSettingItem addObject:[NSNumber numberWithInt:pSettingItemBtn.itemNo]];
-                    //  アイテムを減らす
-                    [pSaveGameInst subItem:pSettingItemBtn.itemNo];
+                    AppController*	pApp	= (AppController*)[UIApplication sharedApplication].delegate;
+                    pApp.storeSuccessDelegate   = self;
+
+                    [pStoreApp requestProduct:[NSString stringWithUTF8String:pData->aStoreIdName]];
                 }
+                else
+                {
+                    //	機能制限でつかえない
+                    UIAlertView*	pAlert	= [[[UIAlertView alloc]
+                                                initWithTitle:@"" message:[DataBaseText getString:155]
+                                                delegate:nil
+                                                cancelButtonTitle:[DataBaseText getString:46]
+                                                otherButtonTitles:nil, nil] autorelease];
+                    [pAlert show];
+                }                
             }
         }
-
-		//	アニメ登録
-		{
-			AnimManager*	pEffMng	= [AnimManager shared];
+    }
+    else
+    {
+        [self _startGamePlay];
+    }
 		
-			UInt32	num	= sizeof(ga_animDataList) / sizeof(ga_animDataList[0]);
-			for( UInt32 i = 0; i < num; ++i )
-			{
-				AnimData*	pEffData	=
-				[[[AnimData alloc] initWithData
-				:ga_animDataList[i].pListFileName
-				:ga_animDataList[i].pImageFileName
-				:ga_animDataList[i].fps] autorelease];
-		
-				[pEffMng add:[NSString stringWithUTF8String:ga_animDataList[i].pImageFileName]:pEffData];
-			}
-		}
-
-		GameData*	pGameData	= [[GameData alloc] autorelease];
-		pGameData->mp_netaList	= [pDataSettingTenpura retain];
-		pGameData->mp_itemNoList	= [pDataSettingItem retain];
-
-		CCScene*	pGameScene	= [GameScene scene:pGameData];
-
-		CCTransitionFade*	pTransFade	=
-		[CCTransitionFade transitionWithDuration:g_sceneChangeTime scene:pGameScene withColor:ccBLACK];
-
-		[[CCDirector sharedDirector] replaceScene:pTransFade];
-	}
-	
-	pDataSettingTenpura	= nil;
-	
 	[[SoundManager shared] playSe:@"btnClick"];
 }
 
@@ -541,11 +526,45 @@
 }
 
 /*
+    @brief  アドオン購入成功
+ */
+-(void) onStoreSuccess:(NSString*)in_pProducts
+{
+	//	購入内容によって設定する
+	DataStoreList*	pStoreInst	= [DataStoreList shared];
+	if( pStoreInst != nil )
+	{
+		for( int i = 0; i < pStoreInst.dataNum; ++i )
+		{
+			const STORE_DATA_ST*	pData	= [pStoreInst getData:i];
+			if( pData != nil )
+			{
+				NSString*	pStr	= [NSString stringWithUTF8String:pData->aStoreIdName];
+				if([pStr isEqualToString:in_pProducts])
+				{
+					switch( pData->no )
+					{
+                        case eSTORE_ID_CURELIEF:
+                        {
+                            //  回復した
+                            [self _startGamePlay];
+                            return;
+                        }
+					}
+				}
+			}
+		}        
+	}
+}
+
+/*
 	@brief	CCBI読み込み終了
 */
 - (void) didLoadFromCCB
 {
     const SAVE_DATA_ST* pSaveData   = [[DataSaveGame shared] getData];
+
+    CCArray*    pDelNodeArray   = [CCArray array];
 
 	CCNode*	pNode	= nil;
 	CCARRAY_FOREACH(_children, pNode)
@@ -562,6 +581,26 @@
 				}
 			}
 		}
+        else if( [pNode isKindOfClass:[CCLabelTTF class]] )
+        {
+            CCLabelTTF* pLabel  = (CCLabelTTF*)pNode;
+            if( [pLabel.string isEqualToString:@"PlayLifePos"])
+            {
+                m_playLifePos   = pLabel.position;
+                mp_playerLifeNumStr    = pLabel;
+                [mp_playerLifeNumStr setString:[NSString stringWithFormat:@"%d", pSaveData->playLife]];
+                //                [pDelNodeArray addObject:pLabel];
+            }
+        }
+        else if( [pNode isKindOfClass:[CCLabelBMFont class]] )
+        {
+            CCLabelBMFont*  pLabel  = (CCLabelBMFont*)pNode;
+            if( [pLabel.string isEqualToString:@"00:00"] )
+            {
+                mp_cureTimeStr  = pLabel;
+                [mp_cureTimeStr setVisible:NO];
+            }
+        }
 		else if( [pNode isKindOfClass:[SettingGameStartBtn class]] )
 		{
 			mp_gameStartBtn	= (CCControlButton*)pNode;
@@ -591,6 +630,11 @@
             mp_eventChkBtn  = pNode;
         }
 	}
+    
+    CCARRAY_FOREACH(pDelNodeArray, pNode)
+    {
+        [self removeChild:pNode cleanup:YES];
+    }
 }
 
 /*
@@ -764,6 +808,143 @@
             [mp_eventChkAlertView release];
         }
         mp_eventChkAlertView    = nil;
+    }
+}
+
+/*
+    @brief  ゲーム開始
+ */
+-(void) _startGamePlay
+{
+	CCArray*	pDataSettingTenpura	= [[[CCArray alloc] init] autorelease];
+	//	受け渡しためのデータリスト作成
+	{
+		SettingItemBtn*	pSettingItemBtn	= nil;
+		CCARRAY_FOREACH(mp_useItemNoList, pSettingItemBtn)
+		{
+			if( ( 0 < pSettingItemBtn.itemNo ) && ( pSettingItemBtn.type == eITEM_TYPE_NETA ) )
+			{
+				DataSettingNetaPack*	pSettingData	= [[[DataSettingNetaPack alloc] init] autorelease];
+				pSettingData.no	= pSettingItemBtn.itemNo;
+				[pDataSettingTenpura addObject:pSettingData];
+			}
+		}
+	}
+
+    DataSaveGame*   pSaveGameInst   = [DataSaveGame shared];
+    const SAVE_DATA_ST* pSaveData   = [pSaveGameInst getData];
+
+    if( 0 < pSaveData->playLife )
+    {
+        CCArray*	pDataSettingItem	= [[[CCArray alloc] init] autorelease];
+        //	受け渡しためのデータリスト作成
+        {
+            
+            SettingItemBtn*	pSettingItemBtn	= nil;
+            CCARRAY_FOREACH(mp_useItemNoList, pSettingItemBtn)
+            {
+                if( ( 0 < pSettingItemBtn.itemNo ) && ( pSettingItemBtn.type == eITEM_TYPE_OPTION ) )
+                {
+                    [pDataSettingItem addObject:[NSNumber numberWithInt:pSettingItemBtn.itemNo]];
+                    //  アイテムを減らす
+                    [pSaveGameInst subItem:pSettingItemBtn.itemNo];
+                }
+            }
+        }
+        
+        //	アニメ登録
+        {
+            AnimManager*	pEffMng	= [AnimManager shared];
+            
+            UInt32	num	= sizeof(ga_animDataList) / sizeof(ga_animDataList[0]);
+            for( UInt32 i = 0; i < num; ++i )
+            {
+                AnimData*	pEffData	=
+                [[[AnimData alloc] initWithData
+                  :ga_animDataList[i].pListFileName
+                  :ga_animDataList[i].pImageFileName
+                  :ga_animDataList[i].fps] autorelease];
+                
+                [pEffMng add:[NSString stringWithUTF8String:ga_animDataList[i].pImageFileName]:pEffData];
+            }
+        }
+        
+        GameData*	pGameData	= [[GameData alloc] autorelease];
+        pGameData->mp_netaList	= [pDataSettingTenpura retain];
+        pGameData->mp_itemNoList	= [pDataSettingItem retain];
+        
+        CCScene*	pGameScene	= [GameScene scene:pGameData];
+        
+        CCTransitionFade*	pTransFade	=
+        [CCTransitionFade transitionWithDuration:g_sceneChangeTime scene:pGameScene withColor:ccBLACK];
+        
+        [[CCDirector sharedDirector] replaceScene:pTransFade];
+        
+        [pSaveGameInst addPlayLife:-1 :NO];
+    }
+    
+	pDataSettingTenpura	= nil;
+}
+
+/*
+    @brief  ライフ値の変更時に対応
+ */
+-(void) _runPlayLifeProcess
+{
+    DataSaveGame*   pDataSaveGameInst   = [DataSaveGame shared];
+    const SAVE_DATA_ST* pSaveData   = [pDataSaveGameInst getData];
+    
+    [mp_cureTimeStr setVisible:NO];
+
+    [mp_playerLifeNumStr setString:[NSString stringWithFormat:@"%d", pSaveData->playLife]];
+    if( pSaveData->playLife < eSAVE_DATA_PLAY_LIEF_MAX )
+    {
+        //  回復時間を表示
+        [mp_cureTimeStr setVisible:YES];
+
+        //  回復時間になっているか
+        {
+            NSDate* pDt = [NSDate date];
+            NSDateFormatter*    pDateFrm    = [[[NSDateFormatter alloc] init] autorelease];
+            [pDateFrm setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
+            NSDate* pCureDt    = [pDateFrm dateFromString:[NSString stringWithUTF8String:pSaveData->aCureTimeStr]];
+            
+            NSDate* pChkDt  = [[[NSDate alloc] initWithTimeInterval:self.cureTimeByCcbiProperty sinceDate:pCureDt] autorelease];
+            int  span    = (int)[pChkDt timeIntervalSinceDate:pDt];
+            
+            if( span <= 0 )
+            {
+                int absSpan = ABS(span);
+                SInt8   cureNum = 1;
+                if( self.cureTimeByCcbiProperty <= absSpan )
+                {
+                    cureNum = (SInt8)MIN(eSAVE_DATA_PLAY_LIEF_MAX, ((absSpan / self.cureTimeByCcbiProperty) + 1));
+                }
+                //  回復
+                [pDataSaveGameInst addPlayLife:cureNum :YES];
+            }
+        }
+
+        //  回復時間を表示
+        if( pSaveData->playLife < eSAVE_DATA_PLAY_LIEF_MAX )
+        {
+            NSDate* pDt = [NSDate date];
+            NSDateFormatter*    pDateFrm    = [[[NSDateFormatter alloc] init] autorelease];
+            [pDateFrm setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
+            NSDate* pCureDt    = [pDateFrm dateFromString:[NSString stringWithUTF8String:pSaveData->aCureTimeStr]];
+            
+            NSDate* pChkDt  = [[[NSDate alloc] initWithTimeInterval:self.cureTimeByCcbiProperty sinceDate:pCureDt] autorelease];
+            int  span    = (int)[pChkDt timeIntervalSinceDate:pDt];
+            
+            SInt32  second  = (span <= 0) ? 0 : span % 60;
+            SInt32  minute  = (span <= 0) ? 0 : span / 60;
+            
+            [mp_cureTimeStr setString:[NSString stringWithFormat:@"%02ld:%02ld", minute, second]];
+        }
+        else
+        {
+            [mp_cureTimeStr setVisible:NO];
+        }
     }
 }
 

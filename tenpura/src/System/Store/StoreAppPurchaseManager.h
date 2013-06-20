@@ -17,6 +17,15 @@ typedef enum
 } STORE_REQUEST_TYPE_ENUM;
 
 /*
+ @brief	課金成功のデリゲーダー定義
+ */
+@protocol  StoreAppPurchaseManagerSuccessProtocol<NSObject>
+
+-(void) onStoreSuccess:(NSString*)in_pProducts;
+
+@end
+
+/*
 	@brief	課金時のデリゲーダー定義
 */
 @protocol  StoreAppPurchaseManagerProtocol<NSObject>
@@ -64,6 +73,7 @@ typedef enum
 
 //	プロダクトリクエスト
 -(BOOL)	requestProduct:(NSString*)in_pIdName;
+
 //	課金開始
 -(BOOL)	requestPayment:(SKProduct*)in_pProduct;
 //	リストア
