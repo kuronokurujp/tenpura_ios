@@ -15,6 +15,10 @@
 #import "./../../Data/DataSaveGame.h"
 #import "./../../Data/DataGlobal.h"
 #import "./../../Data/DataBaseText.h"
+#import "./../../Data/DataNetaList.h"
+
+#import "./../../Object/TenpuraIcon.h"
+
 #import "./../../System/Sound/SoundManager.h"
 
 #import "./../SettingScene.h"

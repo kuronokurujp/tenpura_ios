@@ -19,4 +19,6 @@
 @property	(nonatomic, retain)CCLabelBMFont*	pNameLabel;
 @property	(nonatomic, retain)CCLabelBMFont*	pMoneyLabel;
 
+-(void) setColor:(ccColor3B)color3;
+
 @end

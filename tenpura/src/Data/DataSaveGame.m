@@ -510,6 +510,14 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
     ++pData->chkEventPlayCnt;
 }
 
+-(void) setTutorial:(const BOOL)in_flg
+{
+    SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
+	NSAssert(pData, @"");
+
+    pData->bTutorial    = in_flg;
+}
+
 /*
 	@brief	データ丸ごとアドレス取得
 	@return	データアドレス
@@ -544,6 +552,7 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
     out_pData->invocEventNo = -1;
     out_pData->successEventNo   = -1;
     out_pData->playLife = 0;
+    out_pData->bTutorial    = YES;
 
     //  アイテムデータとのマッピング
     {

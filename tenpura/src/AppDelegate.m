@@ -405,11 +405,14 @@ void uncaughtExceptionHandler( NSException* in_pException )
 		}
 		else
 		{
-			TWTweetComposeViewController*	pCtrl	= [[TWTweetComposeViewController alloc] init];
-			[pCtrl setInitialText:pTweetText];
-			AppController*	pApp	= (AppController*)[UIApplication sharedApplication].delegate;
-			[pApp.navController presentModalViewController:pCtrl animated:YES];
-			[pCtrl release];
+            if( [TWTweetComposeViewController canSendTweet] )
+            {
+                TWTweetComposeViewController*	pCtrl	= [[TWTweetComposeViewController alloc] init];
+                [pCtrl setInitialText:pTweetText];
+                AppController*	pApp	= (AppController*)[UIApplication sharedApplication].delegate;
+                [pApp.navController presentModalViewController:pCtrl animated:YES];
+                [pCtrl release];                
+            }
 		}
 	}
 }

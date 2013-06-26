@@ -788,7 +788,7 @@ enum
 			continue;
 		}
 
-		if( CGRectIntersectsRect( in_rect, [pCustomer getBoxRect] ) == YES )
+		if( CGRectIntersectsRect( in_rect, [pCustomer getBoxRectByTenpuraColision] ) == YES )
 		{
 			if( pNewCutomer != nil )
 			{

@@ -215,8 +215,8 @@
 						<string>Size</string>
 						<key>value</key>
 						<array>
-							<real>100</real>
-							<real>50</real>
+							<real>40</real>
+							<real>40</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -236,7 +236,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn/btn_help.png</string>
+							<string>btn/help_btn.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -259,7 +259,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn/btn_help.png</string>
+							<string>btn/help_btn.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -282,7 +282,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn/btn_help.png</string>
+							<string>btn/help_btn.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -298,6 +298,8 @@
 						</array>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>

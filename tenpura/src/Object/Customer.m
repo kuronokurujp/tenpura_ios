@@ -272,6 +272,17 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 }
 
 /*
+    @brief  天ぷらオブジェクトとのヒット矩形取得
+ */
+-(CGRect)	getBoxRectByTenpuraColision
+{
+	CGSize	texSize	= [mp_sp textureRect].size;
+	CGRect	boxRect	= CGRectMake(self.position.x, self.position.y, 240, texSize.height);
+	
+	return boxRect;
+}
+
+/*
 	@brief	天ぷらアイコンの表示／非表示
 */
 -(void)	setVisibleTenpuraIcon:(BOOL)in_flg

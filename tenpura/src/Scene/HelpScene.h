@@ -14,6 +14,9 @@
 	@note	html内にimgタグを使って画像を参照している時には
 			htmlファイルと同じフォルダに画像を配置する
 */
+@class PrevPageBtnByHelp;
+@class PrevSceneBtnByHelp;
+
 @interface HelpScene : CCLayer
 {
 @private
@@ -25,6 +28,9 @@
 	Float32	helpSceneYPos;
 	Float32	helpSceneSizeWidth;
 	Float32	helpSceneSizeHeight;
+    
+    PrevSceneBtnByHelp* mp_prevSceneBtn;
+    PrevPageBtnByHelp*  mp_prevPageBtn;
 }
 
 @end

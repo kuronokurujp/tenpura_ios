@@ -35,6 +35,7 @@ nabe06_a.png
 play_back.png
 set_back.png
 btn_back.png
+btn_credit.png
 btn_game.png
 btn_game_center.png
 btn_gamestart.png
@@ -42,7 +43,6 @@ btn_help.png
 btn_junbi.png
 btn_left.png
 btn_mission.png
-btn_more_app.png
 btn_retry.png
 btn_rigth.png
 btn_shop.png
@@ -51,6 +51,7 @@ btn_shop_item.png
 btn_shop_tane.png
 btn_twitter.png
 btn_twitter01.png
+help_btn.png
 base_menu.ccbi
 comboMessage.ccbi
 credit.ccbi
@@ -86,11 +87,16 @@ play_end.png
 play_result.png
 play_start.png
 Default.png
+gamecenter-icon.png
+heart.png
 icon-72.png
 icon.png
 Icon@2x.png
 icon_c.png
 icon_s.png
+nabe_kaisu.png
+time.png
+twitter-icon.png
 Info.plist
 konoha.plist
 konoha.png

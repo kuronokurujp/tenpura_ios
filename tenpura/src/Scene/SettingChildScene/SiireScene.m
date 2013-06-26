@@ -70,6 +70,8 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 
 	[pItemCell.pUnknowLabel setString:@""];
 
+    [pItemCell setColor:ccWHITE];
+
 	//	選択可能かチェック
 	if( [self _isCellSelect:idx] == NO )
 	{
@@ -79,7 +81,7 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 			[pItemCell.pUnknowLabel setString:pTenpuraName];
 		}
 
-		[pItemCell setColor:ccGRAY];
+        [pItemCell setColor:ccGRAY];
 
 		return pCell;
 	}
@@ -112,7 +114,6 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 	
 	//	購入できない場合の対応
 	{
-		[pItemCell setColor:ccWHITE];
 		if( [self isBuy:idx] == NO )
 		{
 			//	購入できない

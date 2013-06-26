@@ -81,7 +81,7 @@
 			[pItemCell.pUnknowLabel setString:pItemName];
 		}
 
-		[pItemCell setColor:ccGRAY];
+        [pItemCell setColor:ccGRAY];
 
 		return pCell;
 	}

@@ -97,7 +97,7 @@
 				<key>children</key>
 				<array/>
 				<key>customClass</key>
-				<string></string>
+				<string>PrevSceneBtnByHelp</string>
 				<key>displayName</key>
 				<string>CCControlButton</string>
 				<key>memberVarAssignmentName</key>
@@ -305,20 +305,7 @@
 				<key>children</key>
 				<array/>
 				<key>customClass</key>
-				<string></string>
-				<key>customProperties</key>
-				<array>
-					<dict>
-						<key>name</key>
-						<string>btnTypeName</string>
-						<key>optimized</key>
-						<false/>
-						<key>type</key>
-						<integer>3</integer>
-						<key>value</key>
-						<string>prev</string>
-					</dict>
-				</array>
+				<string>PrevPageBtnByHelp</string>
 				<key>displayName</key>
 				<string>CCControlButton</string>
 				<key>memberVarAssignmentName</key>
@@ -519,6 +506,8 @@
 						</array>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
@@ -555,8 +544,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>441</real>
-							<real>152</real>
+							<real>442</real>
+							<real>149</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -828,8 +817,6 @@
 						<string>textId:71</string>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>

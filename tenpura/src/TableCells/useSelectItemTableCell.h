@@ -20,4 +20,6 @@
 @property	(nonatomic, retain)CCLabelBMFont*	pDataLabel;
 @property   (nonatomic, retain)CCLabelBMFont*   pNumLabel;
 
+-(void) setColor:(ccColor3B)color3;
+
 @end

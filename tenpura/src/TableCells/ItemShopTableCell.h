@@ -27,5 +27,6 @@
 @property   (nonatomic, retain)CCLabelBMFont*   pNumLabel;
 
 -(void)	setEnableSoldOut:(BOOL)in_bFlg;
+-(void) setColor:(ccColor3B)color3;
 
 @end

@@ -83,6 +83,17 @@
                 m_eventSuccessRet   = eEVENT_SUCCESS_RESULT_OK;
             }
         }
+        
+        //  ハート画像
+        {
+            mp_heartObjArray    = [[CCArray arrayWithCapacity:eSAVE_DATA_PLAY_LIEF_MAX] retain];
+            for( int i = 0; i < eSAVE_DATA_PLAY_LIEF_MAX; ++i )
+            {
+                CCSprite*   pSp = [CCSprite spriteWithFile:[NSString stringWithUTF8String:gpa_spriteFileNameList[eSPRITE_FILE_HEART]]];
+                [self addChild:pSp z:10];
+                [mp_heartObjArray addObject:pSp];
+            }
+        }
 		
 		[[SoundManager shared] playBgm:@"normalBGM"];
 	}
@@ -95,6 +106,12 @@
 */
 -(void)dealloc
 {
+    if( mp_heartObjArray != nil )
+    {
+        [mp_heartObjArray release];
+    }
+    mp_heartObjArray    = nil;
+
 	if( mp_missionSucceesAlertView != nil )
 	{
 		[mp_missionSucceesAlertView release];
@@ -586,10 +603,17 @@
             CCLabelTTF* pLabel  = (CCLabelTTF*)pNode;
             if( [pLabel.string isEqualToString:@"PlayLifePos"])
             {
-                m_playLifePos   = pLabel.position;
-                mp_playerLifeNumStr    = pLabel;
-                [mp_playerLifeNumStr setString:[NSString stringWithFormat:@"%d", pSaveData->playLife]];
-                //                [pDelNodeArray addObject:pLabel];
+                CCSprite*   pSp = [mp_heartObjArray objectAtIndex:0];
+                NSAssert(pSp, @"");
+                CGRect  rect    = [pSp textureRect];
+                int obj_idx = 0;
+                CCNode* pHeartObj   = nil;
+                CCARRAY_FOREACH(mp_heartObjArray, pHeartObj)
+                {
+                    [pHeartObj setPosition:ccp(pLabel.position.x + rect.size.width * obj_idx, pLabel.position.y)];
+                    ++obj_idx;
+                }
+                [pLabel setString:@""];
             }
         }
         else if( [pNode isKindOfClass:[CCLabelBMFont class]] )
@@ -896,7 +920,24 @@
     
     [mp_cureTimeStr setVisible:NO];
 
-    [mp_playerLifeNumStr setString:[NSString stringWithFormat:@"%d", pSaveData->playLife]];
+    //  ハート設定
+    {
+        CCNode* pHeartNode  = nil;
+        SInt32  heart_i = 0;
+        CCARRAY_FOREACH(mp_heartObjArray, pHeartNode)
+        {
+            if( heart_i < pSaveData->playLife )
+            {
+                [pHeartNode setVisible:YES];
+            }
+            else
+            {
+                [pHeartNode setVisible:NO];
+            }
+            ++heart_i;
+        }
+    }
+
     if( pSaveData->playLife < eSAVE_DATA_PLAY_LIEF_MAX )
     {
         //  回復時間を表示

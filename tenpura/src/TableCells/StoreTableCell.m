@@ -39,4 +39,19 @@
 	}
 }
 
+-(void) setColor:(ccColor3B)color3
+{
+    [super setColor:color3];
+
+    CCNode* pNode   = nil;
+    CCARRAY_FOREACH(_children, pNode)
+    {
+        if( [pNode isKindOfClass:[CCLabelBMFont class]] )
+        {
+            CCLabelBMFont*  pLabelBM    = (CCLabelBMFont*)pNode;
+            [pLabelBM setColor:color3];
+        }
+    }
+}
+
 @end

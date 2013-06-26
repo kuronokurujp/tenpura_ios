@@ -52,5 +52,6 @@ typedef enum
 -(id)	initWithSetup:(const NETA_DATA_ST*)in_pData;
 
 -(void)	setup:(const NETA_DATA_ST*)in_pData;
+-(void) setColor:(ccColor3B)color3;
 
 @end

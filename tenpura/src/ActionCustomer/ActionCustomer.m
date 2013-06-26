@@ -69,7 +69,7 @@ enum ACTION_SP_ENUM
 		
 		//	取得したスコアラベル
 		{
-			m_scoreLabelPos	= ccp(rect.size.width * 0.4f, rect.size.height * 0.5f - 16.f );
+			m_scoreLabelPos	= ccp(rect.size.width, rect.size.height * 0.5f - 16.f );
 			mp_score	= [CCNodeRGBA node];
 			[mp_score setPosition:m_scoreLabelPos];
 
@@ -88,7 +88,7 @@ enum ACTION_SP_ENUM
 		
 		//	取得した金額ラベル
 		{
-			m_moneyLabelPos	= ccp(rect.size.width * 0.4f, rect.size.height * 0.5f + 16.f );
+			m_moneyLabelPos	= ccp(rect.size.width, rect.size.height * 0.5f + 16.f );
 			mp_money	= [CCNodeRGBA node];
 			[mp_money setPosition:m_moneyLabelPos];
 
@@ -556,15 +556,10 @@ enum ACTION_SP_ENUM
 	//	天ぷらの消滅アクション
 	{
 		CGPoint	anthorPos	= mp_customer.anchorPoint;
-		if( anthorPos.x != 0.5f )
-		{
-			anthorPos.x	= 0.5f;
-		}
-		if( anthorPos.y != 0.5f )
-		{
-			anthorPos.y	= 0.5f;
-		}
-		CGRect	rect	= mp_customer.charSprite.textureRect;
+		anthorPos.x	= 1.5f;
+		anthorPos.y	= 0.5f;
+        
+		CGRect	rect	= [mp_customer getBoxRect];
 		
 		CGPoint	pos	= ccp(rect.size.width * anthorPos.x, rect.size.height * anthorPos.y);
 		[in_pTenpura removeFromParentAndCleanup:NO];

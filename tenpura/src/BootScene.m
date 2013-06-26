@@ -30,7 +30,7 @@
 @implementation BootScene
 
 +(CCScene *) scene
-{
+{    
     return [CCBReader sceneWithNodeGraphFromFile:@"title.ccbi"];
 }
 

@@ -9,8 +9,29 @@
 #import "HelpScene.h"
 
 #import "./../CCBReader/CCBReader.h"
+
 #import "./../Data/DataGlobal.h"
+#import "./../DAta/DataSaveGame.h"
+
 #import "./../System/Sound/SoundManager.h"
+
+#include "../../libs/CCControlExtension/CCControlExtension.h"
+
+@interface PrevSceneBtnByHelp : CCControlButton
+
+@end
+
+@interface PrevPageBtnByHelp : CCControlButton
+
+@end
+
+@implementation PrevSceneBtnByHelp
+
+@end
+
+@implementation PrevPageBtnByHelp
+
+@end
 
 //	指定した値をループするマクロ(unsigneの型だと失敗するので注意)
 #define LOOP( _MIN_, _MAX_, _NUM_ ) (_MAX_) <= (_NUM_) ? (_MIN_) : (_NUM_) < (_MIN_) ? (_MAX_) - 1 : (_NUM_)
@@ -98,7 +119,7 @@ static NSString*	sp_helpHtmlNameList[]	=
 	@brief	シーン終了(変移開始)
 */
 -(void)	onExitTransitionDidStart
-{
+{    
 	//	バナー非表示通知
 	{
 		NSString*	pBannerHideName	= [NSString stringWithUTF8String:gp_bannerHideObserverName];
@@ -126,6 +147,27 @@ static NSString*	sp_helpHtmlNameList[]	=
 		CGRect	webViewRect	= CGRectMake(helpSceneXPos, helpSceneYPos, helpSceneSizeWidth, helpSceneSizeHeight );
 		mp_helpView	= [[UIWebView alloc] initWithFrame:webViewRect];	
 	}
+    
+	CCNode*	pNode	= nil;
+	CCARRAY_FOREACH(_children, pNode)
+	{
+		//	セッティング項目をあらかじめ取得する
+		if( [pNode isKindOfClass:[PrevSceneBtnByHelp class]] )
+		{
+            mp_prevSceneBtn = (PrevSceneBtnByHelp*)pNode;
+        }
+        else if( [pNode isKindOfClass:[PrevPageBtnByHelp class]] )
+        {
+            mp_prevPageBtn  = (PrevPageBtnByHelp*)pNode;
+        }
+    }
+    
+    const SAVE_DATA_ST* pSaveData   = [[DataSaveGame shared] getData];
+    if( pSaveData->bTutorial == YES )
+    {
+        [mp_prevPageBtn setVisible:NO];
+        [mp_prevSceneBtn setVisible:NO];
+    }
 }
 
 /*
@@ -133,9 +175,24 @@ static NSString*	sp_helpHtmlNameList[]	=
 */
 -(void)	pressBackBtn
 {
-	[[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:g_sceneChangeTime];
-	
-	[[SoundManager shared] playSe:@"pressBtnClick"];
+    const SAVE_DATA_ST* pSaveData   = [[DataSaveGame shared] getData];
+    if( pSaveData->bTutorial == YES )
+    {
+        [[DataSaveGame shared] setTutorial:NO];
+
+        CCScene*	sinagakiScene	= [CCBReader sceneWithNodeGraphFromFile:@"setting.ccbi"];
+        
+        CCTransitionFade*	pTransFade	=
+        [CCTransitionFade transitionWithDuration:g_sceneChangeTime scene:sinagakiScene withColor:ccBLACK];
+        
+        [[CCDirector sharedDirector] replaceScene:pTransFade];
+    }
+    else
+    {
+        [[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFade class] duration:g_sceneChangeTime];
+    }
+    
+    [[SoundManager shared] playSe:@"pressBtnClick"];
 }
 
 /*
@@ -143,7 +200,14 @@ static NSString*	sp_helpHtmlNameList[]	=
 */
 -(void)	pressPageNextBtn
 {
-	m_nowPageNum	= LOOP( 0, m_maxPageNum, m_nowPageNum + 1 );
+    SInt32  nextPageNum = m_nowPageNum + 1;
+    if( m_maxPageNum <= nextPageNum )
+    {
+        [mp_prevPageBtn setVisible:YES];
+        [mp_prevSceneBtn setVisible:YES];
+    }
+
+	m_nowPageNum	= LOOP( 0, m_maxPageNum, nextPageNum );
 	[self changePage:m_nowPageNum];
 	
 	[[SoundManager shared] playSe:@"btnClick"];

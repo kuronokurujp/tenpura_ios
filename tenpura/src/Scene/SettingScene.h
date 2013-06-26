@@ -45,7 +45,7 @@ typedef enum
     EVENT_SUCCESS_RESULT_ENUM   m_eventSuccessRet;
     CCNode* mp_eventChkBtn;
     
-    CCLabelTTF* mp_playerLifeNumStr;
+    CCArray*    mp_heartObjArray;
     CCLabelBMFont*  mp_cureTimeStr;
     CGPoint m_playLifePos;
     

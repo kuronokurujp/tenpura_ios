@@ -81,7 +81,7 @@
 						<key>value</key>
 						<array>
 							<real>43</real>
-							<real>220</real>
+							<real>202</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -502,7 +502,7 @@
 								<key>value</key>
 								<array>
 									<real>121</real>
-									<real>129</real>
+									<real>119</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -627,8 +627,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>362</real>
-									<real>178</real>
+									<real>370</real>
+									<real>190</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -753,8 +753,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>362</real>
-									<real>129</real>
+									<real>365</real>
+									<real>145</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -964,7 +964,7 @@
 						<key>value</key>
 						<array>
 							<real>239</real>
-							<real>77</real>
+							<real>72</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -1379,8 +1379,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>125</real>
-							<real>220</real>
+							<real>124</real>
+							<real>203</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -1660,7 +1660,7 @@
 						<key>value</key>
 						<array>
 							<real>207</real>
-							<real>220</real>
+							<real>204</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -1956,7 +1956,7 @@
 						<key>value</key>
 						<array>
 							<real>122</real>
-							<real>165</real>
+							<real>147</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -2136,8 +2136,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>97</real>
-									<real>18</real>
+									<real>69</real>
+									<real>16</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -2159,8 +2159,8 @@
 								<string>ScaleLock</string>
 								<key>value</key>
 								<array>
-									<real>1</real>
-									<real>1</real>
+									<real>0.5</real>
+									<real>0.5</real>
 									<false/>
 									<integer>0</integer>
 								</array>
@@ -2220,8 +2220,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>363</real>
-							<real>228</real>
+							<real>303</real>
+							<real>225</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -2265,18 +2265,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>tableView/shina_cell01.png</string>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>blendFunc</string>
-						<key>type</key>
-						<string>Blendmode</string>
-						<key>value</key>
-						<array>
-							<integer>770</integer>
-							<integer>771</integer>
+							<string>icon/nabe_kaisu.png</string>
 						</array>
 					</dict>
 				</array>
@@ -2621,13 +2610,102 @@
 			</dict>
 			<dict>
 				<key>baseClass</key>
-				<string>CCLabelBMFont</string>
+				<string>CCSprite</string>
 				<key>children</key>
-				<array/>
+				<array>
+					<dict>
+						<key>baseClass</key>
+						<string>CCLabelBMFont</string>
+						<key>children</key>
+						<array/>
+						<key>customClass</key>
+						<string></string>
+						<key>displayName</key>
+						<string>CCLabelBMFont</string>
+						<key>memberVarAssignmentName</key>
+						<string></string>
+						<key>memberVarAssignmentType</key>
+						<integer>0</integer>
+						<key>properties</key>
+						<array>
+							<dict>
+								<key>name</key>
+								<string>position</string>
+								<key>type</key>
+								<string>Position</string>
+								<key>value</key>
+								<array>
+									<real>57</real>
+									<real>14</real>
+									<integer>0</integer>
+								</array>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>anchorPoint</string>
+								<key>type</key>
+								<string>Point</string>
+								<key>value</key>
+								<array>
+									<real>0.5</real>
+									<real>0.5</real>
+								</array>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>scale</string>
+								<key>type</key>
+								<string>ScaleLock</string>
+								<key>value</key>
+								<array>
+									<real>0.69999998807907104</real>
+									<real>0.69999998807907104</real>
+									<false/>
+									<integer>0</integer>
+								</array>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>ignoreAnchorPointForPosition</string>
+								<key>type</key>
+								<string>Check</string>
+								<key>value</key>
+								<false/>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>fntFile</string>
+								<key>type</key>
+								<string>FntFile</string>
+								<key>value</key>
+								<string>text/font.fnt</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>blendFunc</string>
+								<key>type</key>
+								<string>Blendmode</string>
+								<key>value</key>
+								<array>
+									<integer>770</integer>
+									<integer>771</integer>
+								</array>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>string</string>
+								<key>type</key>
+								<string>Text</string>
+								<key>value</key>
+								<string>00:00</string>
+							</dict>
+						</array>
+					</dict>
+				</array>
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>CCLabelBMFont</string>
+				<string>CCSprite</string>
 				<key>memberVarAssignmentName</key>
 				<string></string>
 				<key>memberVarAssignmentType</key>
@@ -2641,8 +2719,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>168</real>
-							<real>260</real>
+							<real>194</real>
+							<real>263</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -2664,8 +2742,8 @@
 						<string>ScaleLock</string>
 						<key>value</key>
 						<array>
-							<real>0.69999998807907104</real>
-							<real>0.69999998807907104</real>
+							<real>1</real>
+							<real>1</real>
 							<false/>
 							<integer>0</integer>
 						</array>
@@ -2680,30 +2758,14 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>fntFile</string>
+						<string>displayFrame</string>
 						<key>type</key>
-						<string>FntFile</string>
-						<key>value</key>
-						<string>text/font.fnt</string>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>blendFunc</string>
-						<key>type</key>
-						<string>Blendmode</string>
+						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<integer>770</integer>
-							<integer>771</integer>
+							<string></string>
+							<string>icon/nabe_kaisu.png</string>
 						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>string</string>
-						<key>type</key>
-						<string>Text</string>
-						<key>value</key>
-						<string>00:00</string>
 					</dict>
 				</array>
 			</dict>

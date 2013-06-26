@@ -194,8 +194,6 @@
 						<string>konohaByParticle</string>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 			<dict>
 				<key>animatedProperties</key>
@@ -1377,7 +1375,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn/btn_more_app.png</string>
+							<string>btn/btn_credit.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -1400,7 +1398,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn/btn_more_app.png</string>
+							<string>btn/btn_credit.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -1423,7 +1421,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn/btn_more_app.png</string>
+							<string>btn/btn_credit.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -1439,6 +1437,8 @@
 						</array>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>animatedProperties</key>

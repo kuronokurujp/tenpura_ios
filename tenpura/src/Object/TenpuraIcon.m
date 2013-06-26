@@ -131,4 +131,17 @@ static const Float32	s_tenpuraFlyStateMax	= 3;
 	m_no	= in_pData->no;
 }
 
+-(void) setColor:(ccColor3B)color3
+{
+    CCNode* pNode   = nil;
+    CCARRAY_FOREACH(_children, pNode)
+    {
+        if( [pNode isKindOfClass:[CCSprite class]] )
+        {
+            CCSprite*   pSprite = (CCSprite*)pNode;
+            [pSprite setColor:color3];
+        }
+    }
+}
+
 @end

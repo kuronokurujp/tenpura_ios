@@ -8,6 +8,7 @@
 
 #import "SiireTableCell.h"
 
+#import "./../Object/TenpuraIcon.h"
 
 @implementation SiireTableCell
 
@@ -127,5 +128,29 @@
 	[self setColor:ccGRAY];
 }
 
+-(void) setColor:(ccColor3B)color3
+{
+    [super setColor:color3];
+
+    CCNode* pNode   = nil;
+    CCARRAY_FOREACH(_children, pNode)
+    {
+        if( [pNode isKindOfClass:[CCLabelBMFont class]] )
+        {
+            CCLabelBMFont*  pLabelBM    = (CCLabelBMFont*)pNode;
+            [pLabelBM setColor:color3];
+        }
+        else if( [pNode isKindOfClass:[TenpuraIcon class]] )
+        {
+            TenpuraIcon*    pTenpuraIcon    = (TenpuraIcon*)pNode;
+            [pTenpuraIcon setColor:color3];
+        }
+        else if( [pNode isKindOfClass:[CCSprite class]] )
+        {
+            CCSprite*   pSprite = (CCSprite*)pNode;
+            [pSprite setColor:color3];
+        }
+    }
+}
 
 @end

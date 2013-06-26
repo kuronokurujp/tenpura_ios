@@ -120,7 +120,16 @@
 */
 -(void)	pressGameBtn
 {
-	CCScene*	sinagakiScene	= [CCBReader sceneWithNodeGraphFromFile:@"setting.ccbi"];
+    NSString*   pCcbiFileName   = @"setting.ccbi";
+    
+    const SAVE_DATA_ST* pSaveData  = [[DataSaveGame shared] getData];
+    NSAssert(pSaveData, @"");
+    if( pSaveData->bTutorial == YES )
+    {
+        pCcbiFileName   = @"help.ccbi";
+    }
+
+	CCScene*	sinagakiScene	= [CCBReader sceneWithNodeGraphFromFile:pCcbiFileName];
 
 	CCTransitionFade*	pTransFade	=
 	[CCTransitionFade transitionWithDuration:g_sceneChangeTime scene:sinagakiScene withColor:ccBLACK];

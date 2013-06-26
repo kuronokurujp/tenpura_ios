@@ -88,6 +88,8 @@ typedef enum
 
 //	オブジェクト矩形取得
 -(CGRect)	getBoxRect;
+-(CGRect)	getBoxRectByTenpuraColision;
+
 
 //	天ぷらアイコンを表示／非表示設定
 -(void)	setVisibleTenpuraIcon:(BOOL)in_flg;

@@ -33,7 +33,7 @@ enum
 	eSAVE_DATA_ITEMS_MAX	= 32,
 	eSAVE_DATA_MISSION_MAX	= 16,
 	eSAVE_DATA_ITEM_USE_MAX	= 99,
-    eSAVE_DATA_PLAY_LIEF_MAX    = 5,
+    eSAVE_DATA_PLAY_LIEF_MAX    = 4,
 };
 
 typedef struct
@@ -97,9 +97,10 @@ typedef struct
     SInt8   eventNetaPackNo;        //  750(1)
     
     SInt8   playLife;               //  751(1)
+    BOOL    bTutorial;              //  752(1)
 
     //	予約領域
-	SInt8	dummy[263];				//	750(263)
+	SInt8	dummy[262];				//	753(262)
 } SAVE_DATA_ST;	//	1024byte
 
 @interface DataSaveGame : NSObject
@@ -163,6 +164,9 @@ typedef struct
 -(void) setEventNo:(SInt8)in_no;
 -(void) setSuccessEventNo:(SInt8)in_no;
 -(void) addEventChkPlayCnt;
+
+//  チュートリアル設定
+-(void) setTutorial:(const BOOL)in_flg;
 
 //	データ丸ごと取得
 -(const SAVE_DATA_ST*)getData;

@@ -123,8 +123,8 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 				CCNode*	pChildNode	= [mp_buyItemCell getChildByTag:eSW_TABLE_TAG_CELL_LAYOUT];
 				if( [pChildNode isKindOfClass:[CCSprite class]] )
 				{
-					CCSprite*	pCellSprite	= (CCSprite*)pChildNode;
-					[pCellSprite setColor:ccGRAY];
+		//			CCSprite*	pCellSprite	= (CCSprite*)pChildNode;
+		//			[pCellSprite setColor:ccGRAY];
 				}
 			
 				[pDataSaveGameInst addSaveMoeny:-([self getSellMoney:[mp_buyItemCell objectID]])];

@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
-#import "./../Object/TenpuraIcon.h"
 #import "./../Data/DataNetaPackList.h"
 
+@class TenpuraIcon;
 @interface SiireTableCell : CCSprite {
 
 @private
@@ -29,6 +29,6 @@
 -(CCLabelBMFont*)	getNetaNameLabel:(SInt32)in_idx;
 -(TenpuraIcon*)	getNetaIconObj:(SInt32)in_idx;
 -(void)	setEnableSoldOut:(BOOL)in_bFlg;
-
+-(void) setColor:(ccColor3B)color3;
 
 @end
