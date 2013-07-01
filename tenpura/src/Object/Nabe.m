@@ -255,8 +255,11 @@ enum
 		if( [pNode isKindOfClass:[Tenpura class]] )
 		{
 			pTenpura	= (Tenpura*)pNode;
-			//	フィーバー設定をする
-			[pTenpura setEnableFever:in_bFlg];
+            if( pTenpura.isUse )
+            {
+                //	フィーバー設定をする
+                [pTenpura setEnableFever:in_bFlg];
+            }
 		}
 	}
 	

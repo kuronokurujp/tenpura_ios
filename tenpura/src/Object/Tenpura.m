@@ -339,6 +339,8 @@ enum
 	if( in_bFlg == YES )
 	{
 		[self setState:eTENPURA_STATE_VERYGOOD];
+        //  再配置状態中で非表示状態かも知れないので表示設定をする
+        [self setVisible:YES];
 	}
 	
 	mb_fever	= in_bFlg;

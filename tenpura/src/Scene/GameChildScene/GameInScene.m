@@ -529,12 +529,11 @@ enum
 			{
 				if( eEatTenpuraState == eEAT_STATE_OK )
 				{
-                    ++pGameScene->m_eatTenpuraMaxNum;
-
 					switch ((SInt32)mp_touchTenpura.state)
 					{
 						case eTENPURA_STATE_VERYGOOD:
-						{                            
+						{
+                            ++pGameScene->m_eatTenpuraMaxNum;
 							++m_veryEatCnt;
 							{
 								++m_combCnt;

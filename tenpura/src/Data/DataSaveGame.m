@@ -410,9 +410,9 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
     BOOL    bSaveTime   = in_bSaveLiefTime;
     if( pData->playLife < eSAVE_DATA_PLAY_LIEF_MAX )
     {
-        if( (in_num < 0) && (oldPlayerLife < eSAVE_DATA_PLAY_LIEF_MAX) )
+        if( (in_num < 0) && (eSAVE_DATA_PLAY_LIEF_MAX <= oldPlayerLife) )
         {
-            bSaveTime   = NO;
+            bSaveTime   = YES;
         }
         
         if( bSaveTime )
@@ -551,7 +551,7 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
     out_pData->nabeLv   = 1;
     out_pData->invocEventNo = -1;
     out_pData->successEventNo   = -1;
-    out_pData->playLife = 0;
+    out_pData->playLife = eSAVE_DATA_PLAY_LIEF_MAX;
     out_pData->bTutorial    = YES;
 
     //  アイテムデータとのマッピング

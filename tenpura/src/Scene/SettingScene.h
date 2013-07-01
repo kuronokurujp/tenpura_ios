@@ -13,7 +13,6 @@
 
 #import "./../System/Store/StoreAppPurchaseManager.h"
 
-#import "./../Object/Ticker.h"
 #import "./../../libs/CCControlExtension/CCControl/CCControlButton.h"
 
 typedef enum
@@ -24,6 +23,7 @@ typedef enum
     eEVENT_SUCCESS_RESULT_NG,
 } EVENT_SUCCESS_RESULT_ENUM;
 
+@class LeftMoveTicker;
 @interface SettingScene : CCLayer
 <
 	UIAlertViewDelegate,

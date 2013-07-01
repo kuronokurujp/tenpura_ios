@@ -25,6 +25,8 @@
 #import "./../System/Sound/SoundManager.h"
 #import "./../System/Anim/AnimManager.h"
 
+#import "./../Object/Ticker.h"
+
 #import "./SettingChildScene/UseSelectNetaScene.h"
 #import "./SettingChildScene/UseSelectItemScene.h"
 
@@ -618,12 +620,6 @@
         }
         else if( [pNode isKindOfClass:[CCLabelBMFont class]] )
         {
-            CCLabelBMFont*  pLabel  = (CCLabelBMFont*)pNode;
-            if( [pLabel.string isEqualToString:@"00:00"] )
-            {
-                mp_cureTimeStr  = pLabel;
-                [mp_cureTimeStr setVisible:NO];
-            }
         }
 		else if( [pNode isKindOfClass:[SettingGameStartBtn class]] )
 		{
@@ -645,6 +641,10 @@
                     if( [pLabelBmFont.string isEqualToString:@"LvNum"] )
                     {
                         pLabelBmFont.string = [NSString stringWithFormat:@"%d", pSaveData->nabeLv];
+                    }
+                    else if( [pLabelBmFont.string isEqualToString:@"00:00"] )
+                    {
+                        mp_cureTimeStr  = pLabelBmFont;
                     }
                 }
             }
@@ -744,7 +744,7 @@
                 NSAssert(pItemData, @"");
                                 
                 //  アイテム内容によって追加できないのがある
-                if( pItemData->no == eITEM_IMPACT_OPEN_NETAPACK )
+                if( pItemData->itemType == eITEM_IMPACT_OPEN_NETAPACK )
                 {
                     //  ネタパックを一つ開く
                     DataNetaPackList*   pDataNetaPackListInst   = [DataNetaPackList shared];
@@ -754,7 +754,6 @@
                         const NETA_PACK_DATA_ST*    pNetaPackData   = [pDataNetaPackListInst getData:openNetaPackIdx];
                         [pDataSaveGameInst addNetaPack:pNetaPackData->no];
                         
-                        [pDataSaveGameInst addItem:pItemData->no];
                         pMessage    = [NSString stringWithFormat:[DataBaseText getString:214], [DataBaseText getString:pNetaPackData->textID]];
                     }
                     else
@@ -904,7 +903,7 @@
         
         [[CCDirector sharedDirector] replaceScene:pTransFade];
         
-        [pSaveGameInst addPlayLife:-1 :NO];
+        [pSaveGameInst addPlayLife:-1 :YES];
     }
     
 	pDataSettingTenpura	= nil;
@@ -918,8 +917,6 @@
     DataSaveGame*   pDataSaveGameInst   = [DataSaveGame shared];
     const SAVE_DATA_ST* pSaveData   = [pDataSaveGameInst getData];
     
-    [mp_cureTimeStr setVisible:NO];
-
     //  ハート設定
     {
         CCNode* pHeartNode  = nil;
@@ -938,11 +935,9 @@
         }
     }
 
+    [mp_cureTimeStr setString:@"00:00"];
     if( pSaveData->playLife < eSAVE_DATA_PLAY_LIEF_MAX )
     {
-        //  回復時間を表示
-        [mp_cureTimeStr setVisible:YES];
-
         //  回復時間になっているか
         {
             NSDate* pDt = [NSDate date];
@@ -955,14 +950,8 @@
             
             if( span <= 0 )
             {
-                int absSpan = ABS(span);
-                SInt8   cureNum = 1;
-                if( self.cureTimeByCcbiProperty <= absSpan )
-                {
-                    cureNum = (SInt8)MIN(eSAVE_DATA_PLAY_LIEF_MAX, ((absSpan / self.cureTimeByCcbiProperty) + 1));
-                }
                 //  回復
-                [pDataSaveGameInst addPlayLife:cureNum :YES];
+                [pDataSaveGameInst addPlayLife:1 :YES];
             }
         }
 
@@ -981,10 +970,6 @@
             SInt32  minute  = (span <= 0) ? 0 : span / 60;
             
             [mp_cureTimeStr setString:[NSString stringWithFormat:@"%02ld:%02ld", minute, second]];
-        }
-        else
-        {
-            [mp_cureTimeStr setVisible:NO];
         }
     }
 }
