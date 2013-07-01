@@ -157,8 +157,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>124</real>
-							<real>103</real>
+							<real>140</real>
+							<real>80</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -274,8 +274,8 @@
 						<string>Size</string>
 						<key>value</key>
 						<array>
-							<real>200</real>
-							<real>50</real>
+							<real>160</real>
+							<real>40</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -357,6 +357,8 @@
 						</array>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 				<key>seqExpanded</key>
 				<true/>
 			</dict>
@@ -459,8 +461,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>223</real>
-							<real>49</real>
+							<real>340</real>
+							<real>80</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -576,8 +578,8 @@
 						<string>Size</string>
 						<key>value</key>
 						<array>
-							<real>200</real>
-							<real>50</real>
+							<real>160</real>
+							<real>40</real>
 							<integer>0</integer>
 						</array>
 					</dict>

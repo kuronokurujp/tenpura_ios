@@ -42,8 +42,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>9</real>
-							<real>5</real>
+							<real>8</real>
+							<real>25</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -130,8 +130,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>241</real>
-							<real>8</real>
+							<real>180</real>
+							<real>4</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -153,8 +153,8 @@
 						<string>ScaleLock</string>
 						<key>value</key>
 						<array>
-							<real>1</real>
-							<real>1</real>
+							<real>0.69999998807907104</real>
+							<real>0.69999998807907104</real>
 							<false/>
 							<integer>0</integer>
 						</array>
@@ -195,6 +195,8 @@
 						<string>data</string>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
@@ -218,8 +220,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>406</real>
-							<real>23</real>
+							<real>412</real>
+							<real>22</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -230,8 +232,8 @@
 						<string>Point</string>
 						<key>value</key>
 						<array>
-							<real>0.5</real>
-							<real>0.5</real>
+							<real>0.0</real>
+							<real>0.0</real>
 						</array>
 					</dict>
 					<dict>
@@ -283,8 +285,6 @@
 						<string>num</string>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>
@@ -337,7 +337,7 @@
 				<key>value</key>
 				<array>
 					<string></string>
-					<string>tableView/neta_cell.png</string>
+					<string>tableView/sire_cell60.png</string>
 				</array>
 			</dict>
 			<dict>

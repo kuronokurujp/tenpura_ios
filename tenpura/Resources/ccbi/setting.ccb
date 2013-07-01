@@ -37,6 +37,18 @@
 				<array>
 					<dict>
 						<key>name</key>
+						<string>position</string>
+						<key>type</key>
+						<string>Position</string>
+						<key>value</key>
+						<array>
+							<real>1</real>
+							<real>-1</real>
+							<integer>0</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
 						<string>scale</string>
 						<key>type</key>
 						<string>ScaleLock</string>
@@ -80,8 +92,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>43</real>
-							<real>202</real>
+							<real>45</real>
+							<real>198</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -182,8 +194,8 @@
 						<string>Size</string>
 						<key>value</key>
 						<array>
-							<real>80</real>
-							<real>80</real>
+							<real>70</real>
+							<real>70</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -501,8 +513,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
+									<real>122</real>
 									<real>121</real>
-									<real>119</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -627,8 +639,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>370</real>
-									<real>190</real>
+									<real>360</real>
+									<real>198</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -753,8 +765,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>365</real>
-									<real>145</real>
+									<real>360</real>
+									<real>158</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -963,8 +975,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>239</real>
-							<real>72</real>
+							<real>241</real>
+							<real>75</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -1379,8 +1391,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>124</real>
-							<real>203</real>
+							<real>120</real>
+							<real>198</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -1481,8 +1493,8 @@
 						<string>Size</string>
 						<key>value</key>
 						<array>
-							<real>80</real>
-							<real>80</real>
+							<real>70</real>
+							<real>70</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -1659,8 +1671,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>207</real>
-							<real>204</real>
+							<real>195</real>
+							<real>198</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -1761,8 +1773,8 @@
 						<string>Size</string>
 						<key>value</key>
 						<array>
-							<real>80</real>
-							<real>80</real>
+							<real>70</real>
+							<real>70</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -1867,8 +1879,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>71</real>
-							<real>290</real>
+							<real>15</real>
+							<real>275</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -1879,8 +1891,8 @@
 						<string>Point</string>
 						<key>value</key>
 						<array>
-							<real>0.5</real>
-							<real>0.5</real>
+							<real>0.0</real>
+							<real>0.0</real>
 						</array>
 					</dict>
 					<dict>
@@ -1911,6 +1923,18 @@
 						<string>FntFile</string>
 						<key>value</key>
 						<string>text/font.fnt</string>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>color</string>
+						<key>type</key>
+						<string>Color3</string>
+						<key>value</key>
+						<array>
+							<integer>254</integer>
+							<integer>255</integer>
+							<integer>255</integer>
+						</array>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -1955,8 +1979,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>122</real>
-							<real>147</real>
+							<real>10</real>
+							<real>140</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -1967,8 +1991,8 @@
 						<string>Point</string>
 						<key>value</key>
 						<array>
-							<real>0.5</real>
-							<real>0.5</real>
+							<real>0.0</real>
+							<real>0.0</real>
 						</array>
 					</dict>
 					<dict>
@@ -1978,8 +2002,8 @@
 						<string>ScaleLock</string>
 						<key>value</key>
 						<array>
-							<real>1</real>
-							<real>1</real>
+							<real>0.69999998807907104</real>
+							<real>0.69999998807907104</real>
 							<false/>
 							<integer>0</integer>
 						</array>
@@ -1999,6 +2023,18 @@
 						<string>FntFile</string>
 						<key>value</key>
 						<string>text/font.fnt</string>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>color</string>
+						<key>type</key>
+						<string>Color3</string>
+						<key>value</key>
+						<array>
+							<integer>255</integer>
+							<integer>19</integer>
+							<integer>0</integer>
+						</array>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -2043,8 +2079,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>360</real>
-							<real>260</real>
+							<real>252</real>
+							<real>215</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -2055,8 +2091,8 @@
 						<string>Point</string>
 						<key>value</key>
 						<array>
-							<real>0.5</real>
-							<real>0.5</real>
+							<real>0.0</real>
+							<real>0.0</real>
 						</array>
 					</dict>
 					<dict>
@@ -2066,8 +2102,8 @@
 						<string>ScaleLock</string>
 						<key>value</key>
 						<array>
-							<real>1</real>
-							<real>1</real>
+							<real>0.69999998807907104</real>
+							<real>0.69999998807907104</real>
 							<false/>
 							<integer>0</integer>
 						</array>
@@ -2087,6 +2123,18 @@
 						<string>FntFile</string>
 						<key>value</key>
 						<string>text/font.fnt</string>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>color</string>
+						<key>type</key>
+						<string>Color3</string>
+						<key>value</key>
+						<array>
+							<integer>255</integer>
+							<integer>19</integer>
+							<integer>0</integer>
+						</array>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -2136,8 +2184,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>69</real>
-									<real>16</real>
+									<real>82</real>
+									<real>6</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -2148,8 +2196,8 @@
 								<string>Point</string>
 								<key>value</key>
 								<array>
-									<real>0.5</real>
-									<real>0.5</real>
+									<real>1</real>
+									<real>0.0</real>
 								</array>
 							</dict>
 							<dict>
@@ -2159,8 +2207,8 @@
 								<string>ScaleLock</string>
 								<key>value</key>
 								<array>
-									<real>0.5</real>
-									<real>0.5</real>
+									<real>0.69999998807907104</real>
+									<real>0.69999998807907104</real>
 									<false/>
 									<integer>0</integer>
 								</array>
@@ -2220,8 +2268,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>303</real>
-							<real>225</real>
+							<real>259</real>
+							<real>253</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -2232,7 +2280,7 @@
 						<string>Point</string>
 						<key>value</key>
 						<array>
-							<real>0.5</real>
+							<real>0.0</real>
 							<real>0.5</real>
 						</array>
 					</dict>
@@ -2292,8 +2340,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>432</real>
-							<real>253</real>
+							<real>434</real>
+							<real>254</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -2315,8 +2363,8 @@
 						<string>ScaleLock</string>
 						<key>value</key>
 						<array>
-							<real>1</real>
-							<real>1</real>
+							<real>0.5</real>
+							<real>0.5</real>
 							<false/>
 							<integer>1</integer>
 						</array>
@@ -2477,6 +2525,8 @@
 						</array>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
@@ -2500,8 +2550,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>45</real>
-							<real>263</real>
+							<real>24</real>
+							<real>253</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -2512,7 +2562,7 @@
 						<string>Point</string>
 						<key>value</key>
 						<array>
-							<real>0.5</real>
+							<real>0.0</real>
 							<real>0.5</real>
 						</array>
 					</dict>
@@ -2605,8 +2655,6 @@
 						<string>PlayLifePos</string>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
@@ -2635,8 +2683,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>57</real>
-									<real>14</real>
+									<real>30</real>
+									<real>8</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -2647,8 +2695,8 @@
 								<string>Point</string>
 								<key>value</key>
 								<array>
-									<real>0.5</real>
-									<real>0.5</real>
+									<real>0.0</real>
+									<real>0.0</real>
 								</array>
 							</dict>
 							<dict>
@@ -2719,8 +2767,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>194</real>
-							<real>263</real>
+							<real>153</real>
+							<real>253</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -2731,7 +2779,7 @@
 						<string>Point</string>
 						<key>value</key>
 						<array>
-							<real>0.5</real>
+							<real>0.0</real>
 							<real>0.5</real>
 						</array>
 					</dict>
@@ -2764,7 +2812,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>icon/nabe_kaisu.png</string>
+							<string>icon/time.png</string>
 						</array>
 					</dict>
 				</array>

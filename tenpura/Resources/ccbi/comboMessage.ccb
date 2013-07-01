@@ -43,7 +43,7 @@
 						<key>value</key>
 						<array>
 							<real>51</real>
-							<real>61</real>
+							<real>60</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -115,7 +115,7 @@
 				<key>type</key>
 				<integer>1</integer>
 				<key>value</key>
-				<string>200.000000</string>
+				<string>140.000000</string>
 			</dict>
 			<dict>
 				<key>name</key>
@@ -125,7 +125,7 @@
 				<key>type</key>
 				<integer>1</integer>
 				<key>value</key>
-				<string>40.000000</string>
+				<string>30.000000</string>
 			</dict>
 			<dict>
 				<key>name</key>
@@ -135,7 +135,7 @@
 				<key>type</key>
 				<integer>1</integer>
 				<key>value</key>
-				<string>200.000000</string>
+				<string>140.000000</string>
 			</dict>
 			<dict>
 				<key>name</key>
@@ -307,7 +307,7 @@
 			<key>offset</key>
 			<real>0.0</real>
 			<key>position</key>
-			<real>0.0</real>
+			<real>5.1999998092651367</real>
 			<key>resolution</key>
 			<real>30</real>
 			<key>scale</key>

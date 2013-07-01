@@ -157,8 +157,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>130</real>
-							<real>91</real>
+							<real>240</real>
+							<real>80</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -185,8 +185,8 @@
 						<string>ScaleLock</string>
 						<key>value</key>
 						<array>
-							<real>1.5</real>
-							<real>1.5</real>
+							<real>1</real>
+							<real>1</real>
 							<false/>
 							<integer>0</integer>
 						</array>
@@ -274,8 +274,8 @@
 						<string>Size</string>
 						<key>value</key>
 						<array>
-							<real>200</real>
-							<real>50</real>
+							<real>160</real>
+							<real>40</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -357,6 +357,8 @@
 						</array>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>
@@ -486,9 +488,9 @@
 			<key>name</key>
 			<string>Default Timeline</string>
 			<key>offset</key>
-			<real>0.0</real>
+			<real>3.75</real>
 			<key>position</key>
-			<real>2.0333333015441895</real>
+			<real>7.5999999046325684</real>
 			<key>resolution</key>
 			<real>30</real>
 			<key>scale</key>
