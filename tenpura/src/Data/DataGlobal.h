@@ -80,9 +80,7 @@ extern const char*	gp_tweetShowObserverName;
 extern const char*	gp_tweetTextKeyName;
 extern const char*	gp_tweetSearchURLKeyName;
 
-//	おじゃま処理用のオブサーバー通知名
-extern	const char*	gp_startOjamaObserverName;
-extern	const char*	gp_startOjamaDataName;
+extern	const char*	gp_paymentObserverName;
 
 extern const char*	gp_soundDataListName;
 
@@ -105,6 +103,8 @@ enum
 	eSPRITE_FILE_CUS_MOJI02,
     eSPRITE_FILE_FONT,
     eSPRITE_FILE_HEART,
+    eSPRITE_FILE_PARTICLE_SAIKOU,
+    eSPRITE_FILE_PARTICLE_TOUCH,
 	eSPRITE_FILE_MAX,
 };
 

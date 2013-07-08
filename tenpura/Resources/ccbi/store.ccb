@@ -80,7 +80,7 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>40</real>
+							<real>440</real>
 							<real>23</real>
 							<integer>0</integer>
 						</array>
@@ -353,8 +353,6 @@
 						<string>textId:7</string>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>

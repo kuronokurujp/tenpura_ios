@@ -156,7 +156,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
 		NSString*	pBannerHideName	= [NSString stringWithUTF8String:gp_bannerHideObserverName];
 		[nc addObserver:self selector:@selector(onBannerHide) name:pBannerHideName object:nil];
 	}
-
+    
 	//	TweetView作成
 	{
 		mp_tweetViewController = [[TweetViewController alloc] initToSetup:@"btn_twitter01.png"];
@@ -676,6 +676,16 @@ void uncaughtExceptionHandler( NSException* in_pException )
 			}
 		}        
 	}
+    
+    {
+        //	バナー表示通知
+        {
+            NSString*	pBannerShowName	= [NSString stringWithUTF8String:gp_paymentObserverName];
+            NSNotification *n = [NSNotification notificationWithName:pBannerShowName object:nil];
+            NSAssert(n, @"");
+            [[NSNotificationCenter defaultCenter] postNotification:n];
+        }
+    }
 	
     [mp_storeSuccessAlerView setMessage:[DataBaseText getString:114]];
     if( [mp_storeSuccessAlerView numberOfButtons] <= 0 )

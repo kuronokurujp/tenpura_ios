@@ -237,15 +237,6 @@
 -(void)	_endPrepaEvent:(ccTime)in_time
 {
 	GameScene*	pGameScene	= (GameScene*)[self parent];
-    {
-        Customer*	pCustomer	= nil;
-        CCArray*    pArray  = pGameScene->mp_customerArray;
-        CCARRAY_FOREACH( pArray, pCustomer )
-        {
-            //	スコア表示開始
-            [pCustomer.act putResultScore];
-        }
-    }
 	
 	int64_t	nowScoreNum	= [pGameScene getScore];
 	[pGameScene->mp_scorePut setNum:nowScoreNum];

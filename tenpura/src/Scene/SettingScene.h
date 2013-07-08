@@ -23,7 +23,6 @@ typedef enum
     eEVENT_SUCCESS_RESULT_NG,
 } EVENT_SUCCESS_RESULT_ENUM;
 
-@class LeftMoveTicker;
 @interface SettingScene : CCLayer
 <
 	UIAlertViewDelegate,
@@ -41,7 +40,7 @@ typedef enum
     UIAlertView*        mp_eventRewardAlertView;
     UIAlertView*        mp_eventNGAlertView;
     UIAlertView*        mp_eventChkAlertView;
-	LeftMoveTicker*		mp_ticker;
+    
     EVENT_SUCCESS_RESULT_ENUM   m_eventSuccessRet;
     CCNode* mp_eventChkBtn;
     
@@ -85,6 +84,11 @@ typedef enum
 
 -(void)settingItem:(SInt32)in_type :(SInt32)in_textId :(SInt32)in_no;
 -(NSArray*) getItemSelectType;
+
+@end
+
+//  天ぷら設定ボタン
+@interface SettingNetaPackBtn : SettingItemBtn
 
 @end
 

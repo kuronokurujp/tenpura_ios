@@ -55,9 +55,6 @@
 -(void)	loopFlash;
 -(void)	endFlash;
 
-//	リザルトスコア表示アクション
--(void)	putResultScore;
-
 //	食べた時のアクション
 -(void)eatVeryGood:(Tenpura*)in_pTenpura :(SInt32)in_score :(SInt32)in_money;
 -(void)eatBat:(Tenpura*)in_pTenpura :(SInt32)in_score :(SInt32)in_money;

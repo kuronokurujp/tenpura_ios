@@ -16,7 +16,7 @@ const float	g_sceneChangeTime	= 0.2f;
 const float	g_bannerRequestTimeSecVal	= 15.f;
 
 //	バナー位置
-const float ga_bannerPos[ 2 ]	= { 480 - 320, 320 - 50 };
+const float ga_bannerPos[ 2 ]	= { 0 , 320 - 50 };
 
 //	バナーパブリッシュID
 const char*	gp_admobBannerID	= "a150a203dfecc8a";
@@ -30,9 +30,8 @@ const char*	gp_tweetShowObserverName	= "OBTweetShow";
 const char*	gp_tweetTextKeyName			= "TweetTextKey";
 const char*	gp_tweetSearchURLKeyName	= "TweetSearchURLKey";
 
-//	おじゃま処理用のオブサーバー通知名
-const char*	gp_startOjamaObserverName	= "InGameStartOjama";
-const char*	gp_startOjamaDataName	= "InGameStartOjamaData";
+//	購入処理のオブサーバー通知名
+const char*	gp_paymentObserverName	= "InPaymenttOjama";
 
 
 //	お客の座標位置
@@ -80,4 +79,6 @@ char*	gpa_spriteFileNameList[eSPRITE_FILE_MAX]	=
 	"moji02.png",
     "font.png",
     "heart.png",
+    "saikou.png",
+    "touch.png"
 };

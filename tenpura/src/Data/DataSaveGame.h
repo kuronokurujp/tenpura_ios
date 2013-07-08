@@ -98,9 +98,11 @@ typedef struct
     
     SInt8   playLife;               //  751(1)
     BOOL    bTutorial;              //  752(1)
+    
+    SInt32  settingNetaPackId;    //  753(4)
 
     //	予約領域
-	SInt8	dummy[262];				//	753(262)
+	SInt8	dummy[258];				//	756(258)
 } SAVE_DATA_ST;	//	1024byte
 
 @interface DataSaveGame : NSObject
@@ -167,6 +169,9 @@ typedef struct
 
 //  チュートリアル設定
 -(void) setTutorial:(const BOOL)in_flg;
+
+//  ネタパックid設定
+-(void) setSettingNetaPackId:(const SInt32)in_id;
 
 //	データ丸ごと取得
 -(const SAVE_DATA_ST*)getData;

@@ -36,6 +36,7 @@ play_back.png
 set_back.png
 btn_back.png
 btn_credit.png
+btn_event.png
 btn_game.png
 btn_game_center.png
 btn_gamestart.png
@@ -43,6 +44,7 @@ btn_help.png
 btn_junbi.png
 btn_left.png
 btn_mission.png
+btn_omakase.png
 btn_retry.png
 btn_rigth.png
 btn_shop_adon.png
@@ -82,11 +84,11 @@ Default.png
 Default@2x.png
 fever.png
 fv.png
+gomibako.png
 play_end.png
 play_result.png
 play_start.png
 Default.png
-gamecenter-icon.png
 heart.png
 icon-72.png
 icon.png
@@ -95,10 +97,15 @@ icon_c.png
 icon_s.png
 nabe_kaisu.png
 time.png
-twitter-icon.png
 Info.plist
+hiscore.plist
+hiscore.png
 konoha.plist
 konoha.png
+saikou.plist
+saikou.png
+touch.plist
+touch.png
 neta_cell.png
 shina_cell.png
 shina_cell01.png

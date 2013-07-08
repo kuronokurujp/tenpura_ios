@@ -912,11 +912,6 @@ enum
 	mp_gameScene	= in_pGameScene;
 	mp_gameInNormalScene	= in_pGameInNormalScene;
 
-	//	停止
-	{
-		[in_pGameInNormalScene pauseSchedulerAndActions];
-	}
-
 	[mp_gameScene->mp_fliterColorBG setVisible:YES];
 	[mp_gameScene->mp_fliterColorBG setOpacity:255];
 
@@ -937,11 +932,6 @@ enum
 		Float32	feverTime	= mp_gameScene->m_feverTime;
 		
 		[self unschedule:_cmd];
-
-		//	再開
-		{
-			[mp_gameInNormalScene resumeSchedulerAndActions];
-		}
 		
 		//	ボーナス設定
 		{

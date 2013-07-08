@@ -30,7 +30,7 @@ enum
 {
 	if( self = [super init] )
 	{
-		mp_number	= [CCLabelBMFont labelWithString:@"1" fntFile:@"combo_num.fnt"];
+		mp_number	= [CCLabelBMFont labelWithString:@"1" fntFile:@"font_suuji_aka.fnt"];
 		[self addChild:mp_number];
 	}
 	

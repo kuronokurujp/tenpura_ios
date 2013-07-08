@@ -500,6 +500,7 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 	NSAssert(pData, @"");
 
     pData->successEventNo   = in_no;
+    [mp_SaveData save];
 }
 
 -(void) addEventChkPlayCnt
@@ -508,6 +509,7 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 	NSAssert(pData, @"");
     
     ++pData->chkEventPlayCnt;
+    [mp_SaveData save];
 }
 
 -(void) setTutorial:(const BOOL)in_flg
@@ -516,6 +518,17 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 	NSAssert(pData, @"");
 
     pData->bTutorial    = in_flg;
+    [mp_SaveData save];
+}
+
+//  ネタパックid設定
+-(void) setSettingNetaPackId:(const SInt32)in_id
+{
+    SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
+	NSAssert(pData, @"");
+    
+    pData->settingNetaPackId    = in_id;
+    [mp_SaveData save];
 }
 
 /*
@@ -546,13 +559,14 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 	}
 	
 	memset( out_pData, 0, sizeof( SAVE_DATA_ST ) );
-	out_pData->money	= 1000;    
+	out_pData->money	= 10000;
 	out_pData->netaNum	= 1;
     out_pData->nabeLv   = 1;
     out_pData->invocEventNo = -1;
     out_pData->successEventNo   = -1;
     out_pData->playLife = eSAVE_DATA_PLAY_LIEF_MAX;
     out_pData->bTutorial    = YES;
+    out_pData->settingNetaPackId  = 1;
 
     //  アイテムデータとのマッピング
     {

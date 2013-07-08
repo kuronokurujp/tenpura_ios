@@ -219,15 +219,6 @@ enum ACTION_SP_ENUM
 }
 
 /*
-	@breif	リザルト時の結果表示
-*/
--(void)	putResultScore
-{
-	[self _createPutResultScoreAction:mp_customer.money];
-	[self _createPutResultMoneyAction:mp_customer.score];
-}
-
-/*
 	@breif	食べる大成功
 */
 -(void)	eatVeryGood:(Tenpura*)in_pTenpura :(SInt32)in_score :(SInt32)in_money
@@ -505,7 +496,6 @@ enum ACTION_SP_ENUM
 
 	//	食べる演出を入れる
 	[mp_customer setScale:1.f];
-	[mp_customer setVisibleTenpuraIcon:NO];
 	
 	Float32	time	= 0.f;
 	{
@@ -523,7 +513,6 @@ enum ACTION_SP_ENUM
 			[self _createPutMoneyAction:m_getMoeny];
 
 			[mp_customer setAnim:eCUSTOMER_ANIM_NORMAL :YES];
-			[mp_customer setVisibleTenpuraIcon:YES];
 
 			if( in_bReset == NO )
 			{

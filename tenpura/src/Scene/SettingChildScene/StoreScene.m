@@ -18,6 +18,7 @@
 @interface StoreScene (PrivateMethod)
 
 -(const BOOL)   isDoCureLife;
+-(void) _onPayment;
 
 @end
 
@@ -30,6 +31,13 @@
 {
 	if( self = [super init] )
 	{
+        //  購入処理時に呼び出す
+        {
+            NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+            
+            NSString*   pObserverName   = [NSString stringWithUTF8String:gp_paymentObserverName];
+            [nc addObserver:self selector:@selector(_onPayment) name:pObserverName object:nil];
+        }
 	}
 	
 	return self;
@@ -40,6 +48,8 @@
 */
 -(void)	dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
 	[super dealloc];
 }
 
@@ -202,6 +212,13 @@
     }
 
     return YES;
+}
+
+//  購入時に呼び出す
+-(void) _onPayment
+{
+    //  リスト再描画
+    [self reloadUpdate];
 }
 
 @end

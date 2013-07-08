@@ -25,8 +25,6 @@
 #import "./../System/Sound/SoundManager.h"
 #import "./../System/Anim/AnimManager.h"
 
-#import "./../Object/Ticker.h"
-
 #import "./SettingChildScene/UseSelectNetaScene.h"
 #import "./SettingChildScene/UseSelectItemScene.h"
 
@@ -68,7 +66,6 @@
         mp_eventChkAlertView        = nil;
         mp_eventChkBtn  = nil;
 
-		mp_ticker	= nil;
 		m_missionSuccessIdx	= 0;
         m_eventSuccessRet   = eEVENT_SUCCESS_RESULT_NONE;
 
@@ -156,8 +153,6 @@
         mp_eventChkAlertView    = nil;
     }
     
-	mp_ticker	= nil;
-	
 	if( mp_useItemNoList != nil )
 	{
 		[mp_useItemNoList release];
@@ -173,8 +168,6 @@
 -(void)	onEnter
 {
     [self _runPlayLifeProcess];
-
-	[mp_ticker setVisible:YES];
 
     [mp_eventChkBtn setVisible:NO];
     if( m_eventSuccessRet == eEVENT_SUCCESS_RESULT_NONE )
@@ -193,7 +186,6 @@
 		if( ( 0 < pSettingItemBtn.itemNo ) && ( pSettingItemBtn.type == eITEM_TYPE_NETA ) )
 		{
 			[mp_gameStartBtn setVisible:YES];
-			[mp_ticker setVisible:NO];
 			break;
 		}
 	}
@@ -230,8 +222,8 @@
             {
                 m_eventSuccessRet   = eEVENT_SUCCESS_RESULT_RUN;
                 [pDataSaveGameInst setEventNo:no];
+                mb_chkStartEvent    = NO;
             }
-            mb_chkStartEvent    = NO;
         }
         else if( (pSaveData->invocEventNo != -1) && (m_eventSuccessRet == eEVENT_SUCCESS_RESULT_NONE) )
         {
@@ -597,6 +589,16 @@
 				if( [pChildNode isKindOfClass:[SettingItemBtn class]] )
 				{
 					[mp_useItemNoList addObject:pChildNode];
+                    
+                    if( [pChildNode isKindOfClass:[SettingNetaPackBtn class]] )
+                    {
+                        SettingNetaPackBtn* pSettingNetaPackBtn = (SettingNetaPackBtn*)pChildNode;
+                        //  初回設定
+                        {
+                            const NETA_PACK_DATA_ST*	pNetaPackData	= [[DataNetaPackList shared] getDataSearchId:pSaveData->settingNetaPackId];
+                            [pSettingNetaPackBtn settingItem:eITEM_TYPE_NETA:pNetaPackData->textID:pNetaPackData->no];
+                        }
+                    }
 				}
 			}
 		}
@@ -625,10 +627,6 @@
 		{
 			mp_gameStartBtn	= (CCControlButton*)pNode;
 			[mp_gameStartBtn setVisible:NO];
-		}
-		else if( [pNode isKindOfClass:[LeftMoveTicker class]] )
-		{
-			mp_ticker	= (LeftMoveTicker*)pNode;
 		}
         else if( [pNode isKindOfClass:[CCSprite class]])
         {
@@ -839,6 +837,9 @@
  */
 -(void) _startGamePlay
 {
+    DataSaveGame*   pSaveGameInst   = [DataSaveGame shared];
+    const SAVE_DATA_ST* pSaveData   = [pSaveGameInst getData];
+
 	CCArray*	pDataSettingTenpura	= [[[CCArray alloc] init] autorelease];
 	//	受け渡しためのデータリスト作成
 	{
@@ -850,19 +851,18 @@
 				DataSettingNetaPack*	pSettingData	= [[[DataSettingNetaPack alloc] init] autorelease];
 				pSettingData.no	= pSettingItemBtn.itemNo;
 				[pDataSettingTenpura addObject:pSettingData];
+                
+                //  ゲーム終了してからも設定画面ではデフォルトでネタパックを設定
+                [pSaveGameInst setSettingNetaPackId:pSettingItemBtn.itemNo];
 			}
 		}
 	}
-
-    DataSaveGame*   pSaveGameInst   = [DataSaveGame shared];
-    const SAVE_DATA_ST* pSaveData   = [pSaveGameInst getData];
 
     if( 0 < pSaveData->playLife )
     {
         CCArray*	pDataSettingItem	= [[[CCArray alloc] init] autorelease];
         //	受け渡しためのデータリスト作成
         {
-            
             SettingItemBtn*	pSettingItemBtn	= nil;
             CCARRAY_FOREACH(mp_useItemNoList, pSettingItemBtn)
             {
@@ -903,7 +903,7 @@
         
         [[CCDirector sharedDirector] replaceScene:pTransFade];
         
-        [pSaveGameInst addPlayLife:-1 :YES];
+        [pSaveGameInst addPlayLife:-1 :NO];
     }
     
 	pDataSettingTenpura	= nil;
@@ -1172,6 +1172,11 @@
     //  ,区切りで値があるので、配列に変換する
     return [self.itemSelectTypeList componentsSeparatedByString:@","];
 }
+
+@end
+
+//  天ぷら設定ボタン
+@implementation SettingNetaPackBtn
 
 @end
 
