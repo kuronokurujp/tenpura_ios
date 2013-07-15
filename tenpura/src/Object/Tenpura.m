@@ -637,8 +637,6 @@ enum
 	return time;
 }
 
-#if 1
-
 #ifdef DEBUG
 -(void)	draw
 {
@@ -664,7 +662,6 @@ enum
 	
 	ccDrawColor4B(255, 255, 255, 255);
 }
-#endif
 #endif
 
 @end

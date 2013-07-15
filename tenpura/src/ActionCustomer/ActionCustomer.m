@@ -31,9 +31,6 @@
 -(CCAction*)	_createPutScoreAction:(SInt32)in_num;
 -(CCAction*)	_createPutMoneyAction:(SInt32)in_num;
 
--(CCAction*)	_createPutResultScoreAction:(SInt32)in_num;
--(CCAction*)	_createPutResultMoneyAction:(SInt32)in_num;
-
 //	食べる処理
 -(void)	_eat:(Tenpura*)in_pTenpura :(SInt32)in_score :(SInt32)in_money;
 
@@ -230,6 +227,16 @@ enum ACTION_SP_ENUM
 	[self _putEatMessage:[NSString stringWithUTF8String:gpa_spriteFileNameList[eSPRITE_FILE_CUS_MOJI01]]];
 
 	[[SoundManager shared] playSe:@"eat"];
+    
+    {
+        CCParticleSystemQuad*   pParticle   = [CCParticleSystemQuad particleWithFile:@"saikou.plist"];
+        NSAssert(pParticle, @"");
+        pParticle.autoRemoveOnFinish    = YES;
+        
+        CGRect  rect    = [mp_customer getBoxRectByTenpuraColision];
+        [pParticle setPosition:ccp(rect.size.width * 0.4f, rect.size.height * 0.5f)];
+        [mp_customer addChild:pParticle z:20];
+    }
 }
 
 /*
@@ -416,42 +423,6 @@ enum ACTION_SP_ENUM
 	[mp_money setPosition:m_moneyLabelPos];
 
 	return pSeq;
-}
-
-/*
-	@brief
-*/
--(CCAction*)	_createPutResultScoreAction:(SInt32)in_num
-{
-	CCFadeIn*		pFadeIn		= [CCFadeIn actionWithDuration:0.1f];
-
-	[mp_scoreIcon stopAllActions];
-	[mp_scoreIcon setScale:1];
-
-	[mp_score setPosition:m_scoreLabelPos];
-	[mp_scoreLabel setString:[NSString stringWithFormat:@"%ld", in_num]];
-	[mp_score runAction:pFadeIn];
-	[mp_score setVisible:YES];
-
-	return pFadeIn;
-}
-
-/*
-	@brief
-*/
--(CCAction*)	_createPutResultMoneyAction:(SInt32)in_num
-{
-	CCFadeIn*		pFaedIn		= [CCFadeIn actionWithDuration:0.1f];
-
-	[mp_moneyIcon stopAllActions];
-	[mp_moneyIcon setScale:1];
-	[mp_money setPosition:m_moneyLabelPos];
-	
-	[mp_moneyLabel setString:[NSString stringWithFormat:@"%ld", in_num]];
-	[mp_money runAction:pFaedIn];
-	[mp_money setVisible:YES];
-
-	return pFaedIn;
 }
 
 /*

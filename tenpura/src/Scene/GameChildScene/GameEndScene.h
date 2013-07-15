@@ -13,7 +13,7 @@ typedef enum
 {
 	eRESULT_TYPE_NONE	= 0,
 	eRESULT_TYPE_RESTART,
-	eRESULT_TYPE_SINAGAKI,
+	eRESULT_TYPE_SETTING,
 } ResultTypeEnum;
 
 @interface GameEndScene : CCLayer

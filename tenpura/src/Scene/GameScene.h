@@ -14,12 +14,11 @@
 #import "./../Object/Tenpura.h"
 #import "./../Object/GameInFliterColorBG.h"
 #import "./../Object/GameInFeverEvent.h"
-#import "./../Object/GameInFeverMessage.h"
 
-@class GameInFeverMessage;
 @class AnimActionNumCounterLabelBMT;
 @class GameInBG;
 @class DustBoxToTenpura;
+@class FeverStatusMenu;
 
 /*
 	@brief	ゲーム開始時に設定するデータ
@@ -47,6 +46,7 @@
 @property	(nonatomic, readonly)Float32	combMessageTime;
 @property	(nonatomic, readonly)Float32	gameTime;
 @property	(nonatomic, readonly)Float32	feverTime;
+@property   (nonatomic, readonly)Float32    feverBonusBaseRate;
 
 @end
 
@@ -63,6 +63,7 @@
 	Float32	m_feverTime;
 	Float32	m_combAddTime;
 	Float32	m_gameEndScoreRate;
+    Float32 m_feverBonusRate;
 	Float32	m_scoreRate;
 	UInt32	m_moneyRate;
     UInt32  m_useNetaPackNo;
@@ -75,10 +76,10 @@
 	GameData*	mp_gameData;
 	GameSceneData*	mp_gameSceneData;
 	
-	GameInFeverMessage*     mp_feverMessage;
 	GameInFliterColorBG*	mp_fliterColorBG;
 	GameInFeverEvent*		mp_feverEvent;
     DustBoxToTenpura*       mp_dustBoxToTenpura;
+    FeverStatusMenu*        mp_feverStatusMenu;
 }
 
 //	関数定義

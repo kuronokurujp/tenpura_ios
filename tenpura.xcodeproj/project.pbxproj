@@ -57,7 +57,6 @@
 		CE2DB179172B72B700E97D84 /* NADView_readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE2DB177172B72B600E97D84 /* NADView_readme.txt */; };
 		CE2DB17B172B731400E97D84 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2DB17A172B731400E97D84 /* Security.framework */; };
 		CE2DB185172B78CA00E97D84 /* AppBankEventBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2DB184172B78CA00E97D84 /* AppBankEventBanner.m */; };
-		CE2F301C16B8C7E40010610D /* GameInFeverMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2F301B16B8C7E40010610D /* GameInFeverMessage.m */; };
 		CE306A791743DB4400BCACE9 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = CE306A781743DB4400BCACE9 /* Reachability.m */; };
 		CE31E3831734D255009316FC /* nabe06_a.png in Resources */ = {isa = PBXBuildFile; fileRef = CE31E3821734D255009316FC /* nabe06_a.png */; };
 		CE33C89516888852004782A4 /* help.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = CE33C89416888852004782A4 /* help.ccbi */; };
@@ -158,6 +157,7 @@
 		CE3865EC174299EF00C176F3 /* SimpleAudioEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3865E5174299EF00C176F3 /* SimpleAudioEngine.m */; };
 		CE3865EF17429B2C00C176F3 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3865EE17429B2C00C176F3 /* CoreText.framework */; };
 		CE3F6840173691F2002296E4 /* nabe05_a.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3F683F173691F2002296E4 /* nabe05_a.png */; };
+		CE4037E9178BE88700AECD29 /* FeverStatusMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4037E8178BE88700AECD29 /* FeverStatusMenu.m */; };
 		CE412EB916DC4C940034A4BA /* abura.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE412EB716DC4C940034A4BA /* abura.plist */; };
 		CE412EBA16DC4C940034A4BA /* abura.png in Resources */ = {isa = PBXBuildFile; fileRef = CE412EB816DC4C940034A4BA /* abura.png */; };
 		CE412EBD16DC90300034A4BA /* ItemShopTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE412EBC16DC90300034A4BA /* ItemShopTableCell.m */; };
@@ -412,6 +412,7 @@
 		CEEFB29416DB01CC00DFB1F5 /* customerListData.csv in Resources */ = {isa = PBXBuildFile; fileRef = CEEFB29316DB01CC00DFB1F5 /* customerListData.csv */; };
 		CEEFB2A916DB533D00DFB1F5 /* bigBomb.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEEFB2A716DB533D00DFB1F5 /* bigBomb.plist */; };
 		CEEFB2AA16DB533D00DFB1F5 /* bigBomb.png in Resources */ = {isa = PBXBuildFile; fileRef = CEEFB2A816DB533D00DFB1F5 /* bigBomb.png */; };
+		CEF15F6E178F92A300BFF363 /* gomibako.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF15F6D178F92A300BFF363 /* gomibako.png */; };
 		CEF24C3816C2468F00AE4B31 /* TenpuraIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF24C3716C2468F00AE4B31 /* TenpuraIcon.m */; };
 		CEF24D87163C131200ACE56F /* CCBAnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF24D7C163C131200ACE56F /* CCBAnimationManager.m */; };
 		CEF24D88163C131200ACE56F /* CCBKeyframe.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF24D7E163C131200ACE56F /* CCBKeyframe.m */; };
@@ -553,8 +554,6 @@
 		CE2DB1DB172B79CD00E97D84 /* GADCustomEventInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADCustomEventInterstitial.h; sourceTree = "<group>"; };
 		CE2DB1DC172B79CD00E97D84 /* GADCustomEventInterstitialDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADCustomEventInterstitialDelegate.h; sourceTree = "<group>"; };
 		CE2DB1DD172B79CD00E97D84 /* GADCustomEventRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADCustomEventRequest.h; sourceTree = "<group>"; };
-		CE2F301A16B8C7E30010610D /* GameInFeverMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameInFeverMessage.h; path = src/Object/GameInFeverMessage.h; sourceTree = "<group>"; };
-		CE2F301B16B8C7E40010610D /* GameInFeverMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameInFeverMessage.m; path = src/Object/GameInFeverMessage.m; sourceTree = "<group>"; };
 		CE306A771743DB4400BCACE9 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		CE306A781743DB4400BCACE9 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		CE31E3821734D255009316FC /* nabe06_a.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nabe06_a.png; path = Resources/bg/nabe06_a.png; sourceTree = "<group>"; };
@@ -778,6 +777,8 @@
 		CE3865E5174299EF00C176F3 /* SimpleAudioEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine.m; sourceTree = "<group>"; };
 		CE3865EE17429B2C00C176F3 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		CE3F683F173691F2002296E4 /* nabe05_a.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nabe05_a.png; path = Resources/bg/nabe05_a.png; sourceTree = "<group>"; };
+		CE4037E7178BE88700AECD29 /* FeverStatusMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FeverStatusMenu.h; path = src/Object/FeverStatusMenu.h; sourceTree = "<group>"; };
+		CE4037E8178BE88700AECD29 /* FeverStatusMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FeverStatusMenu.m; path = src/Object/FeverStatusMenu.m; sourceTree = "<group>"; };
 		CE412EB716DC4C940034A4BA /* abura.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = abura.plist; path = Resources/anim/abura/abura.plist; sourceTree = "<group>"; };
 		CE412EB816DC4C940034A4BA /* abura.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = abura.png; path = Resources/anim/abura/abura.png; sourceTree = "<group>"; };
 		CE412EBB16DC90300034A4BA /* ItemShopTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ItemShopTableCell.h; path = src/TableCells/ItemShopTableCell.h; sourceTree = "<group>"; };
@@ -1115,6 +1116,7 @@
 		CEEFB2A616DB434700DFB1F5 /* TenpuraProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TenpuraProtocol.h; path = src/Object/TenpuraProtocol.h; sourceTree = "<group>"; };
 		CEEFB2A716DB533D00DFB1F5 /* bigBomb.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = bigBomb.plist; path = Resources/anim/bomb/bigBomb.plist; sourceTree = "<group>"; };
 		CEEFB2A816DB533D00DFB1F5 /* bigBomb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bigBomb.png; path = Resources/anim/bomb/bigBomb.png; sourceTree = "<group>"; };
+		CEF15F6D178F92A300BFF363 /* gomibako.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gomibako.png; path = Resources/game/gomibako.png; sourceTree = "<group>"; };
 		CEF24C3616C2468F00AE4B31 /* TenpuraIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TenpuraIcon.h; path = src/Object/TenpuraIcon.h; sourceTree = "<group>"; };
 		CEF24C3716C2468F00AE4B31 /* TenpuraIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TenpuraIcon.m; path = src/Object/TenpuraIcon.m; sourceTree = "<group>"; };
 		CEF24D7B163C131200ACE56F /* CCBAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBAnimationManager.h; sourceTree = "<group>"; };
@@ -2107,12 +2109,12 @@
 				CE0C82FD16B914F80086CEEA /* GameInFeverEvent.m */,
 				CE6446B516B33B9800203455 /* ComboMessage.h */,
 				CE6446B616B33B9800203455 /* ComboMessage.m */,
-				CE2F301A16B8C7E30010610D /* GameInFeverMessage.h */,
-				CE2F301B16B8C7E40010610D /* GameInFeverMessage.m */,
 				CE0C82FF16B915890086CEEA /* GameInFliterColorBG.h */,
 				CE0C830016B915890086CEEA /* GameInFliterColorBG.m */,
 				CE4EC8D517391FCD00D4683C /* SpriteZSetting.h */,
 				CE4EC8D617391FCD00D4683C /* SpriteZSetting.m */,
+				CE4037E7178BE88700AECD29 /* FeverStatusMenu.h */,
+				CE4037E8178BE88700AECD29 /* FeverStatusMenu.m */,
 			);
 			name = Object;
 			sourceTree = "<group>";
@@ -2583,6 +2585,7 @@
 		CEFBC2B016876D9E00C3C233 /* game */ = {
 			isa = PBXGroup;
 			children = (
+				CEF15F6D178F92A300BFF363 /* gomibako.png */,
 				CEFBC2B116876DC100C3C233 /* play_end.png */,
 				CE152F971725810500D980A7 /* play_result.png */,
 				CEF6B07D16B5C819006B620B /* fever.png */,
@@ -2895,6 +2898,7 @@
 				CE20D017178AFCC800E39348 /* saikou.png in Resources */,
 				CE20D018178AFCC800E39348 /* touch.plist in Resources */,
 				CE20D019178AFCC800E39348 /* touch.png in Resources */,
+				CEF15F6E178F92A300BFF363 /* gomibako.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2988,7 +2992,6 @@
 				CE6446B716B33B9800203455 /* ComboMessage.m in Sources */,
 				CE216D7616B37B8C000E0E29 /* AnimManager.m in Sources */,
 				CE216D7A16B37B9A000E0E29 /* AnimActionSprite.m in Sources */,
-				CE2F301C16B8C7E40010610D /* GameInFeverMessage.m in Sources */,
 				CE0C82FE16B914F80086CEEA /* GameInFeverEvent.m in Sources */,
 				CE0C830116B915890086CEEA /* GameInFliterColorBG.m in Sources */,
 				CEBB5D4416BB64530022776F /* ItemShopScene.m in Sources */,
@@ -3105,6 +3108,7 @@
 				CE306A791743DB4400BCACE9 /* Reachability.m in Sources */,
 				CE5E9965176C982C007288C7 /* DataEventDataList.m in Sources */,
 				CE1F168E176FC50000CB0A88 /* DustBoxToTenpura.m in Sources */,
+				CE4037E9178BE88700AECD29 /* FeverStatusMenu.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

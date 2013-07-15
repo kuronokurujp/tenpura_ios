@@ -17,7 +17,9 @@
 
 @interface StoreScene (PrivateMethod)
 
--(const BOOL)   isDoCureLife;
+-(const BOOL)   _isDoCureLife;
+-(const BOOL)   _isDoCutABS;
+
 -(void) _onPayment;
 
 @end
@@ -83,7 +85,11 @@
             BOOL    bBuy    = YES;
             if( pData->no == eSTORE_ID_CURELIEF )
             {
-                bBuy    = [self isDoCureLife];
+                bBuy    = [self _isDoCureLife];
+            }
+            else if( pData->no == eSTORE_ID_CUTABS )
+            {
+                bBuy    = [self _isDoCutABS];
             }
 
             if( bBuy == YES )
@@ -138,12 +144,13 @@
 	}
 
     [pCellLayout setColor:ccWHITE];
-    if( pData->no == eSTORE_ID_CURELIEF )
+    if( (pData->no == eSTORE_ID_CURELIEF) && ([self _isDoCureLife] == NO) )
     {
-        if( [self isDoCureLife] == NO )
-        {
-            [pCellLayout setColor:ccGRAY];
-        }
+        [pCellLayout setColor:ccGRAY];
+    }
+    else if( (pData->no == eSTORE_ID_CUTABS) && ([self _isDoCutABS] == NO) )
+    {
+        [pCellLayout setColor:ccGRAY];
     }
 	
 	return pCell;
@@ -203,7 +210,7 @@
 	[super onExitTransitionDidStart];
 }
 
--(const BOOL)   isDoCureLife
+-(const BOOL)   _isDoCureLife
 {
     const SAVE_DATA_ST* pSaveData   = [[DataSaveGame shared] getData];
     if( eSAVE_DATA_PLAY_LIEF_MAX <= pSaveData->playLife )
@@ -212,6 +219,12 @@
     }
 
     return YES;
+}
+
+-(const BOOL)   _isDoCutABS
+{
+    const SAVE_DATA_ST* pSaveData   = [[DataSaveGame shared] getData];
+    return (pSaveData->adsDel == 0);
 }
 
 //  購入時に呼び出す

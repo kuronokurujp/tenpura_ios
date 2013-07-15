@@ -8,14 +8,17 @@
 
 #import "ItemShopTableCell.h"
 
+#import "./../Data/DataBaseText.h"
 
 @implementation ItemShopTableCell
 
-@synthesize pNameLabel	= mp_nameLabel;
-@synthesize pDataLabel	= mp_dataLabel;
-@synthesize pMoneyLabel	= mp_moneyLabel;
+@synthesize pNameLabel      = mp_nameLabel;
+@synthesize pDataLabel      = mp_dataLabel;
+@synthesize pMoneyLabel     = mp_moneyLabel;
 @synthesize pUnknowLabel	= mp_unknowLabel;
 @synthesize pNumLabel       = mp_numLabel;
+@synthesize pNewLabel       = mp_newTextLabel;
+@synthesize pNumTitleLabel  = mp_numTitleLabel;
 
 /*
 	@brief	初期化
@@ -32,7 +35,9 @@
 		mp_dataLabel	= nil;
 		mp_moneyLabel	= nil;
 		mp_unknowLabel	= nil;
-        mp_numLabel = NULL;
+        mp_numLabel = nil;
+        mp_numTitleLabel    = nil;
+        mp_nameLabel    = nil;
 	}
 	
 	return self;
@@ -73,6 +78,16 @@
             {
                 mp_numLabel = pLabel;
                 [mp_numLabel setString:@""];
+            }
+            else if( [pLabel.string isEqualToString:@"New"] )
+            {
+                mp_newTextLabel = pLabel;
+                [mp_newTextLabel setVisible:NO];
+            }
+            else if( [pLabel.string isEqualToString:[DataBaseText getString:158]] )
+            {
+                mp_numTitleLabel    = pLabel;
+                [mp_numTitleLabel setVisible:NO];
             }
 		}
 	}

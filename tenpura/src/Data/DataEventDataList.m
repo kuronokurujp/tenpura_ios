@@ -51,7 +51,7 @@ static DataEventDataList*	s_pInst	= nil;
 /*
     @brief
  */
-+(const SInt8)  invocEvnet
++(const EVENT_DATA_ST*)  invocEvent
 {
     DataEventDataList*  pEventDataList  = s_pInst;
     NSAssert(s_pInst, @"");
@@ -64,15 +64,15 @@ static DataEventDataList*	s_pInst	= nil;
         const EVENT_DATA_ST*  pData   = [pEventDataList getData:i];
         if( percent < pData->invocPercentNum )
         {
-            return pData->no;
+            return pData;
         }
         else if( percent < pData->invocPercentNum2 )
         {
-            return pData->no;
+            return pData;
         }
     }
     
-    return -1;
+    return nil;
 }
 
 +(const BOOL)   isError:(const SInt8)in_no
@@ -123,21 +123,6 @@ static DataEventDataList*	s_pInst	= nil;
     }
     else if( pData->limitType == eEVENT_LIMIT_TYPE_TIME )
     {
-        //  イベント発生前の時間になっている場合は不正として強制失敗
-        {
-            NSDate* pDt = [NSDate date];
-            NSDateFormatter*    pDateFrm    = [[[NSDateFormatter alloc] init] autorelease];
-            [pDateFrm setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
-            NSDate* pEventDt    = [pDateFrm dateFromString:[NSString stringWithUTF8String:pSaveData->aEventTimeStr]];
-
-            NSTimeInterval  span    = [pEventDt timeIntervalSinceDate:pDt];
-            if( 0 < (int)span )
-            {
-                //  イベント発生時間より前の時間
-                return YES;
-            }
-        }
-        
         //  イベント発生期限をすぎているか
         {
             SInt32  limitTime   = [DataEventDataList getLimitTimeSecond:pData->limitData.time];
@@ -191,15 +176,7 @@ static DataEventDataList*	s_pInst	= nil;
     const SAVE_DATA_ST*   pSaveData   = [pSaveGameInst getData];
     NSAssert(pSaveData->invocEventNo != -1, @"");
 
-    NSDate* pDt = [NSDate date];
-    NSDateFormatter*    pDateFrm    = [[[NSDateFormatter alloc] init] autorelease];
-    [pDateFrm setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
-    NSDate* pEventDt    = [pDateFrm dateFromString:[NSString stringWithUTF8String:pSaveData->aEventTimeStr]];
-
-    NSDate* pChkDt  = [[[NSDate alloc] initWithTimeInterval:in_limitTime sinceDate:pEventDt] autorelease];
-    NSTimeInterval  span    = [pChkDt timeIntervalSinceDate:pDt];
-
-    SInt32  limitTime   = (int)span;
+    SInt32  limitTime   = pSaveData->eventTime;
     if( limitTime <= 0 )
     {
         limitTime   = 0;

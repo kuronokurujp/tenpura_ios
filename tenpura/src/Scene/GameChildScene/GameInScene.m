@@ -15,10 +15,12 @@
 #import "./../../Object/ComboMessage.h"
 #import	"./../../Object/GameInFeverEvent.h"
 #import "./../../Object/DustBoxToTenpura.h"
+#import "./../../Object/FeverStatusMenu.h"
 
 #import "./../../Data/DataNetaList.h"
 #import "./../../Data/DataGlobal.h"
 #import "./../../Data/DataSaveGame.h"
+#import "./../../Data/DataBaseText.h"
 
 #import "./../../System/Sound/SoundManager.h"
 #import "./../../System/Anim/AnimManager.h"
@@ -75,6 +77,8 @@ typedef enum
 		[self addChild:mp_normalScene z:1 tag:eCHILD_TAG_SCENE_NORMAL];
 		[self addChild:mp_feverScene z:2 tag:eCHILD_TAG_SCENE_FEVER];
 		
+        m_oldFeverCnt   = 0;
+        
 		[self setTouchEnabled:false];
 	}
 	
@@ -148,6 +152,8 @@ typedef enum
 	//	フィーバー状態になったら、フィーバ更新へ以降
 	if( mp_normalScene.bFever == YES )
 	{
+        m_oldFeverCnt   = mp_normalScene.feverCnt;
+        
 		[self unschedule:_cmd];
 		[mp_feverScene start:(GameScene*)[self parent]:mp_normalScene];
 		[self schedule:@selector(_updateFever:)];
@@ -164,6 +170,12 @@ typedef enum
 		[self unschedule:_cmd];
 		[self schedule:@selector(_updateNormal:)];
 	}
+    else if( mp_normalScene.feverCnt != m_oldFeverCnt )
+    {
+        m_oldFeverCnt   = mp_normalScene.feverCnt;
+        //  再度フィーバーイベント開始
+        [mp_feverScene start:(GameScene*)[self parent]:mp_normalScene];
+    }
 }
 
 /*
@@ -317,6 +329,7 @@ enum
 
 @synthesize time	= m_time;
 @synthesize bFever	= mb_fever;
+@synthesize feverCnt    = m_feverCnt;
 
 /*
 	@brief
@@ -431,7 +444,7 @@ enum
 	{
 		//	後の出した天ぷらを先にチェックする
 		SInt32	cnt	= [pGameScene->mp_nabe.children count];
-		for( SInt32 i = cnt - 1; i >= 0; --i )
+		for( SInt32 i = cnt - 1; 0 <= i; --i )
 		{
 			pNode	= [pGameScene->mp_nabe.children objectAtIndex:i];
 			if( ([pNode isKindOfClass:[Tenpura class]] == YES) && (pNode.visible == YES) )
@@ -443,6 +456,17 @@ enum
 					{
 						[pTenpura lockTouch];
 						mp_touchTenpura	= pTenpura;
+                        
+                        //  タッチした時のエフェクト
+                        {
+                            CCParticleSystemQuad*   pParticle   = [CCParticleSystemQuad particleWithFile:@"touch.plist"];
+                            NSAssert(pParticle, @"");
+                            pParticle.autoRemoveOnFinish    = YES;
+                            [pParticle setPosition:mp_touchTenpura.position];
+                            
+                            [self addChild:pParticle z:20];
+                        }
+                        
 						break;
 					}
 				}
@@ -470,7 +494,7 @@ enum
         DustBoxToTenpura*   pDustBoxToTenpura   = pGameScene->mp_dustBoxToTenpura;
         if( (pDustBoxToTenpura != nil ) && (pDustBoxToTenpura.visible == YES) )
         {
-            if( CGRectIntersectsRect([pDustBoxToTenpura boundingBox], [mp_touchTenpura boundingBox]) )
+            if( CGRectIntersectsRect([pDustBoxToTenpura getColBox], [mp_touchTenpura boundingBox]) )
             {
                 //  天ぷらを捨てる
                 bDust   = YES;
@@ -707,6 +731,7 @@ enum
 		return	eEAT_STATE_NG;
 	}
 
+    //  取得するスコアと金額を設定
 	TENPURA_STATE_ET	tenpuraState	= in_pTenpura.state;
 	addScoreNum	= in_pTenpura.data.aStatusList[tenpuraState].score;
 	addMoneyNum	= in_pTenpura.data.aStatusList[tenpuraState].money;
@@ -723,8 +748,8 @@ enum
 
 	if( mb_fever == YES )
 	{
-		addMoneyNum	*= 2;
-		addScoreNum	*= 2;
+		addMoneyNum	*= pGameScene->m_feverBonusRate;
+		addScoreNum	*= pGameScene->m_feverBonusRate;
 	}
 
 	{
@@ -885,7 +910,7 @@ enum
 @interface GameInFeverScene (PriveteMethod)
 
 //	フィーバー開始イベント
--(void)	_updateEvent;
+-(void)	_updateEvent:(ccTime)in_dt;
 
 @end
 
@@ -898,6 +923,11 @@ enum
 {
 	if( self = [super init] )
 	{
+        mp_gameScene    = nil;
+        mp_gameInNormalScene    = nil;
+        mp_filterColorAction    = nil;
+        m_feverTime = 0;
+        
 		[self setTouchEnabled:NO];
 	}
 	
@@ -916,8 +946,52 @@ enum
 	[mp_gameScene->mp_fliterColorBG setOpacity:255];
 
 	[mp_gameScene->mp_feverEvent start];
-	[self schedule:@selector(_updateEvent)];
-	
+    
+    //  フィーバー中であれば画面効果を削除
+    if( mp_filterColorAction )
+    {
+        [mp_gameScene->mp_fliterColorBG stopAction:mp_filterColorAction];
+    }
+    mp_filterColorAction    = nil;
+
+    //  演出と同時にフィーバーボーナス開始
+    {
+		m_feverTime	+= mp_gameScene->m_feverTime;
+        if( mp_gameScene->m_feverBonusRate <= 0.f )
+        {
+            mp_gameScene->m_feverBonusRate  = mp_gameScene->mp_gameSceneData.feverBonusBaseRate;
+        }
+        else
+        {
+            //  まだフィーバー中であればボーナス率を加算
+            mp_gameScene->m_feverBonusRate += mp_gameScene->mp_gameSceneData.feverBonusBaseRate - 1.f;
+        }
+        
+		//	ボーナス設定
+		{
+			[mp_gameScene->mp_nabe setEnableFever:YES];
+		}
+		
+		//	BGフィルターに演出
+		{
+			[mp_gameScene->mp_fliterColorBG setVisible:YES];
+			{
+				CCFadeOut*	pFadeOut	= [CCFadeOut actionWithDuration:m_feverTime];
+                
+				CCCallFunc*	pEndCall	= [CCCallFunc actionWithTarget:self selector:@selector(end)];
+				CCSequence*	pRun	= [CCSequence actionOne:pFadeOut two:pEndCall];
+                mp_filterColorAction    = [pRun retain];
+                
+				[mp_gameScene->mp_fliterColorBG runAction:mp_filterColorAction];
+			}
+		}
+	}
+    
+    //  ステータスを表示
+    [mp_gameScene->mp_feverStatusMenu setVisible:YES];
+
+	[self schedule:@selector(_updateEvent:)];	
+    
 	//	BGM変更
 	[[SoundManager shared] playBgm:@"feverBGM"];
 }
@@ -925,34 +999,19 @@ enum
 /*
 	@brief	フィーバーイベント
 */
--(void)	_updateEvent
+-(void)	_updateEvent:(ccTime)in_dt
 {
-	if( mp_gameScene->mp_feverEvent.visible == NO )
-	{
-		Float32	feverTime	= mp_gameScene->m_feverTime;
-		
-		[self unschedule:_cmd];
-		
-		//	ボーナス設定
-		{
-			[mp_gameScene->mp_nabe setEnableFever:YES];
-		}
-		
-		//	フィーバーメッセージを出す
-		[mp_gameScene->mp_feverMessage setVisible:YES];
-		//	BGフィルターに演出
-		{
-			[mp_gameScene->mp_fliterColorBG setVisible:YES];
-			{
-				CCFadeOut*	pFadeOut	= [CCFadeOut actionWithDuration:feverTime];
+    m_feverTime -= in_dt;
+    if( m_feverTime <= 0.f )
+    {
+        m_feverTime = 0.f;
+    }
+    
+    CCLabelBMFont*  pBonusRateBMFont    = mp_gameScene->mp_feverStatusMenu.bonusRateBMFont;
+    pBonusRateBMFont.string = [NSString stringWithFormat:[DataBaseText getString:301], mp_gameScene->m_feverBonusRate];
 
-				CCCallFunc*	pEndCall	= [CCCallFunc actionWithTarget:self selector:@selector(end)];
-				CCSequence*	pRun	= [CCSequence actionOne:pFadeOut two:pEndCall];
-
-				[mp_gameScene->mp_fliterColorBG runAction:pRun];
-			}
-		}
-	}
+    CCLabelBMFont*  pTimeBMFont = mp_gameScene->mp_feverStatusMenu.timerBMFont;
+    pTimeBMFont.string  = [NSString stringWithFormat:[DataBaseText getString:302], (SInt32)m_feverTime];
 }
 
 /*
@@ -960,22 +1019,32 @@ enum
 */
 -(void)	end
 {
+    [self unschedule:@selector(_updateEvent:)];
+
 	[self stopAllActions];
 	if( mp_gameScene != nil )
 	{
 		[mp_gameScene->mp_fliterColorBG stopAllActions];
 
 		//	ボーナスを消す
-		[mp_gameScene->mp_nabe setEnableFever:NO];
-		mp_gameInNormalScene.bFever	= NO;
+        mp_gameInNormalScene.bFever	= NO;
+		[mp_gameScene->mp_nabe setEnableFever:mp_gameInNormalScene.bFever];
 
 		//	フィーバーの後処理
-		[mp_gameScene->mp_feverMessage setVisible:NO];
 		[mp_gameScene->mp_feverEvent setVisible:NO];
 		[mp_gameScene->mp_fliterColorBG setVisible:NO];
 	
 		[[SoundManager shared] playBgm:@"playBGM"];
+        
+        [mp_gameScene->mp_feverStatusMenu setVisible:NO];
+        
+        mp_gameScene->m_feverBonusRate  = 0.f;
 	}
+    mp_gameScene    = nil;
+    mp_gameInNormalScene    = nil;
+    
+    m_feverTime = 0;
+    mp_filterColorAction    = nil;
 }
 
 @end

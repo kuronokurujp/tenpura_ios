@@ -8,13 +8,14 @@
 
 #import "UseSelectItemTableCell.h"
 
+#import "./../Data/DataBaseText.h"
 
 @implementation UseSelectItemTableCell
 
 @synthesize pNameLabel	= mp_nameLabel;
 @synthesize pDataLabel	= mp_dataLabel;
 @synthesize pNumLabel   = mp_numLabel;
-
+@synthesize pNumTitleLable  = mp_numTitleLabel;
 /*
 	@brief	初期化
 */
@@ -24,6 +25,8 @@
 	{
 		mp_nameLabel	= nil;
 		mp_dataLabel	= nil;
+        mp_numLabel = nil;
+        mp_numTitleLabel    = nil;
 	}
 	
 	return self;
@@ -54,6 +57,11 @@
             {
                 mp_numLabel = pLabel;
                 [mp_numLabel setString:@""];
+            }
+            else if( [pLabel.string isEqualToString:[DataBaseText getString:158]] )
+            {
+                mp_numTitleLabel    = pLabel;
+                [mp_numTitleLabel setVisible:NO];
             }
 		}
 	}

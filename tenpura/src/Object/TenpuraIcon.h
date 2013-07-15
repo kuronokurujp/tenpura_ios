@@ -49,9 +49,13 @@ typedef enum
 @property	(nonatomic, readonly)SInt32 no;
 
 //	関数
+//  何でも食べれるアイコンフラグを出したら
 -(id)	initWithSetup:(const NETA_DATA_ST*)in_pData;
+-(id)   initWithSetupByOmakase;
 
 -(void)	setup:(const NETA_DATA_ST*)in_pData;
+-(void) setupByOmakase;
+
 -(void) setColor:(ccColor3B)color3;
 
 @end

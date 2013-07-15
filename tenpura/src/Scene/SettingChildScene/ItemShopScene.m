@@ -69,16 +69,20 @@
 	[pItemCell.pUnknowLabel setString:@""];
 	
     DataSaveGame*	pDataSaveGameInst	= [DataSaveGame shared];
+    const SAVE_DATA_ITEM_ST*    pItemData   = [pDataSaveGameInst getItem:pData->no];
 
     [pItemCell setColor:ccWHITE];
 
+    BOOL    bNotTouchCell   = YES;
+    
 	//	選択可能かチェック
 	if( [self _isCellSelect:idx] == NO )
 	{
-		//	アイテム名表示
 		{
 			NSString*	pItemName	= [NSString stringWithUTF8String:[pDataBaseTextShared getText:156]];
 			[pItemCell.pUnknowLabel setString:pItemName];
+            
+            [pItemCell.pNumTitleLabel setVisible:NO];
 		}
 
         [pItemCell setColor:ccGRAY];
@@ -96,10 +100,12 @@
             const SAVE_DATA_ITEM_ST*	pItemData	= [[DataSaveGame shared] getItem:pData->no];
             if( ( pItemData == NULL ) || ( pItemData->num < eSAVE_DATA_ITEM_USE_MAX ) )
             {
+                bNotTouchCell   = NO;
                 [pItemCell setColor:ccGRAY];
             }
             else
             {
+                bNotTouchCell   = NO;
                 [pItemCell setEnableSoldOut:YES];
             }
 		}
@@ -126,15 +132,31 @@
     
     //  所有数表示
     {
-        const SAVE_DATA_ITEM_ST*    pItemData   = [pDataSaveGameInst getItem:pData->no];
-        if( pItemData != NULL )
+        [pItemCell.pNumTitleLabel setVisible:YES];
+        [pItemCell.pNumLabel setVisible:NO];
+        if( bNotTouchCell == YES )
         {
             [pItemCell.pNumLabel setVisible:YES];
-            [pItemCell.pNumLabel setString:[NSString stringWithFormat:@"%d", pItemData->num]];
+            
+            UInt8  num = 0;
+            if( pItemData != NULL )
+            {
+                num = pItemData->num;
+            }
+            
+            [pItemCell.pNumLabel setString:[NSString stringWithFormat:@"%d", num]];
         }
-        else
+    }
+    
+    //  new表示
+    {
+        [pItemCell.pNewLabel setVisible:NO];
+        if( bNotTouchCell == YES )
         {
-            [pItemCell.pNumLabel setVisible:NO];
+            if( pItemData && pItemData->bNew )
+            {
+                [pItemCell.pNewLabel setVisible:YES];
+            }
         }
     }
 
@@ -174,18 +196,16 @@
 
     if( [pDataSaveGameInst addItem:pData->no] )
     {
-        {
-            DataItemList*   pDataItemListInst   = [DataItemList shared];
+        DataItemList*   pDataItemListInst   = [DataItemList shared];
 
-            SInt32  max = pDataItemListInst.dataNum;
-            for( SInt32 i = 0; i < max; ++i )
+        SInt32  max = pDataItemListInst.dataNum;
+        for( SInt32 i = 0; i < max; ++i )
+        {
+            const ITEM_DATA_ST*	pUnlockItemChkData   = [pDataItemListInst getData:i];
+            if( pUnlockItemChkData->unlockItemNo == pData->no )
             {
-                const ITEM_DATA_ST*	pUnlockItemChkData   = [pDataItemListInst getData:i];
-                if( pUnlockItemChkData->unlockItemNo == pData->no )
-                {
-                    //  購入成功したので、ロック解除
-                    [pDataSaveGameInst unlockItem:pUnlockItemChkData->no];
-                }
+                //  購入成功したので、ロック解除
+                [pDataSaveGameInst unlockItem:pUnlockItemChkData->no];
             }
         }
         

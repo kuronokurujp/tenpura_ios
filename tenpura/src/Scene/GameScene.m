@@ -25,6 +25,7 @@
 
 #import "./../Object/SpriteZSetting.h"
 #import "./../Object/DustBoxToTenpura.h"
+#import "./../Object/FeverStatusMenu.h"
 
 #import "./../CCBReader/CCBReader.h"
 
@@ -127,6 +128,7 @@ enum
 		mp_gameData	= [in_pData retain];
 
 		m_timeVal	= 0.f;
+        m_feverBonusRate = 0.f;
 		m_scoreRate	= 1;
 		m_moneyRate	= 1;
 		m_combAddTime	= 0.f;
@@ -282,10 +284,6 @@ enum
 					
 					[pCCLabelTTFArray addObject:pLabel];
 				}
-				else if( [pChildNode isKindOfClass:[GameInFeverMessage class]] )
-				{
-					mp_feverMessage	= (GameInFeverMessage*)pChildNode;
-				}
 				else if( [pChildNode isKindOfClass:[GameInFliterColorBG class]] )
 				{
 					mp_fliterColorBG	= (GameInFliterColorBG*)pChildNode;
@@ -303,7 +301,14 @@ enum
                     [pChildNode setVisible:bDustBoxToTenpura];
                     mp_dustBoxToTenpura = (DustBoxToTenpura*)pChildNode;
                 }
+                else if( [pChildNode isKindOfClass:[FeverStatusMenu class]] )
+                {
+                    mp_feverStatusMenu  = (FeverStatusMenu*)pChildNode;
+                    [mp_feverStatusMenu setup];
+                }
 			}
+            [pCCBReader removeChild:mp_dustBoxToTenpura];
+
             mp_nabe.bTenpuraNonBurn = bTenpuraBurn;
 
 			[self addChild:pCCBReader];
@@ -331,6 +336,8 @@ enum
 			//	オブジェクトの描画プライオリティ修正
 			{
 				[mp_nabe setZOrder:2.f];
+                [mp_nabe addChild:mp_dustBoxToTenpura z:3];
+                
 				mp_nabe.setFlyTimeRate	= raiseTimeRate;
 				
 				CCNode*	pNode	= nil;
@@ -346,9 +353,8 @@ enum
 					[pSpZ setZOrder:pSpZ.z];
 				}
 				
-				[mp_feverMessage setZOrder:19.f];
 				[mp_feverEvent setZOrder:20.f];
-                [mp_dustBoxToTenpura setZOrder:20.f];
+                [mp_feverStatusMenu setZOrder:25.f];
 			}
 
             //  レベルにあわせて鍋内容変更
@@ -421,6 +427,8 @@ enum
 */
 -(void)	onEnterTransitionDidFinish
 {
+    [[DataSaveGame shared] save];
+
 	//	ゲームスタート演出
 	[self addChild:[GameStartScene node] z:10 tag:eGAME_START_SCENE_TAG];
 	[self schedule:@selector(_updateGameStart:)];
@@ -473,21 +481,10 @@ enum
 		
 		switch ((SInt32)pGameEndScene.resultType)
 		{
-			case eRESULT_TYPE_RESTART:
+			case eRESULT_TYPE_SETTING:
 			{
-                /*
-				//	再スタート
-				CCTransitionFade*	pTransFade	=
-				[CCTransitionFade transitionWithDuration:g_sceneChangeTime scene:[GameScene scene:mp_gameData] withColor:ccBLACK];
-	
-				[[CCDirector sharedDirector] replaceScene:pTransFade];
-                 */
-
-				break;
-			}
-			case eRESULT_TYPE_SINAGAKI:
-			{
-                [[DataSaveGame shared] addNabeExp:1];
+                //  取得したなべ経験値をセーブ
+                [[DataSaveGame shared] saveNabeExp:1];
 
 				//	準備画面に戻る
 				CCScene*	sinagakiScene	= [CCBReader sceneWithNodeGraphFromFile:@"setting.ccbi"];

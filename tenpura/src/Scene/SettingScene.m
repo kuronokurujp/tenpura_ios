@@ -33,7 +33,8 @@
 -(void) _runGamePlay;
 -(void) _runPlayLifeProcess;
 
--(void)	_checkMissionSuccess;
+-(const BOOL)	_checkMissionSuccess;
+-(const BOOL)   _checkLvupNabeSuccess;
 
 -(NSString*)    _getEventNGMessage;
 -(NSString*)    _getEventSuccessMessage;
@@ -64,6 +65,7 @@
         mp_eventRewardAlertView     = nil;
         mp_eventNGAlertView         = nil;
         mp_eventChkAlertView        = nil;
+        mp_lvupNabeAlertView        = nil;
         mp_eventChkBtn  = nil;
 
 		m_missionSuccessIdx	= 0;
@@ -153,12 +155,18 @@
         mp_eventChkAlertView    = nil;
     }
     
+    if( mp_lvupNabeAlertView != nil )
+    {
+        [mp_lvupNabeAlertView release];
+        mp_lvupNabeAlertView    = nil;
+    }
+
 	if( mp_useItemNoList != nil )
 	{
 		[mp_useItemNoList release];
 	}
 	mp_useItemNoList	= nil;
-	
+    
 	[super dealloc];
 }
 
@@ -217,11 +225,11 @@
         if( mb_chkStartEvent == YES )
         {
             //  発生チェック
-            const SInt8   no  = [DataEventDataList invocEvnet];
-            if( no != -1 )
+            const EVENT_DATA_ST*    pEventData  = [DataEventDataList invocEvent];
+            if( pEventData )
             {
                 m_eventSuccessRet   = eEVENT_SUCCESS_RESULT_RUN;
-                [pDataSaveGameInst setEventNo:no];
+                [pDataSaveGameInst setEventNo:pEventData->no :pEventData->limitData.time];
                 mb_chkStartEvent    = NO;
             }
         }
@@ -281,10 +289,16 @@
     else
     {        
         //	成功しているミッションがあるかチェック
-        [self _checkMissionSuccess];
+        if( [self _checkMissionSuccess] == NO )
+        {
+            //  鍋がレベルアップしているか
+            [self _checkLvupNabeSuccess];
+        }
     }
 
     m_eventSuccessRet   = eEVENT_SUCCESS_RESULT_NONE;
+
+    [[DataSaveGame shared] save];
 
 	[super onEnterTransitionDidFinish];
 }
@@ -639,6 +653,8 @@
                     if( [pLabelBmFont.string isEqualToString:@"LvNum"] )
                     {
                         pLabelBmFont.string = [NSString stringWithFormat:@"%d", pSaveData->nabeLv];
+                        
+                        mp_lvNabeStr    = pLabelBmFont;
                     }
                     else if( [pLabelBmFont.string isEqualToString:@"00:00"] )
                     {
@@ -657,6 +673,8 @@
     {
         [self removeChild:pNode cleanup:YES];
     }
+    
+    [DataSaveGame shared].cureTime  = self.cureTimeByCcbiProperty;
 }
 
 /*
@@ -665,6 +683,7 @@
 -(void)	alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     DataSaveGame*   pDataSaveGameInst   = [DataSaveGame shared];
+    const SAVE_DATA_ST* pDataSave   = [pDataSaveGameInst getData];
 
 	if( alertView == mp_missionSucceesAlertView )
 	{
@@ -701,7 +720,10 @@
 		}
 
 		//	他に成功しているミッションがないかチェック
-		[self _checkMissionSuccess];
+		if( [self _checkMissionSuccess] == NO )
+        {
+            [self _checkLvupNabeSuccess];
+        }
 	}
     else if( alertView == mp_eventInvocAlertView )
     {
@@ -714,7 +736,10 @@
         [mp_eventChkBtn setVisible:YES];
 
         //	成功しているミッションがあるかチェック
-        [self _checkMissionSuccess];
+        if([self _checkMissionSuccess] == NO)
+        {
+            [self _checkLvupNabeSuccess];
+        }
     }
     else if( alertView == mp_eventSuccessAlertView )
     {
@@ -806,9 +831,12 @@
         }
         mp_eventRewardAlertView = nil;
                 
-        [pDataSaveGameInst setEventNo:-1];
+        [pDataSaveGameInst setEventNo:-1 :0];
         //	成功しているミッションがあるかチェック
-        [self _checkMissionSuccess];
+        if([self _checkMissionSuccess] == NO)
+        {
+            [self _checkLvupNabeSuccess];
+        }
     }
     else if( alertView == mp_eventNGAlertView )
     {
@@ -818,9 +846,12 @@
         }
         mp_eventNGAlertView = nil;
         
-        [pDataSaveGameInst setEventNo:-1];
+        [pDataSaveGameInst setEventNo:-1 :0];
         //	成功しているミッションがあるかチェック
-        [self _checkMissionSuccess];        
+        if( [self _checkMissionSuccess] == NO )
+        {
+            [self _checkLvupNabeSuccess];
+        }
     }
     else if( alertView == mp_eventChkAlertView )
     {
@@ -829,6 +860,17 @@
             [mp_eventChkAlertView release];
         }
         mp_eventChkAlertView    = nil;
+    }
+    else if( alertView == mp_lvupNabeAlertView )
+    {
+        if( mp_lvupNabeAlertView )
+        {
+            [mp_lvupNabeAlertView release];
+        }
+        mp_lvupNabeAlertView    = nil;
+        
+        //  なべレベル表記更新
+        mp_lvNabeStr.string = [NSString stringWithFormat:@"%d", pDataSave->nabeLv];
     }
 }
 
@@ -940,15 +982,7 @@
     {
         //  回復時間になっているか
         {
-            NSDate* pDt = [NSDate date];
-            NSDateFormatter*    pDateFrm    = [[[NSDateFormatter alloc] init] autorelease];
-            [pDateFrm setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
-            NSDate* pCureDt    = [pDateFrm dateFromString:[NSString stringWithUTF8String:pSaveData->aCureTimeStr]];
-            
-            NSDate* pChkDt  = [[[NSDate alloc] initWithTimeInterval:self.cureTimeByCcbiProperty sinceDate:pCureDt] autorelease];
-            int  span    = (int)[pChkDt timeIntervalSinceDate:pDt];
-            
-            if( span <= 0 )
+            if( pSaveData->cureTime <= 0 )
             {
                 //  回復
                 [pDataSaveGameInst addPlayLife:1 :YES];
@@ -958,16 +992,8 @@
         //  回復時間を表示
         if( pSaveData->playLife < eSAVE_DATA_PLAY_LIEF_MAX )
         {
-            NSDate* pDt = [NSDate date];
-            NSDateFormatter*    pDateFrm    = [[[NSDateFormatter alloc] init] autorelease];
-            [pDateFrm setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
-            NSDate* pCureDt    = [pDateFrm dateFromString:[NSString stringWithUTF8String:pSaveData->aCureTimeStr]];
-            
-            NSDate* pChkDt  = [[[NSDate alloc] initWithTimeInterval:self.cureTimeByCcbiProperty sinceDate:pCureDt] autorelease];
-            int  span    = (int)[pChkDt timeIntervalSinceDate:pDt];
-            
-            SInt32  second  = (span <= 0) ? 0 : span % 60;
-            SInt32  minute  = (span <= 0) ? 0 : span / 60;
+            SInt32  second  = (pSaveData->cureTime <= 0) ? 0 : pSaveData->cureTime % 60;
+            SInt32  minute  = (pSaveData->cureTime <= 0) ? 0 : pSaveData->cureTime / 60;
             
             [mp_cureTimeStr setString:[NSString stringWithFormat:@"%02ld:%02ld", minute, second]];
         }
@@ -977,7 +1003,7 @@
 /*
 	@brief	ミッション成功チェック
 */
--(void)	_checkMissionSuccess
+-(const BOOL)	_checkMissionSuccess
 {
 	DataMissionList*	pMissionInst	= [DataMissionList shared];
 	UInt32	missionNum	= pMissionInst.dataNum;
@@ -1000,9 +1026,39 @@
 											cancelButtonTitle:[DataBaseText getString:46]
 											otherButtonTitles:nil];
 			[mp_missionSucceesAlertView show];
-			break;
+			return  YES;
 		}
 	}
+    
+    return  NO;
+}
+
+/*
+    @brief  鍋のレベルアップが成功しているか
+*/
+-(const BOOL)   _checkLvupNabeSuccess
+{
+    DataSaveGame*   pSaveGame   = [DataSaveGame shared];
+    const SAVE_DATA_ST* pSaveData   = [pSaveGame getData];
+    if( 0 < pSaveData->nabeAddExp )
+    {
+        [pSaveGame saveNabeExp:0];
+        if( [pSaveGame addNabeExp:pSaveData->nabeAddExp] )
+        {
+            //  レベルがあがる
+            //  アラートを出す
+            NSString*   pMessage    = [NSString stringWithFormat:[DataBaseText getString:251], pSaveData->nabeLv];
+			mp_lvupNabeAlertView	= [[UIAlertView alloc]	initWithTitle:[DataBaseText getString:250]
+                                                                    message:pMessage
+                                                                   delegate:self
+                                                          cancelButtonTitle:[DataBaseText getString:46]
+                                                          otherButtonTitles:nil];
+			[mp_lvupNabeAlertView show];
+            return YES;
+        }
+    }
+    
+    return NO;
 }
 
 /*

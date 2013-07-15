@@ -72,7 +72,7 @@ typedef struct
 //	外部参照可能に
 +(DataEventDataList*)shared;
 +(void)end;
-+(const SInt8)  invocEvnet;
++(const EVENT_DATA_ST*)  invocEvent;
 +(const BOOL) isError:(const SInt8)in_no;
 +(const SInt8) chkSuccess:(const UInt8)in_no :(const EVENT_SUCCESS_BIT_ENUM)in_successBit;
 +(const SInt32) getLimitTimeSecond:(const SInt32)in_limitTime;

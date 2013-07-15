@@ -188,7 +188,15 @@ static const CGPoint	s_eatIconPosArray[ eCUSTOMER_MAX ][ eEAT_MAX ]	=
 		if( pTenpura != nil )
 		{
 			//	アイコン作成
-			TenpuraIcon*	pIcon	= [[[TenpuraIcon alloc] initWithSetup:pData] autorelease];
+			TenpuraIcon*	pIcon	= nil;
+            if( mb_allEat )
+            {
+                pIcon   = [[[TenpuraIcon alloc] initWithSetupByOmakase] autorelease];
+            }
+            else
+            {
+                pIcon   = [[[TenpuraIcon alloc] initWithSetup:pData] autorelease];
+            }
 
 			//	相対位置を取得
 			assert( m_idx < eCUSTOMER_MAX );

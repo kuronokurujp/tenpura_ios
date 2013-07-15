@@ -41,7 +41,7 @@ typedef struct
 	UInt8	no;			//	0(1)
 	UInt8	num;		//	1(1)
 	UInt8	unlockFlg;	//	2(1)
-	UInt8	dummy;		//	3(1)
+	UInt8	bNew;		//	3(1)
 } SAVE_DATA_ITEM_ST;	// 4byte
 
 typedef struct
@@ -72,37 +72,38 @@ typedef struct
 	SInt32	score;				//	650(4)
     SInt32  eventScore;
     
-    char   aEventTimeStr[32];  //  654(32)
-    char   aCureTimeStr[32];  //  686(32)
+    SInt32  eventTime;  //  654(4)
+    SInt32  cureTime;   //  658(4)
 
-    UInt16  nabeLv;     //  718(2)
-    UInt16  nabeExp;    //  720(2)
+    UInt16  nabeLv;     //  662(2)
+    UInt16  nabeExp;    //  664(2)
+    UInt16  nabeAddExp; //  666(2)
 
-    UInt32  chkEventPlayCnt;    //  722(4)
+    UInt32  chkEventPlayCnt;    //  668(4)
 
-	SInt8	use;				//	726(1)
-	SInt8	check;				//	727(1)
-    SInt8   invocEventNo;       //  728(1)
-	SInt8	adsDel;				//	729(1)
+	SInt8	use;				//	672(1)
+	SInt8	check;				//	673(1)
+    SInt8   invocEventNo;       //  674(1)
+	SInt8	adsDel;				//	675(1)
 	
-	SInt8	aMissionFlg[eSAVE_DATA_MISSION_MAX];		//	730(16)
+	SInt8	aMissionFlg[eSAVE_DATA_MISSION_MAX];		//	676(16)
     
-    UInt8   putCustomerMaxnum;      // 746(1)
-    UInt8   eventPutCustomerMaxnum;   // 747(1)
+    UInt8   putCustomerMaxnum;      // 692(1)
+    UInt8   eventPutCustomerMaxnum;   // 693(1)
 
-    UInt8   eatTenpuraMaxNum;       // 748(1)
-    UInt8   eventEatTenpuraMaxNum;
+    UInt8   eatTenpuraMaxNum;       // 694(1)
+    UInt8   eventEatTenpuraMaxNum;  //  695(1)
     
-    SInt8   successEventNo;         //  749(1)
-    SInt8   eventNetaPackNo;        //  750(1)
+    SInt8   successEventNo;         //  696(1)
+    SInt8   eventNetaPackNo;        //  697(1)
     
-    SInt8   playLife;               //  751(1)
-    BOOL    bTutorial;              //  752(1)
+    SInt8   playLife;               //  698(1)
+    BOOL    bTutorial;              //  699(1)
     
-    SInt32  settingNetaPackId;    //  753(4)
+    SInt32  settingNetaPackId;    //  700(4)
 
     //	予約領域
-	SInt8	dummy[258];				//	756(258)
+	SInt8	dummy[320];				//	704(320)
 } SAVE_DATA_ST;	//	1024byte
 
 @interface DataSaveGame : NSObject
@@ -110,11 +111,16 @@ typedef struct
 @private
 	//	変数宣言
 	SaveData*	mp_SaveData;
+    SInt32  m_cureTime;
 }
+
+@property   (nonatomic, readwrite)SInt32    cureTime;
 
 //	関数
 +(DataSaveGame*)shared;
 +(void)end;
+
+-(void)save;
 
 //	データリセット
 -(BOOL)reset:(DataItemList*)in_pDataItamList;
@@ -156,14 +162,26 @@ typedef struct
 //  ライフ増減
 -(void) addPlayLife:(const SInt8)in_num :(const BOOL)in_bSaveLiefTime;
 
+//  ライフタイマー加算
+-(void) addPlayLifeTimerCnt:(const SInt32)in_cnt;
+//  イベントタイマー加算
+-(void) addEventTimerCnt:(const SInt32)in_cnt;
+
 //	広告削除
 -(void)	saveCutAdsFlg;
 
-//  なべ経験値加算（レベルがあがるとtrueが変える）
+//  なべ経験値を保存
+//  (なべレベルには反映しない、ここで設定した値を[addNabeExp]に設定する
+//  ゲームで取得した経験値を設定画面で使い、なべレベルが変更して初めてレベル値の表記を変更させるため
+//  設定した値を使ったら０クリアする
+-(void) saveNabeExp:(UInt16)in_expNum;
+
+//  なべ経験値加算（レベルがあがるとtrue）
+//  レベルが変わったら、アラートを出している
 -(BOOL) addNabeExp:(UInt16)in_expNum;
 
 //  イベント設定
--(void) setEventNo:(SInt8)in_no;
+-(void) setEventNo:(SInt8)in_no :(SInt32)in_timeCnt;
 -(void) setSuccessEventNo:(SInt8)in_no;
 -(void) addEventChkPlayCnt;
 

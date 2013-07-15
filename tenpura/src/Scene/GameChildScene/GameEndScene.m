@@ -279,6 +279,12 @@
 	if( mb_hiscore )
 	{
 		pResultCcbiFileName	= @"game_result_hiscore.ccbi";
+
+        {
+            CCParticleSystemQuad*   pParticle   = [CCParticleSystemQuad particleWithFile:@"hiscore.plist"];
+            NSAssert(pParticle, @"");
+            [self addChild:pParticle z:20];
+        }
 	}
 
 	CCNode*	pNode	= [CCBReader nodeGraphFromFile:pResultCcbiFileName owner:self parentSize:winSize];
@@ -332,7 +338,7 @@
 */
 -(void)	_pressGametEndBtn
 {
-	m_resultType	= eRESULT_TYPE_SINAGAKI;
+	m_resultType	= eRESULT_TYPE_SETTING;
 	
 	[[SoundManager shared] playSe:@"btnClick"];
 }

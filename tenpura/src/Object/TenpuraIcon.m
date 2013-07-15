@@ -92,6 +92,12 @@ static const Float32	s_tenpuraFlyStateMax	= 3;
 
 @end
 
+@interface TenpuraIcon (PrivateMethod)
+
+-(void) _setupByBasic:(NSString*)in_pSpFileName;
+
+@end
+
 @implementation TenpuraIcon
 
 @synthesize no	= m_no;
@@ -99,11 +105,21 @@ static const Float32	s_tenpuraFlyStateMax	= 3;
 /*
 	@brief	初期化
 */
--(id)	initWithSetup:(const NETA_DATA_ST*)in_pData;
+-(id)	initWithSetup:(const NETA_DATA_ST*)in_pData
 {
 	if( self = [super init] )
 	{
 		[self setup:in_pData];
+	}
+	
+	return self;
+}
+
+-(id)	initWithSetupByOmakase
+{
+	if( self = [super init] )
+	{
+		[self setupByOmakase];
 	}
 	
 	return self;
@@ -116,19 +132,19 @@ static const Float32	s_tenpuraFlyStateMax	= 3;
 {
 	NSAssert(in_pData, @"");
 
-	NSString*	pFileName	= [NSString stringWithFormat:@"cust_%s.png", in_pData->fileName];
-	if( mp_sp != nil )
-	{
-		[self removeChild:mp_sp cleanup:YES];
-	}
-
-	mp_sp	= [CCSprite node];
-	[mp_sp initWithFile:pFileName];
-		
-	[mp_sp setAnchorPoint:ccp(0,0)];
-	[self addChild:mp_sp];
-	
+    NSString*	pFileName   =nil;
+    {
+        pFileName	= [NSString stringWithFormat:@"cust_%s.png", in_pData->fileName];
+    }
+    
+    [self _setupByBasic:pFileName];
+    	
 	m_no	= in_pData->no;
+}
+
+-(void) setupByOmakase
+{
+    [self _setupByBasic:@"btn_omakase.png"];
 }
 
 -(void) setColor:(ccColor3B)color3
@@ -142,6 +158,24 @@ static const Float32	s_tenpuraFlyStateMax	= 3;
             [pSprite setColor:color3];
         }
     }
+}
+
+-(void) _setupByBasic:(NSString*)in_pSpFileName
+{
+    NSAssert(in_pSpFileName, @"");
+    
+    m_no    = -1;
+
+	if( mp_sp != nil )
+	{
+		[self removeChild:mp_sp cleanup:YES];
+	}
+    
+	mp_sp	= [CCSprite node];
+	[mp_sp initWithFile:in_pSpFileName];
+    
+	[mp_sp setAnchorPoint:ccp(0,0)];
+	[self addChild:mp_sp];
 }
 
 @end

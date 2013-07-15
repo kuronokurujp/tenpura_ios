@@ -88,6 +88,7 @@
 
 +(void) release
 {
+
     [DataEventDataList end];
 	[DataNetaPackList end];
 	[StoreAppPurchaseManager end];

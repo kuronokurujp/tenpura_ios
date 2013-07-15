@@ -25,6 +25,8 @@ static DataSaveGame*	s_pDataSaveGameInst	= nil;
 static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 static const UInt16   s_maxLv_dataSaveGame    = 999;
 
+@synthesize cureTime    = m_cureTime;
+
 /*
 	@brief
 */
@@ -63,6 +65,8 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 {
 	if( self = [super init] )
 	{
+        m_cureTime  = 0;
+        
 		mp_SaveData	= [SaveData alloc];
 		[mp_SaveData setup:s_pSaveIdName :sizeof(SAVE_DATA_ST)];
 		[mp_SaveData load];
@@ -89,12 +93,18 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 {
 	if( mp_SaveData != nil )
 	{
+        [mp_SaveData save];
 		[mp_SaveData release];
 	}
 	
 	mp_SaveData	= nil;
 	
 	[super dealloc];
+}
+
+-(void)save
+{
+    [mp_SaveData save];
 }
 
 /*
@@ -195,7 +205,8 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
     if( pItemData != nil )
     {
         pItemData->unlockFlg = 1;
-    }    
+        pItemData->bNew = 1;
+    }
 }
 
 /*
@@ -220,8 +231,6 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 
 			++pData->netaNum;
 			
-			[mp_SaveData save];
-
 			return YES;
 		}
 		else
@@ -242,7 +251,6 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
     if( pSaveNetaData->hiscore < in_hiscore )
     {
         pSaveNetaData->hiscore  = in_hiscore;
-        [mp_SaveData save];
         return YES;
     }
     
@@ -267,11 +275,11 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 			SAVE_DATA_ITEM_ST*	pAddItem	= &pData->aItems[ pData->itemNum ];
 			pAddItem->no	= in_no;
 			pAddItem->unlockFlg	= 1;
+            pAddItem->bNew  = 0;
+            
 			++pAddItem->num;
 			++pData->itemNum;
-			
-			[mp_SaveData save];
-
+		
 			return YES;
 		}
 		else if( pItem != nil )
@@ -279,8 +287,6 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
             if( pItem->num < eSAVE_DATA_ITEM_USE_MAX )
             {
                 pItem->num += 1;
-                
-                [mp_SaveData save];
                 
                 return YES;
             }
@@ -321,7 +327,6 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 	if( pData != nil )
 	{
 		pData->score	= MIN( in_score, eSCORE_MAX_NUM );
-		[mp_SaveData save];
 	}
 }
 
@@ -336,7 +341,6 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 	if( pData != nil && pData->putCustomerMaxnum < in_num)
 	{
 		pData->putCustomerMaxnum	= in_num;
-		[mp_SaveData save];
         
         return YES;
 	}
@@ -355,7 +359,6 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 	if( pData != nil && pData->eatTenpuraMaxNum < in_num)
 	{
 		pData->eatTenpuraMaxNum	= in_num;
-		[mp_SaveData save];
         
         return YES;
 	}
@@ -376,7 +379,6 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 	{
 		pData->money	= pData->money + in_addMoney;
 		pData->money	= MIN(pData->money, eMONEY_MAX_NUM);
-		[mp_SaveData save];
 	}
 }
 
@@ -390,8 +392,6 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 	if( (pData != nil) && (in_idx < eSAVE_DATA_MISSION_MAX) )
 	{
 		pData->aMissionFlg[in_idx]	= in_flg;
-		
-		[mp_SaveData save];
 	}
 }
 
@@ -401,35 +401,54 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 -(void) addPlayLife:(const SInt8)in_num :(const BOOL)in_bSaveLiefTime
 {
 	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
-    SInt8   oldPlayerLife   = pData->playLife;
     pData->playLife += in_num;
     
     pData->playLife = MIN(pData->playLife, eSAVE_DATA_PLAY_LIEF_MAX);
     pData->playLife = MAX(pData->playLife, 0);
     
-    BOOL    bSaveTime   = in_bSaveLiefTime;
     if( pData->playLife < eSAVE_DATA_PLAY_LIEF_MAX )
     {
-        if( (in_num < 0) && (eSAVE_DATA_PLAY_LIEF_MAX <= oldPlayerLife) )
+        if( (in_num < 0) && (pData->cureTime <= 0) )
         {
-            bSaveTime   = YES;
-        }
-        
-        if( bSaveTime )
-        {
-            //  時間を記録
-            NSDate* pDt = [NSDate date];
-            NSDateFormatter*    pFmt    = [[[NSDateFormatter alloc] init] autorelease];
-            pFmt.dateFormat = @"yyyy/MM/dd HH:mm:ss";
-            NSString* pString  = [pFmt stringFromDate:pDt];
-            
-            //	イベント発生時の時刻
-            const char*	pDateText	= [pString UTF8String];
-            memcpy( pData->aCureTimeStr, pDateText, sizeof(pData->aCureTimeStr));
+            pData->cureTime += m_cureTime;
         }
     }
     
     [mp_SaveData save];
+}
+
+//  ライフタイマー加算
+-(void) addPlayLifeTimerCnt:(const SInt32)in_cnt
+{
+    SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
+    pData->cureTime += in_cnt;
+    if( pData->cureTime < 0 )
+    {
+        pData->cureTime = 0;
+    }
+}
+
+//  イベントタイマー加算
+-(void) addEventTimerCnt:(const SInt32)in_cnt
+{
+	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
+    pData->eventTime += in_cnt;
+    if( pData->eventTime < 0 )
+    {
+        pData->eventTime    = 0;
+    }
+}
+
+/*
+    @brief  なべ経験値を保存
+*/
+-(void) saveNabeExp:(UInt16)in_expNum
+{
+    SAVE_DATA_ST*   pData   = (SAVE_DATA_ST*)[mp_SaveData getData];
+    if( pData != nil )
+    {
+        pData->nabeAddExp   = in_expNum;
+    }
 }
 
 /*
@@ -440,17 +459,16 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
     SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
 	if( pData != nil )
     {
-        pData->nabeExp += in_expNum;
-        if( eNABE_LVUP_NUM <= pData->nabeExp )
+        if( pData->nabeLv < s_maxLv_dataSaveGame )
         {
-            UInt16 addLv    = pData->nabeExp / eNABE_LVUP_NUM;
-            pData->nabeLv += addLv;
-            if( s_maxLv_dataSaveGame <= pData->nabeLv )
+            pData->nabeExp += in_expNum;
+            if( eNABE_LVUP_NUM <= pData->nabeExp )
             {
-                pData->nabeLv   = s_maxLv_dataSaveGame;
+                pData->nabeExp -= eNABE_LVUP_NUM;
+                pData->nabeLv += 1;
+                
+                return true;
             }
-            
-            return true;
         }
     }
 
@@ -460,7 +478,7 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 /*
     @brief  イベント設定
  */
--(void)   setEventNo:(SInt8)in_no
+-(void)   setEventNo:(SInt8)in_no :(SInt32)in_timeCnt
 {
     SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
 	NSAssert(pData, @"");
@@ -481,17 +499,8 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
     pSaveDataNeta->eventHitScore  = pSaveDataNeta->hiscore;
 
     {
-        NSDate* pDt = [NSDate date];
-        NSDateFormatter*    pFmt    = [[[NSDateFormatter alloc] init] autorelease];
-        pFmt.dateFormat = @"yyyy/MM/dd HH:mm:ss";
-        NSString* pString  = [pFmt stringFromDate:pDt];
-        
-        //	イベント発生時の時刻
-        const char*	pDateText	= [pString UTF8String];
-        memcpy( pData->aEventTimeStr, pDateText, sizeof(pData->aEventTimeStr));
+        pData->eventTime    = in_timeCnt;
     }
-    
-    [mp_SaveData save];
 }
 
 -(void)   setSuccessEventNo:(SInt8)in_no
@@ -500,7 +509,6 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 	NSAssert(pData, @"");
 
     pData->successEventNo   = in_no;
-    [mp_SaveData save];
 }
 
 -(void) addEventChkPlayCnt
@@ -509,7 +517,6 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 	NSAssert(pData, @"");
     
     ++pData->chkEventPlayCnt;
-    [mp_SaveData save];
 }
 
 -(void) setTutorial:(const BOOL)in_flg
@@ -518,7 +525,6 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 	NSAssert(pData, @"");
 
     pData->bTutorial    = in_flg;
-    [mp_SaveData save];
 }
 
 //  ネタパックid設定
@@ -528,7 +534,6 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 	NSAssert(pData, @"");
     
     pData->settingNetaPackId    = in_id;
-    [mp_SaveData save];
 }
 
 /*
@@ -593,7 +598,7 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 	if( pData != nil )
 	{
 		pData->adsDel	= 1;
-		[mp_SaveData save];
+        [mp_SaveData save];
 	}
 }
 

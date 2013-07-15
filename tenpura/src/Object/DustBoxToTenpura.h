@@ -9,8 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
-@interface DustBoxToTenpura : CCSprite {
-    
+@interface DustBoxToTenpura : CCSprite
+{
 }
+
+@property   (nonatomic, readonly)Float32    colBoxSizeX;
+@property   (nonatomic, readonly)Float32    colBoxSizeY;
+
+//  コリジョンの範囲
+-(CGRect)getColBox;
 
 @end

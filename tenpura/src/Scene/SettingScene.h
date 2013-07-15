@@ -40,12 +40,15 @@ typedef enum
     UIAlertView*        mp_eventRewardAlertView;
     UIAlertView*        mp_eventNGAlertView;
     UIAlertView*        mp_eventChkAlertView;
+    UIAlertView*        mp_lvupNabeAlertView;
     
     EVENT_SUCCESS_RESULT_ENUM   m_eventSuccessRet;
     CCNode* mp_eventChkBtn;
     
     CCArray*    mp_heartObjArray;
     CCLabelBMFont*  mp_cureTimeStr;
+    CCLabelBMFont*  mp_lvNabeStr;
+    
     CGPoint m_playLifePos;
     
 	UInt32	m_missionSuccessIdx;

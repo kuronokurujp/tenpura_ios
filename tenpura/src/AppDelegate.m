@@ -30,6 +30,8 @@
 
 @interface AppController (PrivateMethod)
 
+-(void) _onSecTimerCnt:(id)in_sender;
+
 -(void)	onBannerShow;
 -(void)	onBannerHide;
 
@@ -175,6 +177,12 @@ void uncaughtExceptionHandler( NSException* in_pException )
 		mp_storeBuyCheckAlerView	= [[UIAlertView alloc] initWithTitle:@"" message:@"" delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
         mp_storeSuccessAlerView	= [[UIAlertView alloc] initWithTitle:@"" message:@"" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
 	}
+    
+    //  １秒ごとにチェックするタイマー
+    {
+        NSTimer*    pSecCountTimer  = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(_onSecTimerCnt:) userInfo:nil repeats:YES];
+        NSAssert(pSecCountTimer, @"");
+    }
 
 	// and add the scene to the stack. The director will run it when it automatically when the view is displayed.
 	[director_ pushScene: [BootScene scene]];
@@ -213,6 +221,8 @@ void uncaughtExceptionHandler( NSException* in_pException )
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
+    [[DataSaveGame shared] save];
+
 	if( [navController_ visibleViewController] == director_ )
 	{
 		StoreAppPurchaseManager*	pStoreInst	= [StoreAppPurchaseManager share];
@@ -346,6 +356,16 @@ void uncaughtExceptionHandler( NSException* in_pException )
 */
 -(void)	onAchievementDescription:(NSMutableDictionary*)achievementDescriptions
 {
+}
+
+/*
+    @brief  １秒ごとのタイマーカウント
+ */
+-(void) _onSecTimerCnt:(id)in_sender
+{
+    DataSaveGame*   pDataSaveGameInst   = [DataSaveGame shared];
+    [pDataSaveGameInst addPlayLifeTimerCnt:-1];
+    [pDataSaveGameInst addEventTimerCnt:-1];
 }
 
 /*

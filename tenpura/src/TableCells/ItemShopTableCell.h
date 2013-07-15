@@ -17,6 +17,8 @@
 	CCLabelBMFont*	mp_moneyLabel;
 	CCLabelBMFont*	mp_unknowLabel;
     CCLabelBMFont*  mp_numLabel;
+    CCLabelBMFont*  mp_newTextLabel;
+    CCLabelBMFont*  mp_numTitleLabel;
 	CCSprite*	mp_soldOutSprite;
 }
 
@@ -25,6 +27,8 @@
 @property	(nonatomic, retain)CCLabelBMFont*	pMoneyLabel;
 @property	(nonatomic, retain)CCLabelBMFont*	pUnknowLabel;
 @property   (nonatomic, retain)CCLabelBMFont*   pNumLabel;
+@property   (nonatomic, retain)CCLabelBMFont*   pNewLabel;
+@property   (nonatomic, retain)CCLabelBMFont*   pNumTitleLabel;
 
 -(void)	setEnableSoldOut:(BOOL)in_bFlg;
 -(void) setColor:(ccColor3B)color3;
