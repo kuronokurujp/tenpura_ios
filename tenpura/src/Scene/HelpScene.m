@@ -233,6 +233,8 @@ static NSString*	sp_helpHtmlNameList[]	=
 	NSString*	pFilePath	= [[NSBundle mainBundle] pathForResource:sp_helpHtmlNameList[in_idx] ofType:@"html"];
 	NSURL*	pFileUrl	= [NSURL fileURLWithPath:pFilePath];
 	[mp_helpView loadRequest:[NSURLRequest requestWithURL:pFileUrl]];
+    [mp_helpView setBackgroundColor:[UIColor clearColor]];
+    [mp_helpView setOpaque:NO];
 }
 
 @end

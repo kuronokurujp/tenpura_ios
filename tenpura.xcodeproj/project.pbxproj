@@ -157,6 +157,7 @@
 		CE3865EC174299EF00C176F3 /* SimpleAudioEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3865E5174299EF00C176F3 /* SimpleAudioEngine.m */; };
 		CE3865EF17429B2C00C176F3 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3865EE17429B2C00C176F3 /* CoreText.framework */; };
 		CE3F6840173691F2002296E4 /* nabe05_a.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3F683F173691F2002296E4 /* nabe05_a.png */; };
+		CE3F89C61796C94D00CB43F9 /* lasttime.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3F89C51796C94D00CB43F9 /* lasttime.png */; };
 		CE4037E9178BE88700AECD29 /* FeverStatusMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4037E8178BE88700AECD29 /* FeverStatusMenu.m */; };
 		CE412EB916DC4C940034A4BA /* abura.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE412EB716DC4C940034A4BA /* abura.plist */; };
 		CE412EBA16DC4C940034A4BA /* abura.png in Resources */ = {isa = PBXBuildFile; fileRef = CE412EB816DC4C940034A4BA /* abura.png */; };
@@ -777,6 +778,7 @@
 		CE3865E5174299EF00C176F3 /* SimpleAudioEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine.m; sourceTree = "<group>"; };
 		CE3865EE17429B2C00C176F3 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		CE3F683F173691F2002296E4 /* nabe05_a.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nabe05_a.png; path = Resources/bg/nabe05_a.png; sourceTree = "<group>"; };
+		CE3F89C51796C94D00CB43F9 /* lasttime.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lasttime.png; path = Resources/game/lasttime.png; sourceTree = "<group>"; };
 		CE4037E7178BE88700AECD29 /* FeverStatusMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FeverStatusMenu.h; path = src/Object/FeverStatusMenu.h; sourceTree = "<group>"; };
 		CE4037E8178BE88700AECD29 /* FeverStatusMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FeverStatusMenu.m; path = src/Object/FeverStatusMenu.m; sourceTree = "<group>"; };
 		CE412EB716DC4C940034A4BA /* abura.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = abura.plist; path = Resources/anim/abura/abura.plist; sourceTree = "<group>"; };
@@ -2585,6 +2587,7 @@
 		CEFBC2B016876D9E00C3C233 /* game */ = {
 			isa = PBXGroup;
 			children = (
+				CE3F89C51796C94D00CB43F9 /* lasttime.png */,
 				CEF15F6D178F92A300BFF363 /* gomibako.png */,
 				CEFBC2B116876DC100C3C233 /* play_end.png */,
 				CE152F971725810500D980A7 /* play_result.png */,
@@ -2899,6 +2902,7 @@
 				CE20D018178AFCC800E39348 /* touch.plist in Resources */,
 				CE20D019178AFCC800E39348 /* touch.png in Resources */,
 				CEF15F6E178F92A300BFF363 /* gomibako.png in Resources */,
+				CE3F89C61796C94D00CB43F9 /* lasttime.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

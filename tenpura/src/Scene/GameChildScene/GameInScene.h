@@ -27,6 +27,8 @@
 	//	フィーバー中の状態
 	GameInFeverScene*	mp_feverScene;
     
+    CCSprite*   mp_lastTimeSprite;
+    
     UInt32  m_oldFeverCnt;
 }
 

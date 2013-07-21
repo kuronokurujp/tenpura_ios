@@ -80,5 +80,6 @@ char*	gpa_spriteFileNameList[eSPRITE_FILE_MAX]	=
     "font.png",
     "heart.png",
     "saikou.png",
-    "touch.png"
+    "touch.png",
+    "lasttime.png",
 };

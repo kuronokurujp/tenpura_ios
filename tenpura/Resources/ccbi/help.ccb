@@ -321,7 +321,7 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>40</real>
+							<real>27</real>
 							<real>149</real>
 							<integer>0</integer>
 						</array>
@@ -542,7 +542,7 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>442</real>
+							<real>453</real>
 							<real>149</real>
 							<integer>0</integer>
 						</array>
@@ -727,8 +727,6 @@
 						</array>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
@@ -831,7 +829,7 @@
 				<key>type</key>
 				<integer>1</integer>
 				<key>value</key>
-				<string>80.000000</string>
+				<string>50.000000</string>
 			</dict>
 			<dict>
 				<key>name</key>
@@ -841,7 +839,7 @@
 				<key>type</key>
 				<integer>1</integer>
 				<key>value</key>
-				<string>50.000000</string>
+				<string>49.000000</string>
 			</dict>
 			<dict>
 				<key>name</key>
@@ -851,7 +849,7 @@
 				<key>type</key>
 				<integer>1</integer>
 				<key>value</key>
-				<string>320.000000</string>
+				<string>382.000000</string>
 			</dict>
 			<dict>
 				<key>name</key>
@@ -861,7 +859,7 @@
 				<key>type</key>
 				<integer>1</integer>
 				<key>value</key>
-				<string>220.000000</string>
+				<string>219.000000</string>
 			</dict>
 		</array>
 		<key>displayName</key>
@@ -957,6 +955,8 @@
 				<false/>
 			</dict>
 		</array>
+		<key>selected</key>
+		<true/>
 	</dict>
 	<key>notes</key>
 	<array/>

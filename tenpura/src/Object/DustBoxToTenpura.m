@@ -11,6 +11,21 @@
 
 @implementation DustBoxToTenpura
 
+-(void) startAnim:(const ANIM_DUST_BOX_TO_TENPURA_ENUM)in_anim
+{
+    [self stopAllActions];
+    [self setScale:1];
+
+    if( in_anim == eANIM_DUST_DUST_BOX_TO_TENPURA )
+    {
+        //  すてるアニメ開始
+        CCScaleTo*  pBigScale  = [CCScaleTo actionWithDuration:0.1f scale:1.3];
+        CCScaleTo*  pNormalScale = [CCScaleTo actionWithDuration:0.1f scale:1];
+        CCSequence* pSeq    = [CCSequence actions:pBigScale, pNormalScale, nil];
+        [self runAction:pSeq];
+    }
+}
+
 //  コリジョンの範囲
 -(CGRect)getColBox
 {

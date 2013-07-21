@@ -57,22 +57,34 @@ static DataEventDataList*	s_pInst	= nil;
     NSAssert(s_pInst, @"");
     
     SInt8   percent = (SInt8)(CCRANDOM_0_1() * 99.f);
+
+    const EVENT_DATA_ST*  pHitEventDataArray[pEventDataList.dataNum];
+    memset(pHitEventDataArray, 0, sizeof(pHitEventDataArray));
     
     const UInt32    dataNum = pEventDataList.dataNum;
+    SInt32  hitCnt  = 0;
     for( UInt32 i = 0; i < dataNum; ++i )
     {
         const EVENT_DATA_ST*  pData   = [pEventDataList getData:i];
         if( percent < pData->invocPercentNum )
         {
-            return pData;
+            pHitEventDataArray[hitCnt]  = pData;
+            ++hitCnt;
         }
         else if( percent < pData->invocPercentNum2 )
         {
-            return pData;
+            pHitEventDataArray[hitCnt]  = pData;
+            ++hitCnt;
         }
     }
     
-    return nil;
+    if( hitCnt <= 0 )
+    {
+        return nil;
+    }
+    
+    SInt32 hitEventIdx  = (SInt32)(CCRANDOM_0_1() * (Float32)(hitCnt - 1));
+    return pHitEventDataArray[hitEventIdx];
 }
 
 +(const BOOL)   isError:(const SInt8)in_no

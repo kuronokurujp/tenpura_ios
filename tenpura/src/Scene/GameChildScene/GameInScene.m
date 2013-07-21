@@ -66,7 +66,12 @@ typedef enum
 	if( self = [super init] )
 	{
 		NSAssert(in_pGameSceneData, @"ゲームシーンデータがない");
-		
+	
+        mp_lastTimeSprite   = nil;
+        mp_normalScene  = nil;
+        mp_feverScene   = nil;
+        m_oldFeverCnt   = 0;
+
 		[self setVisible:YES];
 		[self schedule:@selector(_begin:)];
 		
@@ -76,9 +81,7 @@ typedef enum
 		mp_feverScene	= [GameInFeverScene node];
 		[self addChild:mp_normalScene z:1 tag:eCHILD_TAG_SCENE_NORMAL];
 		[self addChild:mp_feverScene z:2 tag:eCHILD_TAG_SCENE_FEVER];
-		
-        m_oldFeverCnt   = 0;
-        
+		      
 		[self setTouchEnabled:false];
 	}
 	
@@ -136,7 +139,24 @@ typedef enum
 		[self unscheduleUpdate];
 		[self schedule:@selector(_end:)];
 	}
-	
+    else if( (mp_normalScene.time <= 5.f) && (mp_lastTimeSprite == nil) )
+    {
+        //  のこり時間が指定した時間を超えたら点滅処理
+        CCFadeIn*   pFadeIn    = [CCFadeIn actionWithDuration:1];
+        CCFadeOut*   pFadeOut    = [CCFadeOut actionWithDuration:1];
+        CCSequence* pSeq    = [CCSequence actions:pFadeIn, pFadeOut, nil];
+        CCRepeatForever*    pRepeat = [CCRepeatForever actionWithAction:pSeq];
+        CCSprite*   pSp = [CCSprite spriteWithFile:@"lasttime.png"];
+        [pSp setOpacity:0];
+        [pSp setPosition:ccp(0,0)];
+        [pSp setAnchorPoint:ccp(0,0)];
+        
+        [pSp runAction:pRepeat];
+        [self addChild:pSp];
+        
+        mp_lastTimeSprite   = pSp;
+    }
+
 	int64_t	nowScoreNum	= [pGameScene getScore];
 	if( [pGameScene->mp_scorePut getCountNum] != nowScoreNum )
 	{
@@ -390,16 +410,16 @@ enum
 {
 	GameScene*	pGameScene	= mp_gameScene;
 	Customer*	pCustomer	= nil;
-	SInt32	notVisibleCntCustomer	= 0;
+	SInt32	visibleCntCustomer	= 0;
 	CCARRAY_FOREACH(pGameScene->mp_customerArray, pCustomer)
 	{
-		if( pCustomer.visible == NO )
+		if( pCustomer.visible )
 		{
-			++notVisibleCntCustomer;
+			++visibleCntCustomer;
 		}
 	}
-	
-	if( pGameScene->mp_customerArray.count <= notVisibleCntCustomer )
+
+	if( visibleCntCustomer <= 0 )
 	{
 		//	一人も客がいない状態
 		[pGameScene putCustomer:YES];
@@ -498,6 +518,8 @@ enum
             {
                 //  天ぷらを捨てる
                 bDust   = YES;
+                
+                [pDustBoxToTenpura startAnim:eANIM_DUST_DUST_BOX_TO_TENPURA];
                 
                 [mp_touchTenpura unLockTouch];
                 [mp_touchTenpura setState:eTENPURA_STATE_RESTART];

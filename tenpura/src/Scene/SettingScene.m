@@ -678,7 +678,7 @@
 }
 
 /*
-	@brief	ミッション成功メッセージ終了
+	@brief	アラート終了
 */
 -(void)	alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {

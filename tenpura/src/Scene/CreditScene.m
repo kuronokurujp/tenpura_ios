@@ -89,6 +89,8 @@
 		NSString*	pFilePath	= [[NSBundle mainBundle] pathForResource:@"credit" ofType:@"html"];
 		NSURL*	pFileUrl	= [NSURL fileURLWithPath:pFilePath];
 		[mp_view loadRequest:[NSURLRequest requestWithURL:pFileUrl]];
+        [mp_view setBackgroundColor:[UIColor clearColor]];
+        [mp_view setOpaque:NO];
 	}
 }
 
