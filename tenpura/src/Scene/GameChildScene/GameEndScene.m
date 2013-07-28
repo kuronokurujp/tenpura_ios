@@ -115,7 +115,8 @@
             
             if( pSaveData->invocEventNo != -1 )
             {
-                [pDataSaveGame setSuccessEventNo:[DataEventDataList chkSuccess:pSaveData->invocEventNo :successBit]];
+                const SInt8    bSuccess    = [DataEventDataList chkSuccess:pSaveData->invocEventNo :successBit];
+                [pDataSaveGame setSuccessEventNo:bSuccess];
             }
         }
 	       

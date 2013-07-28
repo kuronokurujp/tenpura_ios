@@ -188,7 +188,7 @@ static DataEventDataList*	s_pInst	= nil;
     const SAVE_DATA_ST*   pSaveData   = [pSaveGameInst getData];
     NSAssert(pSaveData->invocEventNo != -1, @"");
 
-    SInt32  limitTime   = pSaveData->eventTime;
+    SInt32  limitTime   = pSaveGameInst.nowEventTime;
     if( limitTime <= 0 )
     {
         limitTime   = 0;

@@ -81,6 +81,7 @@ extern const char*	gp_tweetTextKeyName;
 extern const char*	gp_tweetSearchURLKeyName;
 
 extern	const char*	gp_paymentObserverName;
+extern  const char* gp_getNetTimeObserverName;
 
 extern const char*	gp_soundDataListName;
 

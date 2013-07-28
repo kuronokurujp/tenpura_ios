@@ -33,6 +33,9 @@ const char*	gp_tweetSearchURLKeyName	= "TweetSearchURLKey";
 //	購入処理のオブサーバー通知名
 const char*	gp_paymentObserverName	= "InPaymenttOjama";
 
+//  ネットタイマー取得オブサーバー通知名
+const char* gp_getNetTimeObserverName   = "GetNetworkTime";
+
 
 //	お客の座標位置
 const float ga_initCustomerPos[ eCUSTOMER_MAX ][ 2 ]	=

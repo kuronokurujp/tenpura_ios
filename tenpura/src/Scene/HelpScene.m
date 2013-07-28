@@ -57,6 +57,15 @@ static NSString*	sp_helpHtmlNameList[]	=
 	@"help5",
 };
 
+static NSString*	sp_helpHtmlNameListByLangEn[]	=
+{
+	@"help_en1",
+	@"help_en2",
+	@"help_en3",
+	@"help_en4",
+	@"help_en5",
+};
+
 /*
 	@brief	初期化
 */
@@ -230,8 +239,21 @@ static NSString*	sp_helpHtmlNameList[]	=
 -(void)	changePage:(SInt32)in_idx
 {
 	NSAssert( mp_helpView, @"webViewを確保していない" );
-	NSString*	pFilePath	= [[NSBundle mainBundle] pathForResource:sp_helpHtmlNameList[in_idx] ofType:@"html"];
-	NSURL*	pFileUrl	= [NSURL fileURLWithPath:pFilePath];
+
+    NSString*	pFilePath	= nil;
+    if([NSLocalizedString(@"la",@"") isEqualToString:@"ja"])
+    {
+        // 日本語
+        pFilePath	= sp_helpHtmlNameList[in_idx];
+    }
+    else
+    {
+        // 英語
+        pFilePath	= sp_helpHtmlNameListByLangEn[in_idx];
+    }
+
+	NSString*	pFilePathBundle	= [[NSBundle mainBundle] pathForResource:pFilePath ofType:@"html"];
+	NSURL*	pFileUrl	= [NSURL fileURLWithPath:pFilePathBundle];
 	[mp_helpView loadRequest:[NSURLRequest requestWithURL:pFileUrl]];
     [mp_helpView setBackgroundColor:[UIColor clearColor]];
     [mp_helpView setOpaque:NO];

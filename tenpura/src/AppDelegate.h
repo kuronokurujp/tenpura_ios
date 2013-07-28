@@ -20,6 +20,7 @@
 <
 	UIApplicationDelegate,
     UIAlertViewDelegate,
+    NSURLConnectionDelegate,
 	CCDirectorDelegate,
 	StoreAppPurchaseManagerProtocol,
 	GameKitHelperProtocol
@@ -32,7 +33,15 @@
 	UIActivityIndicatorView*	mp_indicator;
     UIAlertView*	mp_storeBuyCheckAlerView;
     UIAlertView*    mp_storeSuccessAlerView;
+    UIAlertView*    mp_storeErrorAlerView;
+    
+    UIAlertView*    mp_networkTimeErrorAlerView;
     NSString*   mp_storeSuccessProduct;
+    NSTimer*    mp_gameTimer;
+    NSTimer*    mp_startNetworkSendChk;
+    
+    BOOL    mb_visibleByGetNetTime;
+    BOOL    mb_enableByGetNetTime;
 
 	CCDirectorIOS	*director_;							// weak ref
 
@@ -46,5 +55,6 @@
 @property (readonly) UINavigationController *navController;
 @property (readonly) CCDirectorIOS *director;
 @property (nonatomic, assign) id<StoreAppPurchaseManagerSuccessProtocol> storeSuccessDelegate;
+@property   (nonatomic, readonly)BOOL   bVisibleByGetNetTime;
 
 @end

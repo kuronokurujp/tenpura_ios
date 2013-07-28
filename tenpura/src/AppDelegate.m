@@ -30,7 +30,11 @@
 
 @interface AppController (PrivateMethod)
 
+-(void) _onStartGetNetTime;
+-(void) _onStartGameTimer;
+
 -(void) _onSecTimerCnt:(id)in_sender;
+-(void) _onDoStartNetworkSendByObserva:(id)in_sender;
 
 -(void)	onBannerShow;
 -(void)	onBannerHide;
@@ -44,12 +48,15 @@
 
 -(void)	_payment:(NSString*)in_pProducts;
 
+-(const BOOL) _startNetwork;
+
 @end
 
 @implementation AppController
 
 @synthesize window=window_, navController=navController_, director=director_;
 @synthesize storeSuccessDelegate    = m_storeSuccessDelegate;
+@synthesize bVisibleByGetNetTime    = mb_visibleByGetNetTime;
 
 void uncaughtExceptionHandler( NSException* in_pException )
 {
@@ -64,6 +71,11 @@ void uncaughtExceptionHandler( NSException* in_pException )
     mp_grayView = nil;
     mp_indicator    = nil;
     m_storeSuccessDelegate  = nil;
+    mp_networkTimeErrorAlerView = nil;
+    mp_gameTimer    = nil;
+    mp_startNetworkSendChk  = nil;
+    mb_visibleByGetNetTime  = YES;
+    mb_enableByGetNetTime   = YES;
 
 	//	iOS4のみしかない処理に対応
 	[UIViewController iOS4compatibilize];
@@ -174,14 +186,16 @@ void uncaughtExceptionHandler( NSException* in_pException )
 		
     //	ストア処理関連のアラート
 	{
-		mp_storeBuyCheckAlerView	= [[UIAlertView alloc] initWithTitle:@"" message:@"" delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
+		mp_storeBuyCheckAlerView	= [[UIAlertView alloc] initWithTitle:@"" message:@"" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
         mp_storeSuccessAlerView	= [[UIAlertView alloc] initWithTitle:@"" message:@"" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
 	}
     
-    //  １秒ごとにチェックするタイマー
+    //  ネットタイム取得通知
     {
-        NSTimer*    pSecCountTimer  = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(_onSecTimerCnt:) userInfo:nil repeats:YES];
-        NSAssert(pSecCountTimer, @"");
+		NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+        
+		NSString*	pObserverName	= [NSString stringWithUTF8String:gp_getNetTimeObserverName];
+		[nc addObserver:self selector:@selector(_onStartGetNetTime) name:pObserverName object:nil];
     }
 
 	// and add the scene to the stack. The director will run it when it automatically when the view is displayed.
@@ -243,6 +257,9 @@ void uncaughtExceptionHandler( NSException* in_pException )
 		{
 			[director_ resume];
 		}
+        
+        //  アプリがフォワードになったら再度タイム取得する
+        mb_visibleByGetNetTime  = YES;
 	}
 }
 
@@ -359,13 +376,77 @@ void uncaughtExceptionHandler( NSException* in_pException )
 }
 
 /*
+    @brief  ネットタイム取得開始
+ */
+-(void) _onStartGetNetTime
+{
+    //  通信開始タイマー作成
+    if( mp_startNetworkSendChk == nil )
+    {
+        mp_startNetworkSendChk  = [NSTimer scheduledTimerWithTimeInterval:0.001f target:self selector:@selector(_onDoStartNetworkSendByObserva:) userInfo:nil repeats:YES];
+        NSAssert(mp_startNetworkSendChk, @"");
+    }    
+}
+
+/*
+    @brief  ゲームタイマースタート
+ */
+-(void) _onStartGameTimer
+{
+    if( mp_gameTimer == nil )
+    {
+        mp_gameTimer  = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(_onSecTimerCnt:) userInfo:nil repeats:YES];
+        NSAssert(mp_gameTimer, @"");
+    }    
+}
+
+/*
     @brief  １秒ごとのタイマーカウント
  */
 -(void) _onSecTimerCnt:(id)in_sender
 {
     DataSaveGame*   pDataSaveGameInst   = [DataSaveGame shared];
+    pDataSaveGameInst.gameTime  += 1;
     [pDataSaveGameInst addPlayLifeTimerCnt:-1];
     [pDataSaveGameInst addEventTimerCnt:-1];
+}
+
+/*
+ */
+-(void) _onDoStartNetworkSendByObserva:(id)in_sender
+{
+    //  すでに別口でネットワークで発生しているのであればいったん止める
+    if( [UIApplication sharedApplication].networkActivityIndicatorVisible == YES )
+    {
+        return;
+    }
+    
+    if( mb_enableByGetNetTime == NO )
+    {
+        return;
+    }
+
+    mb_visibleByGetNetTime  = NO;
+    {
+        if( [self _startNetwork] == NO )
+        {
+            UIAlertView*	pAlert	= [[[UIAlertView alloc]
+                                        initWithTitle:[DataBaseText getString:1050]
+                                        message:[DataBaseText getString:1051]
+                                        delegate:self cancelButtonTitle:@"OK" otherButtonTitles:
+                                        nil, nil] autorelease];
+            
+            mp_networkTimeErrorAlerView = pAlert;
+            [pAlert show];
+        }
+        else
+        {
+            [[CCDirector sharedDirector] pause];
+        }
+        
+        [mp_startNetworkSendChk invalidate];
+        mp_startNetworkSendChk  = nil;
+    }
 }
 
 /*
@@ -565,6 +646,8 @@ void uncaughtExceptionHandler( NSException* in_pException )
  */
 -(void)	onRequest
 {
+    mb_enableByGetNetTime   = NO;
+
 	[[CCDirector sharedDirector] stopAnimation];
 	[[CCDirector sharedDirector] pause];
 	
@@ -616,10 +699,11 @@ void uncaughtExceptionHandler( NSException* in_pException )
 {
 	UIAlertView*	pAlert	= [[[UIAlertView alloc]
 								initWithTitle:@"" message:in_pErrorMessage
-								delegate:nil
+								delegate:self
 								cancelButtonTitle:[DataBaseText getString:46]
 								otherButtonTitles:nil, nil] autorelease];
 	[pAlert show];
+    mp_storeErrorAlerView   = pAlert;
 }
 
 /*
@@ -683,7 +767,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
                         }
                         case eSTORE_ID_CURELIEF:
                         {
-                            [[DataSaveGame shared] addPlayLife:1 :NO];
+                            [[DataSaveGame shared] addPlayLife:1];
                             break;
                         }
                         case eSTORE_ID_MONEY_3000:		{ [[DataSaveGame shared] addSaveMoeny:3000]; break; }
@@ -698,10 +782,10 @@ void uncaughtExceptionHandler( NSException* in_pException )
 	}
     
     {
-        //	バナー表示通知
+        //	購入終了後に呼び出す
         {
-            NSString*	pBannerShowName	= [NSString stringWithUTF8String:gp_paymentObserverName];
-            NSNotification *n = [NSNotification notificationWithName:pBannerShowName object:nil];
+            NSString*	pPaymentObsName	= [NSString stringWithUTF8String:gp_paymentObserverName];
+            NSNotification *n = [NSNotification notificationWithName:pPaymentObsName object:nil];
             NSAssert(n, @"");
             [[NSNotificationCenter defaultCenter] postNotification:n];
         }
@@ -728,7 +812,130 @@ void uncaughtExceptionHandler( NSException* in_pException )
             [m_storeSuccessDelegate onStoreSuccess:mp_storeSuccessProduct];
             mp_storeSuccessProduct  = nil;
         }
+        mb_enableByGetNetTime   = YES;
+        mp_storeSuccessAlerView = nil;
     }
+    else if( mp_storeErrorAlerView == alertView )
+    {
+        mb_enableByGetNetTime   = YES;
+        mp_storeErrorAlerView   = nil;
+    }
+    else if( mp_networkTimeErrorAlerView == alertView )
+    {
+        [self _startNetwork];
+        mp_networkTimeErrorAlerView = nil;
+    }
+}
+
+//  通信結果取得
+-(void) connection:(NSURLConnection *)connection didReceiveData:(NSData *)receiveData
+{
+    //  ゲーム初期化
+    [DataSaveGame shared].gameTime  = 0;
+
+    //  取得する文字列は「年／月／日 時:分:秒」なのは確実
+    NSString* pStr  = [[[NSString alloc] initWithData:receiveData encoding:NSUTF8StringEncoding] autorelease];
+    NSLog(@"%@", pStr);
+    
+    //  文字列を解析
+    NSDateComponents*   pComp   = [[[NSDateComponents alloc] init] autorelease];
+    pComp.year  = 0;
+    pComp.month = 0;
+    pComp.day   = 0;
+    pComp.hour  = 0;
+    pComp.minute    = 0;
+    pComp.second    = 0;
+    
+    {
+        //  年月日と時分日で分ける
+        NSArray*    pItems  = [pStr componentsSeparatedByString:@" "];
+        NSAssert([pItems count] == 2, @"");
+        //  「年/月/日」を取得
+        NSString*   pYearMonthDayStr    = [pItems objectAtIndex:0];
+        {
+            NSArray*    pYearMonthDayItem   = [pYearMonthDayStr componentsSeparatedByString:@"/"];
+            pComp.year      = [[pYearMonthDayItem objectAtIndex:0] intValue];
+            pComp.month     = [[pYearMonthDayItem objectAtIndex:1] intValue];
+            pComp.day       = [[pYearMonthDayItem objectAtIndex:2] intValue];
+        }
+        
+        //  「時:分:秒」を」取得
+        NSString*   pHourMinSecStr    = [pItems objectAtIndex:1];
+        {
+            NSArray*    pHourMinSecItem = [pHourMinSecStr componentsSeparatedByString:@":"];
+            pComp.hour      = [[pHourMinSecItem objectAtIndex:0] intValue];
+            pComp.minute    = [[pHourMinSecItem objectAtIndex:1] intValue];
+            pComp.second    = [[pHourMinSecItem objectAtIndex:2] intValue];
+        }
+    }
+    
+    NSCalendar* pCal    = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
+    NSDate* nowDate = [pCal dateFromComponents:pComp];
+    
+    //  日付をローカル保存
+    [DataSaveGame shared].networkDate   = nowDate;
+    
+    //  日付関連に関わるステータスを更新
+    [[DataSaveGame shared] updateTimeStatus:nowDate];
+    
+    //  ゲーム内タイマー開始
+    [self _onStartGameTimer];
+}
+
+//  通信成功
+-(void) connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    //  インジケータ表示
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    [[CCDirector sharedDirector] resume];
+}
+
+//  通信失敗
+-(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+    NSLog(@"network error");
+	UIAlertView*	pAlert	= [[[UIAlertView alloc]
+								initWithTitle:[DataBaseText getString:1050]
+								message:[DataBaseText getString:1051]
+								delegate:self cancelButtonTitle:@"OK" otherButtonTitles:
+								nil, nil] autorelease];
+    
+	[pAlert show];
+    
+    mp_networkTimeErrorAlerView = pAlert;
+    
+    //  通信失敗表示
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+}
+
+-(const BOOL) _startNetwork
+{
+    NSURL*  pUrl    = [[NSURL alloc] initWithString:@"http://n2-games.com/time/time.php"];
+    NSURLRequest*   pReq    = [[NSURLRequest alloc] initWithURL:pUrl];
+    NSURLConnection*    pCon    = [[NSURLConnection alloc] initWithRequest:pReq delegate:self];
+    if( pCon == nil )
+    {
+        //  失敗表示
+        NSLog(@"network error");
+        return NO;
+    }
+    
+	CGSize	winSize	= [CCDirector sharedDirector].winSize;
+
+    // グレービューを載せる
+    UIView *grayView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, winSize.width, winSize.height)];
+    [grayView setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5]];
+    
+    //インジケーターを載せる
+    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [indicator setCenter:CGPointMake(winSize.width * 0.5f, winSize.height * 0.5f)];
+    [grayView addSubview:indicator];
+    [indicator startAnimating];
+    
+    [grayView release];
+    [indicator release];
+
+    return YES;
 }
 
 @end

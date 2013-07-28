@@ -9,6 +9,7 @@
 #import "TitleScene.h"
 
 #import "./../CCBReader/CCBReader.h"
+#import "./../AppDelegate.h"
 #import "./../Data/DataSaveGame.h"
 #import "./../Data/DataItemList.h"
 #import "./../Data/DataGlobal.h"
@@ -21,6 +22,12 @@
 #import "./../Data/DataNetaPackList.h"
 
 #endif
+
+@interface TitleScene (PrivateMethod)
+
+-(const BOOL) _startNetwork;
+
+@end
 
 @implementation TitleScene
 
@@ -85,8 +92,28 @@
 #endif
 		[[SoundManager shared] playBgm:@"normalBGM"];
 	}
-	
+    
+    //  ネットタイム取得通知
+    AppController*	pApp	= (AppController*)[UIApplication sharedApplication].delegate;
+    if( pApp.bVisibleByGetNetTime == YES )
+    {
+		NSString*	pGetNetTimeName	= [NSString stringWithUTF8String:gp_getNetTimeObserverName];
+		NSNotification *n = [NSNotification notificationWithName:pGetNetTimeName object:nil];
+		NSAssert(n, @"");
+		[[NSNotificationCenter defaultCenter] postNotification:n];
+    }
+
 	return self;
+}
+
+-(void) dealloc
+{
+    [super dealloc];
+}
+
+-(void) onEnter
+{
+    [super onEnter];
 }
 
 /*
@@ -188,6 +215,32 @@
 	[[CCDirector sharedDirector] pushScene:pTransFade];
 }
 
+-(void) resumeSchedulerAndActions
+{
+    CCNode* pNode   = nil;
+    CCARRAY_FOREACH(_children, pNode)
+    {
+        [pNode resumeSchedulerAndActions];
+    }
+    
+    [mp_particle resetSystem];
+
+    [super resumeSchedulerAndActions];
+}
+
+-(void) pauseSchedulerAndActions
+{
+    CCNode* pNode   = nil;
+    CCARRAY_FOREACH(_children, pNode)
+    {
+        [pNode pauseSchedulerAndActions];
+    }
+    
+    [mp_particle stopSystem];
+    
+    [super pauseSchedulerAndActions];
+}
+
 /*
  @brief	CCBI読み込み終了
  */
@@ -205,10 +258,12 @@
                 CCParticleSystemQuad*   pParticle   = [CCParticleSystemQuad particleWithFile:@"konoha.plist"];
                 NSAssert(pParticle, @"");
                 [pLabelTTF addChild:pParticle];
+                
+                mp_particle = pParticle;
             }
             [pLabelTTF setString:@""];
 		}
-	}
+	}    
 }
 
 @end

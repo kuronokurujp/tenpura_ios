@@ -11,6 +11,10 @@
 
 @interface TitleScene : CCLayer
 {
+    CCParticleSystemQuad*   mp_particle;
 }
+
+-(void) resumeSchedulerAndActions;
+-(void) pauseSchedulerAndActions;
 
 @end

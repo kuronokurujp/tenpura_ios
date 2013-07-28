@@ -7,6 +7,8 @@
 //
 #import "StoreScene.h"
 
+#import "./../../AppDelegate.h"
+
 #import "./../../Data/DataGlobal.h"
 #import "./../../Data/DataBaseText.h"
 #import "./../../Data/DataStoreList.h"
@@ -40,6 +42,8 @@
             NSString*   pObserverName   = [NSString stringWithUTF8String:gp_paymentObserverName];
             [nc addObserver:self selector:@selector(_onPayment) name:pObserverName object:nil];
         }
+        
+        [self scheduleUpdate];
 	}
 	
 	return self;
@@ -53,6 +57,19 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
 	[super dealloc];
+}
+
+-(void) update:(ccTime)delta
+{
+    //  ネットタイム取得通知
+    AppController*	pApp	= (AppController*)[UIApplication sharedApplication].delegate;
+    if( pApp.bVisibleByGetNetTime == YES )
+    {
+		NSString*	pBannerShowName	= [NSString stringWithUTF8String:gp_getNetTimeObserverName];
+		NSNotification *n = [NSNotification notificationWithName:pBannerShowName object:nil];
+		NSAssert(n, @"");
+		[[NSNotificationCenter defaultCenter] postNotification:n];
+    }
 }
 
 /*

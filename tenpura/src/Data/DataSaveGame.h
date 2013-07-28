@@ -72,9 +72,6 @@ typedef struct
 	SInt32	score;				//	650(4)
     SInt32  eventScore;
     
-    SInt32  eventTime;  //  654(4)
-    SInt32  cureTime;   //  658(4)
-
     UInt16  nabeLv;     //  662(2)
     UInt16  nabeExp;    //  664(2)
     UInt16  nabeAddExp; //  666(2)
@@ -100,10 +97,12 @@ typedef struct
     SInt8   playLife;               //  698(1)
     BOOL    bTutorial;              //  699(1)
     
-    SInt32  settingNetaPackId;    //  700(4)
+    SInt32  settingNetaPackId;      //  700(4)
+    char    aCureBeginTimeStr[32];  //  704(32)
+    char    aEventBeginTimeStr[32]; //  736(32)
 
     //	予約領域
-	SInt8	dummy[320];				//	704(320)
+	SInt8	dummy[256];				//	768(256)
 } SAVE_DATA_ST;	//	1024byte
 
 @interface DataSaveGame : NSObject
@@ -112,15 +111,26 @@ typedef struct
 	//	変数宣言
 	SaveData*	mp_SaveData;
     SInt32  m_cureTime;
+    SInt32  m_nowCureTime;
+    SInt32  m_nowEventTime;
+    UInt32  m_gameTime;
+    NSDate* mp_networkDate;
 }
 
 @property   (nonatomic, readwrite)SInt32    cureTime;
+@property   (nonatomic, retain)NSDate*   networkDate;
+@property   (nonatomic, readonly)SInt32 nowCureTime;
+@property   (nonatomic, readonly)SInt32 nowEventTime;
+@property   (nonatomic, readwrite)UInt32    gameTime;
 
 //	関数
 +(DataSaveGame*)shared;
 +(void)end;
 
 -(void)save;
+
+//  時間に関連するステータスを更新
+-(void)updateTimeStatus:(NSDate*)in_date;
 
 //	データリセット
 -(BOOL)reset:(DataItemList*)in_pDataItamList;
@@ -160,7 +170,7 @@ typedef struct
 -(void)	saveMissionFlg:(BOOL)in_flg :(UInt32)in_idx;
 
 //  ライフ増減
--(void) addPlayLife:(const SInt8)in_num :(const BOOL)in_bSaveLiefTime;
+-(void) addPlayLife:(const SInt8)in_num;
 
 //  ライフタイマー加算
 -(void) addPlayLifeTimerCnt:(const SInt32)in_cnt;
@@ -182,7 +192,9 @@ typedef struct
 
 //  イベント設定
 -(void) setEventNo:(SInt8)in_no :(SInt32)in_timeCnt;
+//  in_no=-1なら失敗値なので無視する
 -(void) setSuccessEventNo:(SInt8)in_no;
+-(void) endEvent;
 -(void) addEventChkPlayCnt;
 
 //  チュートリアル設定

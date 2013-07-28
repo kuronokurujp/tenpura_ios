@@ -17,11 +17,11 @@
 
 typedef enum
 {
-    eEVENT_SUCCESS_RESULT_NONE   = 0,
-    eEVENT_SUCCESS_RESULT_RUN,
-    eEVENT_SUCCESS_RESULT_OK,
-    eEVENT_SUCCESS_RESULT_NG,
-} EVENT_SUCCESS_RESULT_ENUM;
+    eEVENT_RESULT_NONE   = 0,
+    eEVENT_RESULT_RUN,
+    eEVENT_RESULT_OK,
+    eEVENT_RESULT_NG,
+} EVENT_RESULT_ENUM;
 
 @interface SettingScene : CCLayer
 <
@@ -42,7 +42,7 @@ typedef enum
     UIAlertView*        mp_eventChkAlertView;
     UIAlertView*        mp_lvupNabeAlertView;
     
-    EVENT_SUCCESS_RESULT_ENUM   m_eventSuccessRet;
+    EVENT_RESULT_ENUM   m_eventResult;
     CCNode* mp_eventChkBtn;
     
     CCArray*    mp_heartObjArray;

@@ -69,7 +69,7 @@
         mp_eventChkBtn  = nil;
 
 		m_missionSuccessIdx	= 0;
-        m_eventSuccessRet   = eEVENT_SUCCESS_RESULT_NONE;
+        m_eventResult   = eEVENT_RESULT_NONE;
 
         //  初回のみイベント発生
         {
@@ -81,7 +81,7 @@
             }
             else if( pSaveData->successEventNo != -1 )
             {
-                m_eventSuccessRet   = eEVENT_SUCCESS_RESULT_OK;
+                m_eventResult   = eEVENT_RESULT_OK;
             }
         }
         
@@ -95,7 +95,7 @@
                 [mp_heartObjArray addObject:pSp];
             }
         }
-		
+        		
 		[[SoundManager shared] playBgm:@"normalBGM"];
 	}
 	
@@ -178,7 +178,7 @@
     [self _runPlayLifeProcess];
 
     [mp_eventChkBtn setVisible:NO];
-    if( m_eventSuccessRet == eEVENT_SUCCESS_RESULT_NONE )
+    if( m_eventResult == eEVENT_RESULT_NONE )
     {
         const SAVE_DATA_ST* pSaveData   = [[DataSaveGame shared] getData];
         if( pSaveData->invocEventNo != -1 )
@@ -228,21 +228,21 @@
             const EVENT_DATA_ST*    pEventData  = [DataEventDataList invocEvent];
             if( pEventData )
             {
-                m_eventSuccessRet   = eEVENT_SUCCESS_RESULT_RUN;
+                m_eventResult   = eEVENT_RESULT_RUN;
                 [pDataSaveGameInst setEventNo:pEventData->no :pEventData->limitData.time];
                 mb_chkStartEvent    = NO;
             }
         }
-        else if( (pSaveData->invocEventNo != -1) && (m_eventSuccessRet == eEVENT_SUCCESS_RESULT_NONE) )
+        else if( (pSaveData->invocEventNo != -1) && (m_eventResult == eEVENT_RESULT_NONE) )
         {
             if( [DataEventDataList isError:pSaveData->invocEventNo] )
             {
-                m_eventSuccessRet   = eEVENT_SUCCESS_RESULT_NG;
+                m_eventResult   = eEVENT_RESULT_NG;
             }            
         }
     }
 	
-    if( m_eventSuccessRet == eEVENT_SUCCESS_RESULT_NG )
+    if( m_eventResult == eEVENT_RESULT_NG )
     {
         [mp_eventChkBtn setVisible:NO];
 
@@ -258,7 +258,7 @@
                                                                 otherButtonTitles:nil];
         [mp_eventNGAlertView show];
     }
-    else if( m_eventSuccessRet == eEVENT_SUCCESS_RESULT_OK )
+    else if( m_eventResult == eEVENT_RESULT_OK )
     {
         if( mp_eventSuccessAlertView != nil )
         {
@@ -272,7 +272,7 @@
                                                                         otherButtonTitles:nil];
         [mp_eventSuccessAlertView show];
     }
-    else if( m_eventSuccessRet == eEVENT_SUCCESS_RESULT_RUN )
+    else if( m_eventResult == eEVENT_RESULT_RUN )
     {
         if( mp_eventInvocAlertView != nil )
         {
@@ -296,7 +296,9 @@
         }
     }
 
-    m_eventSuccessRet   = eEVENT_SUCCESS_RESULT_NONE;
+    [self scheduleUpdate];
+
+    m_eventResult   = eEVENT_RESULT_NONE;
 
     [[DataSaveGame shared] save];
 
@@ -308,6 +310,8 @@
 */
 -(void)	onExitTransitionDidStart
 {
+    [self unscheduleUpdate];
+
     AppController*	pApp	= (AppController*)[UIApplication sharedApplication].delegate;
     pApp.storeSuccessDelegate   = nil;
 
@@ -320,6 +324,19 @@
 	}
 
 	[super onExitTransitionDidStart];
+}
+
+-(void) update:(ccTime)delta
+{
+    //  ネットタイム取得通知
+    AppController*	pApp	= (AppController*)[UIApplication sharedApplication].delegate;
+    if( pApp.bVisibleByGetNetTime == YES )
+    {
+		NSString*	pGetNetTimeName	= [NSString stringWithUTF8String:gp_getNetTimeObserverName];
+		NSNotification *n = [NSNotification notificationWithName:pGetNetTimeName object:nil];
+		NSAssert(n, @"");
+		[[NSNotificationCenter defaultCenter] postNotification:n];
+    }
 }
 
 /*
@@ -830,8 +847,9 @@
             [mp_eventRewardAlertView release];
         }
         mp_eventRewardAlertView = nil;
-                
-        [pDataSaveGameInst setEventNo:-1 :0];
+     
+        [pDataSaveGameInst endEvent];
+        
         //	成功しているミッションがあるかチェック
         if([self _checkMissionSuccess] == NO)
         {
@@ -846,7 +864,8 @@
         }
         mp_eventNGAlertView = nil;
         
-        [pDataSaveGameInst setEventNo:-1 :0];
+        [pDataSaveGameInst endEvent];
+
         //	成功しているミッションがあるかチェック
         if( [self _checkMissionSuccess] == NO )
         {
@@ -945,7 +964,7 @@
         
         [[CCDirector sharedDirector] replaceScene:pTransFade];
         
-        [pSaveGameInst addPlayLife:-1 :NO];
+        [pSaveGameInst addPlayLife:-1];
     }
     
 	pDataSettingTenpura	= nil;
@@ -980,22 +999,27 @@
     [mp_cureTimeStr setString:@"00:00"];
     if( pSaveData->playLife < eSAVE_DATA_PLAY_LIEF_MAX )
     {
+        SInt32  nowCureTime = pDataSaveGameInst.nowCureTime;
         //  回復時間になっているか
         {
-            if( pSaveData->cureTime <= 0 )
+            if( nowCureTime <= 0 )
             {
                 //  回復
-                [pDataSaveGameInst addPlayLife:1 :YES];
+                [pDataSaveGameInst addPlayLife:1];
             }
         }
 
         //  回復時間を表示
         if( pSaveData->playLife < eSAVE_DATA_PLAY_LIEF_MAX )
         {
-            SInt32  second  = (pSaveData->cureTime <= 0) ? 0 : pSaveData->cureTime % 60;
-            SInt32  minute  = (pSaveData->cureTime <= 0) ? 0 : pSaveData->cureTime / 60;
+            SInt32  second  = (nowCureTime <= 0) ? 0 : nowCureTime % 60;
+            SInt32  minute  = (nowCureTime <= 0) ? 0 : nowCureTime / 60;
             
             [mp_cureTimeStr setString:[NSString stringWithFormat:@"%02ld:%02ld", minute, second]];
+        }
+        else
+        {
+            [mp_cureTimeStr setString:[NSString stringWithFormat:@"%02d:%02d", 0, 0]];
         }
     }
 }
