@@ -32,6 +32,11 @@ typedef enum
 
 //	リクエスト開始
 -(void)	onRequest;
+//  プロダクトデータ取得
+-(void) onGetProduect:(SKProduct*)in_pProduct;
+//  プロダクトデータ取得終了
+-(void) onEndGetProducts;
+
 //	リクエストエラー
 -(void)	onErrorRequest:(NSError*)in_pError;
 
@@ -61,6 +66,7 @@ typedef enum
 	id<StoreAppPurchaseManagerProtocol>	m_delegate;
 
 	BOOL	mb_loading;
+    BOOL    mb_requestPayment;
 	SKProductsRequest*	mp_skProductsRequest;
 }
 
@@ -71,8 +77,11 @@ typedef enum
 +(StoreAppPurchaseManager*)	share;
 +(void)	end;
 
+//  
 //	プロダクトリクエスト
 -(BOOL)	requestProduct:(NSString*)in_pIdName;
+//  プロダクトリクエスト（データ取得用）
+-(BOOL) requestProdecutByData:(NSSet*)in_pProductIds;
 
 //	課金開始
 -(BOOL)	requestPayment:(SKProduct*)in_pProduct;

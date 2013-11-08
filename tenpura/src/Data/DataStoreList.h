@@ -26,6 +26,8 @@ typedef struct
 {
 	SInt32		no;
 	UInt32		textId;
+    UInt32      buyMoeny;
+    UInt32      raleBuyMoney;
 	char		aStoreIdName[128];
 	
 } STORE_DATA_ST;
@@ -48,5 +50,9 @@ typedef struct
 -(const STORE_DATA_ST*)	getData:(UInt32)in_idx;
 //	データ取得(id検索)
 -(const STORE_DATA_ST*)	getDataSearchId:(UInt32)in_no;
+//  購入金額設定
+-(void) setBuyMoney:(UInt32)in_idx :(UInt32)in_money;
+//  購入金額取得
+-(const UInt32) getBuyMoney:(UInt32)in_idx;
 
 @end

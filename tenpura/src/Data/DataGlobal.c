@@ -85,4 +85,7 @@ char*	gpa_spriteFileNameList[eSPRITE_FILE_MAX]	=
     "saikou.png",
     "touch.png",
     "lasttime.png",
+    "sire_cell.png",
+    "sire_cell60.png",
+    "sire_cell80.png",
 };

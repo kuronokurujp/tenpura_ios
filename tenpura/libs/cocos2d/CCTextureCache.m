@@ -269,8 +269,33 @@ static CCTextureCache *sharedTextureCache;
 {
 	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nil");
 
+    CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
+
+    if([NSLocalizedString(@"la",@"") isEqualToString:@"ja"])
+    {
+        // 日本語
+    }
+    else
+    {
+        // 英語
+        NSRange r   = [path rangeOfString:@".png"];
+        if( r.location == NSNotFound )
+        {
+        }
+        else
+        {
+            NSMutableString*    pPathMut    = [NSMutableString stringWithString:path];
+            [pPathMut insertString:@"_en" atIndex:r.location];
+            ccResolutionType resolution;
+            NSString *fullpath = [fileUtils fullPathForFilename:pPathMut resolutionType:&resolution];
+            if( fullpath )
+            {
+                path    = pPathMut;
+            }
+        }
+    }
+
 	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
-	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
 	path = [fileUtils standarizePath:path];
 
 	__block CCTexture2D * tex = nil;

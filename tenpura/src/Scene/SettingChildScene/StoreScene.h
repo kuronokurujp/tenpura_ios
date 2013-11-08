@@ -17,6 +17,5 @@
 
 @interface StoreScene : SWTableViewHelper
 {
-@private
 }
 @end

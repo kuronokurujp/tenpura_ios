@@ -66,6 +66,7 @@ static	const char*	sp_transactionFlgName	= "storeTransactionFlg";
 	if( self = [super init] )
 	{
 		mb_loading	= NO;
+        mb_requestPayment   = NO;
 		mp_skProductsRequest	= nil;
 		m_delegate	= nil;
 		
@@ -103,7 +104,31 @@ static	const char*	sp_transactionFlgName	= "storeTransactionFlg";
 	[self _requestProductData:in_pIdName];
 
 	mb_loading	= YES;
+    mb_requestPayment   = YES;
 	return YES;
+}
+
+//  プロダクトリクエスト（データ取得用）
+-(BOOL) requestProdecutByData:(NSSet*)in_pProductIds
+{
+ 	if( [self isTransaction] == true )
+	{
+		return NO;
+	}
+    
+	if( (m_delegate != nil ) && ([m_delegate respondsToSelector:@selector(onRequest)]) )
+	{
+		[m_delegate onRequest];
+	}
+    
+	mp_skProductsRequest	= [[SKProductsRequest alloc] initWithProductIdentifiers:in_pProductIds];
+	[mp_skProductsRequest setDelegate:self];
+	[mp_skProductsRequest start];
+
+    mb_loading  = YES;
+    mb_requestPayment   = NO;
+    
+    return YES;
 }
 
 /*
@@ -215,12 +240,36 @@ static	const char*	sp_transactionFlgName	= "storeTransactionFlg";
 		NSLog(@"invalid product identifier: %@", pIdentifier);
 	}
 
+    BOOL    bRequestPayment = YES;
 	for( SKProduct*	pProduct in response.products )
 	{
 		NSLog(@"volid product identifier: %@", pProduct.productIdentifier);
-		[self requestPayment:pProduct];
-		break;
+        if( mb_requestPayment == NO )
+        {
+            if( (m_delegate != nil) && ([m_delegate respondsToSelector:@selector(onGetProduect:)]) )
+            {
+                [m_delegate onGetProduect:pProduct];
+            }
+            bRequestPayment = NO;
+        }
+
+        if( bRequestPayment == YES )
+        {
+            [self requestPayment:pProduct];
+            break;
+        }
 	}
+    
+    if( mb_requestPayment == NO )
+    {
+        //  データ取得終了
+        mb_loading	= NO;
+
+        if( (m_delegate != nil) && ([m_delegate respondsToSelector:@selector(onEndGetProducts)]) )
+        {
+            [m_delegate onEndGetProducts];
+        }        
+    }
 }
 
 /*

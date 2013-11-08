@@ -1,186 +1,186 @@
 ID,日本語,英語,
-0,リセット セーブ,reset save,デバッグ用
+0,リセット セーブ,Reset And Save,デバッグ用
 1,score,Score,スコア表記
-2,天ぷら,tempura,
-3,ゲーム開始,Game Start,
-4,Twitter,Twitter,
+2,天ぷら,Tempura,
+3,ゲーム開始,Tap To Start,
+4,Twitter,Tweet,
 5,Game Center,Game Center,
 6,クレジット,Credit,
-7,アドオンショップ,Shop,
+7,アドオンショップ,Addon Shop,
 8,ミッション,Mission,
-9,開店,open,
-10,アイテムショップ,neta list,
-11,タイトル,title,
-12,戻る,return,
-13,タネの準備,Game preparation,
-14,タネ選択,Tempura selection,
-15,ハイスコア,high score,
-16,所持金,money,
-17,所持金,money,
-18,タネショップ,Tempura shop,
-19,ふきのとう,Butterbur sprout,
-20,レンコン,Lotus root,
+9,開店,Open,
+10,アイテムショップ,Items,
+11,タイトル,Title,
+12,戻る,Back,
+13,タネの準備,Prepare Stuffs,
+14,タネ選択,Pick Stuffs,
+15,ハイスコア,Hi-score,
+16,所持金,Money,
+17,所持金,Money,
+18,タネショップ,Tempura Stuffs,
+19,ふきのとう,Butterbur Scape,
+20,レンコン,Lotus Root,
 21,エビ,Shrimp,
-22,かき揚げ,Fried,
+22,かき揚げ,Shrimp And Vegetable Fritters,
 23,かぼちゃ,Pumpkin,
-24,さつまいも,Sweet potato,
-25,たらの芽,Bud of cod,
-26,ゲソ,Tentacles,
-27,きす,Whiting,
+24,さつまいも,Sweet Potato,
+25,たらの芽,Bud Of Cod,
+26,ゲソ,Squid Arms,
+27,きす,Sand Borer,
 28,まいたけ,Maitake,
 29,穴子,Conger,
-30,ししとう,Green pepper,
-31,ごぼうのささがき,Sasagaki of burdock,
+30,ししとう,Shishito,
+31,ごぼうのささがき,Chopped Burdock,
 32,しいたけ,Shiitake,
 33,大葉,Macrophyll,
 34,茄子,Eggplant,
 35,みみず,Earthworm,
 36,なめこ,Nameko,
-37,ゾンビの頭,Zombie head,
+37,ゾンビの頭,Zombie's Head,
 38,あわび,Abalone,
 39,ウィンナー,Wiener,
-40,アイス,Ice,
-41,富士山,Fuji Mountain,
-42,スマホ,Sumafo,
+40,アイス,Ice Cream,
+41,富士山,Mt. Fuji,
+42,スマホ,Smart Phone,
 43,地球,Earth,
 44,まんじゅう,Manju,
-45,購入確認,Purchase confirmation,
+45,購入確認,Confirmation,
 46,はい,YES,
 47,いいえ,NO,
-48,購入しました,I purchased,
-49,購入しますか？,Do you want to buy?,
-50,購入成功,Buy success,
+48,購入しました,Purchase Successed,
+49,購入しますか？,Are you sure you want purchase?,
+50,購入成功,Purchase Successed,
 51,Score,Score,
 52,Time,Time,
-53,もう一度,retry,
-54,セッティングへ,go to setting,
-55,天ぷら最高です#tempura / スマホ天ぷら,天ぷら最高です#tempura / スマホ天ぷら,
+53,もう一度,Retry,
+54,セッティングへ,Go To Settings,
+55,天ぷら最高です#tempura / スマホ天ぷら,I love tempura! #tempura / “スマホ天ぷら http://bit.ly/vnIVLk”,
 56,http://bit.ly/vnIVLk,http://blt.ly/vnIVLK,
-57,所持数,Possession number,
+57,所持数,Owned,
 58,金額,Amount,
 59,jp.co.tenpura.buymoney,jp.co.tenpura.buymoney,課金時のプロダクトID
 60,START,START,
-61,%@を%d個以上入手,%@を%d個以上入手,
-62,のりを,The glue,
-63,ごぼうのささがき,Sasagaki of burdock,
-64,さくらえび,Shrimp,
-65,ハイスコア %d 以上を超える,ハイスコア %d 以上を超える,
-66,資金%d入手しました,資金%d入手しました,
-67,ランク%dになりました。,ランク%dになりました。,
-68,ミッション成功,Mission success,
+61,%@を%d個以上入手,Gain %@ more than %d,
+62,のりを,Norio,
+63,ごぼうのささがき,Chopped Burdock,
+64,さくらえび,Sakura Shrimp,
+65,ハイスコア %d 以上を超える,Gain score more than %d ,
+66,資金%d入手しました,Gained %d money,
+67,ランク%dになりました。,Reached %d rank,
+68,ミッション成功,Mission successed,
 800,報酬,Reward,
-69,アイテム選択,Item selection,
-70,ハイスコア%d点 天ぷら,ハイスコア%d点 天ぷら,ハイスコア%d点 天ぷら
-71,ヘルプ,help,
+69,アイテム選択,Select Items,
+70,ハイスコア%d点 天ぷら,Achieved High Score %d,ハイスコア%d点 天ぷら
+71,ヘルプ,Help,
 72,http://bit.ly/vnIVLk,http://bit.ly/vnIVLk,[more app]を押した先のURL
 73,54096e57bc6a4863,54096e57bc6a4863,広告バナーID
-74,石のなべ,Pan ordinary,アイテム名
-75,金のなべ,Pot of gold,アイテム名
-76,鉄人のなべ,Pot of Iron Man,アイテム名
-77,皇帝のなべ,Pot of Emperor,アイテム名
-78,究極のなべ,Pot of ultimate,アイテム名
-79,普通の発泡酒,Malt beer ordinary,アイテム名
-80,仙人のビール,Beer of the hermit,アイテム名
-81,料理がうまくなるビール,Beer cuisine is well,アイテム名
-82,一番搾りビール,Ichiban Shibori beer,アイテム名
-83,天国のビール,Beer heaven,アイテム名
+74,石のなべ,Ordinary saucepan Of Stone,アイテム名
+75,金のなべ,saucepan Of Gold,アイテム名
+76,鉄人のなべ,saucepan Of Iron Chef,アイテム名
+77,皇帝のなべ,saucepan Of Emperor,アイテム名
+78,究極のなべ,saucepan Of Supremacy,アイテム名
+79,普通の発泡酒,Ordinary Low-malt Beer,アイテム名
+80,仙人のビール,Beer of Sennin,アイテム名
+81,料理がうまくなるビール,Tempura Suited Beer,アイテム名
+82,一番搾りビール,KIRIN Ichiban Draft,アイテム名
+83,天国のビール,Beer Of Heaven,アイテム名
 84,しお,Salt,アイテム名
-85,ゆずしお,O citrus fruit,アイテム名
-900,抹茶塩,Matcha salt,アイテム名
-901,高級岩塩,High-quality rock salt,アイテム名
+85,ゆずしお,Citron Flavored Salt,アイテム名
+900,抹茶塩,Matcha Flavored Salt,アイテム名
+901,高級岩塩,Delux Rock Salt,アイテム名
 902,仙人の塩,Salt of hermit,アイテム名
-86,職人のてんつゆ,Tentsuyu of the craftsman,アイテム名
-87,吟味された天つゆ,Tentsuyu it is examined,アイテム名
-88,高級天つゆ,Luxury Tentsuyu,アイテム名
-950,至高の天つゆ,Tentsuyu supreme,アイテム名
-951,仙人の天つゆ,Tentsuyu of hermit,アイテム名
-952,天ぷら「おまかせ」,I can provide anything tempura,アイテム名
-953,こげなくな〜る,No longer burnt,アイテム名
-954,すてられ〜る,I throw away the tempura,アイテム名
-955,お金持ち来たくな〜る,All guests to get rich,アイテム名
-956,タネパックを１つオープン,Open one the Tane pack,アイテム名
-90,スコアが%2.1lf倍になります。,スコアが%2.1lf倍,アイテム効果内容
-91,タイムが＋%2.0lf秒増えます。,タイム＋%2.0lf秒,アイテム効果内容
-92,フィーバーの時間＋%2.0lf秒継続します。,フィーバー時間＋%2.0lf秒,アイテム効果内容
-93,最終得点を%2.1lf倍増えます。,最終得点を最後に%2.1lf倍,アイテム効果内容
-94,どの天ぷらでもお客さんに食べさせることが出来る,It is possible to feed the audience in any tempura,
-95,すべての天ぷらがこげることがなくなる,It tempura all burned there is no,
-96,ゲーム中に天ぷらを捨てることが出来るゴミ箱が設置できる,Trash can to throw away the tempura during the game can be installed,
-97,お客さんが全員必ずお金持ちになる,Audience is sure to get rich all,
-98,タネパックが無料で一つ入手できる,Tanepakku can one get free,
-107,広告を外す,I remove the ads,ストア項目１
-108,タネの２段階目オープン,Second stage of open seed,ストア項目２
-109,タネの３段階目オープン,3 stage open the seed,ストア項目３
-110,タネの４段階目オープン,4 stage open the seed,ストア項目４
-111,タネの５段階目オープン,5 open stage of seed,ストア項目５
-112,資金１００００購入,10000 purchase funds,ストア項目６
-113,資金２００００購入,20000 purchase funds,ストア項目７
-114,購入成功,Buy success,アドオン購入成功時のメッセージ
-115,購入をキャンセルしました,Purchase failure,アドオン購入キャンセル時のメッセージ
-116,購入許可がおりておりません,Can not buy,アドオンの購入許可がおりていない場合のメッセージ
-117,購入失敗しました,I purchased failure,ストア接続状態によって購入できない場合のメッセージ
-118,購入中,Buying,アドオン購入のアラートタイトル
-119,リストア中,During a restore,リストアのアラーとタイトル
-120,途中購入中,Middle Buying,アドオン購入中から途中中断した時のアラートタイトル
-121,しばらくお待ちください,Please wait,アドオン処理中のメッセージ
-122,ノートパソコン,Notebook PC,
+86,職人のてんつゆ,Sauce Of Chef,アイテム名
+87,吟味された天つゆ,Well Examined Sauce,アイテム名
+88,高級天つゆ,Delux Sauce,アイテム名
+950,至高の天つゆ,Supreme Sauce,アイテム名
+951,仙人の天つゆ,Sauce Of Hermit,アイテム名
+952,天ぷら「おまかせ」,Tempura As You Like,アイテム名
+953,こげなくな〜る,Fly Good ,アイテム名
+954,すてられ〜る,Throw Away,アイテム名
+955,お金持ち来たくな〜る,Invite Wealthy Customer,アイテム名
+956,タネパックを１つオープン,Foodstuff-Pack,アイテム名
+90,スコアが%2.1lf倍になります。,Increase Score %2.1lf Times,アイテム効果内容
+91,タイムが＋%2.0lf秒増えます。,Add %2.0lf seconds to your time.,アイテム効果内容
+92,フィーバーの時間＋%2.0lf秒継続します。,Add %2.0lf seconds to “Fever Time”.,アイテム効果内容
+93,最終得点を%2.1lf倍増えます。,Increase Final Score %2.1lf Times,アイテム効果内容
+94,どの天ぷらでもお客さんに食べさせることが出来る,Be able to satisfy customer any time.,
+95,すべての天ぷらがこげることがなくなる,Be able to fly well,
+96,ゲーム中に天ぷらを捨てることが出来るゴミ箱が設置できる,Be able to throw away Tempura.,
+97,お客さんが全員必ずお金持ちになる,Be able to invite only wealthy customer.,
+98,タネパックが無料で一つ入手できる,Be able to gain a Foodstuff-Pack free.,
+107,広告を外す,Remove Ads,ストア項目１
+108,タネの２段階目オープン,Unlock Foodstuff-Pack Level 2,ストア項目２
+109,タネの３段階目オープン,Unlock Foodstuff-Pack Level 3,ストア項目３
+110,タネの４段階目オープン,Unlock Foodstuff-Pack Level 4,ストア項目４
+111,タネの５段階目オープン,Unlock Foodstuff-Pack Level 5,ストア項目５
+112,資金１００００購入,Add 10000 To “Amount”,ストア項目６
+113,資金２００００購入,Add 20000 To “Amount”,ストア項目７
+114,購入成功,Purchase Successed,アドオン購入成功時のメッセージ
+115,購入をキャンセルしました,Purchase Cancelled,アドオン購入キャンセル時のメッセージ
+116,購入許可がおりておりません,You need to unlock item first.,アドオンの購入許可がおりていない場合のメッセージ
+117,購入失敗しました,Purchase Failled,ストア接続状態によって購入できない場合のメッセージ
+118,購入中,Cancelling The Purchase,アドオン購入のアラートタイトル
+119,リストア中,Restoring,リストアのアラーとタイトル
+120,途中購入中,Cancelling ,アドオン購入中から途中中断した時のアラートタイトル
+121,しばらくお待ちください,Reflecting data,アドオン処理中のメッセージ
+122,ノートパソコン,Laptop ,
 123,宇宙人,Alien,
 124,スライム,Slime,
-125,ケーキ,Candy,
+125,ケーキ,Cake,
 126,目玉,Eyeball,
-127,ながぐつ,Boot,
-128,初心者向けレンコン,Beginners lotus root,ネタパック販売名
-129,初心者向け茄子,Eggplant heaven frying immediately,ネタパック販売名
-130,揚がるの早いかぼちゃ,Vegetables set sweet ...,ネタパック販売名
-131,みんな大好き海鮮セット,I love seafood set everyone,ネタパック販売名
-132,高級山菜天ぷらセット,Luxury mountain vegetables tempura set,ネタパック販売名
-133,揚がるの早いししとう,3-piece set food lot,ネタパック販売名
-134,ウソ、ホント？菓子セット,Lie,ネタパック販売名
-135,これで人気者？ＩＴセット,Popular person with this? IT set,ネタパック販売名
-136,マジでッ？げてものセット,Tsu Really? Heta-butsu set,ネタパック販売名
-137,ちょめちょめセット,Nonny-nonny set,ネタパック販売名
-138,ありえねぇ〜銀河セット,~ Galactic set impossible,ネタパック販売名
-139,初心者向けしいたけ,Name change set,ネタパック販売名
-140,揚がるの早いゲソ,Balance set,ネタパック販売名
-141,初めての天ぷらセット,Royal road set this if tempura,ネタパック販売名
-142,キノコがりセット,Set rising mushroom,ネタパック販売名
-143,某RPGザコが現れたセット,Certain RPG Zakopane appeared,ネタパック販売名
-144,そこそこ儲かる穴子,The set can you earn without not,ネタパック販売名
-544,早い早いよ！大葉,The set can you earn without not,ネタパック販売名
-545,スコアのごぼうのささがき,The set can you earn without not,ネタパック販売名
-145,スコア,Score,ゲームリザルト画面のスコアタイトル
+127,ながぐつ,Rubber Boot,
+128,初心者向けレンコン,Lotus Root for Bigginers,ネタパック販売名
+129,初心者向け茄子,Eggplant for Bigginers,ネタパック販売名
+130,揚がるの早いかぼちゃ,Fast Fly Pumpkin,ネタパック販売名
+131,みんな大好き海鮮セット,Lovely Seafood Sets,ネタパック販売名
+132,高級山菜天ぷらセット,Delux Wild Plants Sets,ネタパック販売名
+133,揚がるの早いししとう,Fast Fly Shishito,ネタパック販売名
+134,ウソ、ホント？菓子セット,Incredible ! Sweet-Sets,ネタパック販売名
+135,これで人気者？ＩＴセット,Be popular! IT-Sets,ネタパック販売名
+136,マジでッ？げてものセット,Yuck! Bushmeat-Sets,ネタパック販売名
+137,ちょめちょめセット,Wow!Nasty-Sets,ネタパック販売名
+138,ありえねぇ〜銀河セット,Surprising! Galactic-Sets,ネタパック販売名
+139,初心者向けしいたけ,Shiitake For Biginnerrs,ネタパック販売名
+140,揚がるの早いゲソ,Fast Fly Squid Arms,ネタパック販売名
+141,初めての天ぷらセット,Sets For Biginners,ネタパック販売名
+142,キノコがりセット,Hunted Mushrooms,ネタパック販売名
+143,某RPGザコが現れたセット,RPG-Mobs-Sets,ネタパック販売名
+144,そこそこ儲かる穴子,So-So Selling Conger,ネタパック販売名
+544,早い早いよ！大葉,Fast Fly Macrophyll,ネタパック販売名
+545,スコアのごぼうのささがき,Delux Chopped Burdock,ネタパック販売名
+145,スコア,Scores,ゲームリザルト画面のスコアタイトル
 146,ハイスコア,High scores,ゲームリザルト画面のハイスコアタイトル
-147,獲得資金,Acquisition funds,ゲームリザルト画面の獲得金額タイトル
-148,所持金,Possession gold,ゲームリザルト画面の合計金額タイトル
-149,広告除去：金額85円,¥ 85 Price: ad removal,アドオン広告除去項目名
-160,ハート１つ回復：金額85円,¥ 85 The amount Recovery: one heart 1,アドオンゲームプレイライフ１つ回復
-150,金3000取得：金額85円,¥ 85 Price: 3000 gold acquisition,アドオン金額取得項目名
-151,金9000取得：金額？？円,Gold 9000 acquisition: amount? ? Yen,アドオン金額取得項目名
-152,金80000取得：金額？？円,80000 gold acquisition: amount? ? Yen,アドオン金額取得項目名
-153,金400000取得：金額？？円,400000 gold acquisition: amount? ? Yen,アドオン金額取得項目名
-154,金900000取得：金額？？円,900000 gold acquisition: amount? ? Yen,アドオン金額取得項目名
-155,通信状況を確認してもう一度試してください,Please try again by checking the communication status,通信ができない時のメッセージ
+147,獲得資金,Gainned Money,ゲームリザルト画面の獲得金額タイトル
+148,所持金,Owned Money,ゲームリザルト画面の合計金額タイトル
+149,広告除去：金額%d円,%d Yen: Remove Ads,アドオン広告除去項目名
+160,ハート１つ回復：金額%d円,%d Yen: Heal 1 Life,アドオンゲームプレイライフ１つ回復
+150,金3000取得：金額%d円,%d Yen: Gain 3000 money,アドオン金額取得項目名
+151,金9000取得：金額%d円,%d Yen:Gain 9000 money,アドオン金額取得項目名
+152,金80000取得：金額%d円,%d Yen:Gain 80000 money,アドオン金額取得項目名
+153,金400000取得：金額%d円,%d Yen:Gain 400000 money,アドオン金額取得項目名
+154,金900000取得：金額%d円,%d Yen:Gain 900000 money,アドオン金額取得項目名
+155,通信状況を確認してもう一度試してください,Please check the communication status and try again.,通信ができない時のメッセージ
 156,???,???,アイテム購入が解放していないセルテキスト
-157,ゲームセンターがサインインしているかご確認をお願いします。,We ask for your confirmation game center or are signed in.,
-158,所持数：,Item:,
-200,イベント発生,Event,イベント発生時のタイトル
-201,イベント失敗,Failed Events,イベント失敗時のタイトル
-202,イベント中,During the event,イベント中のタイトル
-203,イベント報酬,Event reward,イベント報酬のタイトル
-204,スコア「%d」よりスコアを取るイベント。,スコア「%d」よりスコアに取れ！,イベント達成内容
-205,お客さんを「%d」より登場させるイベント。,「%d」よりお客さん登場させろ,イベント達成内容
-206,天ぷらを「%d」よりお客さんに食べさせるイベント。,「%d」より天ぷらをお客さんを食べさせろ,イベント達成内容
-207,タネセット「%@」でスコア「%d」よりスコアを取れ！,タネセット「%@」でスコア「%d」よりスコアを取れ！,イベント達成内容
-208,イベント成功,Event success,イベント成功時のタイトル
-209,期限：残りゲーム回数「%d」,期限：残りゲーム回数「%d」,イベント期限内容
-210,期限：残り時間「%d」分,期限：残り時間「%d」分,イベント期限内容
-211,期限：残り時間「%d」秒,期限：残り時間「%d」秒,イベント期限内容
-212,報酬：アイテム「%@」入手しました,報酬：アイテム「」入手しました,イベント報酬内容
-213,報酬：金額「%d」入手しました,報酬：金額「」入手しました,イベント報酬内容
-214,報酬：ネタパック「%@」を入手しました,報酬：ネタパック「%@」を入手しました,イベント報酬内容
-300,フィーバーボーナス,フィーバーボーナス,フィーバー時のステータスタイトル
-301,スコア%2.1f倍,スコア%.1f倍,フィーバー時のスコア倍率
-302,残り%d秒,残り%d秒,フィーバー時の残り時間
-1000,アドイン購入に失敗しました。,I failed to purchase add-in.,アドオン購入失敗時の汎用メッセージ
-1050,通信失敗,通信失敗,通信失敗時のタイトル
-1051,通信に失敗しました。,通信に失敗しました。,通信失敗時のメッセージ
+157,ゲームセンターがサインインしているかご確認をお願いします。,Please check if you successfully sighned in to the “Game Center” .,
+158,所持数：,Owned:,
+200,イベント発生,Event Occurred,イベント発生時のタイトル
+201,イベント失敗,Events Failled,イベント失敗時のタイトル
+202,イベント中,During the Event,イベント中のタイトル
+203,イベント報酬,Event Bonus,イベント報酬のタイトル
+204,スコア「%d」よりスコアを取るイベント。,Gain scores over %d.,イベント達成内容
+205,お客さんを「%d」より登場させるイベント。,Invite over %d customer.,イベント達成内容
+206,天ぷらを「%d」よりお客さんに食べさせるイベント。,Let customer to take %d tempuras.,イベント達成内容
+207,タネセット「%@」でスコア「%d」よりスコアを取れ！,Gain scores over %d with Foodstuff-Pack %@,イベント達成内容
+208,イベント成功,Event Successed,イベント成功時のタイトル
+209,期限：残りゲーム回数「%d」,Limits：%d play left,イベント期限内容
+210,期限：残り時間「%d」分,Limits：%d minutes left,イベント期限内容
+211,期限：残り時間「%d」秒,Limits：%d seconds left,イベント期限内容
+212,報酬：アイテム「%@」入手しました,Rewarded：Item %@,イベント報酬内容
+213,報酬：金額「%d」入手しました,Rewarded： %d money,イベント報酬内容
+214,報酬：ネタパック「%@」を入手しました,Rewarded：Foodstuff-Pack %@,イベント報酬内容
+300,フィーバーボーナス,Fever Bonus,フィーバー時のステータスタイトル
+301,スコア%2.1f倍,Score increased %2.1lf times,フィーバー時のスコア倍率
+302,残り%d秒,%d seconds left,フィーバー時の残り時間
+1000,アドイン購入に失敗しました。,Purchase Failed,アドオン購入失敗時の汎用メッセージ
+1050,通信失敗,Communication failure,通信失敗時のタイトル
+1051,通信に失敗しました。,I failed to communicate.,通信失敗時のメッセージ

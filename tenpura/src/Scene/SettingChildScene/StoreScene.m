@@ -43,6 +43,26 @@
             [nc addObserver:self selector:@selector(_onPayment) name:pObserverName object:nil];
         }
         
+        //  購入内容を設定する
+        {
+            StoreAppPurchaseManager*	pStoreApp	= [StoreAppPurchaseManager share];
+            if( [pStoreApp isPayment] == YES )
+            {
+                NSSet*  pProductIds = [NSSet set];
+                DataStoreList*  pDataStoreShared    = [DataStoreList shared];
+                SInt32		dataNum	= [pDataStoreShared dataNum];
+                
+                for( SInt32 data_i = 0; data_i < dataNum; ++data_i )
+                {
+                    const STORE_DATA_ST*    pData   = [pDataStoreShared getData:data_i];
+                    pProductIds = [pProductIds setByAddingObject:[NSString stringWithUTF8String:pData->aStoreIdName]];
+                }
+                
+                //  購入内容を取得するように呼び出す
+                [pStoreApp requestProdecutByData:pProductIds];
+            }
+        }
+
         [self scheduleUpdate];
 	}
 	
@@ -65,8 +85,8 @@
     AppController*	pApp	= (AppController*)[UIApplication sharedApplication].delegate;
     if( pApp.bVisibleByGetNetTime == YES )
     {
-		NSString*	pBannerShowName	= [NSString stringWithUTF8String:gp_getNetTimeObserverName];
-		NSNotification *n = [NSNotification notificationWithName:pBannerShowName object:nil];
+		NSString*	pGetNetTimeName	= [NSString stringWithUTF8String:gp_getNetTimeObserverName];
+		NSNotification *n = [NSNotification notificationWithName:pGetNetTimeName object:nil];
 		NSAssert(n, @"");
 		[[NSNotificationCenter defaultCenter] postNotification:n];
     }
@@ -146,7 +166,8 @@
 	if( pData != nil )
 	{
 		//	題名
-		[pCellLayout.pNameLabel setString:[DataBaseText getString:pData->textId]];
+        NSString*   pSetText    = [NSString stringWithFormat:[DataBaseText getString:pData->textId], [pDataStoreInst getBuyMoney:idx]];
+		[pCellLayout.pNameLabel setString:pSetText];
 
 		//	金額
 		[pCellLayout.pMoneyLabel setString:@""];

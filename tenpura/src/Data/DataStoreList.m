@@ -122,11 +122,17 @@ static DataStoreList*	s_pInst	= nil;
 	//	textid
 	data.textId	= [(NSNumber*)[in_dataArray objectAtIndex:dataIdx] integerValue];
 	++dataIdx;
-	
+
 	//	ストアID名
 	const char*	pStr	= [[in_dataArray objectAtIndex:dataIdx] UTF8String];
 	memcpy( data.aStoreIdName, pStr, [[in_dataArray objectAtIndex:dataIdx] length]);
 	++dataIdx;
+
+    //  デフォルト表示するアドオン価格値（ネットから取得できない場合はこの値を価格値として表示する）
+    data.buyMoeny	= [(NSNumber*)[in_dataArray objectAtIndex:dataIdx] integerValue];
+	++dataIdx;
+    
+    data.raleBuyMoney   = 0;
 
 	return data;
 }
@@ -155,6 +161,25 @@ static DataStoreList*	s_pInst	= nil;
 	}
 	
 	return nil;
+}
+
+//  購入金額設定
+-(void) setBuyMoney:(UInt32)in_idx :(UInt32)in_money
+{
+    NSAssert( in_idx < m_dataNum, @"データベースリスト指定が間違っています" );
+    mp_dataList[in_idx].raleBuyMoney    = in_money;
+}
+
+//  購入金額取得
+-(const UInt32) getBuyMoney:(UInt32)in_idx
+{
+    NSAssert( in_idx < m_dataNum, @"データベースリスト指定が間違っています" );
+    if( mp_dataList[in_idx].raleBuyMoney == 0 )
+    {
+        return mp_dataList[in_idx].buyMoeny;
+    }
+    
+    return mp_dataList[in_idx].raleBuyMoney;
 }
 
 @end

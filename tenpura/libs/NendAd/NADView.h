@@ -2,13 +2,27 @@
 //  NADView.h
 //  NendAd
 //
-//  Ver 2.0.2
+//  Ver 2.2.0
 //
 //  広告枠ベースビュークラス
 
 #import <UIKit/UIKit.h>
 
 #define NAD_ADVIEW_SIZE_320x50  CGSizeMake(320,50)
+
+// エラー種別
+typedef enum {
+    // 広告サイズがディスプレイサイズよりも大きい
+    NADVIEW_AD_SIZE_TOO_LARGE,
+    // 不明な広告ビュータイプ
+    NADVIEW_INVALID_RESPONSE_TYPE,
+    // 広告取得失敗
+    NADVIEW_FAILED_AD_REQUEST,
+    // 広告画像の取得失敗
+    NADVIEW_FAILED_AD_DOWNLOAD,
+    // リクエストしたサイズと取得したサイズが異なる
+    NADVIEW_AD_SIZE_DIFFERENCES
+}NADViewErrorCode;
 
 @class NADView;
 
@@ -25,21 +39,28 @@
 #pragma mark - 広告受信に失敗した際に通知されます
 - (void)nadViewDidFailToReceiveAd:(NADView *)adView;
 
+#pragma mark - 広告バナークリック時に通知されます
+- (void)nadViewDidClickAd:(NADView *)adView;
+
 @end
 
 @interface NADView : UIView {
     id delegate;
+    NSError *error;
 }
 
 #pragma mark - delegateオブジェクトの指定
 @property (nonatomic, assign) id <NADViewDelegate> delegate;
 
 #pragma mark - モーダルビューを表示元のビューコントローラを指定
-// ※現在では利用されないpropertyのため、次回versionでの削除を予定しています。
+// ※現在では利用されないpropertyのため、今後は削除を予定しています。
 @property (nonatomic, assign) UIViewController *rootViewController;
 
 #pragma mark - Log出力設定
 @property (nonatomic) BOOL isOutputLog;
+
+#pragma mark - エラー内容出力
+@property (nonatomic, assign) NSError *error;
 
 #pragma mark - 広告枠のapiKeyとspotIDをセット
 - (void)setNendID:(NSString *)apiKey spotID:(NSString *)spotID;
@@ -62,3 +83,4 @@
 - (void)resume;
 
 @end
+

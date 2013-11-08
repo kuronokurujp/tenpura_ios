@@ -189,7 +189,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
 		mp_storeBuyCheckAlerView	= [[UIAlertView alloc] initWithTitle:@"" message:@"" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
         mp_storeSuccessAlerView	= [[UIAlertView alloc] initWithTitle:@"" message:@"" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
 	}
-    
+
     //  ネットタイム取得通知
     {
 		NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
@@ -200,7 +200,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
 
 	// and add the scene to the stack. The director will run it when it automatically when the view is displayed.
 	[director_ pushScene: [BootScene scene]];
-	
+
 	// Create a Navigation Controller with the Director
 //	navController_ = [[UINavigationController alloc] initWithRootViewController:director_];
 	navController_ = [[UINavigationControllerExt alloc] initWithRootViewController:director_];
@@ -641,6 +641,29 @@ void uncaughtExceptionHandler( NSException* in_pException )
 	[self _StoreError:pMessageStr];
 }
 
+//  プロダクト情報取得
+-(void) onGetProduect:(SKProduct*)in_pProduct
+{
+    DataStoreList*  pDataStoreShared    = [DataStoreList shared];
+    SInt32		dataNum	= [pDataStoreShared dataNum];
+    
+    for( SInt32 data_i = 0; data_i < dataNum; ++data_i )
+    {
+        const STORE_DATA_ST*    pData   = [pDataStoreShared getData:data_i];
+        if( [[NSString stringWithUTF8String:pData->aStoreIdName] isEqualToString:in_pProduct.productIdentifier] )
+        {
+            [pDataStoreShared setBuyMoney:data_i :[in_pProduct.price unsignedLongValue]];
+            break;
+        }
+    }
+}
+
+//  プロダクトデータ取得終了
+-(void) onEndGetProducts
+{
+    [self _StoreEnd];
+}
+
 /*
  @brief	リクエスト開始
  */
@@ -813,7 +836,6 @@ void uncaughtExceptionHandler( NSException* in_pException )
             mp_storeSuccessProduct  = nil;
         }
         mb_enableByGetNetTime   = YES;
-        mp_storeSuccessAlerView = nil;
     }
     else if( mp_storeErrorAlerView == alertView )
     {

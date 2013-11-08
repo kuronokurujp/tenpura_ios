@@ -1154,7 +1154,16 @@
                 score   = pSaveDataNeta->hiscore;
             }
             
-            pStr    = [NSString stringWithFormat:[DataBaseText getString:207], [DataBaseText getString:pDataNedaPack->textID], score];
+            if([NSLocalizedString(@"la",@"") isEqualToString:@"ja"])
+            {
+                // 日本語
+                pStr    = [NSString stringWithFormat:[DataBaseText getString:207], [DataBaseText getString:pDataNedaPack->textID], score];
+            }
+            else
+            {
+                // 英語
+                pStr    = [NSString stringWithFormat:[DataBaseText getString:207], score, [DataBaseText getString:pDataNedaPack->textID]];
+            }
         }
     }
     

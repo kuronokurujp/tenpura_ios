@@ -1,8 +1,8 @@
-no,項目表示テキストID,ストアID(iTunes Connectに登録したID),コメント
-0,149,com.n2ij.tenpura.cutads,広告を外す
-6,160,com.n2ij.tenpura.cureLief,プレイライフ１つ回復
-1,150,com.n2ij.tenpura.money3000,金額取得
-2,151,com.n2ij.tenpura.money9000,金額取得
-3,152,com.n2ij.tenpura.money80000,金額取得
-4,153,com.n2ij.tenpura.money400000,金額取得
-5,154,com.n2ij.tenpura.money900000,金額取得
+no,項目表示テキストID,ストアID(iTunes Connectに登録したID),デフォルト表示価格,コメント
+0,149,com.n2ij.sumahotenpura.cutads,85,広告を外す
+6,160,com.n2ij.sumahotenpura.cureLief,85,プレイライフ１つ回復
+1,150,com.n2ij.sumahotenpura.money3000,85,金額取得
+2,151,com.n2ij.sumahotenpura.money9000,170,金額取得
+3,152,com.n2ij.sumahotenpura.money80000,1000,金額取得
+4,153,com.n2ij.sumahotenpura.money400000,3000,金額取得
+5,154,com.n2ij.sumahotenpura.money900000,5200,金額取得
