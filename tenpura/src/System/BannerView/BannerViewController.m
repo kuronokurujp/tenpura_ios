@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "./../../Admob/GADRequest.h"
 #import "./../Network/Reachability.h"
+#import "./../Common.h"
 
 #import <AdSupport/ASIdentifierManager.h>
 
@@ -25,11 +26,13 @@
 /*
 	@brief	初期化
 */
--(id)	initWithID:(NSString*)in_pIdName
+-(id)	initWithID:(NSString*)in_pIdName :(UInt32)in_widthType :(UInt32)in_heigthType
 {
 	mp_unitIDName	= [in_pIdName retain];
 	mb_use	= YES;
-
+    m_widthType = in_widthType;
+    m_heightType    = in_heigthType;
+    
 	if( self = [super init] )
 	{
 	}
@@ -43,10 +46,10 @@
 	if (self)
 	{
 		mp_bannerView	= nil;
-		
+		CGPoint pos = converPosVariableDevice(ccp(0,0));
 		CGRect	bannerRect	= CGRectMake(
-										0,
-										0,
+										pos.x,
+										pos.y,
 										GAD_SIZE_320x50.width,
 										GAD_SIZE_320x50.height);
 		mp_bannerView	= [[GADBannerView alloc] initWithFrame:bannerRect];

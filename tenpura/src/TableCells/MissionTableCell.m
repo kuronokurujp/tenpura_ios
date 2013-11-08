@@ -8,7 +8,6 @@
 
 #import "MissionTableCell.h"
 
-
 @implementation MissionTableCell
 
 @synthesize pNameLabel	= mp_name;

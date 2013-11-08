@@ -13,6 +13,7 @@
 #import "./../Object/Customer.h"
 #import	"./../System/Anim/AnimManager.h"
 #import "./../System/Sound/SoundManager.h"
+#import "./../System/Common.h"
 
 @interface Tenpura (PrivateMethod)
 
@@ -433,9 +434,33 @@ enum
 	//	左下の点を開始点に
 	CGPoint	pos	= ccp(	self.position.x - mp_sp.anchorPoint.x * texSize.width,
 						self.position.y - mp_sp.anchorPoint.y * texSize.height);
+    /*
+    pos = converPosVariableDevice(pos);
+    */
 	CGRect	boxRect	= CGRectMake(pos.x, pos.y, texSize.width, texSize.height);
 	
 	return boxRect;
+}
+
+-(CGRect)   boundingBoxByTouch
+{
+	CGSize	texSize	= [mp_sp textureRect].size;
+    texSize = converSizeVariableDevice(texSize);
+
+    CGPoint convertPos = self.position;
+    {
+        CGSize  size    = CGSizeMake(1, 1);
+        size    = converSizeVariableDevice(size);
+        convertPos  = ccp(size.width * convertPos.x, size.height * convertPos.y);
+    }
+
+	//	左下の点を開始点に
+	CGPoint	pos	= ccp(	convertPos.x - mp_sp.anchorPoint.x * texSize.width,
+                      convertPos.y - mp_sp.anchorPoint.y * texSize.height);
+
+	CGRect	boxRect	= CGRectMake(pos.x, pos.y, texSize.width, texSize.height);
+	
+	return boxRect;    
 }
 
 /*

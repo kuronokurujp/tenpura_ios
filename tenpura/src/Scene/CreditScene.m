@@ -8,6 +8,7 @@
 
 #import "./../Data/DataGlobal.h"
 #import "./../System/Sound/SoundManager.h"
+#import "./../System/Common.h"
 
 @interface CreditScene (PrivateMethoe)
 
@@ -84,7 +85,11 @@
 {
 	//	htmlファイル表示
 	{
-		CGRect	webViewRect	= CGRectMake(creditSceneXPos, creditSceneYPos, creditSceneSizeWidth, creditSceneSizeHeight );
+        CGSize  size    = CGSizeMake(creditSceneSizeWidth, creditSceneSizeHeight);
+
+        CGPoint pos     = converPosVariableDevice(ccp(creditSceneXPos, creditSceneYPos));
+
+		CGRect	webViewRect	= CGRectMake(pos.x, pos.y, size.width, size.height );
 		mp_view	= [[UIWebView alloc] initWithFrame:webViewRect];
 		NSString*	pFilePath	= [[NSBundle mainBundle] pathForResource:@"credit" ofType:@"html"];
 		NSURL*	pFileUrl	= [NSURL fileURLWithPath:pFilePath];
@@ -92,6 +97,14 @@
         [mp_view setBackgroundColor:[UIColor clearColor]];
         [mp_view setOpaque:NO];
 	}
+    
+    {
+        CGSize  size    = CGSizeMake(1.f, 1.f);
+        [self setScaleX:converSizeVariableDevice(size).width];
+        
+     //   CGPoint pos = self.position;
+       // [self setPosition:converPosVariableDevice(pos)];
+    }
 }
 
 /*

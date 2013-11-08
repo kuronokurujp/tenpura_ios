@@ -27,11 +27,12 @@
 @private
 	GADBannerView*	mp_bannerView;
 	NSString*	mp_unitIDName;
+    UInt32  m_widthType, m_heightType;
 	BOOL	mb_use;
 }
 
 //	関数
--(id)	initWithID:(NSString*)in_pIdName;
+-(id)	initWithID:(NSString*)in_pIdName :(UInt32)in_widthType :(UInt32)in_heigthType;
 -(void)	setBannerPos:(CGPoint)in_pos;
 -(void)	setBannerID:(const char*)in_pName;
 -(void)	showHide:(BOOL)in_bFlg;

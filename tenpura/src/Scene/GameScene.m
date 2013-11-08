@@ -22,6 +22,7 @@
 #import "./../Data/DataItemList.h"
 #import "./../System/Sound/SoundManager.h"
 #import "./../System/Anim/Action/AnimActionNumCounterLabelTTF.h"
+#import "./../System/Common.h"
 
 #import "./../Object/SpriteZSetting.h"
 #import "./../Object/DustBoxToTenpura.h"
@@ -383,6 +384,14 @@ enum
 			}
 		}
 	}
+    
+    {
+     //   CGPoint pos = converPosVariableDevice(self.position);
+       // [self setPosition:pos];
+        CGSize  size    = CGSizeMake(1.f, 1.f);
+        [self setScaleX:converSizeVariableDevice(size).width];
+        [self setAnchorPoint:ccp(0,0)];
+    }
 	
 	return self;
 }

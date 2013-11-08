@@ -27,28 +27,79 @@
 #import "./System/BannerView/BannerViewController.h"
 #import "./System/FileLoad/FileTexLoadManager.h"
 #import "./System/Store/StoreAppPurchaseManager.h"
+#import "./System/Common.h"
 
 @interface AppController (PrivateMethod)
 
--(void) _onStartGetNetTime;
--(void) _onStartGameTimer;
+/*!
+    @brief  オブサーバーからのサーバー日付依頼関数
+ */
+-(void) _onRequestGetServerDate;
 
--(void) _onSecTimerCnt:(id)in_sender;
--(void) _onDoStartNetworkSendByObserva:(id)in_sender;
+/*!
+    @brief  サーバー日付依頼関数
+    @note
+        この関数はタイマー設定して、呼び出しが成功するまで呼び出し続ける。
+        非通信時には通信になるまで毎フレーム呼ばれる。
+ */
+-(void) _onRequestServerDateByTimer:(id)in_sender;
 
+/*!
+    @brief  ゲームタイム更新依頼
+    @note
+        サーバー日付などゲーム内タイムを外部から取得した場合に呼び出す
+ */
+-(void) _requestGameTimerUpdate;
+
+/*!
+    @brief  ゲーム内タイムを常に更新する
+    @note
+        １秒ごとのタイマー設定で呼び出すようにしている。
+ */
+-(void) _onUpdateCntSecTimer:(id)in_sender;
+
+/*!
+    @brief  バナーを開くオブサーバー関数
+ */
 -(void)	onBannerShow;
+
+/*!
+    @brief  バナーを閉じるオブサーバー関数
+ */
 -(void)	onBannerHide;
 
+/*!
+    @brief  ツイッター画面を開くオブサーバー関数
+ */
 -(void)	onTweetViewShow:(NSNotification*)in_pCenter;
 
-//	ストアのエラー時の処理
--(void)	_StoreError:(NSString*)in_pErrorMessage;
-//	ストアの終了処理
--(void)	_StoreEnd;
+/*!
+    @brief  ストアのエラー時の処理依頼
+    @param  in_pErrorMessage : アラートに表示するテキスト
+    @note
+        内部でアラート表示処理をしている
+ */
+-(void)	_requestStoreError:(NSString*)in_pErrorMessage;
 
+/*!
+    @brief  アドオンストア処理が終わった時に必ず呼び出す
+ */
+-(void)	_storeEnd;
+
+/*!
+    @brief  アドオン購入後の処理
+    @note
+        購入アイテムによる処理をする
+ */
 -(void)	_payment:(NSString*)in_pProducts;
 
--(const BOOL) _startNetwork;
+/*!
+    @brief  サーバー日付を取得依頼
+    @return TRUE : 依頼成功 / FALSE : 依頼失敗
+    @note
+        ネットワークサーバーから最新の日付を取得依頼をする
+*/
+-(const BOOL) _requestServerDate;
 
 @end
 
@@ -73,9 +124,10 @@ void uncaughtExceptionHandler( NSException* in_pException )
     m_storeSuccessDelegate  = nil;
     mp_networkTimeErrorAlerView = nil;
     mp_gameTimer    = nil;
-    mp_startNetworkSendChk  = nil;
+    mp_requestServerDateSendChk  = nil;
     mb_visibleByGetNetTime  = YES;
     mb_enableByGetNetTime   = YES;
+    bgTask_ = UIBackgroundTaskInvalid;
 
 	//	iOS4のみしかない処理に対応
 	[UIViewController iOS4compatibilize];
@@ -150,8 +202,17 @@ void uncaughtExceptionHandler( NSException* in_pException )
 
 	//	広告ビュー作成
 	{
-		mp_bannerViewCtrl	= [[BannerViewController alloc] initWithID:[DataBaseText getString:73]];
-		[mp_bannerViewCtrl setBannerPos:ccp(ga_bannerPos[0], ga_bannerPos[1])];
+        UInt32  widthType   = GAD_SIZE_320x50.width;
+        UInt32  heightType  = GAD_SIZE_320x50.height;
+        
+        if( isDeviceIPhone5() )
+        {
+            widthType   = GAD_SIZE_468x60.width;
+        }
+        
+		mp_bannerViewCtrl	= [[BannerViewController alloc] initWithID:[DataBaseText getString:73] :widthType :heightType];
+        CGPoint pos = ccp(ga_bannerPos[0], ga_bannerPos[1]);//converPosVariableDevice(ccp(ga_bannerPos[0], ga_bannerPos[1]));
+		[mp_bannerViewCtrl setBannerPos:pos];
 		
 		const	SAVE_DATA_ST*	pSaveData	= [[DataSaveGame shared] getData];
 		if( pSaveData->adsDel == 1 )
@@ -195,9 +256,15 @@ void uncaughtExceptionHandler( NSException* in_pException )
 		NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
         
 		NSString*	pObserverName	= [NSString stringWithUTF8String:gp_getNetTimeObserverName];
-		[nc addObserver:self selector:@selector(_onStartGetNetTime) name:pObserverName object:nil];
+		[nc addObserver:self selector:@selector(_onRequestGetServerDate) name:pObserverName object:nil];
     }
-
+    
+    //  バッチを非表示にする。
+    //  回復が最大値になった時にバッチ表示していることがあるかもしれないので。
+    {
+        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    }
+    
 	// and add the scene to the stack. The director will run it when it automatically when the view is displayed.
 	[director_ pushScene: [BootScene scene]];
 
@@ -244,6 +311,57 @@ void uncaughtExceptionHandler( NSException* in_pException )
 		{
 			[director_ pause];
 		}
+        
+        //  バックグランド中も時間関連は継続しておく（１０分しかつかえないが）
+        BOOL    bBackGroundSuppeoted = NO;
+        UIDevice*   pDevice = [UIDevice currentDevice];
+        if( [pDevice respondsToSelector:@selector(isMultitaskingSupported)])
+        {
+            bBackGroundSuppeoted    = pDevice.multitaskingSupported;
+        }
+        
+        if( bBackGroundSuppeoted )
+        {
+            bgTask_  = [application beginBackgroundTaskWithExpirationHandler:^{
+                [application endBackgroundTask:bgTask_];
+                bgTask_ = UIBackgroundTaskInvalid;
+            }];
+          
+            DataSaveGame*   pDataSaveGameInst   = [DataSaveGame shared];
+            const SAVE_DATA_ST* pSaveData   = [pDataSaveGameInst getData];
+
+            dispatch_queue_t gcd_queue =
+            dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+            
+            dispatch_async(gcd_queue, ^{
+                //  バックグランド中は実行する。
+                while(bgTask_ != UIBackgroundTaskInvalid)
+                {
+                    if( pSaveData->playLife < eSAVE_DATA_PLAY_LIEF_MAX )
+                    {
+                        SInt32  nowCureTime = pDataSaveGameInst.nowCureTime;
+                        //  回復時間になっているか
+                        if( nowCureTime <= 0 )
+                        {
+                            //  回復
+                            [pDataSaveGameInst addPlayLife:1];
+                            
+                            //  バッチ表示
+                            [UIApplication sharedApplication].applicationIconBadgeNumber = 1;
+                            
+                            //  ローカル通信をする
+                            [[UIApplication sharedApplication] cancelAllLocalNotifications];
+                            UILocalNotification* plocalNotification = [[[UILocalNotification alloc] init] autorelease];
+                            //  通知内容を指定
+                            [plocalNotification setAlertBody:[DataBaseText getString:1052]];
+                            [plocalNotification setHasAction:NO];
+                            
+                            [[UIApplication sharedApplication] presentLocalNotificationNow:plocalNotification];
+                        }
+                    }
+                }
+            });
+        }
 	}
 }
 
@@ -260,6 +378,14 @@ void uncaughtExceptionHandler( NSException* in_pException )
         
         //  アプリがフォワードになったら再度タイム取得する
         mb_visibleByGetNetTime  = YES;
+        
+        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+        
+        if( bgTask_ != UIBackgroundTaskInvalid )
+        {
+            [application endBackgroundTask:bgTask_];
+            bgTask_ = UIBackgroundTaskInvalid;
+        }
 	}
 }
 
@@ -271,7 +397,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
 		if( ([pStoreInst isTransaction] == NO) && (pStoreInst.bLoad == NO) )
 		{
 			[director_ stopAnimation];
-		}
+		}        
 	}
 }
 
@@ -378,24 +504,24 @@ void uncaughtExceptionHandler( NSException* in_pException )
 /*
     @brief  ネットタイム取得開始
  */
--(void) _onStartGetNetTime
+-(void) _onRequestGetServerDate
 {
     //  通信開始タイマー作成
-    if( mp_startNetworkSendChk == nil )
+    if( mp_requestServerDateSendChk == nil )
     {
-        mp_startNetworkSendChk  = [NSTimer scheduledTimerWithTimeInterval:0.001f target:self selector:@selector(_onDoStartNetworkSendByObserva:) userInfo:nil repeats:YES];
-        NSAssert(mp_startNetworkSendChk, @"");
+        mp_requestServerDateSendChk  = [NSTimer scheduledTimerWithTimeInterval:0.001f target:self selector:@selector(_onRequestServerDateByTimer:) userInfo:nil repeats:YES];
+        NSAssert(mp_requestServerDateSendChk, @"");
     }    
 }
 
 /*
     @brief  ゲームタイマースタート
  */
--(void) _onStartGameTimer
+-(void) _requestGameTimerUpdate
 {
     if( mp_gameTimer == nil )
     {
-        mp_gameTimer  = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(_onSecTimerCnt:) userInfo:nil repeats:YES];
+        mp_gameTimer  = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(_onUpdateCntSecTimer:) userInfo:nil repeats:YES];
         NSAssert(mp_gameTimer, @"");
     }    
 }
@@ -403,7 +529,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
 /*
     @brief  １秒ごとのタイマーカウント
  */
--(void) _onSecTimerCnt:(id)in_sender
+-(void) _onUpdateCntSecTimer:(id)in_sender
 {
     DataSaveGame*   pDataSaveGameInst   = [DataSaveGame shared];
     pDataSaveGameInst.gameTime  += 1;
@@ -413,7 +539,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
 
 /*
  */
--(void) _onDoStartNetworkSendByObserva:(id)in_sender
+-(void) _onRequestServerDateByTimer:(id)in_sender
 {
     //  すでに別口でネットワークで発生しているのであればいったん止める
     if( [UIApplication sharedApplication].networkActivityIndicatorVisible == YES )
@@ -428,7 +554,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
 
     mb_visibleByGetNetTime  = NO;
     {
-        if( [self _startNetwork] == NO )
+        if( [self _requestServerDate] == NO )
         {
             UIAlertView*	pAlert	= [[[UIAlertView alloc]
                                         initWithTitle:[DataBaseText getString:1050]
@@ -444,8 +570,8 @@ void uncaughtExceptionHandler( NSException* in_pException )
             [[CCDirector sharedDirector] pause];
         }
         
-        [mp_startNetworkSendChk invalidate];
-        mp_startNetworkSendChk  = nil;
+        [mp_requestServerDateSendChk invalidate];
+        mp_requestServerDateSendChk  = nil;
     }
 }
 
@@ -514,6 +640,10 @@ void uncaughtExceptionHandler( NSException* in_pException )
                 [pApp.navController presentModalViewController:pCtrl animated:YES];
                 [pCtrl release];                
             }
+            else
+            {
+                //  ツイートが利用できないの。
+            }
 		}
 	}
 }
@@ -572,7 +702,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
  */
 -(void)	onEndTransaction
 {
-	[self _StoreEnd];
+	[self _storeEnd];
 }
 
 /*
@@ -638,7 +768,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
 		}
 	}
 	
-	[self _StoreError:pMessageStr];
+	[self _requestStoreError:pMessageStr];
 }
 
 //  プロダクト情報取得
@@ -661,7 +791,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
 //  プロダクトデータ取得終了
 -(void) onEndGetProducts
 {
-    [self _StoreEnd];
+    [self _storeEnd];
 }
 
 /*
@@ -699,7 +829,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
  */
 -(void)	onErrorRequest:(NSError *)in_pError
 {
-	[self _StoreEnd];
+	[self _storeEnd];
 	
 	NSString*	pMessage	= nil;
 	if( in_pError != nil )
@@ -712,13 +842,13 @@ void uncaughtExceptionHandler( NSException* in_pException )
 		pMessage	= [DataBaseText getString:1000];
 	}
 	
-	[self _StoreError:pMessage];
+	[self _requestStoreError:pMessage];
 }
 
 /*
  @brief	ストアのエラー時の処理
  */
--(void)	_StoreError:(NSString*)in_pErrorMessage
+-(void)	_requestStoreError:(NSString*)in_pErrorMessage
 {
 	UIAlertView*	pAlert	= [[[UIAlertView alloc]
 								initWithTitle:@"" message:in_pErrorMessage
@@ -732,7 +862,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
 /*
     @brief	ストアの終了処理
  */
--(void)	_StoreEnd
+-(void)	_storeEnd
 {
 	[mp_storeBuyCheckAlerView dismissWithClickedButtonIndex:0 animated:YES];
 
@@ -790,7 +920,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
                         }
                         case eSTORE_ID_CURELIEF:
                         {
-                            [[DataSaveGame shared] addPlayLife:1];
+                            [[DataSaveGame shared] addPlayLife:eSAVE_DATA_PLAY_LIEF_MAX];
                             break;
                         }
                         case eSTORE_ID_MONEY_3000:		{ [[DataSaveGame shared] addSaveMoeny:3000]; break; }
@@ -844,7 +974,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
     }
     else if( mp_networkTimeErrorAlerView == alertView )
     {
-        [self _startNetwork];
+        [self _requestServerDate];
         mp_networkTimeErrorAlerView = nil;
     }
 }
@@ -901,7 +1031,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
     [[DataSaveGame shared] updateTimeStatus:nowDate];
     
     //  ゲーム内タイマー開始
-    [self _onStartGameTimer];
+    [self _requestGameTimerUpdate];
 }
 
 //  通信成功
@@ -930,7 +1060,7 @@ void uncaughtExceptionHandler( NSException* in_pException )
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
--(const BOOL) _startNetwork
+-(const BOOL) _requestServerDate
 {
     NSURL*  pUrl    = [[NSURL alloc] initWithString:@"http://n2-games.com/time/time.php"];
     NSURLRequest*   pReq    = [[NSURLRequest alloc] initWithURL:pUrl];

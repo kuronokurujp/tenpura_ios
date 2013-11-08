@@ -25,6 +25,7 @@
 #import "./../../System/Sound/SoundManager.h"
 #import "./../../System/Anim/AnimManager.h"
 #import "./../../System/Anim/Action/AnimActionNumCounterLabelTTF.h"
+#import "./../../System/Common.h"
 
 #import "./../../ActionCustomer/ActionCustomer.h"
 #import "./../../CCBReader/CCBReader.h"
@@ -472,7 +473,7 @@ enum
 				Tenpura*	pTenpura	= (Tenpura*)pNode;
 				if( [pTenpura isTouchOK] )
 				{
-					if( CGRectContainsPoint([pTenpura boundingBox], touchPoint) == YES )
+					if( CGRectContainsPoint([pTenpura boundingBoxByTouch], touchPoint) == YES )
 					{
 						[pTenpura lockTouch];
 						mp_touchTenpura	= pTenpura;

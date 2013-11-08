@@ -9,6 +9,7 @@
 #import "SWTableViewHelper.h"
 #import "./../../TableCells/SampleCell.h"
 #import "./../../CCBReader/CCBReader.h"
+#import "./../../System/Common.h"
 
 @implementation SWTableViewHelper
 
@@ -68,6 +69,7 @@
 
 	//	セルファイル名はアドレスしかもっていないので注意
 	m_data	= *in_pData;
+    m_data.viewSize = converSizeVariableDevice(m_data.viewSize);
 	if( m_data.aCellFileName[ 0 ] != 0 )
 	{
 		CCNode*	pCellScene	= [CCBReader nodeGraphFromFile:[NSString stringWithUTF8String:m_data.aCellFileName]];
@@ -86,6 +88,15 @@
 	mp_table.verticalFillOrder	= SWTableViewFillTopDown;
 		
 	[self addChild:mp_table z:3.f];
+    
+    {
+        CGSize  size    = CGSizeMake(1.f, 1.f);
+       [self setScaleX:converSizeVariableDevice(size).width];
+/*
+        CGPoint pos = self.position;
+        [self setPosition:converPosVariableDevice(pos)];
+ */
+    }
 }
 
 /*
@@ -136,7 +147,15 @@
 		
 		CCSprite*	pSp	= (CCSprite*)pCellScene;
 		[pSp setAnchorPoint:ccp(0, 0)];
-		[pSp setPosition:ccp(0, 0)];
+        
+        if( isDeviceIPhone5() )
+        {
+            CGPoint pos = self.position;
+            pos.x   -= 88;
+            [pSp setPosition:pos];
+        }
+     //   CGPoint pos = self.position;
+   //     [pSp setPosition:converPosVariableDevice(pos)];
 	}
 
 	return pCell;

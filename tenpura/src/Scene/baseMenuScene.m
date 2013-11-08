@@ -10,6 +10,7 @@
 #import "./../Data/DataSaveGame.h"
 #import "./../System/Anim/Action/AnimActionNumCounterLabelTTF.h"
 #import "./../System/Sound/SoundManager.h"
+#import "./../System/Common.h"
 #import "./../CCBReader/CCBReader.h"
 
 @implementation BaseMenuScene
@@ -73,7 +74,7 @@
 				[mp_nowHiScoreText setNum:pSaveData->score];
 			}
 		}
-	}
+	}    
 }
 
 /*

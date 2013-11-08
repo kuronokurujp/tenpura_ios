@@ -7,6 +7,7 @@
 //
 
 #import "DataSaveGame.h"
+#import "DataBaseText.h"
 
 #import "./DataItemList.h"
 #import "./../System/Save/SaveData.h"
@@ -491,10 +492,11 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
         if( (pData->playLife + in_num) <= eSAVE_DATA_PLAY_LIEF_MAX )
         {
             //  全回復した場合は回復時間を初期化
-            memset(pData->aCureBeginTimeStr, 0, sizeof(pData->aCureBeginTimeStr));
+            memset(pData->aCureBeginTimeStr, 0, sizeof(pData->aCureBeginTimeStr));            
         }
         else
         {
+            //  まだ回復が残っている場合は、残り回復時間をセーブしておく
             bSaveTime   = YES;
         }
     }
@@ -522,7 +524,7 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 //  ライフタイマー加算
 -(void) addPlayLifeTimerCnt:(const SInt32)in_cnt
 {
-    --m_nowCureTime;
+    m_nowCureTime += in_cnt;
     if( m_nowCureTime < 0 )
     {
         m_nowCureTime  = 0;
@@ -532,7 +534,7 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 //  イベントタイマー加算
 -(void) addEventTimerCnt:(const SInt32)in_cnt
 {
-    --m_nowEventTime;
+    m_nowEventTime  += in_cnt;
     if( m_nowEventTime < 0 )
     {
         m_nowEventTime = 0;

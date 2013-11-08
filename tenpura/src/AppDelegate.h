@@ -26,6 +26,8 @@
 	GameKitHelperProtocol
 >
 {
+    UIBackgroundTaskIdentifier bgTask_;
+    
 	UIWindow *window_;
 	UINavigationController *navController_;
 
@@ -34,11 +36,10 @@
     UIAlertView*	mp_storeBuyCheckAlerView;
     UIAlertView*    mp_storeSuccessAlerView;
     UIAlertView*    mp_storeErrorAlerView;
-    
     UIAlertView*    mp_networkTimeErrorAlerView;
     NSString*   mp_storeSuccessProduct;
     NSTimer*    mp_gameTimer;
-    NSTimer*    mp_startNetworkSendChk;
+    NSTimer*    mp_requestServerDateSendChk;
     
     BOOL    mb_visibleByGetNetTime;
     BOOL    mb_enableByGetNetTime;

@@ -15,8 +15,9 @@
 #import "./../Data/DataGlobal.h"
 #import "./../System/GameCenter/GameKitHelper.h"
 #import "./../System/Sound/SoundManager.h"
-#import "./../Data/DataBaseText.h"
+#import "./../System/Common.h"
 
+#import "./../Data/DataBaseText.h"
 #ifdef DEBUG
 
 #import "./../Data/DataNetaPackList.h"
@@ -25,7 +26,7 @@
 
 @interface TitleScene (PrivateMethod)
 
--(const BOOL) _startNetwork;
+-(const BOOL) _requestServerDate;
 
 @end
 
@@ -84,9 +85,19 @@
     ];
     [pFullGetNetaPack setFontSize:12.f];
     [pFullGetNetaPack setColor:ccBLACK];
-    [pFullGetNetaPack setPosition:ccp(0, -60)];
+    [pFullGetNetaPack setPosition:ccp(0, -30 * 2)];
 
-	CCMenu*	pMenu	= [CCMenu menuWithItems:pResetSaveItem, pFullGetItem, pFullGetNetaPack, nil];
+    CCMenuItemFont*	pLifeClearItem		= [CCMenuItemFont	itemWithString:@"ライフを1つ減らす"
+                                                             block:^(id sender)
+    {
+        [[DataSaveGame shared] addPlayLife:-1];
+    }
+    ];
+    [pLifeClearItem setFontSize:12.f];
+    [pLifeClearItem setColor:ccBLACK];
+    [pLifeClearItem setPosition:ccp(0, -30 * 3)];
+
+	CCMenu*	pMenu	= [CCMenu menuWithItems:pResetSaveItem, pFullGetItem, pFullGetNetaPack, pLifeClearItem, nil];
 	[pMenu setPosition:ccp( 80.f, 300 )];
 	[self addChild:pMenu z:20];
 #endif
@@ -102,7 +113,7 @@
 		NSAssert(n, @"");
 		[[NSNotificationCenter defaultCenter] postNotification:n];
     }
-
+    
 	return self;
 }
 
@@ -263,7 +274,15 @@
             }
             [pLabelTTF setString:@""];
 		}
-	}    
+	}
+    
+    {
+        CGSize  size    = CGSizeMake(1.f, 1.f);
+       [self setScaleX:converSizeVariableDevice(size).width];
+        
+    //    CGPoint pos = self.position;
+     //   [self setPosition:converPosVariableDevice(pos)];
+    }
 }
 
 @end

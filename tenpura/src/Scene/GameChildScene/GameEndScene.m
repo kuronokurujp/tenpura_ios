@@ -8,6 +8,8 @@
 
 #import "GameEndScene.h"
 
+#import <Twitter/Twitter.h>
+#
 #import "./../GameScene.h"
 #import "./../../Object/Customer.h"
 #import "./../../ActionCustomer/ActionCustomer.h"
@@ -279,7 +281,16 @@
 	NSString*	pResultCcbiFileName	= @"game_result.ccbi";
 	if( mb_hiscore )
 	{
-		pResultCcbiFileName	= @"game_result_hiscore.ccbi";
+        bool    bTweet  = false;
+        if( (5.0 <= [[[UIDevice currentDevice] systemVersion] floatValue]) && ([TWTweetComposeViewController canSendTweet]) )
+		{
+            bTweet  = true;
+        }
+        
+        if( bTweet )
+        {
+            pResultCcbiFileName	= @"game_result_hiscore.ccbi";
+        }
 
         {
             CCParticleSystemQuad*   pParticle   = [CCParticleSystemQuad particleWithFile:@"hiscore.plist"];

@@ -77,6 +77,7 @@
 -(void)	unLockTouchByAct;
 
 -(CGRect)	boundingBox;
+-(CGRect)   boundingBoxByTouch;
 -(void)	pauseSchedulerAndActions;
 -(void)	resumeSchedulerAndActions;
 

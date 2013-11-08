@@ -9,8 +9,15 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
-@interface Common : Common {
-    
-}
+#ifndef tenpura_SysCommon_h
+#define tenpura_DataGlobal_h
 
-@end
+//  異なる解像度にあわせた座標位置
+const CGPoint    converPosVariableDevice( const CGPoint in_pos );
+
+//  異なる解像度にあわせたサイズ
+const CGSize   converSizeVariableDevice( const CGSize in_size );
+
+const bool isDeviceIPhone5();
+
+#endif

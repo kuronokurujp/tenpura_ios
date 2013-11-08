@@ -38,17 +38,7 @@
 		self.ignoreAnchorPointForPosition = YES;
 		_anchorPoint = ccp(0.5f, 0.5f);
 		[self setContentSize:s];
-		
-		//	すべての画面に共通することなのでここで入れる
-		CGRect	screenBounds	= [[UIScreen mainScreen] bounds];
-		if( screenBounds.size.height == 568 )
-		{
-			CCSprite*	pFillter	= [CCSprite spriteWithFile:@"black.png"];
-			[pFillter setAnchorPoint:ccp(0,0)];
-			[pFillter setPosition:ccp(480, 0)];
-			[self addChild:pFillter z:30.f];
-		}
-	}
+    }
 
 	return self;
 }

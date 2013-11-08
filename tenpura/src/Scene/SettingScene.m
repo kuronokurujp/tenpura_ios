@@ -24,6 +24,7 @@
 
 #import "./../System/Sound/SoundManager.h"
 #import "./../System/Anim/AnimManager.h"
+#import "./../System/Common.h"
 
 #import "./SettingChildScene/UseSelectNetaScene.h"
 #import "./SettingChildScene/UseSelectItemScene.h"
@@ -691,7 +692,15 @@
         [self removeChild:pNode cleanup:YES];
     }
     
-    [DataSaveGame shared].cureTime  = self.cureTimeByCcbiProperty;
+    [DataSaveGame shared].cureTime  = 30;//self.cureTimeByCcbiProperty;
+    
+    {
+        CGSize  size    = CGSizeMake(1.f, 1.f);
+        [self setScaleX:converSizeVariableDevice(size).width];
+        
+     //   CGPoint pos = self.position;
+       // [self setPosition:converPosVariableDevice(pos)];
+    }
 }
 
 /*

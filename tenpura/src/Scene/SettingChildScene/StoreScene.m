@@ -15,6 +15,7 @@
 #import "./../../CCBReader/CCBReader.h"
 #import "./../../TableCells/StoreTableCell.h"
 #import "./../../System/Sound/SoundManager.h"
+#import "./../../System/Common.h"
 #import "./../../Data/DataSaveGame.h"
 
 @interface StoreScene (PrivateMethod)
@@ -210,10 +211,18 @@
 
 	data.viewPos	= ccp( TABLE_POS_X, TABLE_POS_Y );
 	data.viewSize	= CGSizeMake(TABLE_SIZE_WIDTH, TABLE_SIZE_HEIGHT );
-
+    
 	[self setup:&data];
 		
 	[self reloadUpdate];
+    
+    {
+        CGSize  size    = CGSizeMake(1.f, 1.f);
+        [self setScaleX:converSizeVariableDevice(size).width];
+        
+     //   CGPoint pos = self.position;
+       // [self setPosition:converPosVariableDevice(pos)];
+    }
 }
 
 /*

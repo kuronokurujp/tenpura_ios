@@ -14,6 +14,7 @@
 #import "./../../Data/DataGlobal.h"
 #import "./../../Object/Tenpura.h"
 #import "./../../System/Sound/SoundManager.h"
+#import "./../../System/Common.h"
 
 #import "AppDelegate.h"
 
@@ -159,6 +160,7 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 	
 	data.viewPos	= ccp( TABLE_POS_X, TABLE_POS_Y );
 	data.viewSize	= CGSizeMake(TABLE_SIZE_WIDTH, TABLE_SIZE_HEIGHT );
+    
 	[self setup:&data];
 
 	//	アラートを出す
@@ -176,6 +178,11 @@ static const SInt32	s_sireTableViewCellMax	= 6;
 				
 
 	[self reloadUpdate];
+    
+    {
+        CGSize  size    = CGSizeMake(1.f, 1.f);
+        [self setScaleX:converSizeVariableDevice(size).width];
+    }
 }
 
 /*

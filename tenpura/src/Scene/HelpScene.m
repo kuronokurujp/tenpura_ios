@@ -14,6 +14,7 @@
 #import "./../DAta/DataSaveGame.h"
 
 #import "./../System/Sound/SoundManager.h"
+#import "./../System/Common.h"
 
 #include "../../libs/CCControlExtension/CCControlExtension.h"
 
@@ -153,7 +154,11 @@ static NSString*	sp_helpHtmlNameListByLangEn[]	=
 {
 	//	htmlファイル表示
 	{
-		CGRect	webViewRect	= CGRectMake(helpSceneXPos, helpSceneYPos, helpSceneSizeWidth, helpSceneSizeHeight );
+        CGSize  size    = CGSizeMake(helpSceneSizeWidth, helpSceneSizeHeight);
+        size    = converSizeVariableDevice(size);
+        
+        CGPoint pos = ccp(helpSceneXPos, helpSceneYPos);//converPosVariableDevice(ccp(helpSceneXPos, helpSceneYPos));
+		CGRect	webViewRect	= CGRectMake(pos.x, pos.y, size.width, size.height );
 		mp_helpView	= [[UIWebView alloc] initWithFrame:webViewRect];	
 	}
     
@@ -176,6 +181,13 @@ static NSString*	sp_helpHtmlNameListByLangEn[]	=
     {
         [mp_prevPageBtn setVisible:NO];
         [mp_prevSceneBtn setVisible:NO];
+    }
+    
+    {
+        CGSize  size    = CGSizeMake(1.f, 1.f);
+        [self setScaleX:converSizeVariableDevice(size).width];
+        
+   //     [self setPosition:converPosVariableDevice(self.position)];
     }
 }
 

@@ -6,7 +6,7 @@ ID,日本語,英語,
 4,Twitter,Tweet,
 5,Game Center,Game Center,
 6,クレジット,Credit,
-7,アドオンショップ,Addon Shop,
+7,アドオンショップ,Add-on Shop,
 8,ミッション,Mission,
 9,開店,Open,
 10,アイテムショップ,Items,
@@ -153,7 +153,7 @@ ID,日本語,英語,
 147,獲得資金,Gainned Money,ゲームリザルト画面の獲得金額タイトル
 148,所持金,Owned Money,ゲームリザルト画面の合計金額タイトル
 149,広告除去：金額%d円,%d Yen: Remove Ads,アドオン広告除去項目名
-160,ハート１つ回復：金額%d円,%d Yen: Heal 1 Life,アドオンゲームプレイライフ１つ回復
+160,ハート5つ回復：金額%d円,%d Yen: Heal 5 Life,アドオンゲームプレイライフ5つ回復
 150,金3000取得：金額%d円,%d Yen: Gain 3000 money,アドオン金額取得項目名
 151,金9000取得：金額%d円,%d Yen:Gain 9000 money,アドオン金額取得項目名
 152,金80000取得：金額%d円,%d Yen:Gain 80000 money,アドオン金額取得項目名
@@ -183,4 +183,5 @@ ID,日本語,英語,
 302,残り%d秒,%d seconds left,フィーバー時の残り時間
 1000,アドイン購入に失敗しました。,Purchase Failed,アドオン購入失敗時の汎用メッセージ
 1050,通信失敗,Communication failure,通信失敗時のタイトル
-1051,通信に失敗しました。,I failed to communicate.,通信失敗時のメッセージ
+1051,ネットワーク通信に失敗しました。,I failed to communicate.,通信失敗時のメッセージ
+1052,プレイライフ数が最大値になりました。,プレイライフ数が最大値になりました。,ライフ数が最大になった時の通知内容

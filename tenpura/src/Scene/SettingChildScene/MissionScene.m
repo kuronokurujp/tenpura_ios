@@ -14,6 +14,7 @@
 #import "./../../TableCells/SampleCell.h"
 #import "./../../TableCells/MissionTableCell.h"
 #import "./../../System/Sound/SoundManager.h"
+#import "./../../System/Common.h"
 
 @implementation MissionScene
 
@@ -49,6 +50,9 @@
 
 	[self setup:&data];
 	[self reloadUpdate];
+    
+    CGSize  size    = CGSizeMake(1.f, 1.f);
+    [self setScaleX:converSizeVariableDevice(size).width];
 }
 
 /*

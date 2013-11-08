@@ -33,7 +33,7 @@ enum
 	eSAVE_DATA_ITEMS_MAX	= 32,
 	eSAVE_DATA_MISSION_MAX	= 16,
 	eSAVE_DATA_ITEM_USE_MAX	= 99,
-    eSAVE_DATA_PLAY_LIEF_MAX    = 4,
+    eSAVE_DATA_PLAY_LIEF_MAX    = 5,
 };
 
 typedef struct
