@@ -16,6 +16,7 @@
 #import "./../System/GameCenter/GameKitHelper.h"
 #import "./../System/Sound/SoundManager.h"
 #import "./../System/Common.h"
+#import "./../System/Alert/UIAlertView+Block.h"
 
 #import "./../Data/DataBaseText.h"
 #ifdef DEBUG
@@ -23,6 +24,8 @@
 #import "./../Data/DataNetaPackList.h"
 
 #endif
+
+static BOOL	bNetTimeRequest_g	= YES;
 
 @interface TitleScene (PrivateMethod)
 
@@ -104,10 +107,10 @@
 		[[SoundManager shared] playBgm:@"normalBGM"];
 	}
     
-    //  ネットタイム取得通知
-    AppController*	pApp	= (AppController*)[UIApplication sharedApplication].delegate;
-    if( pApp.bVisibleByGetNetTime == YES )
+    //  ネットタイム取得通知(初回一回のみ)
+    if( bNetTimeRequest_g == YES )
     {
+		bNetTimeRequest_g	= NO;
 		NSString*	pGetNetTimeName	= [NSString stringWithUTF8String:gp_getNetTimeObserverName];
 		NSNotification *n = [NSNotification notificationWithName:pGetNetTimeName object:nil];
 		NSAssert(n, @"");
@@ -117,14 +120,32 @@
 	return self;
 }
 
--(void) dealloc
-{
-    [super dealloc];
-}
+/*
+	@brief	変移演出終了
+*/
+-(void)	onEnterTransitionDidFinish {
 
--(void) onEnter
-{
-    [super onEnter];
+	//	アップグレード特典があればアラートで内容表示する
+	const SAVE_DATA_ST*	pSaveData	= [[DataSaveGame shared] getData];
+	if( ( pSaveData != NULL ) && (pSaveData->upgradeChk == 1) ) {
+		[[DataSaveGame shared] noticeSpecialFavorMessage];
+		
+		NSString*	pAddMoneyMessage	= [NSString stringWithFormat:[DataBaseText getString:1202], eSPECIAL_FAVOR_ADD_MONEY_NUM];
+		NSString*	pMessage	= [NSString stringWithFormat:@"%@\n%@",
+		 [DataBaseText getString:1201], pAddMoneyMessage];
+		
+		UIAlertView*	pAlert	=
+		[[[UIAlertViewBlock alloc]
+		initWithTitle:[DataBaseText getString:1203] message:pMessage
+		completion:^(UIAlertView *in_pAlerView, NSInteger in_btnIdx) {
+		}
+		cancelButtonTitle:@"OK"
+		otherButtonTitles:nil] autorelease];
+		
+		[pAlert show];
+	}
+	
+	[super onEnterTransitionDidFinish];
 }
 
 /*
@@ -279,9 +300,6 @@
     {
         CGSize  size    = CGSizeMake(1.f, 1.f);
        [self setScaleX:converSizeVariableDevice(size).width];
-        
-    //    CGPoint pos = self.position;
-     //   [self setPosition:converPosVariableDevice(pos)];
     }
 }
 

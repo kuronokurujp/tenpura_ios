@@ -117,6 +117,14 @@ enum
 		}
 	}
 
+	//	ロック中であればタッチによる移動処理をする。
+	{
+		if( mb_lock == YES ) {
+			//	タッチ中かどうか
+			
+		}
+	}
+	
 	{
 		CCNode*	pAnimCursor	= [self getChildByTag:eCHILD_TAG_ANIM_CURSOR];
 		CCNode*	pAnimStar	= [self getChildByTag:eCHILD_TAG_ANIM_STAR];
@@ -350,8 +358,7 @@ enum
 /*
 	@brief	タッチロック
 */
--(void)	lockTouch
-{
+-(void)	lockTouch {
 	CCScaleBy*	pScaleBy	= [CCScaleBy actionWithDuration:0.1f scale:1.5f];
 	[pScaleBy setTag:eACTTAG_LOCK_SCALE];
 

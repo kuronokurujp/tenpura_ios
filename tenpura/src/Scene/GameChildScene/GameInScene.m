@@ -42,7 +42,6 @@
 
 @implementation GameInScene
 
-static const SInt32	s_AddCustomerEatMax	= 1;
 static const UInt32	s_PutCustomerCombNum	= 3;
 
 //	レイヤータグ
@@ -476,6 +475,7 @@ enum
 					if( CGRectContainsPoint([pTenpura boundingBoxByTouch], touchPoint) == YES )
 					{
 						[pTenpura lockTouch];
+											
 						mp_touchTenpura	= pTenpura;
                         
                         //  タッチした時のエフェクト

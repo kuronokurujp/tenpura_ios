@@ -30,6 +30,6 @@
 //	ミッションが成功しているかのフラグ取得
 -(BOOL)	isSuccess:(UInt32)in_idx;
 //	ミッション成功しているかとうかのチェック(内部でチェック処理をするので重い)
--(BOOL)	checSuccess:(UInt32)in_idx;
+-(BOOL)	checkSuccess:(UInt32)in_idx;
 
 @end

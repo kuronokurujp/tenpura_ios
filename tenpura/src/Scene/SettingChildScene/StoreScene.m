@@ -82,15 +82,6 @@
 
 -(void) update:(ccTime)delta
 {
-    //  ネットタイム取得通知
-    AppController*	pApp	= (AppController*)[UIApplication sharedApplication].delegate;
-    if( pApp.bVisibleByGetNetTime == YES )
-    {
-		NSString*	pGetNetTimeName	= [NSString stringWithUTF8String:gp_getNetTimeObserverName];
-		NSNotification *n = [NSNotification notificationWithName:pGetNetTimeName object:nil];
-		NSAssert(n, @"");
-		[[NSNotificationCenter defaultCenter] postNotification:n];
-    }
 }
 
 /*

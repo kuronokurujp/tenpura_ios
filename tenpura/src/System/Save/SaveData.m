@@ -71,12 +71,12 @@
 	NSData*	pData	= [[NSUserDefaults standardUserDefaults] dataForKey:mp_IdName];
 	
 	//	初回か判断
-	if( pData == nil )
-	{
+	if( pData == nil ) {
+		//	初回
 		[self save];
 	}
-	else
-	{
+	else {
+		//	すでにデータがある
 		[pData getBytes:mp_Data length:m_Size];
 	}
 	

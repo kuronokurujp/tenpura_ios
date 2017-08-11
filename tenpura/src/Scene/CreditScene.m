@@ -85,7 +85,7 @@
 {
 	//	htmlファイル表示
 	{
-        CGSize  size    = CGSizeMake(creditSceneSizeWidth, creditSceneSizeHeight);
+        CGSize  size    = CGSizeMake(creditSceneSizeWidth, creditSceneSizeHeight + 30);
 
         CGPoint pos     = converPosVariableDevice(ccp(creditSceneXPos, creditSceneYPos));
 

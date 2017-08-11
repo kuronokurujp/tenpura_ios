@@ -25,10 +25,10 @@
 static DataSaveGame*	s_pDataSaveGameInst	= nil;
 static NSString*		s_pSaveIdName	= @"TenpuraGameData";
 static const UInt16   s_maxLv_dataSaveGame    = 999;
+static const int	s_nowVersionNum	= 2;
 
 @synthesize cureTime        = m_cureTime;
 @synthesize networkDate     = mp_networkDate;
-@synthesize nowCureTime     = m_nowCureTime;
 @synthesize nowEventTime    = m_nowEventTime;
 @synthesize gameTime        = m_gameTime;
 
@@ -37,8 +37,7 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 */
 +(DataSaveGame*)shared
 {
-	if( s_pDataSaveGameInst == nil )
-	{
+	if( s_pDataSaveGameInst == nil ) {
 		s_pDataSaveGameInst	= [[DataSaveGame alloc] init];
 	}
 	
@@ -70,25 +69,38 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 {
 	if( self = [super init] )
 	{
-        m_cureTime  = 0;
-        m_nowCureTime   = 0;
+        m_cureTime      = 0;
         m_nowEventTime  = 0;
-        m_gameTime  = 0;
+        m_gameTime      = 0;
         mp_networkDate  = nil;
+        memset(m_aCureTime, 0, sizeof(m_aCureTime));
         
 		mp_SaveData	= [SaveData alloc];
 		[mp_SaveData setup:s_pSaveIdName :sizeof(SAVE_DATA_ST)];
 		[mp_SaveData load];
 		
 		SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
-		if( pData != nil )
-		{
-			if( pData->use == 0 )
-			{
+		if( pData != nil ) {
+			pData->upgradeChk	= 0;
+			
+			if( pData->use == 0 ) {
 				//	データがない
 				//	リセットしてセーブする
 				[self reset: [DataItemList shared]];
 			}
+			else if(pData->version != s_nowVersionNum) {
+				//	すでにセーブデータが存在するが、バージョンが異なる場合
+				//	特典をつける
+				[self addSaveMoeny:eSPECIAL_FAVOR_ADD_MONEY_NUM];
+				//	ライフを回復へ
+				[self addPlayLife:eSAVE_DATA_PLAY_LIEF_MAX];
+				
+				//	バージョンを最新へ
+				pData->version	= s_nowVersionNum;
+				pData->upgradeChk	= 1;
+			}
+			
+			[self save];
 		}
 	}
 
@@ -119,6 +131,9 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 //  時間に関連するステータスを更新
 -(void)updateTimeStatus:(NSDate*)in_date
 {
+	mp_networkDate	= in_date;
+	[mp_networkDate retain];
+	
     SAVE_DATA_ST* pSaveData   = (SAVE_DATA_ST*)[mp_SaveData getData];
     
     //  指定した時間を超えているかチェック
@@ -128,54 +143,68 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
     //  ライフが減っているなら
     if( pSaveData->playLife < eSAVE_DATA_PLAY_LIEF_MAX )
     {
+		//	回復開始時間から現在の時間との差の時間を取得
         NSDate* pCureBaseDt = [pFmt dateFromString:[NSString stringWithUTF8String:pSaveData->aCureBeginTimeStr]];
         NSTimeInterval  span    = [mp_networkDate timeIntervalSinceDate:pCureBaseDt];
         if( m_cureTime <= span )
         {
-            //  回復する
-            int cureNum = span / m_cureTime;
-            /*
-             下記のメソッドは使えない
-             回復してまだ全回復でない場合に次の回復時間を再設定するが、設定する時間の基準がネットから取得した時間になってしまう。
-             ここでは以前設定した回復期間時間を基準に設定しないと次の回復時間がネット時間を基準した期間になって回復時間がライフを減った時からのびる
-             */
-//           [self addPlayLife:cureNum];
-            pSaveData->playLife += cureNum;
-            pSaveData->playLife = MIN(pSaveData->playLife, eSAVE_DATA_PLAY_LIEF_MAX);
+            //  １ライフ回復時間を超えていたら、１ライフ回復時間未満になるまで回復する
+			while ( m_cureTime < span ) {
+				/*
+				 下記のメソッドは使えない
+				 回復してまだ全回復でない場合に次の回復時間を再設定するが、設定する時間の基準がネットから取得した時間になってしまう。
+				 ここでは以前設定した回復期間時間を基準に設定しないと次の回復時間がネット時間を基準した期間になって回復時間がライフを減った時からのびる
+				 */
+	//           [self addPlayLife:cureNum];
+				pSaveData->playLife += 1;
+				pSaveData->playLife = MIN(pSaveData->playLife, eSAVE_DATA_PLAY_LIEF_MAX);
 
-            if( pSaveData->playLife < eSAVE_DATA_PLAY_LIEF_MAX )
-            {
-                //  ライフ最大から減った後の時間を取得する、ここから回復時間を取得
-                NSDate* pCureDt = [[[NSDate alloc] initWithTimeInterval:m_cureTime * cureNum sinceDate:pCureBaseDt] autorelease];
+				if( eSAVE_DATA_PLAY_LIEF_MAX <= pSaveData->playLife ) {
+					span	= 0;
+					break;
+				}
+								
+				span -= m_cureTime;
+			}
 
-                NSString*   pFmtStr = [pFmt stringFromDate:pCureDt];
-                memcpy(pSaveData->aCureBeginTimeStr, [pFmtStr UTF8String], sizeof(pSaveData->aCureBeginTimeStr));
-                
-                //  次の回復時間を取得
-                {
-                    NSTimeInterval  span    = [pCureDt timeIntervalSinceDate:mp_networkDate];
-                    m_nowCureTime   = span;
-                }
-            }
+			//	回復したが、まだ全快ではない。
+			if( 0 < span ) {
+				//  ライフ最大から減った後の時間を取得する、ここから回復時間を取得
+				NSDate* pCureDt = [[[NSDate alloc] initWithTimeInterval:span sinceDate:mp_networkDate] autorelease];
+
+				NSString*   pFmtStr = [pFmt stringFromDate:pCureDt];
+				memcpy(pSaveData->aCureBeginTimeStr, [pFmtStr UTF8String], sizeof(pSaveData->aCureBeginTimeStr));
+				
+				//  次の回復時間を取得
+				{
+					//	今の時刻と回復時刻から秒を取得
+					NSTimeInterval  span    = [pCureDt timeIntervalSinceDate:mp_networkDate];
+					m_aCureTime[pSaveData->playLife]    = abs(span);
+
+				}
+			}
         }
-        else
-        {
-            m_nowCureTime   = -span;
+        else {
+            //  まだ回復時間が残っている。
+            m_aCureTime[pSaveData->playLife]    = abs(span);
         }
-    }
+		
+		//	まだ先に回復があれば回復時間を設定
+		for( int i = pSaveData->playLife + 1; i < eSAVE_DATA_PLAY_LIEF_MAX; ++i ) {
+			m_aCureTime[i]	= m_cureTime;
+		}
+	}
     
     //  イベントが発生期間の時間を取得
     if( pSaveData->invocEventNo != -1 )
     {
         NSDate* pEventBaseDt    = [pFmt dateFromString:[NSString stringWithUTF8String:pSaveData->aEventBeginTimeStr]];
         NSTimeInterval  span    = [pEventBaseDt timeIntervalSinceDate:mp_networkDate];
-        if( span <= 0  )
-        {
+        if( span <= 0  ) {
             //  イベント終了
             m_nowEventTime  = 0;
         }
-        else
-        {
+        else {
             m_nowEventTime  = span;
         }
     }
@@ -476,28 +505,36 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 {
 	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
     SInt8   oldPlayerLife   = pData->playLife;
+    SInt8   newPlayerLife   = pData->playLife + in_num;
+
+	if ( newPlayerLife < 0 ) {
+		return;
+	}
 
     BOOL    bSaveTime   = NO;
-    if( in_num < 0 )
-    {
-        if(eSAVE_DATA_PLAY_LIEF_MAX <= oldPlayerLife)
-        {
+    if( in_num < 0 ) {
+        //  現在のライフ最大値であればセーブする。
+        if(eSAVE_DATA_PLAY_LIEF_MAX == oldPlayerLife) {
             bSaveTime   = YES;
         }
-        m_nowCureTime   = m_cureTime;
+
+		m_aCureTime[newPlayerLife]  = m_cureTime;
+		for( int i = newPlayerLife - 1; 0 <= i; --i ) {
+			m_aCureTime[i]	= 0;
+		}
     }
-    else if( (0 < in_num) && (pData->playLife < eSAVE_DATA_PLAY_LIEF_MAX) )
+    else if( pData->playLife < eSAVE_DATA_PLAY_LIEF_MAX )
     {
         //  回復する時
-        if( (pData->playLife + in_num) <= eSAVE_DATA_PLAY_LIEF_MAX )
-        {
+        if( eSAVE_DATA_PLAY_LIEF_MAX <= newPlayerLife ) {
             //  全回復した場合は回復時間を初期化
-            memset(pData->aCureBeginTimeStr, 0, sizeof(pData->aCureBeginTimeStr));            
+            memset(pData->aCureBeginTimeStr, 0, sizeof(pData->aCureBeginTimeStr));
+			memset( m_aCureTime, 0, sizeof(m_aCureTime) );
         }
-        else
-        {
+        else {
             //  まだ回復が残っている場合は、残り回復時間をセーブしておく
             bSaveTime   = YES;
+			m_aCureTime[pData->playLife]	= 0;
         }
     }
     
@@ -505,8 +542,8 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
     {
         //  ライフ最大から減った後の時間を取得する、ここから回復時間を取得
         NSDate* pGameDt = [[[NSDate alloc] initWithTimeInterval:m_gameTime sinceDate:mp_networkDate] autorelease];
-        NSDate* pCureDt = [[[NSDate alloc] initWithTimeInterval:m_cureTime sinceDate:pGameDt] autorelease];
-        
+        NSDate* pCureDt = [[[NSDate alloc] initWithTimeInterval:m_aCureTime[newPlayerLife] sinceDate:pGameDt] autorelease];
+
         NSDateFormatter*    pFmt    = [[[NSDateFormatter alloc] init] autorelease];
         [pFmt setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
         NSString*   pFmtStr = [pFmt stringFromDate:pCureDt];
@@ -521,13 +558,45 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
     [mp_SaveData save];
 }
 
+-(const SInt32) getNowCureTime
+{
+    SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
+    if( pData->playLife < eSAVE_DATA_PLAY_LIEF_MAX ) {
+        return m_aCureTime[pData->playLife];
+    }
+    
+    return 0;
+}
+
+-(const SInt32) getAllCureLifeTime
+{
+    SInt32  num = 0;
+    
+    for( SInt32 i = 0; i < eSAVE_DATA_PLAY_LIEF_MAX; ++i ) {
+        num += m_aCureTime[i];
+    }
+    
+    return num;
+}
+
+//  ライフ最大値になる日付取得
+-(NSDate*)  getAllCureLifeDate
+{
+    SInt32  num = [self getAllCureLifeTime];
+    
+    NSDate* pGameDt = [[[NSDate alloc] initWithTimeInterval:m_gameTime sinceDate:mp_networkDate] autorelease];
+    NSDate* pCureDt = [[[NSDate alloc] initWithTimeInterval:num sinceDate:pGameDt] autorelease];
+    
+    return pCureDt;
+}
+
 //  ライフタイマー加算
 -(void) addPlayLifeTimerCnt:(const SInt32)in_cnt
 {
-    m_nowCureTime += in_cnt;
-    if( m_nowCureTime < 0 )
+    SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
+    if( pData->playLife < eSAVE_DATA_PLAY_LIEF_MAX )
     {
-        m_nowCureTime  = 0;
+        m_aCureTime[pData->playLife] += in_cnt;
     }
 }
 
@@ -547,8 +616,7 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
 -(void) saveNabeExp:(UInt16)in_expNum
 {
     SAVE_DATA_ST*   pData   = (SAVE_DATA_ST*)[mp_SaveData getData];
-    if( pData != nil )
-    {
+    if( pData != nil ) {
         pData->nabeAddExp   = in_expNum;
     }
 }
@@ -569,6 +637,8 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
                 pData->nabeExp -= eNABE_LVUP_NUM;
                 pData->nabeLv += 1;
                 
+				[self save];
+
                 return true;
             }
         }
@@ -696,6 +766,7 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
     out_pData->playLife = eSAVE_DATA_PLAY_LIEF_MAX;
     out_pData->bTutorial    = YES;
     out_pData->settingNetaPackId  = 1;
+	out_pData->version	= s_nowVersionNum;
 
     //  アイテムデータとのマッピング
     {
@@ -711,6 +782,17 @@ static const UInt16   s_maxLv_dataSaveGame    = 999;
         out_pData->aNetaPacks[ 0 ].no = 1;
         out_pData->aNetaPacks[ 0 ].num	= 1;
     }
+}
+
+/*
+	@brief	特典内容のメッセージをしたかの通知
+*/
+-(void) noticeSpecialFavorMessage {
+	SAVE_DATA_ST*	pData	= (SAVE_DATA_ST*)[mp_SaveData getData];
+	if( pData != NULL ) {
+		pData->upgradeChk	= 0;
+		[mp_SaveData save];
+	}
 }
 
 /*

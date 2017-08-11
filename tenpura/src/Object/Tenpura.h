@@ -39,6 +39,10 @@
 @property	(nonatomic, retain)		id<TenpuraProtocol>	delegate;
 @property   (nonatomic, readwrite)BOOL bNonBurn;
 
+typedef bool (^isScreenTouchBlock)();
+typedef Point (^getTouchPosBlock)();
+typedef bool (^isTargetHitBlock)(  CGRect in_rect );
+
 //	セットアップ
 -(void)	setupToPosIndex:(const NETA_DATA_ST*)in_pData :(const SInt32)in_posDataIdx :(Float32)in_raiseSpeedRate;
 -(void)	setupToPos:(const NETA_DATA_ST*)in_pData :(const CGPoint)in_pos :(Float32)in_raiseSpeedRate;
@@ -72,6 +76,7 @@
 
 //	タッチロック
 -(void)	lockTouch;
+
 -(void)	unLockTouch;
 -(void) unLockTouchByPos:(const CGPoint)in_pos;
 -(void)	unLockTouchByAct;

@@ -88,13 +88,11 @@
 	didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	// Print IDFA (from AdSupport Framework) for iOS 6 and UDID for iOS < 6.
-	if (NSClassFromString(@"ASIdentifierManager"))
-	{
+	if( NSClassFromString(@"ASIdentifierManager" ) ) {
 		NSLog(@"GoogleAdMobAdsSDK ID for testing: %@",
 		[[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString]);
 	}
-	else
-	{
+	else {
 		NSLog(@"GoogleAdMobAdsSDK ID for testing: %@", [[UIDevice currentDevice] uniqueIdentifier]);
 	}
 

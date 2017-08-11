@@ -133,7 +133,6 @@
 		CE4FE29B16DCBB220094EA66 /* MissionTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4FE29A16DCBB210094EA66 /* MissionTableCell.m */; };
 		CE4FE29E16DCBB380094EA66 /* StoreTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4FE29D16DCBB380094EA66 /* StoreTableCell.m */; };
 		CE51773816494022004DF4F6 /* GameKitHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = CE51773716494022004DF4F6 /* GameKitHelper.m */; };
-		CE51774316497376004DF4F6 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE51774216497376004DF4F6 /* GameKit.framework */; };
 		CE5177531649D921004DF4F6 /* UINavigationControllerExt.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5177521649D921004DF4F6 /* UINavigationControllerExt.m */; };
 		CE538F4416DDD54600A45E0B /* AnimActionNumCounterLabelTTF.m in Sources */ = {isa = PBXBuildFile; fileRef = CE538F4316DDD54600A45E0B /* AnimActionNumCounterLabelTTF.m */; };
 		CE5BAA471669776500BD3606 /* ActionCustomer.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5BAA431669776500BD3606 /* ActionCustomer.m */; };
@@ -530,6 +529,10 @@
 		CEF7FA3216BFF8F600A69042 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF7FA3116BFF8F600A69042 /* iAd.framework */; };
 		CEF8ECCE17E0ACC600CC42D2 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF8ECCD17E0ACC600CC42D2 /* Icon@2x.png */; };
 		CEFBC2B716877DE100C3C233 /* GameEndScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CEFBC2B616877DE100C3C233 /* GameEndScene.m */; };
+		D1988C8518AD156C00E057C0 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1988C8418AD156C00E057C0 /* GameKit.framework */; };
+		D1988C8918AD1AE900E057C0 /* Icon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D1988C8818AD1AE900E057C0 /* Icon-60@2x.png */; };
+		D1988C8B18AD1B2500E057C0 /* Icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D1988C8A18AD1B2500E057C0 /* Icon-40@2x.png */; };
+		D1D792E3191271F900DC16A9 /* UIAlertView+Block.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D792E2191271F900DC16A9 /* UIAlertView+Block.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -807,7 +810,6 @@
 		CE4FE29D16DCBB380094EA66 /* StoreTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StoreTableCell.m; path = src/TableCells/StoreTableCell.m; sourceTree = "<group>"; };
 		CE51773616494022004DF4F6 /* GameKitHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameKitHelper.h; path = src/System/GameCenter/GameKitHelper.h; sourceTree = "<group>"; };
 		CE51773716494022004DF4F6 /* GameKitHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameKitHelper.m; path = src/System/GameCenter/GameKitHelper.m; sourceTree = "<group>"; };
-		CE51774216497376004DF4F6 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		CE5177511649D921004DF4F6 /* UINavigationControllerExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UINavigationControllerExt.h; path = src/UINavigationControllerExt.h; sourceTree = "<group>"; };
 		CE5177521649D921004DF4F6 /* UINavigationControllerExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UINavigationControllerExt.m; path = src/UINavigationControllerExt.m; sourceTree = "<group>"; };
 		CE538F4216DDD54600A45E0B /* AnimActionNumCounterLabelTTF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimActionNumCounterLabelTTF.h; path = src/System/Anim/Action/AnimActionNumCounterLabelTTF.h; sourceTree = "<group>"; };
@@ -1310,6 +1312,11 @@
 		CEF8ECCD17E0ACC600CC42D2 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "Resources/Icon@2x.png"; sourceTree = "<group>"; };
 		CEFBC2B516877DE100C3C233 /* GameEndScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameEndScene.h; path = src/Scene/GameChildScene/GameEndScene.h; sourceTree = "<group>"; };
 		CEFBC2B616877DE100C3C233 /* GameEndScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameEndScene.m; path = src/Scene/GameChildScene/GameEndScene.m; sourceTree = "<group>"; };
+		D1988C8418AD156C00E057C0 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		D1988C8818AD1AE900E057C0 /* Icon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-60@2x.png"; path = "Resources/Icon-60@2x.png"; sourceTree = "<group>"; };
+		D1988C8A18AD1B2500E057C0 /* Icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-40@2x.png"; path = "Resources/Icon-40@2x.png"; sourceTree = "<group>"; };
+		D1D792E1191271F900DC16A9 /* UIAlertView+Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIAlertView+Block.h"; path = "src/System/Alert/UIAlertView+Block.h"; sourceTree = "<group>"; };
+		D1D792E2191271F900DC16A9 /* UIAlertView+Block.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIAlertView+Block.m"; path = "src/System/Alert/UIAlertView+Block.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1326,6 +1333,7 @@
 				CE8BF5F517C79E7100B989A6 /* EventKitUI.framework in Frameworks */,
 				CE8BF5F317C79E4800B989A6 /* CoreTelephony.framework in Frameworks */,
 				CE8BF5F117C79E1E00B989A6 /* CoreMotion.framework in Frameworks */,
+				D1988C8518AD156C00E057C0 /* GameKit.framework in Frameworks */,
 				CE8BF5EF17C79DE300B989A6 /* CFNetwork.framework in Frameworks */,
 				CE3865EF17429B2C00C176F3 /* CoreText.framework in Frameworks */,
 				CE2DB17B172B731400E97D84 /* Security.framework in Frameworks */,
@@ -1341,7 +1349,6 @@
 				CE7C358316972FBC00E6E2EC /* Twitter.framework in Frameworks */,
 				CEDD4102165AA0D90037F60B /* StoreKit.framework in Frameworks */,
 				CEDD4104165AA1070037F60B /* AdSupport.framework in Frameworks */,
-				CE51774316497376004DF4F6 /* GameKit.framework in Frameworks */,
 				CEF39135163DEFC500EC8B75 /* MessageUI.framework in Frameworks */,
 				CED245F11639964D00506CA8 /* OpenGLES.framework in Frameworks */,
 				CED245F31639964D00506CA8 /* OpenAL.framework in Frameworks */,
@@ -2242,6 +2249,7 @@
 		CED245ED1639964D00506CA8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D1988C8418AD156C00E057C0 /* GameKit.framework */,
 				CE8BF60017C79F3300B989A6 /* Social.framework */,
 				CE8BF5FE17C79F0E00B989A6 /* MobileCoreServices.framework */,
 				CE8BF5FC17C79EE900B989A6 /* MediaPlayer.framework */,
@@ -2266,7 +2274,6 @@
 				CEF7FA2916BFF8B000A69042 /* CoreLocation.framework */,
 				CE7C358216972FBC00E6E2EC /* Twitter.framework */,
 				CEDD4101165AA0D80037F60B /* StoreKit.framework */,
-				CE51774216497376004DF4F6 /* GameKit.framework */,
 				CEF39136163DEFD100EC8B75 /* SystemConfiguration.framework */,
 				CEF39134163DEFC500EC8B75 /* MessageUI.framework */,
 				CED245EE1639964D00506CA8 /* QuartzCore.framework */,
@@ -2310,9 +2317,11 @@
 				CE9A09FF17AFD6A9005A33A9 /* text */,
 				CE9A0A1717AFD6A9005A33A9 /* title */,
 				CE3D053B17E0A49A006F69FA /* Icon-72.png */,
+				D1988C8A18AD1B2500E057C0 /* Icon-40@2x.png */,
 				0465128617E16D31007ADDC0 /* icon120x120.png */,
 				0465128417E15D3A007ADDC0 /* icon114×114.png */,
 				CEF8ECCD17E0ACC600CC42D2 /* Icon@2x.png */,
+				D1988C8818AD1AE900E057C0 /* Icon-60@2x.png */,
 				CE3D053C17E0A49A006F69FA /* Icon-Small-50.png */,
 				CE3D053D17E0A49A006F69FA /* Icon-Small.png */,
 				CE3D053E17E0A49A006F69FA /* Icon-Small@2x.png */,
@@ -2432,11 +2441,11 @@
 		CED24786163996CA00506CA8 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				CED24798163997A700506CA8 /* System */,
 				CE5BAA411669774A00BD3606 /* ActionCustomer */,
 				CEDD40F5165AA0450037F60B /* Admob */,
 				CEF24D7A163C131200ACE56F /* CCBReader */,
 				CED24799163997AB00506CA8 /* TableCells */,
-				CED24798163997A700506CA8 /* System */,
 				CED24797163997A200506CA8 /* Scene */,
 				CED247961639979B00506CA8 /* Object */,
 				CED247951639979600506CA8 /* Data */,
@@ -2533,6 +2542,7 @@
 		CED24798163997A700506CA8 /* System */ = {
 			isa = PBXGroup;
 			children = (
+				D1D792DE1912713000DC16A9 /* Alert */,
 				CE306A761743DB4400BCACE9 /* Network */,
 				CED37D7516E4357400191102 /* Store */,
 				CE216D5D16B37A3B000E0E29 /* Anim */,
@@ -2775,6 +2785,15 @@
 			name = TweetView;
 			sourceTree = "<group>";
 		};
+		D1D792DE1912713000DC16A9 /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				D1D792E1191271F900DC16A9 /* UIAlertView+Block.h */,
+				D1D792E2191271F900DC16A9 /* UIAlertView+Block.m */,
+			);
+			name = Alert;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2801,7 +2820,17 @@
 		CED245E11639964D00506CA8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0510;
+				TargetAttributes = {
+					CED245E91639964D00506CA8 = {
+						DevelopmentTeam = T2KN6B847T;
+						SystemCapabilities = {
+							com.apple.GameCenter = {
+								enabled = 1;
+							};
+						};
+					};
+				};
 			};
 			buildConfigurationList = CED245E41639964D00506CA8 /* Build configuration list for PBXProject "tenpura" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -2860,6 +2889,7 @@
 				CE9A0A3C17AFD6A9005A33A9 /* charNormal03.plist in Resources */,
 				CE9A0A3D17AFD6A9005A33A9 /* charNormal03.png in Resources */,
 				CE9A0A3F17AFD6A9005A33A9 /* cursor.plist in Resources */,
+				D1988C8B18AD1B2500E057C0 /* Icon-40@2x.png in Resources */,
 				CE9A0A4017AFD6A9005A33A9 /* cursor.png in Resources */,
 				CE9A0A4217AFD6A9005A33A9 /* star.plist in Resources */,
 				CE9A0A4317AFD6A9005A33A9 /* star.png in Resources */,
@@ -2993,6 +3023,7 @@
 				CE9A0ADE17AFD6A9005A33A9 /* end01.caf in Resources */,
 				CE9A0ADF17AFD6A9005A33A9 /* end02.caf in Resources */,
 				CE9A0AE017AFD6A9005A33A9 /* fried01.caf in Resources */,
+				D1988C8918AD1AE900E057C0 /* Icon-60@2x.png in Resources */,
 				CE9A0AE117AFD6A9005A33A9 /* fried02.caf in Resources */,
 				CE9A0AE217AFD6A9005A33A9 /* fried03.caf in Resources */,
 				CE9A0AE317AFD6A9005A33A9 /* fried04.caf in Resources */,
@@ -3296,6 +3327,7 @@
 				CE3865C31742993500C176F3 /* CCES2Renderer.m in Sources */,
 				CE3865C41742993500C176F3 /* CCGLView.m in Sources */,
 				CE3865C51742993500C176F3 /* CCTouchDispatcher.m in Sources */,
+				D1D792E3191271F900DC16A9 /* UIAlertView+Block.m in Sources */,
 				CE3865C61742993500C176F3 /* CCTouchHandler.m in Sources */,
 				CE3865C71742993500C176F3 /* CCDirectorMac.m in Sources */,
 				CE3865C81742993500C176F3 /* CCEventDispatcher.m in Sources */,
@@ -3350,7 +3382,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: N2intarakuteivujapanLtd. (T2KN6B847T)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: N2intarakuteivujapanLtd. (T2KN6B847T)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -3372,8 +3405,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: N2intarakuteivujapanLtd.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: N2intarakuteivujapanLtd.";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3398,8 +3431,8 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5B92C109-E404-4325-8449-04C19F64C501";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5B92C109-E404-4325-8449-04C19F64C501";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E47DE5E2-47F3-4D3F-B99E-EFE8A64307F4";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
@@ -3414,7 +3447,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: noritugu nitta (WHH93AX5YL)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: noritugu nitta (WHH93AX5YL)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -3442,7 +3476,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: N2intarakuteivujapanLtd. (T2KN6B847T)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: N2intarakuteivujapanLtd. (T2KN6B847T)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -3464,8 +3499,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: noritugu nitta (WHH93AX5YL)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: noritugu nitta (WHH93AX5YL)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3491,9 +3526,10 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "D361C198-AD24-4B2F-90A1-05BD40E997C9";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D361C198-AD24-4B2F-90A1-05BD40E997C9";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "542693F4-F73A-4370-BA7D-F21B883F81BC";
 				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = NO;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -3502,8 +3538,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: N2intarakuteivujapanLtd.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: N2intarakuteivujapanLtd.";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3528,8 +3564,8 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5B92C109-E404-4325-8449-04C19F64C501";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5B92C109-E404-4325-8449-04C19F64C501";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E47DE5E2-47F3-4D3F-B99E-EFE8A64307F4";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;

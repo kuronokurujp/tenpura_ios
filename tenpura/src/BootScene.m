@@ -84,6 +84,9 @@
     
     //	トランザクション中かチェック
     [[StoreAppPurchaseManager share] checkTransaction];
+   
+	//	１ライフ回復時間(設定する時間は秒単位にしないとだめ)
+    [DataSaveGame shared].cureTime  = 60 * 15;
 }
 
 +(void) release

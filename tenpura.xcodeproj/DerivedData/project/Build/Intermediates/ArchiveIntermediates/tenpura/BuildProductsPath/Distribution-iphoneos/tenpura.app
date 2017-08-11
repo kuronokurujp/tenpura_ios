@@ -1,0 +1,1 @@
+/Users/mac/Desktop/tenpura2/tenpura.xcodeproj/DerivedData/project/Build/Intermediates/ArchiveIntermediates/tenpura/InstallationBuildProductsLocation/Applications/tenpura.app

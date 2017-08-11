@@ -21,9 +21,8 @@ enum
 	eMONEY_MAX_NUM	= 999999,
 };
 
-enum
-{
-    eNABE_LVUP_NUM  = 10
+enum {
+    eNABE_LVUP_NUM  = 10,
 };
 
 //	セーブデータ内容
@@ -34,6 +33,12 @@ enum
 	eSAVE_DATA_MISSION_MAX	= 16,
 	eSAVE_DATA_ITEM_USE_MAX	= 99,
     eSAVE_DATA_PLAY_LIEF_MAX    = 5,
+};
+
+//	特典
+enum {
+	//	追加ゲーム金額値
+	eSPECIAL_FAVOR_ADD_MONEY_NUM	= 10000,
 };
 
 typedef struct
@@ -101,8 +106,11 @@ typedef struct
     char    aCureBeginTimeStr[32];  //  704(32)
     char    aEventBeginTimeStr[32]; //  736(32)
 
+	int		version;				//	768(4)
+	SInt8	upgradeChk;				//	769(1)
+
     //	予約領域
-	SInt8	dummy[256];				//	768(256)
+	SInt8	dummy[251];				//	763(251)
 } SAVE_DATA_ST;	//	1024byte
 
 @interface DataSaveGame : NSObject
@@ -111,16 +119,15 @@ typedef struct
 	//	変数宣言
 	SaveData*	mp_SaveData;
     SInt32  m_cureTime;
-    SInt32  m_nowCureTime;
+    SInt32  m_aCureTime[eSAVE_DATA_PLAY_LIEF_MAX];
     SInt32  m_nowEventTime;
     UInt32  m_gameTime;
     NSDate* mp_networkDate;
 }
 
 @property   (nonatomic, readwrite)SInt32    cureTime;
-@property   (nonatomic, retain)NSDate*   networkDate;
-@property   (nonatomic, readonly)SInt32 nowCureTime;
-@property   (nonatomic, readonly)SInt32 nowEventTime;
+@property   (nonatomic, retain)NSDate*      networkDate;
+@property   (nonatomic, readonly)SInt32     nowEventTime;
 @property   (nonatomic, readwrite)UInt32    gameTime;
 
 //	関数
@@ -148,7 +155,6 @@ typedef struct
 //  アイテムロック解除
 -(void) unlockItem:(const UInt32)in_no;
 
-
 //	ネタ追加
 -(BOOL) addNetaPack:(UInt32)in_no;
 //  ネタパックごとのハイスコア(関数内部で保存している値より小さい場合は処理をスキップしている)
@@ -171,6 +177,15 @@ typedef struct
 
 //  ライフ増減
 -(void) addPlayLife:(const SInt8)in_num;
+
+//  今のライフ回復タイム取得
+-(const SInt32) getNowCureTime;
+
+//  ライフ最大値になるタイム取得
+-(const SInt32) getAllCureLifeTime;
+
+//  ライフ最大値になる日付取得
+-(NSDate*)  getAllCureLifeDate;
 
 //  ライフタイマー加算
 -(void) addPlayLifeTimerCnt:(const SInt32)in_cnt;
@@ -208,5 +223,8 @@ typedef struct
 
 //	セーブ初期データ取得
 -(void)getInitSaveData:(SAVE_DATA_ST*)out_pData :(DataItemList*)in_pDataItemInst;
+
+//	特典メッセージを出したかどうか
+-(void) noticeSpecialFavorMessage;
 
 @end

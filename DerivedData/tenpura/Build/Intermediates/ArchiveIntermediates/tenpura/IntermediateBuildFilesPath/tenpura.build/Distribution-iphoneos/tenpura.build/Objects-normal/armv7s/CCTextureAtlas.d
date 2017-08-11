@@ -1,0 +1,21 @@
+dependencies: \
+  /Users/mac/Desktop/tenpura2/tenpura/libs/cocos2d/CCTextureAtlas.m \
+  /Users/mac/Desktop/tenpura2/tenpura/libs/cocos2d/CCTextureAtlas.h \
+  /Users/mac/Desktop/tenpura2/tenpura/libs/cocos2d/CCTexture2D.h \
+  /Users/mac/Desktop/tenpura2/tenpura/libs/cocos2d/ccTypes.h \
+  /Users/mac/Desktop/tenpura2/tenpura/libs/cocos2d/ccMacros.h \
+  /Users/mac/Desktop/tenpura2/tenpura/libs/cocos2d/ccConfig.h \
+  /Users/mac/Desktop/tenpura2/tenpura/libs/cocos2d/Platforms/CCGL.h \
+  /Users/mac/Desktop/tenpura2/tenpura/libs/cocos2d/Platforms/iOS/CCGLView.h \
+  /Users/mac/Desktop/tenpura2/tenpura/libs/cocos2d/Platforms/iOS/CCESRenderer.h \
+  /Users/mac/Desktop/tenpura2/tenpura/libs/cocos2d/Platforms/CCNS.h \
+  /Users/mac/Desktop/tenpura2/tenpura/libs/cocos2d/CCTextureCache.h \
+  /Users/mac/Desktop/tenpura2/tenpura/libs/cocos2d/CCGLProgram.h \
+  /Users/mac/Desktop/tenpura2/tenpura/libs/cocos2d/ccGLStateCache.h \
+  /Users/mac/Desktop/tenpura2/tenpura/libs/cocos2d/CCDirector.h \
+  /Users/mac/Desktop/tenpura2/tenpura/libs/cocos2d/CCProtocols.h \
+  tenpura/libs/kazmath/include/kazmath/mat4.h \
+  tenpura/libs/kazmath/include/kazmath/utility.h \
+  /Users/mac/Desktop/tenpura2/tenpura/libs/cocos2d/CCConfiguration.h \
+  /Users/mac/Desktop/tenpura2/tenpura/libs/cocos2d/Support/NSThread+performBlock.h \
+  /Users/mac/Desktop/tenpura2/tenpura/libs/cocos2d/Support/OpenGL_Internal.h

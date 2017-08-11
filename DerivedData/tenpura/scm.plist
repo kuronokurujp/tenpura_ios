@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>FoundWorkingCopyPaths</key>
+	<array>
+		<string>/Users/mac/Desktop/tenpura2</string>
+	</array>
+	<key>LastWorkingCopyScanDate</key>
+	<date>2013-09-12T03:42:51Z</date>
+	<key>MissingFilePaths</key>
+	<array>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Resources/TapjoyResources.bundle/back.png</string>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Resources/TapjoyResources.bundle/MRAIDWebBrowserViewController.nib</string>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Resources/TapjoyResources.bundle/forward-disabled@2x.png</string>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Resources/TapjoyResources.bundle/1.sql</string>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Headers</string>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Headers/Tapjoy.h</string>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Resources/TapjoyResources.bundle/forward@2x.png</string>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Resources/TapjoyResources.bundle/addressbar-background.png</string>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Resources/TapjoyResources.bundle/openbrowser@2x.png</string>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Resources/TapjoyResources.bundle/mraid.js.txt</string>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Resources/TapjoyResources.bundle/MRAID_Standard_HTML_Stub.html</string>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Headers/TapjoyConnectConstants.h</string>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Resources/TapjoyResources.bundle/close.png</string>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Resources/TapjoyResources.bundle/forward.png</string>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Resources/TapjoyResources.bundle/openbrowser.png</string>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Resources/TapjoyResources.bundle/2.sql</string>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Headers/TJEvent.h</string>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Resources/TapjoyResources.bundle/close@2x.png</string>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Resources/TapjoyResources.bundle/MRAID_Standard_JS_Stub.html</string>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Resources/TapjoyResources.bundle/back-disabled.png</string>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Resources/TapjoyResources.bundle/TJCclose_button.png</string>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Resources/TapjoyResources.bundle/back@2x.png</string>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Resources/TapjoyResources.bundle/refresh.png</string>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Resources/TapjoyResources.bundle/forward-disabled.png</string>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Resources/TapjoyResources.bundle/back-disabled@2x.png</string>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Resources/TapjoyResources.bundle/TJCVideoView.nib</string>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Resources/TapjoyResources.bundle/refresh@2x.png</string>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Resources/TapjoyResources.bundle/3.sql</string>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Resources/TapjoyResources.bundle/TJCLoadingView.nib</string>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Resources/TapjoyResources.bundle/Info.plist</string>
+		<string>/Users/mac/Desktop/tenpura2/tenpura/libs/Tapjoy.embeddedframework/Tapjoy.framework/Versions/A/Resources/TapjoyResources.bundle/addressbar-background@2x.png</string>
+	</array>
+	<key>Version</key>
+	<integer>4</integer>
+</dict>
+</plist>

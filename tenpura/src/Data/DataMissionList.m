@@ -209,7 +209,7 @@ enum
 /*
 	@brief	ミッション成功しているかとうかのチェック
 */
--(BOOL)	checSuccess:(UInt32)in_idx
+-(BOOL)	checkSuccess:(UInt32)in_idx
 {
 	DataSaveGame*	pSaveDataInst	= [DataSaveGame shared];
 	NSAssert(pSaveDataInst, @"セーブデータがない");

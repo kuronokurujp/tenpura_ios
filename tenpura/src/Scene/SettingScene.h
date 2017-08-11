@@ -12,6 +12,7 @@
 #import "./../Data/DataEventDataList.h"
 
 #import "./../System/Store/StoreAppPurchaseManager.h"
+#import "./../System/Alert/UIAlertView+Block.h"
 
 #import "./../../libs/CCControlExtension/CCControl/CCControlButton.h"
 
@@ -25,7 +26,6 @@ typedef enum
 
 @interface SettingScene : CCLayer
 <
-	UIAlertViewDelegate,
     StoreAppPurchaseManagerSuccessProtocol
 >
 {
@@ -33,14 +33,6 @@ typedef enum
 	//	セッティング用項目リスト
 	CCArray*			mp_useItemNoList;
 	CCControlButton*	mp_gameStartBtn;
-	UIAlertView*		mp_missionSucceesAlertView;
-	UIAlertView*		mp_missionBounesAlertView;
-    UIAlertView*        mp_eventInvocAlertView;
-    UIAlertView*        mp_eventSuccessAlertView;
-    UIAlertView*        mp_eventRewardAlertView;
-    UIAlertView*        mp_eventNGAlertView;
-    UIAlertView*        mp_eventChkAlertView;
-    UIAlertView*        mp_lvupNabeAlertView;
     
     EVENT_RESULT_ENUM   m_eventResult;
     CCNode* mp_eventChkBtn;

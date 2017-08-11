@@ -73,7 +73,7 @@ ID,日本語,英語,
 70,ハイスコア%d点 天ぷら,Achieved High Score %d,ハイスコア%d点 天ぷら
 71,ヘルプ,Help,
 72,http://bit.ly/vnIVLk,http://bit.ly/vnIVLk,[more app]を押した先のURL
-73,54096e57bc6a4863,54096e57bc6a4863,広告バナーID
+73,a150f452e1325b5,a150f452e1325b5,広告バナーID
 74,石のなべ,Ordinary saucepan Of Stone,アイテム名
 75,金のなべ,saucepan Of Gold,アイテム名
 76,鉄人のなべ,saucepan Of Iron Chef,アイテム名
@@ -184,4 +184,11 @@ ID,日本語,英語,
 1000,アドイン購入に失敗しました。,Purchase Failed,アドオン購入失敗時の汎用メッセージ
 1050,通信失敗,Communication failure,通信失敗時のタイトル
 1051,ネットワーク通信に失敗しました。,I failed to communicate.,通信失敗時のメッセージ
-1052,プレイライフ数が最大値になりました。,プレイライフ数が最大値になりました。,ライフ数が最大になった時の通知内容
+1052,プレイライフ数が最大値になりました。,Game play life is complete recovery,ライフ数が最大になった時の通知内容
+251,レベル「%d」になりました。,Change Level[%d],レベルアップ時の内容
+250,レベルアップ！,Level Up!,レベルアップ時のタイトル
+1201,ライフ全回復しました。,Life full recovery,
+1202,ゲーム金額「%d」を提供します。,Game gold「%d」 get,
+1203,アップグレード特典,Upgrade Awards,
+1210,バージョンアップが必要です。,Need to be upgraded,
+1211,ボタンを押すとiTunesの画面へ行きます,Go to iTunes and press the button,

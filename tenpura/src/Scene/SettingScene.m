@@ -41,6 +41,9 @@
 -(NSString*)    _getEventSuccessMessage;
 -(NSString*)    _getEventInvocMessage:(const BOOL)in_bNewScore :(const BOOL)in_bNewLimit;
 
+/** ミッション成功ウィンドウ */
+-(void)	_runMissionSceesssWindow:(NSInteger)in_missionIdx;
+
 @end
 
 @implementation SettingScene
@@ -52,21 +55,12 @@
 */
 -(id)init
 {
-	if( self = [super init] )
-	{
+	if( self = [super init] ) {
 		//	エフェクト管理をいったんすべて解放
 		[AnimManager end];
 
 		mp_useItemNoList	= [[CCArray alloc] init];
 		mp_gameStartBtn	= nil;
-		mp_missionSucceesAlertView	= nil;
-		mp_missionBounesAlertView	= nil;
-        mp_eventInvocAlertView      = nil;
-        mp_eventSuccessAlertView    = nil;
-        mp_eventRewardAlertView     = nil;
-        mp_eventNGAlertView         = nil;
-        mp_eventChkAlertView        = nil;
-        mp_lvupNabeAlertView        = nil;
         mp_eventChkBtn  = nil;
 
 		m_missionSuccessIdx	= 0;
@@ -76,12 +70,10 @@
         {
             DataSaveGame*   pDataSaveGameInst   = [DataSaveGame shared];
             const SAVE_DATA_ST* pSaveData   = [pDataSaveGameInst getData];
-            if(pSaveData->invocEventNo == -1)
-            {
+            if(pSaveData->invocEventNo == -1) {
                 mb_chkStartEvent    = YES;
             }
-            else if( pSaveData->successEventNo != -1 )
-            {
+            else if( pSaveData->successEventNo != -1 ) {
                 m_eventResult   = eEVENT_RESULT_OK;
             }
         }
@@ -89,14 +81,13 @@
         //  ハート画像
         {
             mp_heartObjArray    = [[CCArray arrayWithCapacity:eSAVE_DATA_PLAY_LIEF_MAX] retain];
-            for( int i = 0; i < eSAVE_DATA_PLAY_LIEF_MAX; ++i )
-            {
+            for( int i = 0; i < eSAVE_DATA_PLAY_LIEF_MAX; ++i ) {
                 CCSprite*   pSp = [CCSprite spriteWithFile:[NSString stringWithUTF8String:gpa_spriteFileNameList[eSPRITE_FILE_HEART]]];
                 [self addChild:pSp z:10];
                 [mp_heartObjArray addObject:pSp];
             }
         }
-        		
+        
 		[[SoundManager shared] playBgm:@"normalBGM"];
 	}
 	
@@ -108,62 +99,12 @@
 */
 -(void)dealloc
 {
-    if( mp_heartObjArray != nil )
-    {
+    if( mp_heartObjArray != nil ) {
         [mp_heartObjArray release];
     }
     mp_heartObjArray    = nil;
-
-	if( mp_missionSucceesAlertView != nil )
-	{
-		[mp_missionSucceesAlertView release];
-		mp_missionSucceesAlertView	= nil;
-	}
-	
-	if( mp_missionBounesAlertView != nil )
-	{
-		[mp_missionBounesAlertView release];
-		mp_missionBounesAlertView	= nil;
-	}
-
-	if( mp_eventInvocAlertView != nil )
-	{
-		[mp_eventInvocAlertView release];
-		mp_eventInvocAlertView	= nil;
-	}
-
-	if( mp_eventSuccessAlertView != nil )
-	{
-		[mp_eventSuccessAlertView release];
-		mp_eventSuccessAlertView	= nil;
-	}
-
-	if( mp_eventRewardAlertView != nil )
-	{
-		[mp_eventRewardAlertView release];
-		mp_eventRewardAlertView	= nil;
-	}
     
-    if( mp_eventNGAlertView != nil )
-    {
-        [mp_eventNGAlertView release];
-        mp_eventNGAlertView = nil;
-    }
-    
-    if( mp_eventChkAlertView )
-    {
-        [mp_eventChkAlertView release];
-        mp_eventChkAlertView    = nil;
-    }
-    
-    if( mp_lvupNabeAlertView != nil )
-    {
-        [mp_lvupNabeAlertView release];
-        mp_lvupNabeAlertView    = nil;
-    }
-
-	if( mp_useItemNoList != nil )
-	{
+	if( mp_useItemNoList != nil ) {
 		[mp_useItemNoList release];
 	}
 	mp_useItemNoList	= nil;
@@ -188,12 +129,11 @@
         }
     }
 
-	//	受け渡しためのデータリスト作成
+	//	ゲーム側に渡す天ぷらデータがない場合はゲーム開始ボタンを消す
 	SettingItemBtn*	pSettingItemBtn	= nil;
-	CCARRAY_FOREACH(mp_useItemNoList, pSettingItemBtn)
-	{
-		if( ( 0 < pSettingItemBtn.itemNo ) && ( pSettingItemBtn.type == eITEM_TYPE_NETA ) )
-		{
+	CCARRAY_FOREACH(mp_useItemNoList, pSettingItemBtn) {
+		if( ( 0 < pSettingItemBtn.itemNo ) && ( pSettingItemBtn.type == eITEM_TYPE_NETA ) ) {
+			//	ゲーム側に渡す天ぷらデータがあったので開始ボタンを表示
 			[mp_gameStartBtn setVisible:YES];
 			break;
 		}
@@ -223,77 +163,152 @@
         DataSaveGame*   pDataSaveGameInst   = [DataSaveGame shared];
         const SAVE_DATA_ST* pSaveData   = [pDataSaveGameInst getData];
         
-        if( mb_chkStartEvent == YES )
-        {
+		//	イベントが発生しているチェック
+        if( mb_chkStartEvent == YES ) {
             //  発生チェック
             const EVENT_DATA_ST*    pEventData  = [DataEventDataList invocEvent];
-            if( pEventData )
-            {
+            if( pEventData ) {
                 m_eventResult   = eEVENT_RESULT_RUN;
                 [pDataSaveGameInst setEventNo:pEventData->no :pEventData->limitData.time];
                 mb_chkStartEvent    = NO;
             }
         }
-        else if( (pSaveData->invocEventNo != -1) && (m_eventResult == eEVENT_RESULT_NONE) )
-        {
-            if( [DataEventDataList isError:pSaveData->invocEventNo] )
-            {
+        else if( (pSaveData->invocEventNo != -1) && (m_eventResult == eEVENT_RESULT_NONE) ) {
+            if( [DataEventDataList isError:pSaveData->invocEventNo] ) {
                 m_eventResult   = eEVENT_RESULT_NG;
             }            
         }
     }
 	
-    if( m_eventResult == eEVENT_RESULT_NG )
-    {
+    if( m_eventResult == eEVENT_RESULT_NG ) {
         [mp_eventChkBtn setVisible:NO];
 
-        if( mp_eventNGAlertView != nil )
-        {
-            [mp_eventNGAlertView release];
-            mp_eventNGAlertView = nil;
-        }
-        mp_eventNGAlertView	= [[UIAlertView alloc]	initWithTitle:[DataBaseText getString:201]
-                                                                message:[self _getEventNGMessage]
-                                                                delegate:self
-                                                                cancelButtonTitle:[DataBaseText getString:46]
-                                                                otherButtonTitles:nil];
-        [mp_eventNGAlertView show];
+        UIAlertViewBlock* pAlertView	= [[[UIAlertViewBlock alloc]
+		initWithTitle:[DataBaseText getString:201]
+		message:[self _getEventNGMessage]
+		
+		completion:^( UIAlertView* in_pAlertView, NSInteger in_btnIdx ) {
+		
+		    DataSaveGame*   pDataSaveGameInst   = [DataSaveGame shared];
+
+			[pDataSaveGameInst endEvent];
+
+			//	成功しているミッションがあるかチェック
+			if( [self _checkMissionSuccess] == NO ) {
+			}
+		}
+		
+		cancelButtonTitle:[DataBaseText getString:46]
+		otherButtonTitles:nil] autorelease];
+		
+        [pAlertView show];
     }
-    else if( m_eventResult == eEVENT_RESULT_OK )
-    {
-        if( mp_eventSuccessAlertView != nil )
-        {
-            [mp_eventSuccessAlertView release];
-            mp_eventSuccessAlertView = nil;
-        }
-        mp_eventSuccessAlertView	= [[UIAlertView alloc]	initWithTitle:[DataBaseText getString:208]
-                                                                        message:[self _getEventSuccessMessage]
-                                                                        delegate:self
-                                                                        cancelButtonTitle:[DataBaseText getString:46]
-                                                                        otherButtonTitles:nil];
-        [mp_eventSuccessAlertView show];
+    else if( m_eventResult == eEVENT_RESULT_OK ) {
+        UIAlertViewBlock*		pAlertView	= [[[UIAlertViewBlock alloc]
+		initWithTitle:[DataBaseText getString:208]
+		message:[self _getEventSuccessMessage]
+		completion:^( UIAlertView* in_pAlertView, NSInteger in_btnIdx ) {
+		
+		    DataSaveGame*   pDataSaveGameInst   = [DataSaveGame shared];
+
+			//  アイテム取得／お金取得
+			NSString*   pMessage    = nil;
+			{
+				const SAVE_DATA_ST* pSaveData   = [pDataSaveGameInst getData];
+				NSAssert(pSaveData->invocEventNo != -1, @"");
+				const EVENT_DATA_ST*  pEventData  = [[DataEventDataList shared] getDataSearchId:pSaveData->invocEventNo];
+				if( pEventData->rewardDataType == 0 )
+				{
+					//  アイテム取得
+					const ITEM_DATA_ST* pItemData   = [[DataItemList shared] getDataSearchId:pEventData->reward.itemNo];
+					NSAssert(pItemData, @"");
+									
+					//  アイテム内容によって追加できないのがある
+					if( pItemData->itemType == eITEM_IMPACT_OPEN_NETAPACK ) {
+						//  ネタパックを一つ開く
+						DataNetaPackList*   pDataNetaPackListInst   = [DataNetaPackList shared];
+						SInt32  openNetaPackIdx = pSaveData->netaNum;
+						if( openNetaPackIdx < pDataNetaPackListInst.dataNum ) {
+							const NETA_PACK_DATA_ST*    pNetaPackData   = [pDataNetaPackListInst getData:openNetaPackIdx];
+							[pDataSaveGameInst addNetaPack:pNetaPackData->no];
+							
+							pMessage    = [NSString stringWithFormat:[DataBaseText getString:214], [DataBaseText getString:pNetaPackData->textID]];
+						}
+						else {
+							//  もうこれ以上取得できない場合は金額に変える
+							pMessage    = [NSString stringWithFormat:[DataBaseText getString:213], 10000];
+							[pDataSaveGameInst addSaveMoeny:10000];
+						}
+					}
+					else {
+						//  アイテム取得
+						const SAVE_DATA_ITEM_ST*  pSaveDataItem   = [pDataSaveGameInst getItem:pItemData->no];
+						if( (pSaveDataItem == nil) || (pSaveDataItem->num < eSAVE_DATA_ITEM_USE_MAX ) ) {
+							[pDataSaveGameInst addItem:pItemData->no];
+							pMessage    = [NSString stringWithFormat:[DataBaseText getString:212], [DataBaseText getString:pItemData->textID]];
+						}
+						else {
+							//  これ以上取得できない場合は金に換える
+							SInt32  money   = pItemData->sellMoney * 0.5f;
+							pMessage    = [NSString stringWithFormat:[DataBaseText getString:213], money];
+							[pDataSaveGameInst addSaveMoeny:money];
+						}
+					}
+				}
+				else if( pEventData->rewardDataType == 1 ) {
+					//  金取得
+					pMessage    = [NSString stringWithFormat:[DataBaseText getString:213], pEventData->reward.money];
+					[pDataSaveGameInst addSaveMoeny:pEventData->reward.money];
+				}
+			}
+			NSAssert(pMessage, @"");
+		
+			//	報酬内容を出す
+			{
+				UIAlertViewBlock*		pSuccessAlertView	= [[[UIAlertViewBlock alloc]
+				initWithTitle:[DataBaseText getString:203]
+				message:pMessage
+				completion:^( UIAlertView* in_pAlertView, NSInteger in_btnIdx ) {
+				
+					[pDataSaveGameInst endEvent];
+					//	成功しているミッションがあるかチェック
+					if([self _checkMissionSuccess] == NO) {
+					}
+
+				}
+				cancelButtonTitle:[DataBaseText getString:46]
+				otherButtonTitles:nil] autorelease];
+				
+				[pSuccessAlertView show];
+			}
+		}
+		
+		cancelButtonTitle:[DataBaseText getString:46]
+		otherButtonTitles:nil] autorelease];
+		
+        [pAlertView show];
     }
     else if( m_eventResult == eEVENT_RESULT_RUN )
     {
-        if( mp_eventInvocAlertView != nil )
-        {
-            [mp_eventInvocAlertView release];
-            mp_eventInvocAlertView = nil;
-        }
-        mp_eventInvocAlertView	= [[UIAlertView alloc]	initWithTitle:[DataBaseText getString:200]
-                                                                    message:[self _getEventInvocMessage:YES :YES]
-                                                                    delegate:self
-                                                                    cancelButtonTitle:[DataBaseText getString:46]
-                                                                    otherButtonTitles:nil];
-        [mp_eventInvocAlertView show];
+        UIAlertViewBlock*		pAlertView	= [[[UIAlertViewBlock alloc]
+		initWithTitle:[DataBaseText getString:200]
+		message:[self _getEventInvocMessage:YES :YES]
+		completion:^(UIAlertView* in_pAlertView, NSInteger in_btnIdx) {
+			[mp_eventChkBtn setVisible:YES];
+
+			//	成功しているミッションがあるかチェック
+			if([self _checkMissionSuccess] == NO) {
+			}
+		}
+		cancelButtonTitle:[DataBaseText getString:46]
+		otherButtonTitles:nil] autorelease];
+		
+        [pAlertView show];
     }
-    else
-    {        
+    else {
         //	成功しているミッションがあるかチェック
         if( [self _checkMissionSuccess] == NO )
         {
-            //  鍋がレベルアップしているか
-            [self _checkLvupNabeSuccess];
         }
     }
 
@@ -329,15 +344,6 @@
 
 -(void) update:(ccTime)delta
 {
-    //  ネットタイム取得通知
-    AppController*	pApp	= (AppController*)[UIApplication sharedApplication].delegate;
-    if( pApp.bVisibleByGetNetTime == YES )
-    {
-		NSString*	pGetNetTimeName	= [NSString stringWithUTF8String:gp_getNetTimeObserverName];
-		NSNotification *n = [NSNotification notificationWithName:pGetNetTimeName object:nil];
-		NSAssert(n, @"");
-		[[NSNotificationCenter defaultCenter] postNotification:n];
-    }
 }
 
 /*
@@ -558,12 +564,14 @@
 -(void) pressEventBtn
 {
     //	イベント内容を出す
-    mp_eventChkAlertView	= [[UIAlertView alloc]	initWithTitle:[DataBaseText getString:202]
-                                                                    message:[self _getEventInvocMessage:NO :NO]
-                                                                    delegate:self
-                                                                    cancelButtonTitle:[DataBaseText getString:46]
-                                                                    otherButtonTitles:nil];
-    [mp_eventChkAlertView show];
+    UIAlertView* pAlertView	= [[[UIAlertView alloc]
+	initWithTitle:[DataBaseText getString:202]
+	message:[self _getEventInvocMessage:NO :NO]
+	delegate:nil
+	cancelButtonTitle:[DataBaseText getString:46]
+	otherButtonTitles:nil] autorelease];
+	
+    [pAlertView show];
     
 	[[SoundManager shared] playSe:@"btnClick"];
 }
@@ -692,213 +700,9 @@
         [self removeChild:pNode cleanup:YES];
     }
     
-    [DataSaveGame shared].cureTime  = 30;//self.cureTimeByCcbiProperty;
-    
     {
         CGSize  size    = CGSizeMake(1.f, 1.f);
         [self setScaleX:converSizeVariableDevice(size).width];
-        
-     //   CGPoint pos = self.position;
-       // [self setPosition:converPosVariableDevice(pos)];
-    }
-}
-
-/*
-	@brief	アラート終了
-*/
--(void)	alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    DataSaveGame*   pDataSaveGameInst   = [DataSaveGame shared];
-    const SAVE_DATA_ST* pDataSave   = [pDataSaveGameInst getData];
-
-	if( alertView == mp_missionSucceesAlertView )
-	{
-		if( mp_missionSucceesAlertView != nil )
-		{
-			[mp_missionSucceesAlertView release];
-			mp_missionSucceesAlertView	= nil;
-		}
-
-		if( mp_missionBounesAlertView != nil )
-		{
-			[mp_missionBounesAlertView release];
-			mp_missionBounesAlertView	= nil;
-		}
-		
-		DataMissionList*	pMissionInst	= [DataMissionList shared];
-
-		//	報酬内容を出す
-		mp_missionBounesAlertView	= [[UIAlertView alloc]	initWithTitle:[DataBaseText getString:800]
-										message:[pMissionInst getSuccessMsg:m_missionSuccessIdx]
-										delegate:self
-										cancelButtonTitle:[DataBaseText getString:46]
-										otherButtonTitles:nil];
-		[mp_missionBounesAlertView show];
-		
-		m_missionSuccessIdx	= 0;
-	}
-	else if( alertView == mp_missionBounesAlertView )
-	{
-		if( mp_missionBounesAlertView != nil )
-		{
-			[mp_missionBounesAlertView release];
-			mp_missionBounesAlertView	= nil;
-		}
-
-		//	他に成功しているミッションがないかチェック
-		if( [self _checkMissionSuccess] == NO )
-        {
-            [self _checkLvupNabeSuccess];
-        }
-	}
-    else if( alertView == mp_eventInvocAlertView )
-    {
-        if( mp_eventInvocAlertView )
-        {
-            [mp_eventInvocAlertView release];
-        }
-        mp_eventInvocAlertView  = nil;
-        
-        [mp_eventChkBtn setVisible:YES];
-
-        //	成功しているミッションがあるかチェック
-        if([self _checkMissionSuccess] == NO)
-        {
-            [self _checkLvupNabeSuccess];
-        }
-    }
-    else if( alertView == mp_eventSuccessAlertView )
-    {
-        if( mp_eventSuccessAlertView )
-        {
-            [mp_eventSuccessAlertView release];
-        }
-        mp_eventSuccessAlertView    = nil;
-        
-        if( mp_eventRewardAlertView )
-        {
-            [mp_eventRewardAlertView release];
-        }
-        
-        //  アイテム取得／お金取得
-        NSString*   pMessage    = nil;
-        {
-            const SAVE_DATA_ST* pSaveData   = [pDataSaveGameInst getData];
-            NSAssert(pSaveData->invocEventNo != -1, @"");
-            const EVENT_DATA_ST*  pEventData  = [[DataEventDataList shared] getDataSearchId:pSaveData->invocEventNo];
-            if( pEventData->rewardDataType == 0 )
-            {
-                //  アイテム取得
-                const ITEM_DATA_ST* pItemData   = [[DataItemList shared] getDataSearchId:pEventData->reward.itemNo];
-                NSAssert(pItemData, @"");
-                                
-                //  アイテム内容によって追加できないのがある
-                if( pItemData->itemType == eITEM_IMPACT_OPEN_NETAPACK )
-                {
-                    //  ネタパックを一つ開く
-                    DataNetaPackList*   pDataNetaPackListInst   = [DataNetaPackList shared];
-                    SInt32  openNetaPackIdx = pSaveData->netaNum;
-                    if( openNetaPackIdx < pDataNetaPackListInst.dataNum )
-                    {
-                        const NETA_PACK_DATA_ST*    pNetaPackData   = [pDataNetaPackListInst getData:openNetaPackIdx];
-                        [pDataSaveGameInst addNetaPack:pNetaPackData->no];
-                        
-                        pMessage    = [NSString stringWithFormat:[DataBaseText getString:214], [DataBaseText getString:pNetaPackData->textID]];
-                    }
-                    else
-                    {
-                        //  もうこれ以上取得できない場合は金額に変える
-                        pMessage    = [NSString stringWithFormat:[DataBaseText getString:213], 10000];
-                        [pDataSaveGameInst addSaveMoeny:10000];
-                    }
-                }
-                else
-                {
-                    //  アイテム取得
-                    const SAVE_DATA_ITEM_ST*  pSaveDataItem   = [pDataSaveGameInst getItem:pItemData->no];
-                    if( (pSaveDataItem == nil) || (pSaveDataItem->num < eSAVE_DATA_ITEM_USE_MAX ) )
-                    {
-                        [pDataSaveGameInst addItem:pItemData->no];
-                        pMessage    = [NSString stringWithFormat:[DataBaseText getString:212], [DataBaseText getString:pItemData->textID]];
-                    }
-                    else
-                    {
-                        //  これ以上取得できない場合は金に換える
-                        SInt32  money   = pItemData->sellMoney * 0.5f;
-                        pMessage    = [NSString stringWithFormat:[DataBaseText getString:213], money];
-                        [pDataSaveGameInst addSaveMoeny:money];
-                    }
-                }
-            }
-            else if( pEventData->rewardDataType == 1 )
-            {
-                //  金取得
-                pMessage    = [NSString stringWithFormat:[DataBaseText getString:213], pEventData->reward.money];
-                [pDataSaveGameInst addSaveMoeny:pEventData->reward.money];
-            }
-        }
-        NSAssert(pMessage, @"");
-    
-        mp_eventRewardAlertView = nil;
-
-		//	報酬内容を出す
-		mp_eventRewardAlertView	= [[UIAlertView alloc]	initWithTitle:[DataBaseText getString:203]
-                                                                        message:pMessage
-                                                                        delegate:self
-                                                                        cancelButtonTitle:[DataBaseText getString:46]
-                                                                        otherButtonTitles:nil];
-		[mp_eventRewardAlertView show];
-    }
-    else if ( alertView == mp_eventRewardAlertView )
-    {
-        if( mp_eventRewardAlertView )
-        {
-            [mp_eventRewardAlertView release];
-        }
-        mp_eventRewardAlertView = nil;
-     
-        [pDataSaveGameInst endEvent];
-        
-        //	成功しているミッションがあるかチェック
-        if([self _checkMissionSuccess] == NO)
-        {
-            [self _checkLvupNabeSuccess];
-        }
-    }
-    else if( alertView == mp_eventNGAlertView )
-    {
-        if( mp_eventNGAlertView )
-        {
-            [mp_eventNGAlertView release];
-        }
-        mp_eventNGAlertView = nil;
-        
-        [pDataSaveGameInst endEvent];
-
-        //	成功しているミッションがあるかチェック
-        if( [self _checkMissionSuccess] == NO )
-        {
-            [self _checkLvupNabeSuccess];
-        }
-    }
-    else if( alertView == mp_eventChkAlertView )
-    {
-        if( mp_eventChkAlertView )
-        {
-            [mp_eventChkAlertView release];
-        }
-        mp_eventChkAlertView    = nil;
-    }
-    else if( alertView == mp_lvupNabeAlertView )
-    {
-        if( mp_lvupNabeAlertView )
-        {
-            [mp_lvupNabeAlertView release];
-        }
-        mp_lvupNabeAlertView    = nil;
-        
-        //  なべレベル表記更新
-        mp_lvNabeStr.string = [NSString stringWithFormat:@"%d", pDataSave->nabeLv];
     }
 }
 
@@ -1008,26 +812,23 @@
     [mp_cureTimeStr setString:@"00:00"];
     if( pSaveData->playLife < eSAVE_DATA_PLAY_LIEF_MAX )
     {
-        SInt32  nowCureTime = pDataSaveGameInst.nowCureTime;
         //  回復時間になっているか
         {
-            if( nowCureTime <= 0 )
-            {
+            if( [pDataSaveGameInst getNowCureTime] <= 0 ) {
                 //  回復
                 [pDataSaveGameInst addPlayLife:1];
             }
         }
 
-        //  回復時間を表示
-        if( pSaveData->playLife < eSAVE_DATA_PLAY_LIEF_MAX )
-        {
+        // 今の回復時間を表示
+        SInt32  nowCureTime = [pDataSaveGameInst getNowCureTime];
+        if( pSaveData->playLife < eSAVE_DATA_PLAY_LIEF_MAX ) {
             SInt32  second  = (nowCureTime <= 0) ? 0 : nowCureTime % 60;
             SInt32  minute  = (nowCureTime <= 0) ? 0 : nowCureTime / 60;
             
             [mp_cureTimeStr setString:[NSString stringWithFormat:@"%02ld:%02ld", minute, second]];
         }
-        else
-        {
+        else {
             [mp_cureTimeStr setString:[NSString stringWithFormat:@"%02d:%02d", 0, 0]];
         }
     }
@@ -1042,26 +843,31 @@
 	UInt32	missionNum	= pMissionInst.dataNum;
 	for( UInt32 i = 0; i < missionNum; ++i )
 	{
-		if( [pMissionInst checSuccess:i] == YES )
+		if( [pMissionInst checkSuccess:i] == YES )
 		{
 			m_missionSuccessIdx	= i;
 			[pMissionInst setSuccess:YES:i];
 			//	ミッション成功メッセージを出す（アラート）
-			if( mp_missionSucceesAlertView != nil )
-			{
-				[mp_missionSucceesAlertView release];
-				mp_missionSucceesAlertView	= nil;
+			UIAlertViewBlock*	pAlertView	= [[[UIAlertViewBlock alloc]
+			initWithTitle:[DataBaseText getString:68]
+			message:[pMissionInst getMissonName:i]
+			
+			completion:^(UIAlertView* in_pAlerView, NSInteger in_btnIdx ) {
+				//	ミッション成功表示
+				[self runMissionSceesssView:m_missionSuccessIdx];
+				m_missionSuccessIdx	= 0;
 			}
-
-			mp_missionSucceesAlertView	= [[UIAlertView alloc]	initWithTitle:[DataBaseText getString:68]
-											message:[pMissionInst getMissonName:i]
-											delegate:self
-											cancelButtonTitle:[DataBaseText getString:46]
-											otherButtonTitles:nil];
-			[mp_missionSucceesAlertView show];
+			
+			cancelButtonTitle:[DataBaseText getString:46]
+			otherButtonTitles:nil] autorelease];
+			
+			[pAlertView show];
 			return  YES;
 		}
 	}
+	
+	//	レベルが上がっているかチェック
+	[self _checkLvupNabeSuccess];
     
     return  NO;
 }
@@ -1073,20 +879,28 @@
 {
     DataSaveGame*   pSaveGame   = [DataSaveGame shared];
     const SAVE_DATA_ST* pSaveData   = [pSaveGame getData];
-    if( 0 < pSaveData->nabeAddExp )
-    {
-        [pSaveGame saveNabeExp:0];
-        if( [pSaveGame addNabeExp:pSaveData->nabeAddExp] )
-        {
+	
+	int	addExp	= pSaveData->nabeAddExp;
+	//	セーブして取得した経験値をクリア
+	[pSaveGame saveNabeExp:0];
+	
+    if( 0 <  addExp ) {
+        if( [pSaveGame addNabeExp:addExp] ) {
             //  レベルがあがる
-            //  アラートを出す
             NSString*   pMessage    = [NSString stringWithFormat:[DataBaseText getString:251], pSaveData->nabeLv];
-			mp_lvupNabeAlertView	= [[UIAlertView alloc]	initWithTitle:[DataBaseText getString:250]
-                                                                    message:pMessage
-                                                                   delegate:self
-                                                          cancelButtonTitle:[DataBaseText getString:46]
-                                                          otherButtonTitles:nil];
-			[mp_lvupNabeAlertView show];
+			
+			UIAlertViewBlock* pAlertView	= [[[UIAlertViewBlock alloc]
+			initWithTitle:[DataBaseText getString:250]
+			message:pMessage
+			completion:^( UIAlertView* in_pAlertView, NSInteger in_btnIdx ) {
+				//  なべレベル表記更新
+				mp_lvNabeStr.string = [NSString stringWithFormat:@"%d", pSaveData->nabeLv];
+			}
+			cancelButtonTitle:[DataBaseText getString:46]
+			otherButtonTitles:nil] autorelease];
+			
+			[pAlertView show];
+			
             return YES;
         }
     }
@@ -1213,6 +1027,30 @@
     }
     
     return pStr;
+}
+
+/**
+	@brief	ミッション成功時のウィンドウ表示
+*/
+-(void)	runMissionSceesssView:(NSInteger)in_missionIdx
+{
+	DataMissionList*	pMissionInst	= [DataMissionList shared];
+
+	//	報酬内容を出す
+	{
+		UIAlertViewBlock*	pMissionAlertView	= [[[UIAlertViewBlock alloc]
+		initWithTitle:[DataBaseText getString:800]
+		message:[pMissionInst getSuccessMsg:in_missionIdx]
+		completion:^(UIAlertView* in_pAlertView, NSInteger in_btnIdx ) {
+			//	他に成功しているミッションがないかチェック
+			if( [self _checkMissionSuccess] == NO ) {
+			}
+		}
+		cancelButtonTitle:[DataBaseText getString:46]
+		otherButtonTitles:nil] autorelease];
+
+		[pMissionAlertView show];
+	}
 }
 
 @end
