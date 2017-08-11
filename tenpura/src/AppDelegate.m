@@ -948,9 +948,14 @@ void uncaughtExceptionHandler( NSException* in_pException )
 
 /** タイマー取得のための非同期通信処理をする */
 -(const BOOL) _requestServerDate {
-	//	ネットワークシーン開始
+/*
+    @date   2017/08/18
+    @note   ネットワークを通じてサーバー時刻を取得していたが、サーバーが停止してアクセスが不可能になった
+*/
+#if 0
+    //	ネットワークシーン開始
 	[self _beginNetworkScene];
-	
+
     NSURL*  pUrl    = [[NSURL alloc] initWithString:@"http://n2-games.com/time/baseParam.php"];
     NSURLRequest*   pReq    = [[NSURLRequest alloc] initWithURL:pUrl];
 	//	非同期通信にする（通信中はゲームはポーズ状態にする）
@@ -1067,48 +1072,41 @@ void uncaughtExceptionHandler( NSException* in_pException )
 						[pAlert show];
 					}
 				}
-				
-				//  文字列を解析
-				NSDateComponents*   pComp   = [[[NSDateComponents alloc] init] autorelease];
-				{
-					pComp.year  = 0;
-					pComp.month = 0;
-					pComp.day   = 0;
-					pComp.hour  = 0;
-					pComp.minute    = 0;
-					pComp.second    = 0;
 
-					//  年月日と時分日で分ける
-					NSArray*    pItems  = [pDateString componentsSeparatedByString:@" "];
-					NSAssert([pItems count] == 2, @"");
-					//  「年/月/日」を取得
-					NSString*   pYearMonthDayStr    = [pItems objectAtIndex:0];
-					{
-						NSArray*    pYearMonthDayItem   = [pYearMonthDayStr componentsSeparatedByString:@"/"];
-						pComp.year      = [[pYearMonthDayItem objectAtIndex:0] intValue];
-						pComp.month     = [[pYearMonthDayItem objectAtIndex:1] intValue];
-						pComp.day       = [[pYearMonthDayItem objectAtIndex:2] intValue];
-					}
-					
-					//  「時:分:秒」を」取得
-					NSString*   pHourMinSecStr    = [pItems objectAtIndex:1];
-					{
-						NSArray*    pHourMinSecItem = [pHourMinSecStr componentsSeparatedByString:@":"];
-						pComp.hour      = [[pHourMinSecItem objectAtIndex:0] intValue];
-						pComp.minute    = [[pHourMinSecItem objectAtIndex:1] intValue];
-						pComp.second    = [[pHourMinSecItem objectAtIndex:2] intValue];
-					}
-				}
+                //  文字列を解析
+                NSDateComponents*   pComp   = [[[NSDateComponents alloc] init] autorelease];
+                {
+                    pComp.year  = 0;
+                    pComp.month = 0;
+                    pComp.day   = 0;
+                    pComp.hour  = 0;
+                    pComp.minute    = 0;
+                    pComp.second    = 0;
+                    
+                    //  年月日と時分日で分ける
+                    NSArray*    pItems  = [in_pTimeString componentsSeparatedByString:@" "];
+                    NSAssert([pItems count] == 2, @"");
+                    //  「年/月/日」を取得
+                    NSString*   pYearMonthDayStr    = [pItems objectAtIndex:0];
+                    {
+                        NSArray*    pYearMonthDayItem   = [pYearMonthDayStr componentsSeparatedByString:@"/"];
+                        pComp.year      = [[pYearMonthDayItem objectAtIndex:0] intValue];
+                        pComp.month     = [[pYearMonthDayItem objectAtIndex:1] intValue];
+                        pComp.day       = [[pYearMonthDayItem objectAtIndex:2] intValue];
+                    }
+                    
+                    //  「時:分:秒」を」取得
+                    NSString*   pHourMinSecStr    = [pItems objectAtIndex:1];
+                    {
+                        NSArray*    pHourMinSecItem = [pHourMinSecStr componentsSeparatedByString:@":"];
+                        pComp.hour      = [[pHourMinSecItem objectAtIndex:0] intValue];
+                        pComp.minute    = [[pHourMinSecItem objectAtIndex:1] intValue];
+                        pComp.second    = [[pHourMinSecItem objectAtIndex:2] intValue];
+                    }
+                }
 
-				NSCalendar* pCal    = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
-				NSDate* nowDate = [pCal dateFromComponents:pComp];
-
-				//  日付をローカル保存
-				//  日付関連に関わるステータスを更新
-				[[DataSaveGame shared] updateTimeStatus:nowDate];
-
-				//  ゲーム内タイマー開始
-				[self _requestGameTimerUpdate];
+                //  ゲーム時間初期化
+                [self _initGameTime:pComp];
 				
 				[self _endNetworkScene];
 
@@ -1116,8 +1114,28 @@ void uncaughtExceptionHandler( NSException* in_pException )
 		}
 	}
 	}];
-	
+#else
+
+#endif
+    
     return YES;
+}
+
+/*
+    @date   2017/08/11
+    @param  ゲームタイマー初期化
+ */
+-(void) _initGameTime:(NSDateComponents*)in_pDate
+{
+    NSCalendar* pCal    = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
+    NSDate* nowDate = [pCal dateFromComponents:in_pDate];
+    
+    //  日付をローカル保存
+    //  日付関連に関わるステータスを更新
+    [[DataSaveGame shared] updateTimeStatus:nowDate];
+    
+    //  ゲーム内タイマー開始
+    [self _requestGameTimerUpdate];
 }
 
 @end

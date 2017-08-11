@@ -1,1 +1,0 @@
-/Users/mac/Desktop/tenpura2/DerivedData/tenpura/Build/Intermediates/ArchiveIntermediates/tenpura/InstallationBuildProductsLocation/Applications/tenpura.app
