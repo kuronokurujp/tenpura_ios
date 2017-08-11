@@ -1,0 +1,2 @@
+# tenpura_ios
+iosアプリのカジュアルゲーム
