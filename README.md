@@ -1,25 +1,47 @@
-# tenpura_ios
-iosアプリのカジュアルゲーム
+<h1>iOS版アプリのカジュアルゲーム<h1>
+  
+---
+
+<h3><span style="color=red">注意点</span><h3>
+  <p>iOSの対応バージョンが古いので現在は端末で動作出来ません。</p>
+  
+---
+  
 <p>
-▪️アプリ内容<br>
-<p>
-天ぷらを揚げてお客さんに提供する。<br>
-制限時間内に提供してポイントを稼げくシンプルなゲーム<br>
-apple store
-https://itunes.apple.com/jp/app/sumaho-tianpura-sumahotoo/id701997075?mt=8
-<p>
-▪️開発環境<br>
-<p>
-マシン:Mac<br>
-IDE:Xcode<br>
-言語:Objective-C<br>
-フレームワーク:Cocos2D<br>
-<p>
-▪️開発期間:2012~2013年<br>
-  <p>
-  プログラム開発のみなら２ヶ月ほど<br>
-<p>
-▪️開発人数:4人<br>
-  企画が二人<br>
-  プログラマーが一人（自分）<br>
-  グラフィッカーが一人<br>
+■アプリ内容<br>
+　　ユーザーが指定天ぷらを揚げてキャラクターに提供する。<br>
+　　制限時間内に提供してポイントを稼げくシンプルなゲーム<br>
+</p>
+
+---
+
+
+~~[アプリ配信URL](https://itunes.apple.com/jp/app/sumaho-tianpura-sumahotoo/id701997075?mt=8)~~<br>
+※バージョンが古いのですでに公開停止しています。
+  
+---
+ 
+■開発環境<br>
+
+|マシン|IDE|言語|フレームワーク|
+|:----:|:----:|:----:|:----:|
+|Mac Book Air|Xcode|Objective-C|Cocos2D|
+
+--- 
+
+■開発期間<br>
+<ul>
+<li>2012~2013年</li>
+<li>プログラム開発のみなら２ヶ月ほど</li>
+</ul>
+
+---
+
+■開発メンバー<br>
+<ul>
+<li>企画が二人</li>
+<li>プログラマーが一人（自分）</li>
+<li>グラフィッカーが一人</li>
+</ul>
+
+---
