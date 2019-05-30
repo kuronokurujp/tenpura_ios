@@ -2,7 +2,7 @@
   
 ---
 
-<h3><span style="color=red">注意点</span><h3>
+### <span style="color=red">注意点</span>
   <p>iOSの対応バージョンが古いので現在は端末で動作出来ません。</p>
   
 ---
